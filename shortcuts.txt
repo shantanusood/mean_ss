@@ -1,0 +1,3 @@
+Run app:		ng serve --open --host 0.0.0.0 --port 4200 --disable-host-check
+Create routing:		ng generate module <name> --module app --flat
+Create component: 	ng generate component <name>
