@@ -9,7 +9,6 @@ export class NavComponent implements OnInit {
 
   constructor() { }
 
-//  private apiUrl = "http://192.168.1.157:5000/test";
   ngOnInit() {
 
   }
