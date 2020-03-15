@@ -21,25 +21,25 @@
     </button>
     &nbsp;&nbsp;&nbsp;
     <button mat-raised-button (click)="clickGrowth()" style="align-self: right;">
-        Get Growth
+        Plot Growth
     </button>
     &nbsp;&nbsp;&nbsp;
     <button mat-raised-button (click)="clickProfit()" style="align-self: right;">
-        Get Profit
+        Plot Profit
     </button>
     &nbsp;&nbsp;&nbsp;
     <button mat-raised-button (click)="clickRatio()" style="align-self: right;">
-        Get Ratio
+        Plot Ratio
     </button>
     &nbsp;&nbsp;&nbsp;
     <button mat-raised-button (click)="clickCash()" style="align-self: right;">
-        Get Cash
+        Plot Cash
     </button>
   </div>
 <hr>
   <table class="mat-elevation-z8">
-    <tr *ngFor="let item of response| keyvalue">
-          <td>{{ item.key }}</td> <td>{{ item.value }}</td>
+    <tr *ngFor="let items of response| keyvalue">
+          <td>{{ items.key }}</td> <td *ngFor="let item of items.value| keyvalue"><tr>{{ item.key }}</tr><tr>{{ item.value }}</tr></td>
     </tr>
   </table>
 </div>

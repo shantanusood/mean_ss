@@ -40,25 +40,25 @@ export class HomeComponent implements OnInit {
     });
   }
   clickGrowth(){
-    const url = 'http://localhost:5000/filter/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/growth/-999';
+    const url = 'http://localhost:5000/filters/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/growth/-999';
     this.http.get(url).subscribe(res => {
       this.response = res;
     });
   }
   clickCash(){
-    const url = 'http://localhost:5000/filter/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/cash/-999';
+    const url = 'http://localhost:5000/filters/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/cash/-999';
     this.http.get(url).subscribe(res => {
       this.response = res;
     });
   }
   clickProfit(){
-    const url = 'http://localhost:5000/filter/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/profit';
+    const url = 'http://localhost:5000/filters/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/profit';
     this.http.get(url).subscribe(res => {
       this.response = res;
     });
   }
   clickRatio(){
-    const url = 'http://localhost:5000/filter/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/ratio';
+    const url = 'http://localhost:5000/filters/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/ratio';
     this.http.get(url).subscribe(res => {
       this.response = res;
     });
