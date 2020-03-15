@@ -1,7 +1,35 @@
 <div class="container">
 <br>
 
-<div class="example-form-field" style="padding: 1%;">
+<div class="example-form-field">
+    <button mat-raised-button style="align-self: right;" (click)="changeType('Stocks')">
+        Stocks
+      </button>
+      &nbsp;&nbsp;
+      <button mat-raised-button style="align-self: right;" (click)="changeType('Etfs')">
+          ETFs
+      </button>
+      &nbsp;&nbsp;
+      <button mat-raised-button style="align-self: right;" (click)="changeType('Index')">
+          Index
+      </button>
+      &nbsp;&nbsp;
+      <button mat-raised-button style="align-self: right;" (click)="changeType('Mutual')">
+          Mutual Funds
+      </button>
+      &nbsp;&nbsp;
+      <button mat-raised-button style="align-self: right;" (click)="changeType('Futures')">
+          Futures
+      </button>
+      &nbsp;&nbsp;
+      <button mat-raised-button style="align-self: right;" (click)="changeType('Currency')">
+          Currency
+      </button>
+</div>
+
+<div class="example-form-field" style="padding: 1%;" *ngIf="stocks">
+  <span style="color: #4CAF50; "><b><em>Stocks:</em></b></span>
+  &nbsp;&nbsp;&nbsp;
     <input matInput type="text" id="quoteInput">
     &nbsp;&nbsp;&nbsp;
     <button mat-raised-button (click)="clickQuote()" style="align-self: right;">
@@ -36,33 +64,112 @@
         Plot Cash
     </button>
   </div>
-  <p style="padding: 10px;">This utility gives you useful data for various securities, enter them above. Documentation Links - <a href="https://github.com/shantanusood/UserInterface/blob/master/README.md" target="_blank">This UI</a> - <a href="https://github.com/shantanusood/YahooFinDataAnalytics/blob/master/README.md" target="_blank">Backend Data</a></p>
+  <div class="example-form-field" style="padding: 1%;" *ngIf="etfs">
+      <span style="color: #4CAF50;"><b><em>ETFs:</em></b></span>
+      &nbsp;&nbsp;&nbsp;
+      <input matInput type="text" id="quoteInput">
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickQuote()" style="align-self: right;">
+        Get Quotes
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickPerformance()" style="align-self: right;">
+        Performance
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickHoldings()" style="align-self: right;">
+        Get Holdings
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickRisk()" style="align-self: right;">
+        Get Risk
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickHistory()" style="align-self: right;">
+        Plot History
+      </button>
+  </div>
+
+  <div class="example-form-field" style="padding: 1%;" *ngIf="index">
+      <span style="color: #4CAF50;"><b><em>Indices (e.g. ^DJI):</em></b></span>
+    &nbsp;&nbsp;&nbsp;
+    <input matInput type="text" id="quoteInput">
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickQuote()" style="align-self: right;">
+        Get Quotes
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickHistory()" style="align-self: right;">
+          Plot History
+        </button>
+  </div>
+  <div class="example-form-field" style="padding: 1%;" *ngIf="mutual">
+      <span style="color: #4CAF50;"><b><em>Mutual Funds:</em></b></span>
+      &nbsp;&nbsp;&nbsp;
+      <input matInput type="text" id="quoteInput">
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickQuote()" style="align-self: right;">
+        Get Quotes
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickPerformance()" style="align-self: right;">
+        Performance
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickHoldings()" style="align-self: right;">
+        Get Holdings
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickRisk()" style="align-self: right;">
+        Get Risk
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickSustainability()" style="align-self: right;">
+        Get Sustainability
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickHistory()" style="align-self: right;">
+        Plot History
+      </button>
+  </div>
+  <div class="example-form-field" style="padding: 1%;" *ngIf="futures">
+      <span style="color: #4CAF50;"><b><em>Futures (e.g. EM=X):</em></b></span>
+      &nbsp;&nbsp;&nbsp;
+      <input matInput type="text" id="quoteInput">
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickQuote()" style="align-self: right;">
+        Get Quotes
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickHistory()" style="align-self: right;">
+        Plot History
+      </button>
+  </div>
+  <div class="example-form-field" style="padding: 1%;" *ngIf="currency">
+      <span style="color: #4CAF50;"><b><em>Currency (e.g. USDEUR=X):</em></b></span>
+      &nbsp;&nbsp;&nbsp;
+      <input matInput type="text" id="quoteInput">
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickQuote()" style="align-self: right;">
+        Get Quotes
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="clickHistory()" style="align-self: right;">
+        Plot History
+      </button>
+  </div>
+
+  <p style="padding: 10px;">This utility gives you useful data for various securities, enter them above. Documentation Links -
+    <a href="https://github.com/shantanusood/UserInterface/blob/master/README.md" target="_blank">This UI</a>
+    - <a href="https://github.com/shantanusood/YahooFinDataAnalytics/blob/master/README.md" target="_blank">Backend Data</a></p>
 <hr>
-<table style="width: 200px; padding: 5px; margin: 10px;">
-  <tr>
-    <th>Index</th>
-    <th>Meaning</th>
-  </tr>
-    <td>
-      <tr>0</tr>
-      <tr>1</tr>
-      <tr>2</tr>
-      <tr>3</tr>
-    </td>
-    <td>
-        <tr>Current Year</tr>
-        <tr>Year minus 1</tr>
-        <tr>Year minus 2</tr>
-        <tr>Year minus 3</tr>
-      </td>
-  </table>
-  <hr>
+
   <table class="mat-elevation-z8">
 
     <tr *ngFor="let items of response| keyvalue">
-          <td>{{ items.key }}</td> <td *ngFor="let item of items.value| keyvalue"><tr>{{ item.key }}</tr><tr>{{ item.value }}</tr></td>
+        <td>{{ items.key }}</td> <td *ngFor="let item of items.value| keyvalue" >
+            <tr>{{ item.value }}</tr></td>
     </tr>
   </table>
 </div>
-
 
