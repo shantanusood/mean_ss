@@ -12,7 +12,6 @@ import { HomeComponent } from './home/home.component';
 import { TutoringComponent } from './tutoring/tutoring.component';
 import { FiunanceComponent } from './fiunance/fiunance.component';
 import { HealthComponent } from './health/health.component';
-import { MenuComponent } from './menu/menu.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,7 +21,6 @@ import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
@@ -33,9 +31,7 @@ import { TestComponent } from './test/test.component';
     HomeComponent,
     TutoringComponent,
     FiunanceComponent,
-    HealthComponent,
-    MenuComponent,
-    TestComponent
+    HealthComponent
   ],
   imports: [
     BrowserModule,
