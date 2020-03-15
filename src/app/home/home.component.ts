@@ -8,26 +8,59 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'bookName', 'authorName'];
   response: any;
-  constructor(private http: HttpClient) {  }
+
+  constructor(private http: HttpClient) {}
+
   ngOnInit() {
-
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    let obs = this.http.get('http://localhost:3200/api/testService', options);
-    try{
-      obs.subscribe((response) =>{
-        this.response = response;
-        console.log(response);
-      });
-    } catch(e) {
-      console.log(e);
-    }
-
   }
 
+  clickQuote() {
+    const url = 'http://localhost:5000/data/quote/' + ((document.getElementById('quoteInput') as HTMLInputElement).value);
+    this.http.get(url).subscribe(res => {
+      this.response = res;
+    });
+  }
+  clickBalSheet(){
+    const url = 'http://localhost:5000/data/bs/' + ((document.getElementById('quoteInput') as HTMLInputElement).value);
+    this.http.get(url).subscribe(res => {
+      this.response = res;
+    });
+  }
+  clickFinancial(){
+    const url = 'http://localhost:5000/data/fin/' + ((document.getElementById('quoteInput') as HTMLInputElement).value);
+    this.http.get(url).subscribe(res => {
+      this.response = res;
+    });
+  }
+  clickCashFlow(){
+    const url = 'http://localhost:5000/data/cf/' + ((document.getElementById('quoteInput') as HTMLInputElement).value);
+    this.http.get(url).subscribe(res => {
+      this.response = res;
+    });
+  }
+  clickGrowth(){
+    const url = 'http://localhost:5000/filter/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/growth/-999';
+    this.http.get(url).subscribe(res => {
+      this.response = res;
+    });
+  }
+  clickCash(){
+    const url = 'http://localhost:5000/filter/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/cash/-999';
+    this.http.get(url).subscribe(res => {
+      this.response = res;
+    });
+  }
+  clickProfit(){
+    const url = 'http://localhost:5000/filter/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/profit';
+    this.http.get(url).subscribe(res => {
+      this.response = res;
+    });
+  }
+  clickRatio(){
+    const url = 'http://localhost:5000/filter/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/ratio';
+    this.http.get(url).subscribe(res => {
+      this.response = res;
+    });
+  }
 }
