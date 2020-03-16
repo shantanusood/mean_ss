@@ -1,3 +1,6 @@
+
+![UI snapshot](/images/ui_snap.JPG)
+
 ## Data for this UI
 
 * This app has 4 tabs, each has a different sub project, as below:
