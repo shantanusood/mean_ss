@@ -17,22 +17,25 @@ export class HomeComponent implements OnInit {
   mutual = false;
   futures = false;
   currency = false;
+  options = false;
 
   constructor(private http: HttpClient) {}
 
   changeType(type: String){
     if(type==='Stocks'){
-      this.stocks = true; this.etfs = false;this.index = false; this.mutual=false;this.futures=false;this.currency=false;
+      this.stocks = true; this.etfs = false;this.index = false; this.mutual=false;this.futures=false;this.currency=false;this.options=false;
     }else if(type==='Etfs'){
-      this.stocks = false; this.etfs = true;this.index = false; this.mutual=false;this.futures=false;this.currency=false;
+      this.stocks = false; this.etfs = true;this.index = false; this.mutual=false;this.futures=false;this.currency=false;this.options=false;
     }else if(type==='Index'){
-      this.stocks = false; this.etfs = false;this.index = true; this.mutual=false;this.futures=false;this.currency=false;
+      this.stocks = false; this.etfs = false;this.index = true; this.mutual=false;this.futures=false;this.currency=false;this.options=false;
     }else if(type==='Mutual'){
-      this.stocks = false; this.etfs = false;this.index = false; this.mutual=true;this.futures=false;this.currency=false;
+      this.stocks = false; this.etfs = false;this.index = false; this.mutual=true;this.futures=false;this.currency=false;this.options=false;
     }else if(type==='Futures'){
-      this.stocks = false; this.etfs = false;this.index = false; this.mutual=false;this.futures=true;this.currency=false;
+      this.stocks = false; this.etfs = false;this.index = false; this.mutual=false;this.futures=true;this.currency=false;this.options=false;
     }else if(type==='Currency'){
-      this.stocks = false; this.etfs = false;this.index = false; this.mutual=false;this.futures=false;this.currency=true;
+      this.stocks = false; this.etfs = false;this.index = false; this.mutual=false;this.futures=false;this.currency=true;this.options=false;
+    }else if(type==='Options'){
+      this.stocks = false; this.etfs = false;this.index = false; this.mutual=false;this.futures=false;this.currency=false;this.options=true;
     }
 
   }

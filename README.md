@@ -1,27 +1,14 @@
-# Silpaservices
+## Data for this UI
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.2.
+* This app has 4 tabs, each has a different sub project, as below:
+
+1. Install and run the project first on port 5000:  https://github.com/shantanusood/YahooFinDataAnalytics -> `Home` tab
+2. Install and run the project first on port xxxx:  https://github.com/shantanusood/SocialDataService -> `External Data` tab
+3. Install and run the project first on port xxxx:  https://github.com/shantanusood/InvestmentStrategies -> `Strategies` tab
+4. Install and run the project first on port xxxx:  https://github.com/shantanusood/PredictiveModels -> `Predictions` tab
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+* Run `npm install` in the directory where you clone this repo
+* Next, Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
