@@ -195,9 +195,11 @@
     </tr>
   </table>
   <div *ngIf="chart" class="charting">
+    <p style="width:100%;text-align:center;">{{chart_title}}<p>
     <canvas id="canvas">{{ chart }}</canvas>
   </div>
-  <div *ngIf="barchart" class="barcharting" >
+  <div *ngIf="barchart" class="barcharting">
+    <p style="width:100%;text-align:center;">{{barchart_title}}<p>
     <canvas id="canvas2">{{ barchart }}</canvas>
   </div>
 </div>

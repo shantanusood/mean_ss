@@ -119,5 +119,8 @@
       }
     }
   },
-  "defaultProject": "silpaservices"
+  "defaultProject": "silpaservices",
+  "cli": {
+    "analytics": "ee5f7123-2569-41b0-8ca6-988fc7a928b6"
+  }
 }

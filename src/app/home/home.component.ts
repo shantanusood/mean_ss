@@ -9,7 +9,7 @@ import { Chart } from 'chart.js';
 })
 export class HomeComponent implements OnInit {
 
-  readonly baseUrl = 'http://localhost:5000/';
+  readonly baseUrl = 'http://192.168.2.229:5000/';
   response: any;
 
   stocks = false;
@@ -21,6 +21,9 @@ export class HomeComponent implements OnInit {
   options = false;
 
   profit = false;
+  
+  chart_title: string = "";
+  barchart_title: string = "";
 
   chart = [];
   barchart = [];
@@ -103,6 +106,8 @@ export class HomeComponent implements OnInit {
   }
 
   clickGrowth(){
+    this.chart_title = "% Revenue Growth";
+    this.barchart_title = "";
     this.barchart = [];
     var str: string = ((document.getElementById('quoteInput') as HTMLInputElement).value);
     const url = this.baseUrl + 'filters/^' + str + '/growth/-999';
@@ -113,6 +118,8 @@ export class HomeComponent implements OnInit {
 
   }
   clickCash(){
+    this.chart_title = "% Free Cash Growth";
+    this.barchart_title = "";
     this.barchart = [];
     var str: string = ((document.getElementById('quoteInput') as HTMLInputElement).value);
     const url = this.baseUrl + 'filters/^' + str + '/cash/-999';
@@ -123,7 +130,8 @@ export class HomeComponent implements OnInit {
 
   }
   clickProfit(){
-
+    this.chart_title = "Net Profits";
+    this.barchart_title = "% Profit Growth";
     var str: string = ((document.getElementById('quoteInput') as HTMLInputElement).value);
     const url = this.baseUrl + 'filters/^' + str + '/profit';
     this.http.get(url).subscribe(res => {
@@ -134,6 +142,8 @@ export class HomeComponent implements OnInit {
 
   }
   clickRatio(){
+    this.chart_title = "Ratio";
+    this.barchart_title = "";
     this.barchart = [];
     var str: string = ((document.getElementById('quoteInput') as HTMLInputElement).value);
     const url = this.baseUrl + 'filters/^' + str + '/ratio';
@@ -144,6 +154,8 @@ export class HomeComponent implements OnInit {
 
   }
   clickPerformance(){
+    this.chart_title = "Yearly % Growth";
+    this.barchart_title = "Cumulative % Growth";
     const url = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/perf/ann';
     const url2 = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/perf/trail';
     this.http.get(url).subscribe(res => {
@@ -178,6 +190,8 @@ export class HomeComponent implements OnInit {
     });
   }
   clickHistory(){
+    this.chart_title = "Volume";
+    this.barchart_title = "Adj Close change";
     const url = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/hist';
     this.http.get(url).subscribe(res => {
       this.chart = this.charting(res['Adj Close**'], res['Date'], 'line', 'canvas2');
