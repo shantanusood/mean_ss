@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   options = false;
 
   profit = false;
-  
+
   chart_title: string = "";
   barchart_title: string = "";
 
@@ -178,9 +178,11 @@ export class HomeComponent implements OnInit {
     });
   }
   clickHoldings(){
-    const url = this.baseUrl + 'filters/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/ratio';
+    this.chart_title = "Top 10 Holdings";
+    this.barchart_title = "";
+    const url = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/hld';
     this.http.get(url).subscribe(res => {
-      this.response = res;
+      this.chart = this.charting(res['Assets'], res['Name'], 'bar', 'canvas');
     });
   }
   clickRisk(){
