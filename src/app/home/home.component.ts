@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +20,10 @@ export class HomeComponent implements OnInit {
   currency = false;
   options = false;
 
+  profit = false;
+
+  chart = [];
+  barchart = [];
   constructor(private http: HttpClient) {}
 
   changeType(type: String){
@@ -68,33 +73,248 @@ export class HomeComponent implements OnInit {
     });
   }
   clickGrowth(){
-    const url = this.baseUrl + 'filters/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/growth/-999';
+    this.barchart = [];
+    var str:string = ((document.getElementById('quoteInput') as HTMLInputElement).value);
+    const url = this.baseUrl + 'filters/^' + str + '/growth/-999';
     this.http.get(url).subscribe(res => {
       this.response = res;
+      this.chart = new Chart('canvas', {
+        type: 'line',
+        data: {
+          labels: [2019, 2018, 2017],
+          datasets: [
+            {
+              data: res[str],
+              borderColor: '#4CAF50',
+              fill: false
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              display: true
+            }],
+            yAxes: [{
+              display: true
+            }],
+          }
+        }
+      });
     });
+
   }
   clickCash(){
-    const url = this.baseUrl + 'filters/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/cash/-999';
+    this.barchart = [];
+    var str:string = ((document.getElementById('quoteInput') as HTMLInputElement).value);
+    const url = this.baseUrl + 'filters/^' + str + '/cash/-999';
     this.http.get(url).subscribe(res => {
       this.response = res;
+      this.chart = new Chart('canvas', {
+        type: 'line',
+        data: {
+          labels: [2019, 2018, 2017],
+          datasets: [
+            {
+              data: res[str],
+              borderColor: '#4CAF50',
+              fill: false
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              display: true
+            }],
+            yAxes: [{
+              display: true
+            }],
+          }
+        }
+      });
     });
+
   }
   clickProfit(){
-    const url = this.baseUrl + 'filters/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/profit';
+
+    var str:string = ((document.getElementById('quoteInput') as HTMLInputElement).value);
+    const url = this.baseUrl + 'filters/^' + str + '/profit';
     this.http.get(url).subscribe(res => {
       this.response = res;
+      this.chart = new Chart('canvas', {
+        type: 'bar',
+        data: {
+          labels: [2019, 2018, 2017, 2016],
+          datasets: [
+            {
+              data: res[str][0],
+              borderColor: '#4CAF50',
+              fill: false
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              display: true
+            }],
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              },
+              display: true
+            }],
+          }
+        }
+      });
+      this.barchart = new Chart('canvas2', {
+        type: 'line',
+        data: {
+          labels: [2019, 2018, 2017],
+          datasets: [
+            {
+              data: res[str][1],
+              borderColor: '#4CAF50',
+              fill: false
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              display: true
+            }],
+            yAxes: [{
+              display: true
+            }],
+          }
+        }
+      });
     });
+
   }
   clickRatio(){
-    const url = this.baseUrl + 'filters/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/ratio';
+    this.barchart = [];
+    var str:string = ((document.getElementById('quoteInput') as HTMLInputElement).value);
+    const url = this.baseUrl + 'filters/^' + str + '/ratio';
     this.http.get(url).subscribe(res => {
       this.response = res;
+      this.chart = new Chart('canvas', {
+        type: 'line',
+        data: {
+          labels: [2019, 2018, 2017, 2016],
+          datasets: [
+            {
+              //label: 'Ratio',
+              data: res[str],
+              borderColor: '#4CAF50',
+              fill: false
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              display: true
+            }],
+            yAxes: [{
+              display: true
+            }],
+          }
+        }
+      });
     });
+
   }
   clickPerformance(){
-    const url = this.baseUrl + 'filters/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/ratio';
+    const url = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/perf/ann';
+    const url2 = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/perf/trail';
     this.http.get(url).subscribe(res => {
-      this.response = res;
+      let keys : string[] = [];
+      let values : string[] = [];
+      Object.keys(res).forEach(function(key) {
+        values.push(res[key]);
+        keys.push(key);
+      });
+      this.chart = new Chart('canvas', {
+        type: 'bar',
+        data: {
+          labels: keys,
+          datasets: [
+            {
+              //label: 'Ratio',
+              data: values,
+              borderColor: '#4CAF50',
+              fill: false
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              display: true
+            }],
+            yAxes: [{
+              display: true
+            }],
+          }
+        }
+      });
+    });
+    this.http.get(url2).subscribe(res => {
+      let keys : string[] = [];
+      let values : string[] = [];
+      Object.keys(res).forEach(function(key) {
+        values.push(res[key]);
+        keys.push(key);
+      });
+      this.barchart = new Chart('canvas2', {
+        type: 'bar',
+        data: {
+          labels: keys,
+          datasets: [
+            {
+              //label: 'Ratio',
+              data: values,
+              borderColor: '#4CAF50',
+              fill: false
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              display: true
+            }],
+            yAxes: [{
+              display: true
+            }],
+          }
+        }
+      });
+
     });
   }
   clickHoldings(){
