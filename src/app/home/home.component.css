@@ -1,7 +1,6 @@
 
 .container{
-  border-style: solid;
-  border-color: #333;
+
   margin-top: -23px;
   margin-bottom: -19px;
 }
@@ -11,6 +10,24 @@
   margin-left: 5%;
 
 }
+.charting{
+  padding: 5px;
+  margin-top: 0px;
+  width: 48%;
+  height: 49%;
+  display: inline-block;
+  float: left;
+}
+
+.barcharting{
+  padding: 5px;
+  margin-top: 0px;
+  width: 48%;
+  height: 49%;
+  display: inline-block;
+  float: right;
+}
+
 button{
   align-self: center;
 }

@@ -67,6 +67,10 @@
     <button mat-raised-button (click)="clickCash()" style="align-self: right;">
         Plot Cash
     </button>
+    &nbsp;&nbsp;&nbsp;
+    <button mat-raised-button (click)="clickHistory()" style="align-self: right;">
+      Plot History
+    </button>
   </div>
   <div class="example-form-field" style="padding: 1%;" *ngIf="etfs">
       <span style="color: #4CAF50;"><b><em>ETFs:</em></b></span>
@@ -190,10 +194,10 @@
             <tr>{{ item.value }}</tr></td>
     </tr>
   </table>
-  <div *ngIf="chart" style="width: 25%; height: 25%; padding: 40px; position: relative;">
+  <div *ngIf="chart" class="charting">
     <canvas id="canvas">{{ chart }}</canvas>
   </div>
-  <div *ngIf="barchart" style="margin-left:32%;margin-top:-15%;width: 25%; height: 25%; padding: 10px; position: absolute;">
+  <div *ngIf="barchart" class="barcharting" >
     <canvas id="canvas2">{{ barchart }}</canvas>
   </div>
 </div>
