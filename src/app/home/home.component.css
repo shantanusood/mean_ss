@@ -40,7 +40,9 @@ input
 }
 
 table {
-  width: 100%;
+  padding: 5px;
+  width: 99.5%;
+  margin-left: 0.25%;
 }
 
 table, th , td {

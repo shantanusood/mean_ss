@@ -9,7 +9,7 @@ import { Chart } from 'chart.js';
 })
 export class HomeComponent implements OnInit {
 
-  readonly baseUrl = 'http://192.168.2.229:5000/';
+  readonly baseUrl = 'http://localhost:5000/';
   response: any;
 
   stocks = false;
