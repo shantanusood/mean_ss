@@ -5,12 +5,14 @@ import { HomeComponent } from './home/home.component';
 import { TutoringComponent } from './tutoring/tutoring.component';
 import { FiunanceComponent } from './fiunance/fiunance.component';
 import { HealthComponent } from './health/health.component';
+import { ResearchComponent } from './home/research/research.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'education', component: TutoringComponent},
-  {path: 'finance', component: FiunanceComponent},
-  {path: 'health', component: HealthComponent}
+  {path: 'external', component: TutoringComponent},
+  {path: 'predict', component: FiunanceComponent},
+  {path: 'strategy', component: HealthComponent},
+  {path: ':type/:id', component: ResearchComponent}
 ];
 
 @NgModule({

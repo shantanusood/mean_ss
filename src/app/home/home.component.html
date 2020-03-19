@@ -37,39 +37,43 @@
     <input matInput type="text" id="quoteInput">
     &nbsp;&nbsp;&nbsp;
     <button mat-raised-button (click)="clickQuote()" style="align-self: right;">
-      Get Quotes
+      Quote
     </button>
     &nbsp;&nbsp;&nbsp;
     <button mat-raised-button (click)="clickFinancial()" style="align-self: right;">
-      Get FinData
+      FinData
     </button>
     &nbsp;&nbsp;&nbsp;
     <button mat-raised-button (click)="clickCashFlow()" style="align-self: right;">
-      Get CashFlow
+      CashFlow
     </button>
     &nbsp;&nbsp;&nbsp;
     <button mat-raised-button (click)="clickBalSheet()" style="align-self: right;">
-      Get BalSheet
+      BalSheet
     </button>
     &nbsp;&nbsp;&nbsp;
     <button mat-raised-button (click)="clickGrowth()" style="align-self: right;">
-        Plot Growth
+        Growth
     </button>
     &nbsp;&nbsp;&nbsp;
     <button mat-raised-button (click)="clickProfit()" style="align-self: right;">
-        Plot Profit
+        Profit
     </button>
     &nbsp;&nbsp;&nbsp;
     <button mat-raised-button (click)="clickRatio()" style="align-self: right;">
-        Plot Ratio
+        Ratio
     </button>
     &nbsp;&nbsp;&nbsp;
     <button mat-raised-button (click)="clickCash()" style="align-self: right;">
-        Plot Cash
+        Cash
     </button>
     &nbsp;&nbsp;&nbsp;
     <button mat-raised-button (click)="clickHistory()" style="align-self: right;">
-      Plot History
+      History
+    </button>
+    &nbsp;&nbsp;&nbsp;
+    <button mat-raised-button (click)="setTicker()" style="align-self: right;">
+      Full Research
     </button>
   </div>
   <div class="example-form-field" style="padding: 1%;" *ngIf="etfs">
@@ -78,7 +82,7 @@
       <input matInput type="text" id="quoteInput">
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickQuote()" style="align-self: right;">
-        Get Quotes
+        Quote
       </button>
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickPerformance()" style="align-self: right;">
@@ -86,17 +90,22 @@
       </button>
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickHoldings()" style="align-self: right;">
-        Get Holdings
+        Holdings
       </button>
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickRisk()" style="align-self: right;">
-        Get Risk
+        Risk
       </button>
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickHistory()" style="align-self: right;">
-        Plot History
+        History
       </button>
-  </div>
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="setTicker()" style="align-self: right;">
+        Full Research
+      </button>
+
+    </div>
 
   <div class="example-form-field" style="padding: 1%;" *ngIf="index">
       <span style="color: #4CAF50;"><b><em>Indices (e.g. ^DJI):</em></b></span>
@@ -104,11 +113,11 @@
     <input matInput type="text" id="quoteInput">
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickQuote()" style="align-self: right;">
-        Get Quotes
+        Quote
       </button>
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickHistory()" style="align-self: right;">
-          Plot History
+          History
         </button>
   </div>
   <div class="example-form-field" style="padding: 1%;" *ngIf="mutual">
@@ -117,7 +126,7 @@
       <input matInput type="text" id="quoteInput">
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickQuote()" style="align-self: right;">
-        Get Quotes
+        Quote
       </button>
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickPerformance()" style="align-self: right;">
@@ -125,19 +134,23 @@
       </button>
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickHoldings()" style="align-self: right;">
-        Get Holdings
+        Holdings
       </button>
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickRisk()" style="align-self: right;">
-        Get Risk
+        Risk
       </button>
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickSustainability()" style="align-self: right;">
-        Get Sustainability
+        Sustainability
       </button>
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickHistory()" style="align-self: right;">
-        Plot History
+        History
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <button mat-raised-button (click)="setTicker()" style="align-self: right;">
+        Full Research
       </button>
   </div>
   <div class="example-form-field" style="padding: 1%;" *ngIf="futures">
@@ -146,11 +159,11 @@
       <input matInput type="text" id="quoteInput">
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickQuote()" style="align-self: right;">
-        Get Quotes
+        Quote
       </button>
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickHistory()" style="align-self: right;">
-        Plot History
+        History
       </button>
   </div>
   <div class="example-form-field" style="padding: 1%;" *ngIf="currency">
@@ -159,11 +172,11 @@
       <input matInput type="text" id="quoteInput">
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickQuote()" style="align-self: right;">
-        Get Quotes
+        Quote
       </button>
       &nbsp;&nbsp;&nbsp;
       <button mat-raised-button (click)="clickHistory()" style="align-self: right;">
-        Plot History
+        History
       </button>
   </div>
 
@@ -173,11 +186,15 @@
     <input matInput type="text" id="quoteInput">
     &nbsp;&nbsp;&nbsp;
     <button mat-raised-button (click)="clickQuote()" style="align-self: right;">
-      Get Quotes
+      Quote
     </button>
     &nbsp;&nbsp;&nbsp;
     <button mat-raised-button (click)="clickHistory()" style="align-self: right;">
-      Plot History
+      Chain
+    </button>
+    &nbsp;&nbsp;&nbsp;
+    <button mat-raised-button (click)="setTicker()" style="align-self: right;">
+      Full Research
     </button>
 </div>
 
@@ -186,6 +203,7 @@
     - <a href="https://github.com/shantanusood/YahooFinDataAnalytics/blob/master/README.md" target="_blank">Backend Data</a></p>
 
 
+    <a *ngIf="ticker" routerLink="/{{type}}/{{ticker}}" style="width:100%;text-align:center;">Full Research</a>
 
   <table class="mat-elevation-z8">
 

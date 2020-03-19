@@ -21,6 +21,7 @@ import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ResearchComponent } from './home/research/research.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     HomeComponent,
     TutoringComponent,
     FiunanceComponent,
-    HealthComponent
+    HealthComponent,
+    ResearchComponent
   ],
   imports: [
     BrowserModule,

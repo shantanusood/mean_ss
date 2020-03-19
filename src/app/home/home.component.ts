@@ -12,6 +12,9 @@ export class HomeComponent implements OnInit {
   readonly baseUrl = 'http://localhost:5000/';
   response: any;
 
+  ticker: string = "";
+  type:string = "";
+
   stocks = false;
   etfs = false;
   index = false;
@@ -30,6 +33,7 @@ export class HomeComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   changeType(type: string){
+    this.type = type;
     if (type === 'Stocks'){
       this.stocks = true; this.etfs = false; this.index = false; this.mutual = false; this.futures = false; this.currency = false; this.options = false;
     }else if (type === 'Etfs'){
@@ -78,6 +82,12 @@ export class HomeComponent implements OnInit {
     });
   }
   ngOnInit() {
+
+  }
+
+  setTicker(){
+    this.ticker = ((document.getElementById('quoteInput') as HTMLInputElement).value);
+    return this.ticker;
   }
 
   clickQuote() {
@@ -107,7 +117,6 @@ export class HomeComponent implements OnInit {
 
   clickGrowth(){
     this.chart_title = "% Revenue Growth";
-    this.barchart_title = "";
     this.barchart = [];
     var str: string = ((document.getElementById('quoteInput') as HTMLInputElement).value);
     const url = this.baseUrl + 'filters/^' + str + '/growth/-999';
@@ -119,7 +128,6 @@ export class HomeComponent implements OnInit {
   }
   clickCash(){
     this.chart_title = "% Free Cash Growth";
-    this.barchart_title = "";
     this.barchart = [];
     var str: string = ((document.getElementById('quoteInput') as HTMLInputElement).value);
     const url = this.baseUrl + 'filters/^' + str + '/cash/-999';
@@ -143,7 +151,6 @@ export class HomeComponent implements OnInit {
   }
   clickRatio(){
     this.chart_title = "Ratio";
-    this.barchart_title = "";
     this.barchart = [];
     var str: string = ((document.getElementById('quoteInput') as HTMLInputElement).value);
     const url = this.baseUrl + 'filters/^' + str + '/ratio';
@@ -179,7 +186,6 @@ export class HomeComponent implements OnInit {
   }
   clickHoldings(){
     this.chart_title = "Top 10 Holdings";
-    this.barchart_title = "";
     const url = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/hld';
     this.http.get(url).subscribe(res => {
       this.chart = this.charting(res['Assets'], res['Name'], 'bar', 'canvas');
