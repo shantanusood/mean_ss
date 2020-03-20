@@ -185,14 +185,23 @@ export class HomeComponent implements OnInit {
     });
   }
   clickHoldings(){
-    this.chart_title = "Top 10 Holdings";
+    this.barchart_title = "Top 10 Holdings";
+    this.chart_title = "Sector Composition";
+    const url1 = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/hld/comp';
+    this.http.get(url1).subscribe(res => {
+      this.response = res;
+    });
+    const url2 = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/hld/weight';
+    this.http.get(url2).subscribe(res => {
+      this.chart = this.charting(res['Percent'], res['Sector'], 'bar', 'canvas');
+    });
     const url = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/hld';
     this.http.get(url).subscribe(res => {
-      this.chart = this.charting(res['Assets'], res['Name'], 'bar', 'canvas');
+      this.chart = this.charting(res['Assets'], res['Name'], 'bar', 'canvas2');
     });
   }
   clickRisk(){
-    const url = this.baseUrl + 'filters/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/ratio';
+    const url = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/risk';
     this.http.get(url).subscribe(res => {
       this.response = res;
     });
@@ -204,12 +213,6 @@ export class HomeComponent implements OnInit {
     this.http.get(url).subscribe(res => {
       this.chart = this.charting(res['Adj Close**'], res['Date'], 'line', 'canvas2');
       this.barchart = this.charting(res['Volume'], res['Date'], 'bar', 'canvas');
-    });
-  }
-  clickSustainability(){
-    const url = this.baseUrl + 'filters/' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/ratio';
-    this.http.get(url).subscribe(res => {
-      this.response = res;
     });
   }
 }

@@ -35,7 +35,7 @@ export class ResearchComponent implements OnInit {
   perf = [];
   perf_trail = [];
   hld = [];
-
+  hld_weight = [];
   objectKeys = Object.keys;
 
   charting(data_input, labels_input, chart_type, canvas_id){
@@ -122,6 +122,10 @@ export class ResearchComponent implements OnInit {
       this.http.get(this.baseUrl + 'data/quote/' + this.ticker).subscribe(res => {
         this.response[0] = res;
       });
+      this.table_title[1] = "Risk Info";
+      this.http.get(this.baseUrl + 'filters/^' + this.ticker + '/risk').subscribe(res => {
+        this.response[1] = res;
+      });
       this.chart_title[0] = "Yearly % Growth";
       this.chart_title[1] = "Cumulative % Growth";
       this.http.get(this.baseUrl + 'filters/^' + this.ticker + '/perf/ann').subscribe(res => {
@@ -147,6 +151,14 @@ export class ResearchComponent implements OnInit {
       this.http.get(this.baseUrl + 'filters/^' + this.ticker + '/hist').subscribe(res => {
         this.hist = this.charting(res['Adj Close**'], res['Date'], 'line', 'hist');
         this.hist_vol = this.charting(res['Volume'], res['Date'], 'bar', 'hist_vol');
+      });
+      this.table_title[2] = "Composition";
+      this.http.get(this.baseUrl + 'filters/^' + this.ticker + '/hld/comp').subscribe(res => {
+        this.response[2] = res;
+      });
+      this.chart_title[3] = "Composition by sector";
+      this.http.get(this.baseUrl + 'filters/^' + this.ticker + '/hld/weight').subscribe(res => {
+        this.hld_weight = this.charting(res['Percent'], res['Sector'], 'bar', 'hld_weight');
       });
       this.chart_title[2] = "Top 10 Holdings";
       this.http.get(this.baseUrl + 'filters/^' + this.ticker + '/hld').subscribe(res => {

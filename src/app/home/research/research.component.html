@@ -13,7 +13,7 @@
 
   <p style="width:100%;text-align:center;"><b>{{table_title[res]}}</b></p>
   <table class="mat-elevation-z8">
-    <tr *ngFor="let items of response[res]| keyvalue">
+    <tr *ngFor="let items of response[res]| keyvalue: 0">
       <td>{{ items.key }}</td> <td *ngFor="let item of items.value| keyvalue" >
           <tr>{{ item.value }}</tr></td>
   </tr>
@@ -50,5 +50,9 @@
 </div>
 <div *ngIf="perf && (getType()==='Etfs' || getType()==='Mutual')" class="charting">
   <p style="width:100%;text-align:center;">{{chart_title[2]}}<p>
+  <canvas id="hld_weight">{{ hld_weight }}</canvas>
+</div>
+<div *ngIf="perf && (getType()==='Etfs' || getType()==='Mutual')" class="charting">
+  <p style="width:100%;text-align:center;">{{chart_title[3]}}<p>
   <canvas id="hld">{{ hld }}</canvas>
 </div>
