@@ -85,6 +85,10 @@ export class HomeComponent implements OnInit {
 
   }
 
+  originalOrder = (a: any, b: any): number => {
+    return 0;
+  }
+
   setTicker(){
     this.ticker = ((document.getElementById('quoteInput') as HTMLInputElement).value);
     return this.ticker;

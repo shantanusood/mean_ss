@@ -13,8 +13,8 @@
 
   <p style="width:100%;text-align:center;"><b>{{table_title[res]}}</b></p>
   <table class="mat-elevation-z8">
-    <tr *ngFor="let items of response[res]| keyvalue: 0">
-      <td>{{ items.key }}</td> <td *ngFor="let item of items.value| keyvalue" >
+    <tr *ngFor="let items of response[res]| keyvalue: originalOrder">
+      <td>{{ items.key }}</td> <td *ngFor="let item of items.value| keyvalue: originalOrder" >
           <tr>{{ item.value }}</tr></td>
   </tr>
   </table>

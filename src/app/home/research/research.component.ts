@@ -70,6 +70,10 @@ export class ResearchComponent implements OnInit {
   getType():string{
     return this.type;
   }
+
+  originalOrder = (a: any, b: any): number => {
+    return 0;
+  }
   ngOnInit() {
     this.routeSub = this.route.params.subscribe(params => {
       this.ticker = params['id'];

@@ -203,8 +203,8 @@
 <br/>
   <table class="mat-elevation-z8">
 
-    <tr *ngFor="let items of response| keyvalue: 0">
-        <td>{{ items.key }}</td> <td *ngFor="let item of items.value| keyvalue" >
+    <tr *ngFor="let items of response| keyvalue: originalOrder">
+        <td>{{ items.key }}</td> <td *ngFor="let item of items.value| keyvalue: originalOrder" >
             <tr>{{ item.value }}</tr></td>
     </tr>
   </table>
