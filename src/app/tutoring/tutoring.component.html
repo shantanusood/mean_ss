@@ -1,3 +1,20 @@
 <div class="container">
-  <p>tutoring works!</p>
+  <br>
+  <div class="example-form-field">
+    <button mat-raised-button style="align-self: right;" (click)="changeType('Economic')">
+        Economic
+      </button>
+      &nbsp;&nbsp;
+      <button mat-raised-button style="align-self: right;" (click)="changeType('Social')">
+          Social
+      </button>
+      &nbsp;&nbsp;
+      <button mat-raised-button style="align-self: right;" (click)="changeType('Financial')">
+          Financial
+      </button>
+    </div>
+    <p style="padding: 10px;">This utility gives you useful data for various securities, enter them above. Documentation Links -
+      <a href="https://github.com/shantanusood/UserInterface/blob/master/README.md" target="_blank">This UI</a>
+      - <a href="https://github.com/shantanusood/SocialDataService/blob/master/README.md" target="_blank">Backend Data</a></p>
+
 </div>

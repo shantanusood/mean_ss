@@ -203,8 +203,8 @@
     - <a href="https://github.com/shantanusood/YahooFinDataAnalytics/blob/master/README.md" target="_blank">Backend Data</a></p>
 
 
-    <a *ngIf="ticker" routerLink="/{{type}}/{{ticker}}" style="width:100%;text-align:center;">Full Research</a>
-
+    <a *ngIf="ticker" routerLink="/{{type}}/{{ticker}}" mat-button style="margin-left:15%;width:70%;text-align:center;text-decoration: underline;">Get Complete Research Document for {{ticker}}</a>
+<br/>
   <table class="mat-elevation-z8">
 
     <tr *ngFor="let items of response| keyvalue">

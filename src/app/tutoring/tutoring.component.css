@@ -1,6 +1,60 @@
+
 .container{
-  border-style: solid;
-  border-color: #333;
+
   margin-top: -23px;
   margin-bottom: -19px;
+}
+
+.example-form-field{
+  align-items: center;
+  margin-left: 5%;
+
+}
+.charting{
+  padding: 5px;
+  margin-top: 0px;
+  width: 48%;
+  height: inherit;
+  display: inline-block;
+  float: left;
+}
+
+.barcharting{
+  padding: 5px;
+  margin-top: 0px;
+  width: 48%;
+  height: inherit;
+  display: inline-block;
+  float: right;
+}
+
+button{
+  align-self: center;
+}
+input
+{
+  -moz-border-radius: 5px;
+ border-radius: 5px;
+    border:solid 1px black;
+    padding:5px;
+}
+
+table {
+  padding: 5px;
+  width: 99.5%;
+  margin-left: 0.25%;
+}
+
+table, th , td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+  padding: 5px;
+}
+
+table tr:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+
+table tr:nth-child(even) {
+  background-color: #ffffff;
 }

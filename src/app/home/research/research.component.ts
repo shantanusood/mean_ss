@@ -20,11 +20,23 @@ export class ResearchComponent implements OnInit {
   constructor(private route: ActivatedRoute, private http: HttpClient) {
   }
 
+  response = [];
 
-  chart_title = "";
+  chart_title = [];
+  table_title = [];
 
+  cash = [];
+  growth = [];
+  profit_raw = [];
+  profit_growth = [];
+  ratio = [];
+  hist_vol = [];
+  hist = [];
+  perf = [];
+  perf_trail = [];
+  hld = [];
 
-  chart = [];
+  objectKeys = Object.keys;
 
   charting(data_input, labels_input, chart_type, canvas_id){
     return new Chart(canvas_id, {
@@ -55,21 +67,91 @@ export class ResearchComponent implements OnInit {
     });
   }
 
+  getType():string{
+    return this.type;
+  }
   ngOnInit() {
     this.routeSub = this.route.params.subscribe(params => {
       this.ticker = params['id'];
       this.type = params['type'];
     });
     if(this.type==='Stocks'){
-      this.chart_title = "% Free Cash Growth";
-      const url = this.baseUrl + 'filters/^' + this.ticker + '/cash/-999';
-      this.http.get(url).subscribe(res => {
-        this.chart = this.charting(res[this.ticker], [2019, 2018, 2017], 'line', 'canvas');
+
+      this.table_title[0] = "Quote for "+this.ticker.toUpperCase();
+      this.http.get(this.baseUrl + 'data/quote/' + this.ticker).subscribe(res => {
+        this.response[0] = res;
       });
-    }else if (this.type === 'Etfs'){
-
-    }else if (this.type === 'Mutual'){
-
+      this.table_title[1] = "Balance Sheet";
+      this.http.get(this.baseUrl + 'data/bs/' + this.ticker).subscribe(res => {
+        this.response[1] = res;
+      });
+      this.table_title[2] = "Income Statement";
+      this.http.get(this.baseUrl + 'data/fin/' + this.ticker).subscribe(res => {
+        this.response[2] = res;
+      });
+      this.table_title[3] = "Cash Flow";
+      this.http.get(this.baseUrl + 'data/cf/' + this.ticker).subscribe(res => {
+        this.response[3] = res;
+      });
+      this.chart_title[0] = "% Revenue Growth";
+      this.http.get(this.baseUrl + 'filters/^' + this.ticker + '/growth/-999').subscribe(res => {
+        this.growth = this.charting(res[this.ticker], [2019, 2018, 2017], 'line', 'growth');
+      });
+      this.chart_title[1] = "Net Profits";
+      this.chart_title[2] = "% Profit Growth";
+      this.http.get(this.baseUrl + 'filters/^' + this.ticker+ '/profit').subscribe(res => {
+        this.profit_raw = this.charting(res[this.ticker][0], [2019, 2018, 2017, 2016], 'bar', 'profit_growth');
+        this.profit_growth = this.charting(res[this.ticker][1], [2019, 2018, 2017], 'line', 'profit_raw');
+      });
+      this.chart_title[3] = "Ratio";
+      this.http.get(this.baseUrl + 'filters/^' + this.ticker + '/ratio').subscribe(res => {
+        this.ratio = this.charting(res[this.ticker], [2019, 2018, 2017, 2016], 'line', 'ratio');
+      });
+      this.chart_title[4] = "% Free Cash Growth";
+      this.http.get(this.baseUrl + 'filters/^' + this.ticker + '/cash/-999').subscribe(res => {
+        this.cash = this.charting(res[this.ticker], [2019, 2018, 2017], 'line', 'cash');
+      });
+      this.chart_title[5] = "Yearly % Growth";
+      this.chart_title[6] = "Cumulative % Growth";
+      this.http.get(this.baseUrl + 'filters/^' + this.ticker + '/hist').subscribe(res => {
+        this.hist = this.charting(res['Adj Close**'], res['Date'], 'line', 'hist');
+        this.hist_vol = this.charting(res['Volume'], res['Date'], 'bar', 'hist_vol');
+      });
+    }else if (this.type === 'Etfs' || this.type === 'Mutual'){
+      this.table_title[0] = "Quote for "+this.ticker;
+      this.http.get(this.baseUrl + 'data/quote/' + this.ticker).subscribe(res => {
+        this.response[0] = res;
+      });
+      this.chart_title[0] = "Yearly % Growth";
+      this.chart_title[1] = "Cumulative % Growth";
+      this.http.get(this.baseUrl + 'filters/^' + this.ticker + '/perf/ann').subscribe(res => {
+        let keys : string[] = [];
+        let values : string[] = [];
+        Object.keys(res).forEach(function(key) {
+          values.push(res[key]);
+          keys.push(key);
+        });
+        this.perf = this.charting(values, keys, 'bar', 'perf');
+      });
+      this.http.get(this.baseUrl + 'filters/^' + this.ticker + '/perf/trail').subscribe(res => {
+        let keys : string[] = [];
+        let values : string[] = [];
+        Object.keys(res).forEach(function(key) {
+          values.push(res[key]);
+          keys.push(key);
+        });
+        this.perf_trail = this.charting(values, keys, 'bar', 'perf_trail');
+      });
+      this.chart_title[5] = "Yearly % Growth";
+      this.chart_title[6] = "Cumulative % Growth";
+      this.http.get(this.baseUrl + 'filters/^' + this.ticker + '/hist').subscribe(res => {
+        this.hist = this.charting(res['Adj Close**'], res['Date'], 'line', 'hist');
+        this.hist_vol = this.charting(res['Volume'], res['Date'], 'bar', 'hist_vol');
+      });
+      this.chart_title[2] = "Top 10 Holdings";
+      this.http.get(this.baseUrl + 'filters/^' + this.ticker + '/hld').subscribe(res => {
+        this.hld = this.charting(res['Assets'], res['Name'], 'bar', 'hld');
+      });
     }else if (this.type === 'Options'){
 
     }
