@@ -22,6 +22,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ResearchComponent } from './home/research/research.component';
+import { DocsComponent } from './docs/docs.component';
+import { SearchComponent } from './docs/search/search.component';
+import { LeftpanComponent } from './docs/leftpan/leftpan.component';
+import { DocpanComponent } from './docs/docpan/docpan.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,11 @@ import { ResearchComponent } from './home/research/research.component';
     TutoringComponent,
     FiunanceComponent,
     HealthComponent,
-    ResearchComponent
+    ResearchComponent,
+    DocsComponent,
+    SearchComponent,
+    LeftpanComponent,
+    DocpanComponent
   ],
   imports: [
     BrowserModule,

@@ -2,5 +2,69 @@
 
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+background-color: rgb(65, 61, 61);
+}
+
+
+.container{
+
+  margin-top: -23px;
+  margin-bottom: -19px;
+}
+
+.example-form-field{
+  align-items: center;
+  margin-left: 5%;
+
+}
+.charting{
+  padding: 5px;
+  margin-top: 0px;
+  width: 48%;
+  height: inherit;
+  display: inline-block;
+  float: left;
+}
+
+.barcharting{
+  padding: 5px;
+  margin-top: 0px;
+  width: 48%;
+  height: inherit;
+  display: inline-block;
+  float: right;
+}
+
+button{
+  align-self: center;
+}
+#quoteInput
+{
+  -moz-border-radius: 5px;
+ border-radius: 5px;
+    border:solid 1px black;
+    padding:5px;
+}
+
+.mat-elevation-z8 {
+  padding: 5px;
+  width: 99.5%;
+  margin-left: 0.25%;
+}
+
+.mat-elevation-z8, th , td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+  padding: 5px;
+  color: wheat;
+}
+
+.mat-elevation-z8 tr:nth-child(odd) {
+  background-color: #2e2c2c;
+}
+
+.mat-elevation-z8 tr:nth-child(even) {
+  background-color: #645c5c;
+}
 

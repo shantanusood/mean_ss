@@ -46,8 +46,11 @@ export class ResearchComponent implements OnInit {
         datasets: [
           {
             data: data_input,
-            borderColor: '#4CAF50',
-            fill: false
+            fill: false,
+            borderColor: "wheat",
+            backgroundColor: "wheat",
+            pointHoverBackgroundColor: "wheat",
+            pointHoverBorderColor: "wheat"
           }
         ]
       },
@@ -57,10 +60,24 @@ export class ResearchComponent implements OnInit {
         },
         scales: {
           xAxes: [{
-            display: true
+            display: true,
+            ticks: {
+              fontColor: "wheat", // this here
+            },
+            gridLines: {
+              color: 'black',
+              zeroLineColor: 'wheat'
+            }
           }],
           yAxes: [{
-            display: true
+            display: true,
+            ticks: {
+              fontColor: "wheat", // this here
+            },
+            gridLines: {
+              color: 'wheat',
+              zeroLineColor: 'wheat'
+            }
           }],
         }
       }

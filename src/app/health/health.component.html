@@ -1,3 +1,17 @@
 <div class="container">
-  <p>health works!</p>
+
+  <div class="example-form-field" style="padding: 1%;">
+    &nbsp;&nbsp;&nbsp;
+    <button mat-raised-button (click)="getEtfs()" style="align-self: right;">
+      Quote
+    </button>
+</div>
+
+  <table class="mat-elevation-z8">
+
+    <tr *ngFor="let items of response| keyvalue">
+        <td>{{ items.key }}</td> <td *ngFor="let item of items.value| keyvalue" >
+            <tr>{{ item.value }}</tr></td>
+    </tr>
+  </table>
 </div>

@@ -1,10 +1,13 @@
 .bottom {
-  background-color: #333;
+  background-color: rgb(39, 38, 38);
   overflow: hidden;
   float: left;
   color: #f2f2f2;
-  padding: 0px;
+  padding: 2.5px;
   text-decoration: none;
   font-size: 17px;
   width: 100%;
+}
+table, th, td {
+  border: 0px solid black;
 }

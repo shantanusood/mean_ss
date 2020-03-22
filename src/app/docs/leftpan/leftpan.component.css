@@ -1,0 +1,8 @@
+.leftpan {
+  width: 20%;
+  border: solid black 0px;
+  height: inherit;
+  display: inline-block;
+  float: left;
+}
+

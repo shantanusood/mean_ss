@@ -32,7 +32,7 @@
 </div>
 
 <div class="example-form-field" style="padding: 1%;" *ngIf="stocks">
-  <span style="color: #4CAF50; "><b><em>Stocks:</em></b></span>
+  <span style="color: wheat; "><em>Stocks:</em></span>
   &nbsp;&nbsp;&nbsp;
     <input matInput type="text" id="quoteInput">
     &nbsp;&nbsp;&nbsp;
@@ -77,7 +77,7 @@
     </button>
   </div>
   <div class="example-form-field" style="padding: 1%;" *ngIf="etfs">
-      <span style="color: #4CAF50;"><b><em>ETFs:</em></b></span>
+      <span style="color: wheat;"><em>ETFs:</em></span>
       &nbsp;&nbsp;&nbsp;
       <input matInput type="text" id="quoteInput">
       &nbsp;&nbsp;&nbsp;
@@ -108,7 +108,7 @@
     </div>
 
   <div class="example-form-field" style="padding: 1%;" *ngIf="index">
-      <span style="color: #4CAF50;"><b><em>Indices (e.g. ^DJI):</em></b></span>
+      <span style="color: wheat;"><em>Indices (e.g. ^DJI):</em></span>
     &nbsp;&nbsp;&nbsp;
     <input matInput type="text" id="quoteInput">
       &nbsp;&nbsp;&nbsp;
@@ -121,7 +121,7 @@
         </button>
   </div>
   <div class="example-form-field" style="padding: 1%;" *ngIf="mutual">
-      <span style="color: #4CAF50;"><b><em>Mutual Funds:</em></b></span>
+      <span style="color: wheat;"><em>Mutual Funds:</em></span>
       &nbsp;&nbsp;&nbsp;
       <input matInput type="text" id="quoteInput">
       &nbsp;&nbsp;&nbsp;
@@ -150,7 +150,7 @@
       </button>
   </div>
   <div class="example-form-field" style="padding: 1%;" *ngIf="futures">
-      <span style="color: #4CAF50;"><b><em>Futures (e.g. EM=X):</em></b></span>
+      <span style="color: wheat;"><em>Futures (e.g. EM=X):</em></span>
       &nbsp;&nbsp;&nbsp;
       <input matInput type="text" id="quoteInput">
       &nbsp;&nbsp;&nbsp;
@@ -163,7 +163,7 @@
       </button>
   </div>
   <div class="example-form-field" style="padding: 1%;" *ngIf="currency">
-      <span style="color: #4CAF50;"><b><em>Currency (e.g. USDEUR=X):</em></b></span>
+      <span style="color: wheat;"><em>Currency (e.g. USDEUR=X):</em></span>
       &nbsp;&nbsp;&nbsp;
       <input matInput type="text" id="quoteInput">
       &nbsp;&nbsp;&nbsp;
@@ -177,7 +177,7 @@
   </div>
 
   <div class="example-form-field" style="padding: 1%;" *ngIf="options">
-    <span style="color: #4CAF50;"><b><em>Option:</em></b></span>
+    <span style="color: wheat;"><em>Option:</em></span>
     &nbsp;&nbsp;&nbsp;
     <input matInput type="text" id="quoteInput">
     &nbsp;&nbsp;&nbsp;
@@ -194,9 +194,9 @@
     </button>-->
 </div>
 
-  <p style="padding: 10px;">This utility gives you useful data for various securities, enter them above. Documentation Links -
-    <a href="https://github.com/shantanusood/UserInterface/blob/master/README.md" target="_blank">This UI</a>
-    - <a href="https://github.com/shantanusood/YahooFinDataAnalytics/blob/master/README.md" target="_blank">Backend Data</a></p>
+  <p style="padding: 10px;color: wheat;">This utility gives you useful data for various securities, enter them above. Documentation Links -
+    <a style="color: white;" href="https://github.com/shantanusood/UserInterface/blob/master/README.md" target="_blank">This UI</a>
+    - <a style="color: white;" href="https://github.com/shantanusood/YahooFinDataAnalytics/blob/master/README.md" target="_blank">Backend Data</a></p>
 
 
     <a *ngIf="ticker" routerLink="/{{type}}/{{ticker}}" mat-button style="margin-left:15%;width:70%;text-align:center;text-decoration: underline;">Get Complete Research Document for {{ticker}}</a>
@@ -209,11 +209,11 @@
     </tr>
   </table>
   <div *ngIf="chart" class="charting">
-    <p style="width:100%;text-align:center;">{{chart_title}}<p>
+    <p style="width:100%;text-align:center;color: wheat;">{{chart_title}}<p>
     <canvas id="canvas">{{ chart }}</canvas>
   </div>
   <div *ngIf="barchart" class="barcharting">
-    <p style="width:100%;text-align:center;">{{barchart_title}}<p>
+    <p style="width:100%;text-align:center;color: wheat;">{{barchart_title}}<p>
     <canvas id="canvas2">{{ barchart }}</canvas>
   </div>
 </div>

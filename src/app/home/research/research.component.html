@@ -1,17 +1,17 @@
-<h3 style="width:100%;text-align:center;">Full research for {{ ticker | uppercase }}</h3>
+<h3 style="width:100%;text-align:center;color: wheat;">Full research for {{ ticker | uppercase }}</h3>
 
 <div *ngIf="hist_vol" class="charting">
-  <p style="width:100%;text-align:center;">{{chart_title[5]}}<p>
+  <p style="width:100%;text-align:center;color: wheat;">{{chart_title[5]}}<p>
   <canvas id="hist_vol">{{ hist_vol }}</canvas>
 </div>
 <div *ngIf="hist" class="charting">
-  <p style="width:100%;text-align:center;">{{chart_title[6]}}<p>
+  <p style="width:100%;text-align:center;color: wheat;">{{chart_title[6]}}<p>
   <canvas id="hist">{{ hist }}</canvas>
 </div>
 
 <table *ngFor="let res of objectKeys(response)">
 
-  <p style="width:100%;text-align:center;"><b>{{table_title[res]}}</b></p>
+  <p style="width:100%;text-align:center;color: wheat;"><b>{{table_title[res]}}</b></p>
   <table class="mat-elevation-z8">
     <tr *ngFor="let items of response[res]| keyvalue: originalOrder">
       <td>{{ items.key }}</td> <td *ngFor="let item of items.value| keyvalue: originalOrder" >
@@ -21,38 +21,38 @@
 
 </table>
 <div *ngIf="growth && getType()==='Stocks'" class="charting">
-  <p style="width:100%;text-align:center;">{{chart_title[0]}}<p>
+  <p style="width:100%;text-align:center;color: wheat;">{{chart_title[0]}}<p>
   <canvas id="growth">{{ growth }}</canvas>
 </div>
 <div *ngIf="profit_raw && getType()==='Stocks'" class="charting">
-  <p style="width:100%;text-align:center;">{{chart_title[1]}}<p>
+  <p style="width:100%;text-align:center;color: wheat;">{{chart_title[1]}}<p>
   <canvas id="profit_raw">{{ profit_raw }}</canvas>
 </div>
 <div *ngIf="profit_growth && getType()==='Stocks'" class="charting">
-  <p style="width:100%;text-align:center;">{{chart_title[2]}}<p>
+  <p style="width:100%;text-align:center;color: wheat;">{{chart_title[2]}}<p>
   <canvas id="profit_growth">{{ profit_growth }}</canvas>
 </div>
 <div *ngIf="ratio && getType()==='Stocks'" class="charting">
-  <p style="width:100%;text-align:center;">{{chart_title[3]}}<p>
+  <p style="width:100%;text-align:center;color: wheat;">{{chart_title[3]}}<p>
   <canvas id="ratio">{{ ratio }}</canvas>
 </div>
 <div *ngIf="cash && getType()==='Stocks'" class="charting">
-  <p style="width:100%;text-align:center;">{{chart_title[4]}}<p>
+  <p style="width:100%;text-align:center;color: wheat;">{{chart_title[4]}}<p>
   <canvas id="cash">{{ cash }}</canvas>
 </div>
 <div *ngIf="perf && (getType()==='Etfs' || getType()==='Mutual')" class="charting">
-  <p style="width:100%;text-align:center;">{{chart_title[0]}}<p>
+  <p style="width:100%;text-align:center;color: wheat;">{{chart_title[0]}}<p>
   <canvas id="perf">{{ perf }}</canvas>
 </div>
 <div *ngIf="perf && (getType()==='Etfs' || getType()==='Mutual')" class="charting">
-  <p style="width:100%;text-align:center;">{{chart_title[1]}}<p>
+  <p style="width:100%;text-align:center;color: wheat;">{{chart_title[1]}}<p>
   <canvas id="perf_trail">{{ perf_trail }}</canvas>
 </div>
 <div *ngIf="perf && (getType()==='Etfs' || getType()==='Mutual')" class="charting">
-  <p style="width:100%;text-align:center;">{{chart_title[2]}}<p>
+  <p style="width:100%;text-align:center;color: wheat;">{{chart_title[2]}}<p>
   <canvas id="hld_weight">{{ hld_weight }}</canvas>
 </div>
 <div *ngIf="perf && (getType()==='Etfs' || getType()==='Mutual')" class="charting">
-  <p style="width:100%;text-align:center;">{{chart_title[3]}}<p>
+  <p style="width:100%;text-align:center;color: wheat;">{{chart_title[3]}}<p>
   <canvas id="hld">{{ hld }}</canvas>
 </div>

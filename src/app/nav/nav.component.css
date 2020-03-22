@@ -13,7 +13,7 @@
 /* Style the links inside the navigation bar */
 .topnav a {
   float: left;
-  color: #f2f2f2;
+  color: wheat;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -22,25 +22,33 @@
 
 /* Change the color of links on hover */
 .topnav a:hover {
-  background-color: #ddd;
+  background-color: wheat;
   color: black;
 }
 
 .hme {
-  background-color: #4CAF50;
+  background-color: rgb(80, 79, 79);
   color: white;
 }
 
 .edu {
-  background-color: #4CAF50;
+  background-color: rgb(105, 105, 105);
+  text-decoration: underline;
   color: white;
 }
 
 .fin {
-  background-color: #4CAF50;
+  background-color: rgb(105, 105, 105);
   color: white;
+  text-decoration: underline;
 }
 .hth {
-  background-color: #4CAF50;
+  background-color: rgb(105, 105, 105);
+  color: white;
+  text-decoration: underline;
+}
+.doc {
+  background-color: rgb(105, 105, 105);
+  text-decoration: underline;
   color: white;
 }
