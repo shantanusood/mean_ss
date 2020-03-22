@@ -100,7 +100,13 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.chart_title = "S&P 500 TTM Volume";
+    this.barchart_title = "S&P 500 TTM Adj Close change";
+    const url = this.baseUrl + 'filters/^^GSPC/hist';
+    this.http.get(url).subscribe(res => {
+      this.chart = this.charting(res['Adj Close**'], res['Date'], 'line', 'canvas2');
+      this.barchart = this.charting(res['Volume'], res['Date'], 'bar', 'canvas');
+    });
   }
 
   originalOrder = (a: any, b: any): number => {

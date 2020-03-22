@@ -1,5 +1,44 @@
 <div class="leftpan">
 
-  <p>leftpan works!</p>
+  <br />
+  <span>
+
+    <ul>
+      <li><a [routerLink]="'/docs/home'" routerLinkActive="hme" >Homepage Docs</a>
+
+        <ul *ngIf="home">
+          <li><a href="/docs/home/#opening1">Backend Api</a></li>
+          <li><a href="/docs/home/#opening2">User Interface</a></li>
+          <li><a href="/docs/home/#opening3">Examples</a></li>
+        </ul>
+
+      </li>
+      <li><a [routerLink]="'/docs/ext'" routerLinkActive="hme">External Data Docs</a>
+
+        <ul *ngIf="ext">
+          <li><a href="/docs/ext/#opening1">Backend Api</a></li>
+          <li><a href="/docs/ext/#opening2">User Interface</a></li>
+          <li><a href="/docs/ext/#opening3">Examples</a></li>
+        </ul>
+      </li>
+      <li><a [routerLink]="'/docs/strat'" routerLinkActive="hme">Strategies Docs</a>
+
+        <ul *ngIf="strat">
+          <li><a href="/docs/strat/#opening1">Backend Api</a></li>
+          <li><a href="/docs/strat/#opening2">User Interface</a></li>
+          <li><a href="/docs/strat/#opening3">Examples</a></li>
+        </ul>
+      </li>
+      <li><a [routerLink]="'/docs/predict'" routerLinkActive="hme">Predictions Docs</a>
+
+        <ul *ngIf="predict">
+          <li><a href="/docs/predict/#opening1">Backend Api</a></li>
+          <li><a href="/docs/predict/#opening2">User Interface</a></li>
+          <li><a href="/docs/predict/#opening3">Examples</a></li>
+        </ul>
+      </li>
+    </ul>
+
+  </span>
 
 </div>

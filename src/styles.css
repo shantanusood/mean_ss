@@ -68,3 +68,14 @@ button{
   background-color: #645c5c;
 }
 
+.docpan {
+  width: 80%;
+  border: solid black 0px;
+  margin-left: 20%;
+  border-top: wheat solid 1px;
+  border-left: wheat dashed 1px;
+}
+
+.docpan p {
+  padding: 2%;
+}

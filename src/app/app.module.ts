@@ -27,6 +27,10 @@ import { SearchComponent, AutocompletePipeStartsWith } from './docs/search/searc
 import { LeftpanComponent } from './docs/leftpan/leftpan.component';
 import { DocpanComponent } from './docs/docpan/docpan.component';
 import { IgxAutocompleteModule, IgxDropDownModule, IgxInputGroupModule } from 'igniteui-angular';
+import { HomedocComponent } from './docs/docpan/homedoc/homedoc.component';
+import { ExtdocComponent } from './docs/docpan/extdoc/extdoc.component';
+import { StratdocComponent } from './docs/docpan/stratdoc/stratdoc.component';
+import { PredictdocComponent } from './docs/docpan/predictdoc/predictdoc.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +47,11 @@ import { IgxAutocompleteModule, IgxDropDownModule, IgxInputGroupModule } from 'i
     SearchComponent,
     LeftpanComponent,
     DocpanComponent,
-    AutocompletePipeStartsWith
+    AutocompletePipeStartsWith,
+    HomedocComponent,
+    ExtdocComponent,
+    StratdocComponent,
+    PredictdocComponent
   ],
   imports: [
     BrowserModule,
