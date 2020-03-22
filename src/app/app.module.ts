@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -23,9 +23,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ResearchComponent } from './home/research/research.component';
 import { DocsComponent } from './docs/docs.component';
-import { SearchComponent } from './docs/search/search.component';
+import { SearchComponent, AutocompletePipeStartsWith } from './docs/search/search.component';
 import { LeftpanComponent } from './docs/leftpan/leftpan.component';
 import { DocpanComponent } from './docs/docpan/docpan.component';
+import { IgxAutocompleteModule, IgxDropDownModule, IgxInputGroupModule } from 'igniteui-angular';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { DocpanComponent } from './docs/docpan/docpan.component';
     DocsComponent,
     SearchComponent,
     LeftpanComponent,
-    DocpanComponent
+    DocpanComponent,
+    AutocompletePipeStartsWith
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,11 @@ import { DocpanComponent } from './docs/docpan/docpan.component';
     MatListModule,
     MatTableModule,
     MatFormFieldModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    IgxAutocompleteModule,
+    IgxDropDownModule,
+    IgxInputGroupModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

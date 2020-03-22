@@ -1,8 +1,13 @@
 <div class="search">
-  <span style="color: wheat;font-size: 6mm;">&nbsp;&nbsp;Search: &nbsp;&nbsp;</span>
-  <input matInput type="text" id="quoteInput">
-  <span style="font-size: 3mm;color: wheat;">&nbsp;&nbsp;&nbsp;*&nbsp;Can search Stocks, ETFs, Indices, Mutual funds, Currency pair, futures. Just start typing to get results.</span>
+  <form class="input-group-form">
+      <igx-input-group class="autocomplete">
+          <label style="color: wheat;font-size: 4mm;" igxLabel for="town">&nbsp;&nbsp;&nbsp;Search for tickers</label>
+          <input id="quoteInput" igxInput name="town" type="text" [igxAutocomplete]="townsPanel" [(ngModel)]="townSelected"/>
+      </igx-input-group>
+      <igx-drop-down #townsPanel maxHeight="100px" >
+          <igx-drop-down-item *ngFor="let town of towns | startsWith:townSelected" [value]="town">
+              {{town}}
+          </igx-drop-down-item>
+      </igx-drop-down>
+  </form>
 </div>
-<p></p>
-<p></p>
-<hr>
