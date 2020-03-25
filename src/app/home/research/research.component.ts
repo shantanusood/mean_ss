@@ -12,7 +12,7 @@ import { Chart } from 'chart.js';
 })
 export class ResearchComponent implements OnInit {
 
-  readonly baseUrl = 'http://localhost:5000/';
+  readonly baseUrl = 'http://192.168.1.162:5000/';
   ticker: string = "";
   type: string = "";
 

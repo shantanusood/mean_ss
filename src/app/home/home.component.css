@@ -1,0 +1,17 @@
+.completeRes {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width:40%;
+  white-space: normal;
+  text-align:center;
+  background-color: rgb(80, 79, 79);
+  color: wheat;
+  font-size: auto;
+  margin-top: 5px;
+}
+.completeRes:hover {
+  text-decoration: none;
+  color: black;
+  background-color: wheat;
+}

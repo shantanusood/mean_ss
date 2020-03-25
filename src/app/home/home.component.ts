@@ -9,7 +9,7 @@ import { Chart } from 'chart.js';
 })
 export class HomeComponent implements OnInit {
 
-  readonly baseUrl = 'http://localhost:5000/';
+  readonly baseUrl = 'http://192.168.1.162:5000/';
   response: any;
 
   ticker: string = "";
@@ -28,8 +28,9 @@ export class HomeComponent implements OnInit {
   chart_title: string = "";
   barchart_title: string = "";
 
-  chart = [];
-  barchart = [];
+  chart:Chart = [];
+  barchart:Chart = [];
+
   constructor(private http: HttpClient) {}
 
   changeType(type: string){
@@ -87,7 +88,7 @@ export class HomeComponent implements OnInit {
           yAxes: [{
             display: true,
             ticks: {
-              fontColor: "wheat", // this here
+              fontColor: "wheat",
             },
             gridLines: {
               color: 'wheat',

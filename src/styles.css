@@ -16,7 +16,11 @@ background-color: rgb(65, 61, 61);
 .example-form-field{
   align-items: center;
   margin-left: 5%;
-
+}
+.example-form-field button {
+  align-self: right;
+  margin-top: 8px;
+  margin-bottom: 0px;
 }
 .charting{
   padding: 5px;
@@ -24,6 +28,7 @@ background-color: rgb(65, 61, 61);
   width: 48%;
   height: inherit;
   display: inline-block;
+  min-width: 400px;
   float: left;
 }
 
@@ -33,7 +38,7 @@ background-color: rgb(65, 61, 61);
   width: 48%;
   height: inherit;
   display: inline-block;
-  float: right;
+  min-width: 400px;
 }
 
 button{
@@ -72,10 +77,21 @@ button{
   width: 80%;
   border: solid black 0px;
   margin-left: 20%;
-  border-top: wheat solid 1px;
-  border-left: wheat dashed 1px;
+  border-top: wheat solid 0px;
+  border-left: wheat dashed 0px;
 }
 
 .docpan p {
+  color: aliceblue;
+  text-align: justify;
+  text-justify: inter-word;
   padding: 2%;
+}
+
+.docpan h5 {
+  color: aliceblue;
+  text-align: justify;
+  text-justify: inter-word;
+  padding: 1%;
+  border-bottom: solid black 2px;
 }

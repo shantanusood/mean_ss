@@ -1,0 +1,12 @@
+.search {
+  width: 60%;
+  padding: 0%;
+  display: block;
+  margin-left: 10%;
+  margin-right: auto;
+}
+
+igx-drop-down {
+  padding: 2%;
+}
+

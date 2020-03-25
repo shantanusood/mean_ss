@@ -31,6 +31,9 @@ import { HomedocComponent } from './docs/docpan/homedoc/homedoc.component';
 import { ExtdocComponent } from './docs/docpan/extdoc/extdoc.component';
 import { StratdocComponent } from './docs/docpan/stratdoc/stratdoc.component';
 import { PredictdocComponent } from './docs/docpan/predictdoc/predictdoc.component';
+import { CoronaComponent, AutocompletePipeCorona } from './corona/corona.component';
+import { CoronaleftComponent } from './corona/coronaleft/coronaleft.component';
+import { CoronamianComponent } from './corona/coronamian/coronamian.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,11 @@ import { PredictdocComponent } from './docs/docpan/predictdoc/predictdoc.compone
     HomedocComponent,
     ExtdocComponent,
     StratdocComponent,
-    PredictdocComponent
+    PredictdocComponent,
+    CoronaComponent,
+    AutocompletePipeCorona,
+    CoronaleftComponent,
+    CoronamianComponent
   ],
   imports: [
     BrowserModule,

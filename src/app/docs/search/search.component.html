@@ -1,11 +1,36 @@
 <div class="search">
-  <form class="input-group-form">
+  <div class="example-form-field">
+    <button mat-raised-button  (click)="changeType('Stocks')">
+        Stocks
+      </button>
+      &nbsp;&nbsp;
+      <button mat-raised-button  (click)="changeType('ETFs')">
+          ETFs
+      </button>
+      &nbsp;&nbsp;
+      <button mat-raised-button  (click)="changeType('Index')">
+          Index
+      </button>
+      &nbsp;&nbsp;
+      <button mat-raised-button  (click)="changeType('MutualFunds')">
+          Mutual Funds
+      </button>
+      &nbsp;&nbsp;
+      <button mat-raised-button  (click)="changeType('Futures')">
+          Futures
+      </button>
+      &nbsp;&nbsp;
+      <button mat-raised-button  (click)="changeType('Currency')">
+          Currency
+      </button>
+  </div>
+    <form class="input-group-form" *ngIf="type">
       <igx-input-group class="autocomplete">
-          <label style="color: wheat;font-size: 4mm;" igxLabel for="town">&nbsp;&nbsp;&nbsp;Search for tickers</label>
-          <input id="quoteInput" igxInput name="town" type="text" [igxAutocomplete]="townsPanel" [(ngModel)]="townSelected"/>
+          <label style="color: wheat;font-size: 4.5mm;" igxLabel for="town">&nbsp;&nbsp;&nbsp;Search for {{type}} tickers&nbsp;&nbsp; (Start typing anything)</label>
+          <input igxInput name="town" type="text" [igxAutocomplete]="townsPanel" [(ngModel)]="townSelected"/>
       </igx-input-group>
-      <igx-drop-down #townsPanel maxHeight="100px" >
-          <igx-drop-down-item *ngFor="let town of towns | startsWith:townSelected" [value]="town">
+      <igx-drop-down #townsPanel maxHeight="500px" >
+          <igx-drop-down-item *ngFor="let town of towns | contains:townSelected" [value]="town">
               {{town}}
           </igx-drop-down-item>
       </igx-drop-down>

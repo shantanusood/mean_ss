@@ -19,6 +19,6 @@ export class AppComponent implements OnInit{
   constructor(private http:HttpClient){}
 
   ngOnInit(): void {
-    this.http.get<Course[]>('http://localhost:1337/192.168.1.157:5000/test').subscribe(res => console.log(res));
+
   }
 }
