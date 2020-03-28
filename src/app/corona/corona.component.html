@@ -1,20 +1,30 @@
 <div class="container">
-<div class="search">
-
-  <form class="input-group-form" >
+  <div class="search">
+    <form class="input-group-form">
       <igx-input-group class="autocomplete">
-          <label style="color: wheat;font-size: 4.5mm;" igxLabel for="town">&nbsp;&nbsp;&nbsp;Search coronavirus impact data&nbsp;&nbsp; (Start typing anything)</label>
-          <input igxInput name="town" type="text" [igxAutocomplete]="townsPanel" [(ngModel)]="townSelected"/>
+        <label style="color: wheat;font-size: 4.5mm;" igxLabel for="town"
+          >&nbsp;&nbsp;&nbsp;Search coronavirus impact data&nbsp;&nbsp; (Start
+          typing anything)</label
+        >
+        <input
+          igxInput
+          name="town"
+          type="text"
+          [igxAutocomplete]="townsPanel"
+          [(ngModel)]="townSelected"
+        />
       </igx-input-group>
-      <igx-drop-down #townsPanel maxHeight="500px" >
-          <igx-drop-down-item *ngFor="let town of towns | contains:townSelected" [value]="town">
-              {{town}}
-          </igx-drop-down-item>
+      <igx-drop-down #townsPanel maxHeight="500px">
+        <igx-drop-down-item
+          *ngFor="let town of towns | contains: townSelected"
+          [value]="town"
+        >
+          {{ town }}
+        </igx-drop-down-item>
       </igx-drop-down>
-  </form>
-</div>
+    </form>
+  </div>
 
-
-<app-coronaleft></app-coronaleft>
-<app-coronamian></app-coronamian>
+  <app-coronaleft></app-coronaleft>
+  <app-coronamian></app-coronamian>
 </div>

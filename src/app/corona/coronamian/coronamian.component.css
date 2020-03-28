@@ -1,0 +1,16 @@
+.chartingvirus{
+  padding: 2%;
+  margin-top: 0px;
+  width: 100%;
+  height: inherit;
+  display: inline-block;
+  min-width: 400px;
+  max-width: 800px;
+  float: left;
+}
+.desc {
+  width: 100%;
+  text-align: justify;
+  color: aliceblue;
+  max-width: 800px;
+}

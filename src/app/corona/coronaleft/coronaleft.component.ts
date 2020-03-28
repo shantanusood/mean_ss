@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CoronaserviceService } from 'services/coronaservice.service';
 
 @Component({
   selector: 'app-coronaleft',
@@ -7,23 +8,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./coronaleft.component.css']
 })
 export class CoronaleftComponent implements OnInit {
+  constructor(private ruuter: Router, private serv: CoronaserviceService) {}
 
-  constructor(private ruuter: Router) { }
-
+  value: String = '';
   home = false;
-  count:number = 0;
+  count: number = 0;
 
-  setHome(){
+  change(val:string){
+    this.serv.changeMessage(val);
+  }
+
+  setHome() {
     this.count = this.count + 1;
-    console.log(this.count);
-    if(this.count%2===0 || this.count===0){
+    if (this.count % 2 === 0 || this.count === 0) {
       this.home = false;
-    }else{
+    } else {
       this.home = true;
     }
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
