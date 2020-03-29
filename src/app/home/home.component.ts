@@ -9,7 +9,7 @@ import { Chart } from 'chart.js';
 })
 export class HomeComponent implements OnInit {
 
-  readonly baseUrl = 'http://e883bfe6.ngrok.io/';
+  readonly baseUrl = 'http://58fb7171.ngrok.io/';
   response: any;
 
   ticker: string = "";

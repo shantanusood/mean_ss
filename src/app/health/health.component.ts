@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class HealthComponent implements OnInit {
 
-  readonly baseUrl = 'http://c90bf576.ngrok.io/';
+  readonly baseUrl = 'http://1d00d09b.ngrok.io/';
   response: any;
 
   constructor(private http: HttpClient) {}

@@ -12,7 +12,7 @@ import { Chart } from 'chart.js';
 })
 export class ResearchComponent implements OnInit {
 
-  readonly baseUrl = 'http://e883bfe6.ngrok.io/';
+  readonly baseUrl = 'http://58fb7171.ngrok.io/';
   ticker: string = "";
   type: string = "";
 
