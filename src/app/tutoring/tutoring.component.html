@@ -1,19 +1,29 @@
 <div class="container">
-  <div class="example-form-field">
-    <button mat-raised-button  (click)="changeType('Economic')">
-        Economic
-      </button>
-      &nbsp;&nbsp;
-      <button mat-raised-button  (click)="changeType('Social')">
-          Social
-      </button>
-      &nbsp;&nbsp;
-      <button mat-raised-button  (click)="changeType('Financial')">
-          Financial
-      </button>
-    </div>
-    <p style="padding: 10px;">A story through data. Documentation Links -
-      <a href="https://github.com/shantanusood/UserInterface/blob/master/README.md" target="_blank">This UI</a>
-      - <a href="https://github.com/shantanusood/SocialDataService/blob/master/README.md" target="_blank">Backend Data</a></p>
+  <div class="search">
+    <form class="input-group-form">
+      <igx-input-group class="autocomplete">
+        <label style="color: wheat;font-size: 4.5mm;" igxLabel for="town"
+          >&nbsp;&nbsp;&nbsp;Search external data&nbsp;&nbsp; (Start
+          typing anything)</label>
+        <input
+          igxInput
+          name="town"
+          type="text"
+          [igxAutocomplete]="townsPanel"
+          [(ngModel)]="townSelected"
+        />
+      </igx-input-group>
+      <igx-drop-down #townsPanel maxHeight="500px">
+        <igx-drop-down-item
+          *ngFor="let town of towns | contains: townSelected"
+          [value]="town"
+        >
+          {{ town }}
+        </igx-drop-down-item>
+      </igx-drop-down>
+    </form>
+  </div>
 
+  <app-left></app-left>
+  <app-main></app-main>
 </div>

@@ -11,7 +11,6 @@ import { ExtdocComponent } from './docs/docpan/extdoc/extdoc.component';
 import { StratdocComponent } from './docs/docpan/stratdoc/stratdoc.component';
 import { PredictdocComponent } from './docs/docpan/predictdoc/predictdoc.component';
 import { ResearchComponent } from './home/research/research.component';
-import { CoronaComponent } from './corona/corona.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -23,7 +22,6 @@ const routes: Routes = [
   {path: 'docs/ext', component: ExtdocComponent},
   {path: 'docs/strat', component: StratdocComponent},
   {path: 'docs/predict', component: PredictdocComponent},
-  {path: 'corona', component: CoronaComponent},
   {path: ':type/:id', component: ResearchComponent}
 ];
 

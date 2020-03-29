@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
-import { TutoringComponent } from './tutoring/tutoring.component';
+import { TutoringComponent, AutocompletePipeExtData } from './tutoring/tutoring.component';
 import { FiunanceComponent } from './fiunance/fiunance.component';
 import { HealthComponent } from './health/health.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -31,9 +31,8 @@ import { HomedocComponent } from './docs/docpan/homedoc/homedoc.component';
 import { ExtdocComponent } from './docs/docpan/extdoc/extdoc.component';
 import { StratdocComponent } from './docs/docpan/stratdoc/stratdoc.component';
 import { PredictdocComponent } from './docs/docpan/predictdoc/predictdoc.component';
-import { CoronaComponent, AutocompletePipeCorona } from './corona/corona.component';
-import { CoronaleftComponent } from './corona/coronaleft/coronaleft.component';
-import { CoronamianComponent } from './corona/coronamian/coronamian.component';
+import { LeftComponent } from './tutoring/left/left.component';
+import { MainComponent } from './tutoring/main/main.component';
 
 @NgModule({
   declarations: [
@@ -55,10 +54,8 @@ import { CoronamianComponent } from './corona/coronamian/coronamian.component';
     ExtdocComponent,
     StratdocComponent,
     PredictdocComponent,
-    CoronaComponent,
-    AutocompletePipeCorona,
-    CoronaleftComponent,
-    CoronamianComponent
+    LeftComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,

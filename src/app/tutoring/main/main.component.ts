@@ -1,19 +1,20 @@
+
 import { Component, OnInit } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Chart } from "chart.js";
 import { CoronaserviceService } from "services/coronaservice.service";
 
 @Component({
-  selector: "app-coronamian",
-  templateUrl: "./coronamian.component.html",
-  styleUrls: ["./coronamian.component.css"]
+  selector: 'app-main',
+  templateUrl: './main.component.html',
+  styleUrls: ['./main.component.css']
 })
-export class CoronamianComponent implements OnInit {
+export class MainComponent implements OnInit {
   chart_title: String = "";
   description:string = "";
 
   val:String = "";
-  baseUrl = "http://192.168.1.162:5000/";
+  baseUrl = "http://e883bfe6.ngrok.io/";
 
   constructor(private http: HttpClient, private serv: CoronaserviceService) {}
 
