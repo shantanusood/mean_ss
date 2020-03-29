@@ -42,6 +42,16 @@ export class MainComponent implements OnInit {
             console.log(res);
             this.chart = this.charting(res['Adj Close**'], res['Date'], 'line');
           });
+        }else{
+          this.chart_title = "This is a test!";
+          this.description = "This chart represents the trailing twelve months VOLUME for the whatever it may"
+                              +"This chart represents the trailing twelve months VOLUME for the whatever it"
+                              +"This chart represents the trailing twelve months VOLUME for the whatever ";
+          const url = this.baseUrl + 'filters/^^GSPC/hist';
+          this.http.get(url).subscribe(res => {
+            console.log(res);
+            this.chart = this.charting(res['Adj Close**'], res['Date'], 'line');
+          });
         }
     });
   }

@@ -2,9 +2,45 @@
 
   <div class="example-form-field">
     &nbsp;&nbsp;&nbsp;
-    <button mat-raised-button (click)="getEtfs()" >
-      Quote
+    <button mat-raised-button (click)="changeType('Stocks')">
+      Stocks
     </button>
+    &nbsp;&nbsp;&nbsp;
+    <button mat-raised-button (click)="changeType('Etfs')" >
+      ETFs
+    </button>
+</div>
+<div class="example-form-field" style="padding: 1%;" *ngIf="stocks">
+  <span style="color: wheat;"><em>Tickers (Comma seperated):</em></span>
+  &nbsp;&nbsp;&nbsp;
+  <input matInput type="text" id="quoteInput">
+  &nbsp;&nbsp;&nbsp;
+  <select class="select-css">
+    <option>Select filter type</option>
+    <option>Free Cash</option>
+    <option>Revenue Growth</option>
+    <option>Volume</option>
+    <option>TTM performance</option>
+  </select>
+  &nbsp;&nbsp;&nbsp;
+  <button mat-raised-button>
+    Compare
+  </button>
+  &nbsp;&nbsp;&nbsp;
+</div>
+<div class="example-form-field" style="padding: 1%;" *ngIf="etfs">
+  <span style="color: wheat;"><em>Start Index:</em></span>
+  &nbsp;&nbsp;&nbsp;
+  <input matInput type="number" id="num">
+  &nbsp;&nbsp;&nbsp;
+  <span style="color: wheat;"><em>End Index:</em></span>
+  &nbsp;&nbsp;&nbsp;
+  <input matInput type="number" id="num">
+  &nbsp;&nbsp;&nbsp;
+  <button mat-raised-button (click)="getEtfs()">
+    Run report
+  </button>
+  &nbsp;&nbsp;&nbsp;
 </div>
 
   <table class="mat-elevation-z8">

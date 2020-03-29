@@ -24,7 +24,7 @@
 .leftpan li a {
   display: block;
   color: wheat;
-  padding: 8px 16px;
+  padding: 5px 10px;
   text-decoration: none;
 }
 
@@ -51,8 +51,8 @@
 
 .leftpan li ul li {
 position: relative;
-padding-top: 3px;
-padding-bottom: 3px;
+padding-top: 0px;
+padding-bottom: 0px;
 text-align: left;
 margin-left: 3px;
 color: wheat;
