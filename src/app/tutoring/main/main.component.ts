@@ -14,7 +14,7 @@ export class MainComponent implements OnInit {
   description:string = "";
 
   val:String = "";
-  baseUrl = "http://e883bfe6.ngrok.io/";
+  baseUrl = "http://58fb7171.ngrok.io/";
 
   constructor(private http: HttpClient, private serv: CoronaserviceService) {}
 
