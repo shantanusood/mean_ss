@@ -1,0 +1,25 @@
+<div class="leftpan">
+  <br />
+  <span>
+    <ul>
+      <li>
+        <a [routerLink]="'/corona'" routerLinkActive="hme" (click)="setHome()">Homepage Docs</a>
+
+        <ul *ngIf="home">
+          <li><a (click)="change('Vol')">Volume</a></li>
+          <li><a (click)="change('Chart')">Chart</a></li>
+          <li><a href="/corona/#opening3">Examples</a></li>
+        </ul>
+      </li>
+      <li>
+        <a [routerLink]="'/corona'" routerLinkActive="hme">Homepage Docs2</a>
+
+        <ul>
+          <li><a href="/corona/#opening1">Backend Api</a></li>
+          <li><a href="/corona/#opening2">User Interface</a></li>
+          <li><a href="/corona/#opening3">Examples</a></li>
+        </ul>
+      </li>
+    </ul>
+  </span>
+</div>

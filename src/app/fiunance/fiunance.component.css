@@ -1,0 +1,16 @@
+.monitor {
+  padding: 20px;
+}
+
+.monitor table {
+  border: aliceblue dashed 2px;
+  padding: 20px;
+  width: 300px;
+  display:inline-table;
+}
+
+.monitor tr {
+  text-align: center;
+  padding: 20px;
+  height: 20px;
+}

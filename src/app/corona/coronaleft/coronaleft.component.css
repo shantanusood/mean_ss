@@ -1,0 +1,75 @@
+.leftpan {
+  overflow: hidden;
+  text-align: center;
+  width: 20%;
+  border: solid black 0px;
+  height: inherit;
+  display: inline-block;
+  border-top: wheat solid 0px;
+  float: left;
+}
+.leftpan span {
+  display: inline-block;
+  padding: 2%;
+}
+
+.leftpan ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  background-color: #333;
+}
+
+.leftpan li a {
+  display: block;
+  color: wheat;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.leftpan li a:hover {
+  background-color: wheat;
+  color: black;
+}
+
+.hme {
+  background-color: rgb(80, 79, 79);
+  color: white;
+}
+
+#arrow {
+  border-right:2px solid black;
+  border-bottom:2px solid black;
+  width:10px;
+  height:10px;
+  transform: rotate(-45deg);
+  margin-top:40px;
+}
+
+
+
+.leftpan li ul li {
+position: relative;
+padding-top: 3px;
+padding-bottom: 3px;
+text-align: left;
+margin-left: 3px;
+color: wheat;
+}
+
+.leftpan li ul {
+list-style: none;
+}
+
+.leftpan li ul li:before{
+ content: '';
+ position: absolute;
+ border-right:2px solid wheat;
+ border-bottom:2px solid wheat;
+ width:10px;
+ height:10px;
+ top: calc(50% - 4px);
+ left: -20px;
+ transform: translateY(-50%) rotate(-45deg);
+}

@@ -1,3 +1,82 @@
 <div class="container">
-  <p style="padding: 5%; font-size: 4em; color: wheat;">Coming soon - AI/ML driven predictions!</p>
+
+  <span style="float: right;"><button mat-button (click)="onClickAdd()"><b style="font-size: 10mm; color: silver;">+</b></button></span>
+
+  <div *ngIf="add" style="float: right;">
+    <br>
+
+    Account: <input matInput type="text" id="account"><br>
+    Ticker: <input matInput type="text" id="ticker"><br>
+    Width: <input matInput type="text" id="width"><br>
+    Call side: <input matInput type="text" id="call"><br>
+    Put side: <input matInput type="text" id="put"><br>
+
+    <button mat-raised-button (click)="onClickAddVals()">Add</button>
+  </div>
+
+
+  <div class="monitor">
+    <table *ngFor="let x of arrBirds" >
+      <tr style="color:aliceblue; font-size: 7.5mm;">{{x.ticker | uppercase}}
+        <span style="float: right;"><button mat-button (click)="onClickDelete(x)"><b style="color:tomato;">x</b></button></span>
+      </tr>
+      <tr>.</tr>
+      <tr>.</tr>
+      <tr >
+        <td style="display:inline-block; color:orange; font-size: 6mm; border: solid orange 0.5px;" *ngFor="let y of x.positions.fidelity.call">
+          <span *ngIf="y.indexOf('%')==-1" >{{y}}</span>
+          <span *ngIf="y.indexOf('%')!=-1" style="text-decoration: underline;"><i>{{y}}</i></span>
+          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, y, 'fidelity', 'call')"><b style="color:tomato;">x</b></button></span>
+        </td>
+      </tr>
+      <tr>.</tr>
+      <tr >
+        <td style="display:inline-block; color:rosybrown; font-size: 6mm; border: solid rosybrown 0.5px;" *ngFor="let y of x.positions.robinhood.call">
+          <span *ngIf="y.indexOf('%')==-1" >{{y}}</span>
+          <span *ngIf="y.indexOf('%')!=-1" style="text-decoration: underline;"><i>{{y}}</i></span>
+          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, y, 'robinhood', 'call')"><b style="color:tomato;">x</b></button></span>
+        </td>
+      </tr>
+      <tr>.</tr>
+      <tr >
+        <td style="display:inline-block; color:wheat; font-size: 6mm; border: solid wheat 0.5px;" *ngFor="let y of x.positions.tastyworks.call">
+          <span *ngIf="y.indexOf('%')==-1" >{{y}}</span>
+          <span *ngIf="y.indexOf('%')!=-1" style="text-decoration: underline;"><i>{{y}}</i></span>
+          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, y, 'tastyworks', 'call')"><b style="color:tomato;">x</b></button></span>
+        </td>
+      </tr>
+      <tr>.</tr>
+      <tr>.</tr>
+      <tr style="color:red; font-size: 8mm; border: dashed white 2px;">{{x.price}}</tr>
+      <tr>.</tr>
+      <tr>.</tr>
+      <tr >
+        <td style="display:inline-block; color:wheat; font-size: 6mm; border: solid wheat 0.5px;" *ngFor="let y of x.positions.tastyworks.put">
+          <span *ngIf="y.indexOf('%')==-1" >{{y}}</span>
+          <span *ngIf="y.indexOf('%')!=-1" style="text-decoration: underline;"><i>{{y}}</i></span>
+          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, y, 'tastyworks', 'put')"><b style="color:tomato;">x</b></button></span>
+        </td>
+      </tr>
+      <tr>.</tr>
+      <tr >
+        <td style="display:inline-block; color:rosybrown; font-size: 6mm; border: solid rosybrown 0.5px;" *ngFor="let y of x.positions.robinhood.put">
+          <span *ngIf="y.indexOf('%')==-1" >{{y}}</span>
+          <span *ngIf="y.indexOf('%')!=-1" style="text-decoration: underline;"><i>{{y}}</i></span>
+          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, y, 'robinhood', 'put')"><b style="color:tomato;">x</b></button></span>
+        </td>
+      </tr>
+      <tr>.</tr>
+      <tr >
+        <td style="display:inline-block; color:orange; font-size: 6mm; border: solid orange 0.5px;" *ngFor="let y of x.positions.fidelity.put">
+          <span *ngIf="y.indexOf('%')==-1" >{{y}}</span>
+          <span *ngIf="y.indexOf('%')!=-1" style="text-decoration: underline;"><i>{{y}}</i></span>
+          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, y, 'fidelity', 'put')"><b style="color:tomato;">x</b></button></span>
+        </td>
+      </tr>
+      <tr>.</tr>
+      <tr>.</tr>
+    </table>
+  </div>
+
 </div>
+
