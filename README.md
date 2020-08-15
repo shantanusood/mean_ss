@@ -1,5 +1,7 @@
 
 ![UI snapshot](/images/ui_snap.JPG)
+![UI snapshot](/images/bystrike.png)
+![UI snapshot](/images/progress.png)
 
 ## Data for this UI
 
