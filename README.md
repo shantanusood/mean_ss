@@ -1,6 +1,9 @@
 
+## Homepage to explore data
 ![UI snapshot](/images/ui_snap.JPG)
+## To monitor options trades by strike
 ![UI snapshot](/images/bystrike.png)
+## To monitor options trade by PNL
 ![UI snapshot](/images/progress.png)
 
 ## Data for this UI
