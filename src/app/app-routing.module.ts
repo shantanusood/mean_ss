@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { TutoringComponent } from './tutoring/tutoring.component';
 import { FiunanceComponent } from './fiunance/fiunance.component';
+import { ProgressComponent } from './fiunance/progress/progress.component'
 import { HealthComponent } from './health/health.component';
 import { DocsComponent } from './docs/docs.component';
 import { HomedocComponent } from './docs/docpan/homedoc/homedoc.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'external', component: TutoringComponent},
   {path: 'predict', component: FiunanceComponent},
+  {path: 'progress', component: ProgressComponent},
   {path: 'strategy', component: HealthComponent},
   {path: 'docs', component: DocsComponent},
   {path: 'docs/home', component: HomedocComponent},

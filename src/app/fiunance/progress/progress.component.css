@@ -1,46 +1,48 @@
-a {
-  text-decoration: underline;
+
+.charting_hist{
   padding: 5px;
-  color: wheat;
+  margin-top: 0px;
+  width: 65%;
+  height: inherit;
+  display: inline-block;
+  min-width: 500px;
 }
-
-a:hover{
-  text-decoration: none;
+.charting_front{
   padding: 5px;
-  color: rgb(65, 61, 61);
-  background-color: wheat;
-}
-sup {
-  font-size: 0.5em;
-}
-sub {
-  font-size: 0.5em;
-}
-.add {
-  padding: 1px;
+  margin-top: 0px;
+  width: 32.5%;
+  height: inherit;
+  display: inline-block;
 }
 
-.add td {
-  color: black;
-  border: none;
+.charting_next{
+  padding: 5px;
+  margin-top: 0px;
+  width: 32.5%;
+  height: inherit;
+  display: inline-block;
 }
 
-.monitor {
-  padding: 20px;
+.percent {
+  overflow:scroll;
+    overflow-x:hidden;
+  padding: 5px;
+  margin-right: 10px;
+  border: solid wheat 1px;
+  right: 0;
+  top: 6.5%;
+  height: 900px;
+  z-index: 9;
+  float: right;
+  display: inline-block;
+  position: absolute;
+  margin-left: 65%;
 }
 
-.monitor table {
-  border: aliceblue dashed 2px;
-  padding: 20px;
-  width: 300px;
-  display:inline-table;
+.percent td {
+  width: 75px;
 }
 
-.monitor tr {
-  text-align: center;
-  padding: 20px;
-  height: 20px;
-}
 
 @keyframes ldio-tbsvbued4f {
   0% { opacity: 1 }
@@ -121,3 +123,4 @@ sub {
   transform-origin: 0 0; /* see note above */
 }
 .ldio-tbsvbued4f div { box-sizing: content-box; }
+

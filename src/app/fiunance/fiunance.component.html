@@ -1,82 +1,82 @@
-<div class="container">
+<div *ngIf="loading else loaded" style="text-align: center;">
+  <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
+    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    </div></div>
+</div>
+<div style="float: right; position:fixed; margin-right: 10px; right: 0; top: 2%; z-index: 10;">
+  <br>
+  <table>
+    <tr><button mat-button><img (click)="onClickRefresh()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></tr>
+     <tr><button mat-button (click)="onClickAdd()">
+       <b style="font-size: 10mm; color: white; " *ngIf="addtext.indexOf('-')==-1">{{addtext}}</b>
+       <b style="font-size: 10mm; color: black; " *ngIf="addtext.indexOf('+')==-1">{{addtext}}</b>
+      </button>
+      </tr>
+  </table>
 
-  <span style="float: right;"><button mat-button (click)="onClickAdd()"><b style="font-size: 10mm; color: silver;">+</b></button></span>
+</div>
 
-  <div *ngIf="add" style="float: right;">
-    <br>
-
-    Account: <input matInput type="text" id="account"><br>
-    Ticker: <input matInput type="text" id="ticker"><br>
-    Width: <input matInput type="text" id="width"><br>
-    Call side: <input matInput type="text" id="call"><br>
-    Put side: <input matInput type="text" id="put"><br>
-
-    <button mat-raised-button (click)="onClickAddVals()">Add</button>
+<div *ngIf="add" style="float:right; background-color:wheat; padding: 5px; margin-top: 20px; margin-right: 10px; position:fixed; right: 0; top: 6.5%; z-index: 9;">
+  <br>
+  <table class="add">
+    <tr><td>Account:</td> <td><input matInput type="text" id="account"></td></tr>
+    <tr><td>Ticker: </td> <td><input matInput type="text" id="ticker"></td></tr>
+    <tr><td>Contracts: </td> <td><input matInput type="text" id="contracts"></td></tr>
+    <tr><td>Collateral: </td> <td><input matInput type="text" id="collateral"></td></tr>
+    <tr><td>Expiration: </td> <td><input matInput type="text" id="exp"></td></tr>
+    <tr><td>Call side: </td> <td><input matInput type="text" id="call"></td></tr>
+    <tr><td>Put side: </td> <td><input matInput type="text" id="put"></td></tr>
+    <tr><td>Premium: </td> <td><input matInput type="text" id="premium"></td></tr>
+    <tr><td></td><td><button mat-button (click)="onClickAddVals()" style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
+</table>
+</div>
+<div class="container" >
+  <div style="border: solid 0px wheat ; font-size: 1.4em; font-weight: bold; margin: 0 auto; padding: 3px; margin-top: 20px; margin-right: 10px; position: absolute; right: 30%; left: 30%; top: 2%; z-index: 9; width: 40%; color: wheat;">
+    <table>
+      <td style="border: 0px; " *ngFor="let x of processTopExpiration(dt)">
+        <span *ngIf="x.indexOf('-')!=-1" style="text-decoration: underline;">{{x}}:</span>
+        <span *ngIf="x.indexOf('-')==-1">{{x}}</span>
+      </td>
+      <td style="border: 0px;">&nbsp;<a class="progress" href="./progress">> Progress</a></td>
+    </table>
   </div>
-
+  <ng-template #loaded>
 
   <div class="monitor">
     <table *ngFor="let x of arrBirds" >
-      <tr style="color:aliceblue; font-size: 7.5mm;">{{x.ticker | uppercase}}
-        <span style="float: right;"><button mat-button (click)="onClickDelete(x)"><b style="color:tomato;">x</b></button></span>
+      <tr style="color:aliceblue; font-size: 7.5mm;">{{x.ticker | uppercase}} - {{x.total}}
+        <span><button mat-button (click)="onClickDelete(x)"><b style="color:tomato;">x</b></button></span>
       </tr>
-      <tr>.</tr>
-      <tr>.</tr>
-      <tr >
-        <td style="display:inline-block; color:orange; font-size: 6mm; border: solid orange 0.5px;" *ngFor="let y of x.positions.fidelity.call">
-          <span *ngIf="y.indexOf('%')==-1" >{{y}}</span>
-          <span *ngIf="y.indexOf('%')!=-1" style="text-decoration: underline;"><i>{{y}}</i></span>
-          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, y, 'fidelity', 'call')"><b style="color:tomato;">x</b></button></span>
+      <hr>
+      <tr *ngFor="let y of reverseIt(x.ordered.call)">
+        <td *ngIf="process(y)[0].indexOf('robinhood')!=-1 && processKey(y)!='0'" style="display:inline-block; color:rosybrown; font-size: 6mm; border: solid rosybrown 0px;">
+          {{processKey(y)}} <sup>{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
+          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, 'robinhood', 'call', processKey(y))"><b style="color:tomato;">x</b></button></span>
         </td>
+        <td *ngIf="process(y)[0].indexOf('fidelity')!=-1 && processKey(y)!='0'" style="display:inline-block; color:orange; font-size: 6mm; border: solid orange 0px;">
+          {{processKey(y)}} <sup>{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
+          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, 'fidelity', 'call', processKey(y))"><b style="color:tomato;">x</b></button></span>
+        <td *ngIf="process(y)[0].indexOf('tastyworks')!=-1 && processKey(y)!='0'" style="display:inline-block; color:rgb(243, 138, 126); font-size: 6mm; border: solid salmon 0px;">
+          {{processKey(y)}} <sup>{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
+          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, 'tastyworks', 'call', processKey(y))"><b style="color:tomato;">x</b></button></span>
       </tr>
-      <tr>.</tr>
-      <tr >
-        <td style="display:inline-block; color:rosybrown; font-size: 6mm; border: solid rosybrown 0.5px;" *ngFor="let y of x.positions.robinhood.call">
-          <span *ngIf="y.indexOf('%')==-1" >{{y}}</span>
-          <span *ngIf="y.indexOf('%')!=-1" style="text-decoration: underline;"><i>{{y}}</i></span>
-          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, y, 'robinhood', 'call')"><b style="color:tomato;">x</b></button></span>
-        </td>
+      <tr style="color:red; font-size: 8mm; border: dashed white 2px; padding: 5px;">{{x.price}}</tr>
+      <tr *ngFor="let y of reverseIt(x.ordered.put)">
+        <td *ngIf="process(y)[0].indexOf('robinhood')!=-1 && processKey(y)!='0'" style="display:inline-block; color:rosybrown; font-size: 6mm; border: solid rosybrown 0px;">
+          {{processKey(y)}} <sup>{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
+          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, 'robinhood', 'put', processKey(y))"><b style="color:tomato;">x</b></button></span>
+        <td *ngIf="process(y)[0].indexOf('fidelity')!=-1 && processKey(y)!='0'" style="display:inline-block; color:orange; font-size: 6mm; border: solid orange 0px;">
+          {{processKey(y)}} <sup>{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
+          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, 'fidelity', 'put', processKey(y))"><b style="color:tomato;">x</b></button></span>
+        <td *ngIf="process(y)[0].indexOf('tastyworks')!=-1 && processKey(y)!='0'" style="display:inline-block; color:rgb(243, 138, 126); font-size: 6mm; border: solid salmon 0px;">
+          {{processKey(y)}} <sup>{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
+          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, 'tastyworks', 'put', processKey(y))"><b style="color:tomato;">x</b></button></span>
       </tr>
-      <tr>.</tr>
-      <tr >
-        <td style="display:inline-block; color:wheat; font-size: 6mm; border: solid wheat 0.5px;" *ngFor="let y of x.positions.tastyworks.call">
-          <span *ngIf="y.indexOf('%')==-1" >{{y}}</span>
-          <span *ngIf="y.indexOf('%')!=-1" style="text-decoration: underline;"><i>{{y}}</i></span>
-          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, y, 'tastyworks', 'call')"><b style="color:tomato;">x</b></button></span>
-        </td>
-      </tr>
-      <tr>.</tr>
-      <tr>.</tr>
-      <tr style="color:red; font-size: 8mm; border: dashed white 2px;">{{x.price}}</tr>
-      <tr>.</tr>
-      <tr>.</tr>
-      <tr >
-        <td style="display:inline-block; color:wheat; font-size: 6mm; border: solid wheat 0.5px;" *ngFor="let y of x.positions.tastyworks.put">
-          <span *ngIf="y.indexOf('%')==-1" >{{y}}</span>
-          <span *ngIf="y.indexOf('%')!=-1" style="text-decoration: underline;"><i>{{y}}</i></span>
-          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, y, 'tastyworks', 'put')"><b style="color:tomato;">x</b></button></span>
-        </td>
-      </tr>
-      <tr>.</tr>
-      <tr >
-        <td style="display:inline-block; color:rosybrown; font-size: 6mm; border: solid rosybrown 0.5px;" *ngFor="let y of x.positions.robinhood.put">
-          <span *ngIf="y.indexOf('%')==-1" >{{y}}</span>
-          <span *ngIf="y.indexOf('%')!=-1" style="text-decoration: underline;"><i>{{y}}</i></span>
-          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, y, 'robinhood', 'put')"><b style="color:tomato;">x</b></button></span>
-        </td>
-      </tr>
-      <tr>.</tr>
-      <tr >
-        <td style="display:inline-block; color:orange; font-size: 6mm; border: solid orange 0.5px;" *ngFor="let y of x.positions.fidelity.put">
-          <span *ngIf="y.indexOf('%')==-1" >{{y}}</span>
-          <span *ngIf="y.indexOf('%')!=-1" style="text-decoration: underline;"><i>{{y}}</i></span>
-          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, y, 'fidelity', 'put')"><b style="color:tomato;">x</b></button></span>
-        </td>
-      </tr>
-      <tr>.</tr>
-      <tr>.</tr>
     </table>
+
+
   </div>
 
+</ng-template>
 </div>
 

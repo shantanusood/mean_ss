@@ -4,16 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { AgGridModule } from 'ag-grid-angular';
 import { NavComponent } from './nav/nav.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { TutoringComponent, AutocompletePipeExtData } from './tutoring/tutoring.component';
-import { FiunanceComponent } from './fiunance/fiunance.component';
+import { FiunanceComponent, Dialog } from './fiunance/fiunance.component';
 import { HealthComponent } from './health/health.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
@@ -33,9 +35,11 @@ import { StratdocComponent } from './docs/docpan/stratdoc/stratdoc.component';
 import { PredictdocComponent } from './docs/docpan/predictdoc/predictdoc.component';
 import { LeftComponent } from './tutoring/left/left.component';
 import { MainComponent } from './tutoring/main/main.component';
+import { ProgressComponent } from './fiunance/progress/progress.component';
 
 @NgModule({
   declarations: [
+    Dialog,
     AppComponent,
     NavComponent,
     HeaderComponent,
@@ -56,9 +60,12 @@ import { MainComponent } from './tutoring/main/main.component';
     StratdocComponent,
     PredictdocComponent,
     LeftComponent,
-    MainComponent
+    MainComponent,
+    ProgressComponent
   ],
   imports: [
+    AgGridModule.withComponents([]),
+    MatDialogModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -77,6 +84,7 @@ import { MainComponent } from './tutoring/main/main.component';
     FormsModule,
     ReactiveFormsModule
   ],
+  entryComponents: [Dialog],
   providers: [],
   bootstrap: [AppComponent]
 })
