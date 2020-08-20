@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Chart } from 'chart.js';
-//import { GridOptions, ColDef } from 'ag-grid-community';
+import { CoronaserviceService } from './../../coronaservice.service';
 
 @Component({
   selector: 'app-progress',
@@ -9,10 +9,12 @@ import { Chart } from 'chart.js';
   styleUrls: ['./progress.component.css']
 })
 export class ProgressComponent implements OnInit {
+  username: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private ds: CoronaserviceService) {
 
   }
+  closedTrd: object[];
   readonly baseUrl = 'http://192.168.1.162:5000/';
   data: object[];
   chart:Chart = [];
@@ -32,6 +34,12 @@ export class ProgressComponent implements OnInit {
   current: object[];
 
   changeType(type: string){
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === "canvas") {
+        instance.destroy();
+        return;
+      }
+    });
     if (type === 'fidelity'){
       this.index = 1;
       this.type = type;
@@ -52,19 +60,43 @@ export class ProgressComponent implements OnInit {
   }
   ngOnInit() {
 
+    this.ds.current.subscribe(message => this.username = message);
     this.gainsProgress();
     this.currentProgress();
     this.charting();
   }
 
-  gainsProgress(){
-
+  closeExpired(){
     this.http
       .get(
         this.baseUrl +
-          "data/progress/gains")
+          "data/"+this.username+"/progress/close")
       .subscribe((data) => {
-        this.dataof = data as object[];
+        this.closedTrd = data as object[];
+      });
+
+  }
+
+  gainsProgress(){
+
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === "canvas_front") {
+        instance.destroy();
+        return;
+      }
+    });
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === "canvas_next") {
+        instance.destroy();
+        return;
+      }
+    });
+    this.http
+      .get(
+        this.baseUrl +
+        "data/"+this.username+"/progress/gains")
+      .subscribe((data2) => {
+        this.dataof = data2 as object[];
         this.monthone = this.dataof[3][0];
         this.monthtwo = this.dataof[3][1];
         this.frontMonth = new Chart("canvas_front", {
@@ -83,9 +115,17 @@ export class ProgressComponent implements OnInit {
             ]
           },
           options: {
+            showAllTooltips: true,
             legend: {
               display: false
             },
+            plugins: {
+              datalabels: {
+                 display: true,
+                 align: 'center',
+                 anchor: 'center'
+              }
+           },
             scales: {
               xAxes: [{
                 display: true,
@@ -161,7 +201,7 @@ export class ProgressComponent implements OnInit {
     this.http
       .get(
         this.baseUrl +
-          "data/progress/current")
+        "data/"+this.username+"/progress/current")
       .subscribe((data) => {
         console.log(data);
         this.current = data as object[];
@@ -173,7 +213,7 @@ export class ProgressComponent implements OnInit {
     this.http
       .get(
         this.baseUrl +
-          "data/daily/" +
+        "data/"+this.username+"/daily/" +
           (document.getElementById("fidelity") as HTMLInputElement).value +
           "/" +
           (document.getElementById("robinhood") as HTMLInputElement).value +
@@ -205,8 +245,15 @@ export class ProgressComponent implements OnInit {
   }
 
   charting() {
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === "canvas") {
+        instance.destroy();
+        return;
+      }
+    });
+
     this.perc_change = "";
-    this.http.get(this.baseUrl + "data/daily").subscribe(res => {
+    this.http.get(this.baseUrl + "data/"+this.username+"/daily").subscribe(res => {
       this.data = res as object[];
       this.chart = new Chart("canvas", {
         type: "line",
@@ -256,7 +303,15 @@ export class ProgressComponent implements OnInit {
   }
 
   filterHist(filter: string){
-    this.http.get(this.baseUrl + "data/daily/" + this.index + "/" + this.type + "/" + filter)
+
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === "canvas") {
+        instance.destroy();
+        return;
+      }
+    });
+
+    this.http.get(this.baseUrl + "data/"+this.username+"/daily/" + this.index + "/" + this.type + "/" + filter)
       .subscribe((res) => {
         this.data = res as object[];
         this.perc_change = this.data['change'];

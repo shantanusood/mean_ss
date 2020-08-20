@@ -56,6 +56,12 @@ export class HomeComponent implements OnInit {
 
   // tslint:disable-next-line: variable-name
   charting(data_input, labels_input, chart_type, canvas_id){
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === chart_type) {
+        instance.destroy();
+        return;
+      }
+    });
     return new Chart(canvas_id, {
       type: chart_type,
       data: {
@@ -102,6 +108,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+
     var vol: string = "QQQ";
     this.chart_title = vol + " TTM Volume";
     this.barchart_title = vol + " TTM Adj Close change";
@@ -147,6 +154,12 @@ export class HomeComponent implements OnInit {
   }
 
   clickGrowth(){
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === 'canvas') {
+        instance.destroy();
+        return;
+      }
+    });
     this.chart_title = "% Revenue Growth";
     this.barchart = [];
     var str: string = ((document.getElementById('quoteInput') as HTMLInputElement).value);
@@ -158,6 +171,12 @@ export class HomeComponent implements OnInit {
 
   }
   clickCash(){
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === 'canvas') {
+        instance.destroy();
+        return;
+      }
+    });
     this.chart_title = "% Free Cash Growth";
     this.barchart = [];
     var str: string = ((document.getElementById('quoteInput') as HTMLInputElement).value);
@@ -169,6 +188,18 @@ export class HomeComponent implements OnInit {
 
   }
   clickProfit(){
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === 'canvas') {
+        instance.destroy();
+        return;
+      }
+    });
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === 'canvas2') {
+        instance.destroy();
+        return;
+      }
+    });
     this.chart_title = "Net Profits";
     this.barchart_title = "% Profit Growth";
     var str: string = ((document.getElementById('quoteInput') as HTMLInputElement).value);
@@ -181,6 +212,12 @@ export class HomeComponent implements OnInit {
 
   }
   clickRatio(){
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === 'canvas') {
+        instance.destroy();
+        return;
+      }
+    });
     this.chart_title = "Ratio";
     this.barchart = [];
     var str: string = ((document.getElementById('quoteInput') as HTMLInputElement).value);
@@ -192,6 +229,18 @@ export class HomeComponent implements OnInit {
 
   }
   clickPerformance(){
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === 'canvas') {
+        instance.destroy();
+        return;
+      }
+    });
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === 'canvas2') {
+        instance.destroy();
+        return;
+      }
+    });
     this.chart_title = "Yearly % Growth";
     this.barchart_title = "Cumulative % Growth";
     const url = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/perf/ann';
@@ -216,6 +265,18 @@ export class HomeComponent implements OnInit {
     });
   }
   clickHoldings(){
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === 'canvas') {
+        instance.destroy();
+        return;
+      }
+    });
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === 'canvas2') {
+        instance.destroy();
+        return;
+      }
+    });
     this.barchart_title = "Top 10 Holdings";
     this.chart_title = "Sector Composition";
     const url1 = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/hld/comp';
@@ -238,6 +299,18 @@ export class HomeComponent implements OnInit {
     });
   }
   clickHistory(){
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === 'canvas') {
+        instance.destroy();
+        return;
+      }
+    });
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === 'canvas2') {
+        instance.destroy();
+        return;
+      }
+    });
     this.chart_title = "Volume";
     this.barchart_title = "Adj Close change";
     const url = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/hist';

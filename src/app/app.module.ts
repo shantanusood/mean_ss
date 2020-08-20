@@ -36,6 +36,8 @@ import { PredictdocComponent } from './docs/docpan/predictdoc/predictdoc.compone
 import { LeftComponent } from './tutoring/left/left.component';
 import { MainComponent } from './tutoring/main/main.component';
 import { ProgressComponent } from './fiunance/progress/progress.component';
+import { LoginComponent } from './login/login.component';
+import { CoronaserviceService } from 'services/coronaservice.service';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,8 @@ import { ProgressComponent } from './fiunance/progress/progress.component';
     PredictdocComponent,
     LeftComponent,
     MainComponent,
-    ProgressComponent
+    ProgressComponent,
+    LoginComponent
   ],
   imports: [
     AgGridModule.withComponents([]),
@@ -85,7 +88,7 @@ import { ProgressComponent } from './fiunance/progress/progress.component';
     ReactiveFormsModule
   ],
   entryComponents: [Dialog],
-  providers: [],
+  providers: [CoronaserviceService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

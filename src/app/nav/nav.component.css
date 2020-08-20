@@ -37,6 +37,12 @@
   color: white;
 }
 
+.pro {
+  background-color: rgb(105, 105, 105);
+  color: white;
+  text-decoration: underline;
+}
+
 .fin {
   background-color: rgb(105, 105, 105);
   color: white;

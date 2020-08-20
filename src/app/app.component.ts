@@ -1,24 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
-interface Course{
-  about: string;
-}
+import { Subscription } from 'rxjs';
+import { CoronaserviceService } from './coronaservice.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [CoronaserviceService]
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'silpaservices';
-  courses$: [];
+  dataPassed: any;
+  subscription: Subscription;
 
-  constructor(private http:HttpClient){}
+  constructor(private ds: CoronaserviceService) {
+    this.subscription = this.ds.getData().subscribe(x => {
+      this.dataPassed = x;
+    });
+  }
 
-  ngOnInit(): void {
-
+  ngOnInit(){
+    console.log(this.dataPassed);
   }
 }

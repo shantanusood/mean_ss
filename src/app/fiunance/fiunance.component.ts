@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialo
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EaseInOut } from 'igniteui-angular/lib/animations/easings';
 import { AstMemoryEfficientTransformer } from '@angular/compiler';
+import { CoronaserviceService } from '../coronaservice.service';
 
 export interface DialogData {
   animal: string;
@@ -12,32 +13,38 @@ export interface DialogData {
 @Component({
   selector: "app-fiunance",
   templateUrl: "./fiunance.component.html",
-  styleUrls: ["./fiunance.component.css"],
+  styleUrls: ["./fiunance.component.css"]
 })
 export class FiunanceComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog) {
-    this.http.get(this.baseUrl + "data/expiration").subscribe((data) => {
-      this.dt = data as object;
-    });
+
+  username: string;
+  constructor(private http: HttpClient, public dialog: MatDialog, private ds: CoronaserviceService) {
+
+
   }
   arrBirds: string[];
   mySubscription: any;
+  addedRes: string[];
   loading = true;
   dt: object;
   count:number = 0;
-  readonly baseUrl = "http://192.168.1.162:5000/";
+  readonly baseUrl = "http://shantanusood.pythonanywhere.com/";
   add = false;
   addtext:string = "+";
   retExp: string[] ;
 
   ngOnInit() {
+    this.ds.current.subscribe(message => this.username = message);
+    this.http.get(this.baseUrl + "data/"+this.username+"/expiration").subscribe((data) => {
+      this.dt = data as object;
+    });
     this.getData();
   }
 
   getData() {
     this.loading = true;
     console.log("Clicked - Init");
-    this.http.get(this.baseUrl + "data/monitoring").subscribe((data) => {
+    this.http.get(this.baseUrl + "data/"+this.username+"/monitoring").subscribe((data) => {
       this.arrBirds = data as string[];
       this.loading = false;
     });
@@ -80,7 +87,7 @@ export class FiunanceComponent implements OnInit {
   }
   onClickDelete(ticker: any) {
     this.http
-      .get(this.baseUrl + "data/monitoring/delete/" + ticker.ticker)
+      .get(this.baseUrl + "data/"+this.username+"/monitoring/delete/" + ticker.ticker)
       .subscribe((data) => {
         //console.log(data);
       });
@@ -99,7 +106,7 @@ export class FiunanceComponent implements OnInit {
       this.animal = result['animal'];
       this.name = result['name'];
       this.http
-      .get(this.baseUrl + "data/monitoring/delete/" + ticker.ticker + "/" + account+ "/" + type + "/" + strike+ "/" + this.animal+ "/" + this.name)
+      .get(this.baseUrl + "data/"+this.username+"/monitoring/delete/" + ticker.ticker + "/" + account+ "/" + type + "/" + strike+ "/" + this.animal+ "/" + this.name)
       .subscribe((data) => {
         //console.log(data);
       });
@@ -124,7 +131,7 @@ export class FiunanceComponent implements OnInit {
     this.http
       .get(
         this.baseUrl +
-          "data/monitoring/add/" +
+        "data/"+this.username+"/monitoring/add/" +
           (document.getElementById("account") as HTMLInputElement).value +
           "/" +
           (document.getElementById("ticker") as HTMLInputElement).value +
@@ -140,12 +147,16 @@ export class FiunanceComponent implements OnInit {
           (document.getElementById("premium") as HTMLInputElement).value
       )
       .subscribe((data) => {
+        this.addedRes = data as string[];
         //console.log(data);
+      },
+      (error) => {
+        this.addedRes = error as string[];
       });
     this.http
       .get(
         this.baseUrl +
-          "data/progress/add/" +
+        "data/"+this.username+"/progress/add/" +
           (document.getElementById("account") as HTMLInputElement).value +
           "/" +
           (document.getElementById("ticker") as HTMLInputElement).value +
@@ -164,6 +175,13 @@ export class FiunanceComponent implements OnInit {
       )
       .subscribe((data) => {
         //console.log(data);
+      },
+      (error) => {
+        if(error['status'].toString() === '404'){
+          this.addedRes = ['All fields required'];
+        }else{
+          this.addedRes = error['status'] as string[];
+        }
       });
   }
 }

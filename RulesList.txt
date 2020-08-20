@@ -1,0 +1,12 @@
+Trade initiation strategies
+ > No new trades when less than 30 DTE
+ > Start next month when less than 60 DTE
+ > Only trade high volume securities
+ > Stay at least 1 SD away, and greater than 70% POP
+
+Trade managment/termination strategies
+ > Close all trades with less than 3-5% short strike to ITM by 7 DTE
+ > If short strike less than 1-2% to ITM then close the trade
+ > If profit reaches 60% start to close the trade
+ > If still greater than 25-30 DTE and trade is less than 1-2% to ITM, adjust by buying 
+   another trade with premium equal to greater than the loss on this trade

@@ -1,5 +1,4 @@
 <div class="container">
-
     <div>
   <div class="charting_front">
     <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">{{monthone}}
@@ -18,7 +17,9 @@
 <div class="percent">
   <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Percent PNL
     <button mat-button style="float: right;"><img (click)="currentProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
+    <button mat-raised-button style="float: right;" (click)="closeExpired()"><span style="color: red">x</span> Expired</button>
   </p>
+  <span style="color: red;">{{closedTrd}}</span>
   <div *ngIf="loading else loaded" style="text-align: center;">
     <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
       <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>

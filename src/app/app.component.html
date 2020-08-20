@@ -1,7 +1,17 @@
 
-<app-header></app-header>
+
+<span *ngIf="dataPassed else login_test">
+
+  <app-header [name]="dataPassed"></app-header>
+
+  <router-outlet></router-outlet>
+  <app-footer></app-footer>
+
+</span>
+
+<ng-template #login_test>
+  <app-login></app-login>
+</ng-template>
+
 <br>
-<router-outlet></router-outlet>
-<br>
-<app-footer></app-footer>
 

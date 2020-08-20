@@ -28,6 +28,7 @@
     <tr><td>Put side: </td> <td><input matInput type="text" id="put"></td></tr>
     <tr><td>Premium: </td> <td><input matInput type="text" id="premium"></td></tr>
     <tr><td></td><td><button mat-button (click)="onClickAddVals()" style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
+    <tr *ngIf="addedRes"><td colspan="2" style="color: red;">{{addedRes}}</td></tr>
 </table>
 </div>
 <div class="container" >
@@ -37,7 +38,6 @@
         <span *ngIf="x.indexOf('-')!=-1" style="text-decoration: underline;">{{x}}:</span>
         <span *ngIf="x.indexOf('-')==-1">{{x}}</span>
       </td>
-      <td style="border: 0px;">&nbsp;<a class="progress" href="./progress">> Progress</a></td>
     </table>
   </div>
   <ng-template #loaded>
@@ -60,7 +60,7 @@
           {{processKey(y)}} <sup>{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
           <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, 'tastyworks', 'call', processKey(y))"><b style="color:tomato;">x</b></button></span>
       </tr>
-      <tr style="color:red; font-size: 8mm; border: dashed white 2px; padding: 5px;">{{x.price}}</tr>
+      <tr style="color:red; font-size: 8mm; border: dashed wheat 2px; padding: 5px;">{{x.price}}</tr>
       <tr *ngFor="let y of reverseIt(x.ordered.put)">
         <td *ngIf="process(y)[0].indexOf('robinhood')!=-1 && processKey(y)!='0'" style="display:inline-block; color:rosybrown; font-size: 6mm; border: solid rosybrown 0px;">
           {{processKey(y)}} <sup>{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
