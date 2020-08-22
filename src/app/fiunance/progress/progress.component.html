@@ -67,7 +67,7 @@
 </div>
 
 <div *ngIf="chart" class="charting_hist" >
-  <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Daily historic performance - {{type | uppercase}}
+  <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Daily historic performance - {{type_key | uppercase}}
     <span style="color: green;" *ngIf="perc_change.indexOf('-')==-1">{{perc_change}}</span>
     <span style="color: red;" *ngIf="perc_change.indexOf('-')!=-1">{{perc_change}}</span>
     <button mat-button style="float: right;"><img (click)="charting()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
@@ -108,15 +108,15 @@
 
   <div style="text-align: center;">
   <button mat-raised-button  (click)="changeType('fidelity')">
-      Fidelity
+      {{account_1}}
     </button>
     &nbsp;&nbsp;
     <button mat-raised-button  (click)="changeType('robinhood')">
-        Robinhood
+      {{account_2}}
     </button>
     &nbsp;&nbsp;
     <button mat-raised-button  (click)="changeType('tastyworks')">
-        Tastyworks
+      {{account_3}}
     </button>
     &nbsp;&nbsp;
     <button mat-raised-button  (click)="changeType('retirement')">
@@ -130,15 +130,15 @@
   </div >
   <div style="color: wheat; border: solid wheat 0px; padding: 5px; text-align: center;">
       &nbsp;&nbsp;<u>Data:</u>&nbsp;
-      &nbsp;&nbsp;Fidelity:&nbsp; <input matInput type="text" id="fidelity" style="width: 60px;">
-      &nbsp;&nbsp;Robinhood:&nbsp; <input matInput type="text" id="robinhood" style="width: 60px;">
-      &nbsp;&nbsp;Tastyworks:&nbsp; <input matInput type="text" id="tastyworks" style="width: 60px;">
+      &nbsp;&nbsp;{{account_1}}:&nbsp; <input matInput type="text" id="fidelity" style="width: 60px;">
+      &nbsp;&nbsp;{{account_2}}:&nbsp; <input matInput type="text" id="robinhood" style="width: 60px;">
+      &nbsp;&nbsp;{{account_3}}:&nbsp; <input matInput type="text" id="tastyworks" style="width: 60px;">
       &nbsp;&nbsp;Retirement:&nbsp; <input matInput type="text" id="retirement" style="width: 60px;">
       <br>
       &nbsp;&nbsp;<u>Contributions:</u>&nbsp;
-      &nbsp;&nbsp;Fidelity:&nbsp; <input matInput type="text" id="fidelity_c" style="width: 60px;">
-      &nbsp;&nbsp;Robinhood:&nbsp; <input matInput type="text" id="robinhood_c" style="width: 60px;">
-      &nbsp;&nbsp;Tastyworks:&nbsp; <input matInput type="text" id="tastyworks_c" style="width: 60px;">
+      &nbsp;&nbsp;{{account_1}}:&nbsp; <input matInput type="text" id="fidelity_c" style="width: 60px;">
+      &nbsp;&nbsp;{{account_2}}:&nbsp; <input matInput type="text" id="robinhood_c" style="width: 60px;">
+      &nbsp;&nbsp;{{account_3}}:&nbsp; <input matInput type="text" id="tastyworks_c" style="width: 60px;">
       &nbsp;&nbsp;Retirement:&nbsp; <input matInput type="text" id="retirement_c" style="width: 60px;">
       <button mat-button (click)="addDataHistoric()"><u>Add</u></button>
   </div>

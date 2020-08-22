@@ -58,3 +58,26 @@
   text-decoration: underline;
   color: white;
 }
+
+.header_menu{
+  float:right;
+  background-color:wheat;
+  padding: 5px;
+  border: rosybrown solid 1px;
+  margin-top: -22px;
+  margin-right: 1px;
+  position:fixed;
+  right: 0;
+  top: 6.5%;
+  z-index: 11;
+}
+
+.header_menu table {
+  color: black;
+  border: 0px;
+}
+
+.header_menu td {
+  color: black;
+  border: 0px;
+}

@@ -15,7 +15,8 @@ export class ProgressComponent implements OnInit {
 
   }
   closedTrd: object[];
-  readonly baseUrl = 'http://192.168.1.162:5000/';
+  //readonly baseUrl = "http://localhost:5000/";
+  readonly baseUrl = "http://shantanusood.pythonanywhere.com/";
   data: object[];
   chart:Chart = [];
   frontMonth:Chart = [];
@@ -28,6 +29,12 @@ export class ProgressComponent implements OnInit {
   perc_change: string = " ";
   monthone: string;
   monthtwo: string;
+
+  account_1: string;
+  account_2: string;
+  account_3: string;
+
+  type_key: string;
 
   gains: object[];
 
@@ -43,27 +50,43 @@ export class ProgressComponent implements OnInit {
     if (type === 'fidelity'){
       this.index = 1;
       this.type = type;
+      this.type_key = this.account_1;
     }else if (type === 'robinhood'){
       this.index = 2;
       this.type = type;
+      this.type_key = this.account_2;
     }else if (type === 'tastyworks'){
       this.index = 3;
       this.type = type;
+      this.type_key = this.account_3;
     }else if (type === 'retirement'){
       this.index = 4;
       this.type = type;
+      this.type_key = 'retirement';
     }else if (type === 'total'){
       this.index = 5;
       this.type = type;
+      this.type_key = 'total';
     }
     this.charting();
   }
   ngOnInit() {
 
+    this.type_key = this.type;
     this.ds.current.subscribe(message => this.username = message);
+    this.http
+      .get(
+        this.baseUrl +
+          "data/"+this.username+"/accounts")
+      .subscribe((data) => {
+        console.log(data);
+        this.account_1 = data['fidelity'];
+        this.account_2 = data['robinhood'];
+        this.account_3 = data['tastyworks'];
+      });
     this.gainsProgress();
-    this.currentProgress();
     this.charting();
+    this.currentProgress();
   }
 
   closeExpired(){

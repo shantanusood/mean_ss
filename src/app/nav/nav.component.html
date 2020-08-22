@@ -5,6 +5,22 @@
   <a [routerLink]="'/predict'" routerLinkActive="fin">Monitor</a> <!--https://github.com/shantanusood/PredictiveModels--><!--PYTHON-->
   <a [routerLink]="'/progress'" routerLinkActive="pro">Progress</a>
   <a [routerLink]="'/docs'" routerLinkActive="doc">Docs</a> <!--https://github.com/shantanusood/--><!---->
-  <a style="float: right;"><span style="height: auto;">{{username}}</span></a>
+  <a *ngIf="open else thisone" style="float: right; cursor:pointer; background-color: wheat; color:rosybrown ;" (click)="openUserMenu()"><span style="height: auto;">{{username}}</span></a>
+  <ng-template #thisone><a style="float: right; cursor:pointer;" (click)="openUserMenu()"><span style="height: auto;">{{username}}</span></a></ng-template>
 </div>
 
+<div *ngIf="open" class="header_menu">
+  <table class="add">
+    <tr><td colspan="2"><u>Update your account names:</u></td></tr>
+    <tr><td>Account 1:</td> <td><input matInput type="text" id="account1"></td></tr>
+    <tr><td>Account 2:</td> <td><input matInput type="text" id="account2"></td></tr>
+    <tr><td>Account 3:</td> <td><input matInput type="text" id="account3"></td></tr>
+    <tr style="border-bottom: dashed 1px rosybrown;"><td></td><td><button mat-button style="display: block; margin-left: auto; margin-right: auto; " (click)="changeAcc()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
+    <tr *ngIf="msg"><td colspan="2">{{msg}}</td></tr>
+    <tr><td colspan="2"><u>Request new account:</u></td></tr>
+    <tr><td>Username:</td> <td><input matInput type="text" id="account"></td></tr>
+    <tr><td>Email:</td> <td><input matInput type="text" id="ticker"></td></tr>
+    <tr style="border-bottom: dashed 1px rosybrown;"><td></td><td><button mat-button style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Send Request&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
+    <tr><td></td><td><button mat-button style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
+</table>
+</div>
