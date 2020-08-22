@@ -10,7 +10,7 @@ import { Chart } from 'chart.js';
 export class HomeComponent implements OnInit {
 
  //readonly baseUrl = "http://localhost:5000/";
- readonly baseUrl = "http://shantanusood.pythonanywhere.com/";
+ readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
   response: any;
 
   ticker: string = "";

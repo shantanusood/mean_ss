@@ -16,7 +16,7 @@ export class ProgressComponent implements OnInit {
   }
   closedTrd: object[];
   //readonly baseUrl = "http://localhost:5000/";
-  readonly baseUrl = "http://shantanusood.pythonanywhere.com/";
+  readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
   data: object[];
   chart:Chart = [];
   frontMonth:Chart = [];
