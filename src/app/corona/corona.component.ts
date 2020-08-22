@@ -1,5 +1,6 @@
 import { Component, HostListener, Inject, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CoronaserviceService } from './../coronaservice.service';
 
 @Component({
   selector: 'app-corona',
@@ -19,10 +20,24 @@ export class CoronaComponent implements OnInit{
   currency = false;
   options = false;
 
+  username: string;
+  roles: string;
+  role_list: object[];
+
   type:string = "";
 
-  constructor(private http: HttpClient) {
-
+  constructor(private http: HttpClient, private ds: CoronaserviceService) {
+    this.ds.current.subscribe(message => this.username = message);
+    this.http.get('/assets/roles.json').subscribe((data) => {
+      this.role_list = data as object[];
+      this.role_list.forEach(d => {
+        if(d['userid']===this.username){
+          this.roles = d['role'];
+        }
+        console.log(d['userid']);
+        console.log(d['role']);
+      });
+    });
       this.towns = [
           "New York", "Washington, D.C.", "London", "Berlin", "Sofia", "Rome", "Kiev",
           'Copenhagen', "Paris", "Barcelona", "Vienna", "Athens", "Dublin", "Yerevan",

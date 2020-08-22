@@ -39,8 +39,11 @@ import { MainComponent } from './tutoring/main/main.component';
 import { ProgressComponent } from './fiunance/progress/progress.component';
 import { LoginComponent } from './login/login.component';
 import { CoronaserviceService } from 'services/coronaservice.service';
-import { CoronaleftComponent  } from "./corona/coronaleft/coronaleft.component";
-import { CoronamianComponent  } from "./corona/coronamian/coronamian.component";
+import { CoronaleftComponent  } from './admin/coronaleft/coronaleft.component';
+import { CoronamianComponent  } from './admin/coronamian/coronamian.component';
+import { EducationComponent } from './education/education.component';
+import { AdminComponent } from './admin/admin.component';
+import { TechieComponent } from './techie/techie.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +74,10 @@ import { CoronamianComponent  } from "./corona/coronamian/coronamian.component";
     LoginComponent,
     CoronaComponent,
     CoronaleftComponent,
-    CoronamianComponent
+    CoronamianComponent,
+    EducationComponent,
+    AdminComponent,
+    TechieComponent
   ],
   imports: [
     AgGridModule.withComponents([]),

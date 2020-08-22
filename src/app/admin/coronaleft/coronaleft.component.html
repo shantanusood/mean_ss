@@ -1,0 +1,32 @@
+<div class="leftpan">
+  <br />
+  <span>
+    <ul>
+      <li>
+        <a (click)="open('home')" style="cursor: pointer;"><u>Common tasks</u></a>
+
+        <ul *ngIf="home">
+          <li><a (click)="change('Vol')" style="cursor: pointer;">Website Roles</a></li>
+          <li><a (click)="change('Chart')" style="cursor: pointer;">Create new user</a></li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="open('ext')" style="cursor: pointer;"><u>Open Bugs</u></a>
+
+        <ul *ngIf="ext">
+          <li><a (click)="change('high')" style="cursor: pointer;">High</a></li>
+          <li><a (click)="change('medium')" style="cursor: pointer;">Medium</a></li>
+          <li><a (click)="change('low')" style="cursor: pointer;">Low</a></li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="open('strat')" style="cursor: pointer;"><u>Open Feature List</u></a>
+
+        <ul *ngIf="strat">
+          <li><a (click)="change('style')" style="cursor: pointer;">Styling</a></li>
+          <li><a (click)="change('func')" style="cursor: pointer;">Functionality</a></li>
+        </ul>
+      </li>
+    </ul>
+  </span>
+</div>

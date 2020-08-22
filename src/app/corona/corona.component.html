@@ -1,30 +1,16 @@
 <div class="container">
-  <div class="search">
-    <form class="input-group-form">
-      <igx-input-group class="autocomplete">
-        <label style="color: wheat;font-size: 4.5mm;" igxLabel for="town"
-          >&nbsp;&nbsp;&nbsp;Search coronavirus impact data&nbsp;&nbsp; (Start
-          typing anything)</label
-        >
-        <input
-          igxInput
-          name="town"
-          type="text"
-          [igxAutocomplete]="townsPanel"
-          [(ngModel)]="townSelected"
-        />
-      </igx-input-group>
-      <igx-drop-down #townsPanel maxHeight="500px">
-        <igx-drop-down-item
-          *ngFor="let town of towns | contains: townSelected"
-          [value]="town"
-        >
-          {{ town }}
-        </igx-drop-down-item>
-      </igx-drop-down>
-    </form>
+
+  <div class="social">
+    <span>LinkedIn</span>
+    <span *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('techstu')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">
+      GitHub
+    </span>
+    <span *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">
+      Twitter
+    </span>
   </div>
 
-  <app-coronaleft></app-coronaleft>
-  <app-coronamian></app-coronamian>
+
+
+
 </div>

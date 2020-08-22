@@ -1,21 +1,29 @@
 <div class="topnav">
-  <a [routerLink]="'/'" routerLinkActive="hme" >Home</a> <!--https://github.com/shantanusood/YahooFinDataAnalytics--><!--PYTHON-->
-  <a [routerLink]="'/strategy'" routerLinkActive="hth">Analytics</a> <!--https://github.com/shantanusood/InvestmentStrategies--><!--JAVA-->
-  <a [routerLink]="'/external'" routerLinkActive="edu">All Users</a> <!--https://github.com/shantanusood/SocialDataService--><!--JAVA-->
-  <a [routerLink]="'/predict'" routerLinkActive="fin">Monitor</a> <!--https://github.com/shantanusood/PredictiveModels--><!--PYTHON-->
-  <a [routerLink]="'/progress'" routerLinkActive="pro">Progress</a>
-  <a [routerLink]="'/docs'" routerLinkActive="doc">Docs</a> <!--https://github.com/shantanusood/--><!---->
+  <a [routerLink]="'/'" routerLinkActive="hme" >Home</a>
+  <a [routerLink]="'/tutor'" routerLinkActive="tut" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('student')!=-1">Tutoring</a>
+  <a [routerLink]="'/tech'" routerLinkActive="tut" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('techstu')!=-1">Techie</a>
+  <a [routerLink]="'/explore'" routerLinkActive="exp" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">Explore</a>
+  <a [routerLink]="'/strategy'" routerLinkActive="hth" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">Analytics</a>
+  <a [routerLink]="'/external'" routerLinkActive="edu" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('analytics')!=-1">All Users</a>
+  <a [routerLink]="'/predict'" routerLinkActive="fin" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">Monitor</a>
+  <a [routerLink]="'/progress'" routerLinkActive="pro" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">Progress</a>
+  <a [routerLink]="'/docs'" routerLinkActive="doc" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">Docs</a>
+  <a [routerLink]="'/admin'" routerLinkActive="adm" *ngIf="roles.indexOf('admin')!=-1">Admin</a>
   <a *ngIf="open else thisone" style="float: right; cursor:pointer; background-color: wheat; color:rosybrown ;" (click)="openUserMenu()"><span style="height: auto;">{{username}}</span></a>
   <ng-template #thisone><a style="float: right; cursor:pointer;" (click)="openUserMenu()"><span style="height: auto;">{{username}}</span></a></ng-template>
 </div>
 
 <div *ngIf="open" class="header_menu">
   <table class="add">
-    <tr><td colspan="2"><u>Update your account names:</u></td></tr>
-    <tr><td>Account 1:</td> <td><input matInput type="text" id="account1"></td></tr>
-    <tr><td>Account 2:</td> <td><input matInput type="text" id="account2"></td></tr>
-    <tr><td>Account 3:</td> <td><input matInput type="text" id="account3"></td></tr>
-    <tr style="border-bottom: dashed 1px rosybrown;"><td></td><td><button mat-button style="display: block; margin-left: auto; margin-right: auto; " (click)="changeAcc()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
+    <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">
+      <td colspan="2"><u>Update your account names:</u></td></tr>
+    <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">
+      <td>Account 1:</td> <td><input matInput type="text" id="account1"></td></tr>
+    <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">
+      <td>Account 2:</td> <td><input matInput type="text" id="account2"></td></tr>
+    <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">
+      <td>Account 3:</td> <td><input matInput type="text" id="account3"></td></tr>
+    <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1" style="border-bottom: dashed 1px rosybrown;"><td></td><td><button mat-button style="display: block; margin-left: auto; margin-right: auto; " (click)="changeAcc()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
     <tr *ngIf="msg"><td colspan="2">{{msg}}</td></tr>
     <tr><td colspan="2"><u>Request new account:</u></td></tr>
     <tr><td>Username:</td> <td><input matInput type="text" id="account"></td></tr>

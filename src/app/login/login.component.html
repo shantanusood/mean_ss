@@ -1,4 +1,4 @@
-<h4 style="text-align: center; margin-left: 125px; color: wheat;">Trade management, please login to continue.</h4>
+<h4 style="text-align: center; margin-left: 205px; color: wheat;">Login to continue, don't have an account? <br><u>Email</u>: silpaservicesllc@gmail.com</h4>
 
 <div class="login">
 
@@ -9,6 +9,7 @@
         <td style="border: solid wheat 0px; font-size: 1.8em;"><mat-label>Username: </mat-label></td>
         <td style="border: solid wheat 0px;"><input matInput type="text" id="username" style="height: 35px !important;"></td>
       </tr>
+      <tr *ngIf="correct"><td colSpan="2" style="color: red; border: solid wheat 0px;">Incorrect username, not authenticated!</td></tr>
       <tr>
         <td colspan="2" style="border: solid wheat 0px; padding-top: 20px; width: 100px !important; text-align: center;">
             <button mat-raised-button (click)="onClickLogin()"><span style="font-size: 2em;">Login &nbsp;</span>

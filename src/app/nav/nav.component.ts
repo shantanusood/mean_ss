@@ -13,13 +13,27 @@ export class NavComponent implements OnInit {
   //readonly baseUrl = "http://localhost:5000/";
   readonly baseUrl = "http://shantanusood.pythonanywhere.com/";
 
-  count: number = 0;
+  countx: number = 0;
   open: boolean = false;
   msg: string;
+
+  roles: string;
+
+  role_list: object[];
 
   @Input() username: string;
 
   ngOnInit() {
+    this.http.get('/assets/roles.json').subscribe((data) => {
+      this.role_list = data as object[];
+      this.role_list.forEach(d => {
+        if(d['userid']===this.username){
+          this.roles = d['role'];
+        }
+        console.log(d['userid']);
+        console.log(d['role']);
+      });
+    });
 
   }
 
@@ -43,8 +57,8 @@ export class NavComponent implements OnInit {
   }
 
   openUserMenu(){
-    this.count++;
-    if(this.count%2==0){
+    this.countx++;
+    if(this.countx%2==0){
       this.open = false;
     }else{
       this.open = true;

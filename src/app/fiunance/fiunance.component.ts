@@ -18,10 +18,8 @@ export interface DialogData {
 export class FiunanceComponent implements OnInit {
 
   username: string;
-  constructor(private http: HttpClient, public dialog: MatDialog, private ds: CoronaserviceService) {
+  constructor(private http: HttpClient, public dialog: MatDialog, private ds: CoronaserviceService) {}
 
-
-  }
   arrBirds: string[];
   mySubscription: any;
   addedRes: string[];

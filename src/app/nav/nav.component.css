@@ -31,6 +31,24 @@
   color: white;
 }
 
+.tut {
+  background-color: rgb(105, 105, 105);
+  text-decoration: underline;
+  color: white;
+}
+
+.adm {
+  background-color: rgb(105, 105, 105);
+  text-decoration: underline;
+  color: white;
+}
+
+.exp {
+  background-color: rgb(105, 105, 105);
+  text-decoration: underline;
+  color: white;
+}
+
 .edu {
   background-color: rgb(105, 105, 105);
   text-decoration: underline;

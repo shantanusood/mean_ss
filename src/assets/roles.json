@@ -1,0 +1,26 @@
+[
+	{
+		"userid":"shantanusood",
+		"role": "admin"
+	},
+	{
+		"userid":"testuser",
+		"role": "basictrader"
+	},
+	{
+		"userid":"advuser",
+		"role": "advancedtrader"
+	},
+	{
+		"userid":"analyticsuser",
+		"role": "analytics"
+	},
+	{
+		"userid":"studentuser",
+		"role": "student"
+	},
+	{
+		"userid":"techuser",
+		"role": "techstu"
+	}
+]
