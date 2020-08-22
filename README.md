@@ -1,4 +1,7 @@
 
+## This app is live at: https://trade-management.herokuapp.com/
+* Use "testuser" to play around with the UI
+
 ## Homepage to explore data
 ![UI snapshot](/images/ui_snap.JPG)
 ## To monitor options trades by strike
