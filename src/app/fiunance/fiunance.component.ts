@@ -188,9 +188,8 @@ export class FiunanceComponent implements OnInit {
 }
 
 @Component({
-  selector: 'dialog-overview-example-dialog'
-  //templateUrl: '<div><p>Closing price</p>Cost: <input matInput [(ngModel)]="data.animal">Contracts: <input matInput [(ngModel)]="data.name"></div>'+
-    //'<div mat-dialog-actions><button mat-button [mat-dialog-close]="data" cdkFocusInitial>Close Trade</button></div>',
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: "./dialog.html"
 })
 export class Dialog {
 
