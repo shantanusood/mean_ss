@@ -50,15 +50,15 @@
             <span *ngIf="x[0].indexOf('tastyworks')!=-1 && i!=6"  style="color:rgb(243, 138, 126)">
               {{y}}
             </span>
-            <span *ngIf="i==6 && y.indexOf('-')!=-1"  style="color:red">
-              <span *ngIf="!retValGreater(y, -75.0)" style="border: solid red 0.5px;">{{y}}%</span>
+            <span *ngIf="i==6 && y.indexOf('-')!=-1"  style="color:red">{{y}}%
+              <!--<span *ngIf="!retValGreater(y, -75.0)" style="border: solid red 0.5px;">{{y}}%</span>
               <span *ngIf="!retValGreater(y, -50.0) && retValGreater(y, -75.0)" style="border: dashed red 0.5px;">{{y}}%</span>
-              <span *ngIf="retValGreater(y, -50.0)">{{y}}%</span>
+              <span *ngIf="retValGreater(y, -50.0)">{{y}}%</span>-->
             </span>
-            <span *ngIf="i==6 && y.indexOf('-')==-1"  style="color:green">
-              <span *ngIf="retValGreater(y, 75.0)" style="border: solid green 0.5px;">{{y}}%</span>
+            <span *ngIf="i==6 && y.indexOf('-')==-1"  style="color:green">{{y}}%
+              <!--<span *ngIf="retValGreater(y, 75.0)" style="border: solid green 0.5px;">{{y}}%</span>
               <span *ngIf="retValGreater(y, 50.0) && !retValGreater(y, 75.0)" style="border: dashed green 0.5px;">{{y}}%</span>
-              <span *ngIf="!retValGreater(y, 50.0)">{{y}}%</span>
+              <span *ngIf="!retValGreater(y, 50.0)">{{y}}%</span>-->
             </span>
           </td>
         </tr>
