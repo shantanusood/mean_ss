@@ -34,10 +34,13 @@ import { ExtdocComponent } from './docs/docpan/extdoc/extdoc.component';
 import { StratdocComponent } from './docs/docpan/stratdoc/stratdoc.component';
 import { PredictdocComponent } from './docs/docpan/predictdoc/predictdoc.component';
 import { LeftComponent } from './tutoring/left/left.component';
+import { CoronaComponent, AutocompletePipeCorona} from './corona/corona.component';
 import { MainComponent } from './tutoring/main/main.component';
 import { ProgressComponent } from './fiunance/progress/progress.component';
 import { LoginComponent } from './login/login.component';
 import { CoronaserviceService } from 'services/coronaservice.service';
+import { CoronaleftComponent  } from "./corona/coronaleft/coronaleft.component";
+import { CoronamianComponent  } from "./corona/coronamian/coronamian.component";
 
 @NgModule({
   declarations: [
@@ -49,6 +52,7 @@ import { CoronaserviceService } from 'services/coronaservice.service';
     HomeComponent,
     TutoringComponent,
     AutocompletePipeExtData,
+    AutocompletePipeCorona,
     FiunanceComponent,
     HealthComponent,
     ResearchComponent,
@@ -64,7 +68,10 @@ import { CoronaserviceService } from 'services/coronaservice.service';
     LeftComponent,
     MainComponent,
     ProgressComponent,
-    LoginComponent
+    LoginComponent,
+    CoronaComponent,
+    CoronaleftComponent,
+    CoronamianComponent
   ],
   imports: [
     AgGridModule.withComponents([]),

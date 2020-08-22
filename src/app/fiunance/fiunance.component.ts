@@ -189,7 +189,7 @@ export class FiunanceComponent implements OnInit {
 
 @Component({
   selector: 'dialog-overview-example-dialog',
-  templateUrl: "./dialog.html"
+  templateUrl: './dialog.html'
 })
 export class Dialog {
 
