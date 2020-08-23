@@ -14,8 +14,8 @@ export class LeftComponent implements OnInit {
   constructor(private ruuter: Router, private serv: CoronaserviceService, private http: HttpClient) {}
 
   value: String = '';
-  //readonly baseUrl = "http://localhost:5000/";
-  readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
+  readonly baseUrl = "http://localhost:5000/";
+  //readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
 
   @Input()
   nameSel: string;

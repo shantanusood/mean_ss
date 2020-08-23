@@ -26,8 +26,8 @@ export class FiunanceComponent implements OnInit {
   loading = true;
   dt: object;
   count:number = 0;
-  //readonly baseUrl = "http://localhost:5000/";
-  readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
+  readonly baseUrl = "http://localhost:5000/";
+  //readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
   add = false;
   addtext:string = "+";
   retExp: string[] ;
