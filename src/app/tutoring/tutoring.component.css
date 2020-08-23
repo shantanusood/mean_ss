@@ -53,9 +53,9 @@ table tr:nth-child(even) {
 }
 
 .search {
-  width: 60%;
+  width: 250px;
   padding: 0%;
-  display: block;
+  display: inline-block;
   margin-left: 10%;
   margin-right: auto;
 }

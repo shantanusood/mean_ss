@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class TutoringComponent implements OnInit {
 
   public towns = [];
-  public townSelected;
+  public townSelected = "shantanusood";
 
   stocks = false;
   etfs = false;
@@ -18,19 +18,25 @@ export class TutoringComponent implements OnInit {
   futures = false;
   currency = false;
   options = false;
+  roles: object[];
+  refreshed: number = 0;
 
   type:string = "";
 
   constructor(private http: HttpClient) {
+    this.http.get('/assets/roles.json').subscribe((data) => {
+      this.roles = data as object[];
+      this.roles.forEach(x => {
+        if(x['role']=='admin' || x['role']=='basictrader' || x['role']=='advancedtrader')
+        this.towns.push(x['userid']);
+      })
+    });
 
-      this.towns = [
-          "New York", "Washington, D.C.", "London", "Berlin", "Sofia", "Rome", "Kiev",
-          'Copenhagen', "Paris", "Barcelona", "Vienna", "Athens", "Dublin", "Yerevan",
-          "Oslo", "Helsinki", "Stockholm", "Prague", "Istanbul", "El Paso", "Florence", "Moscow",
-          "Jambol", "Talin", "Zlatna Panega", "Queenstown", "Gabrovo", "Ugurchin", "Xanthi"
-        ];
   }
 
+  onClickRefresh(){
+    this.refreshed = this.refreshed + 1;
+  }
   ngOnInit() {
   }
 

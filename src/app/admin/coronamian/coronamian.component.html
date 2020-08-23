@@ -1,118 +1,88 @@
 <div class="docpan">
 
-  <h5 *ngIf="default">This is default content</h5>
+  <h5 *ngIf="default || highbug">High bugs list</h5>
   <h5 *ngIf="roleslist">What are all the roles defined in the app</h5>
   <h5 *ngIf="newuser">How to create a new user</h5>
+  <h5 *ngIf="medbug">Medium bugs list</h5>
+  <h5 *ngIf="lowbug">Low bugs list</h5>
+  <h5 *ngIf="openStyle">Open styling feature list (UI)</h5>
+  <h5 *ngIf="openfeat">Open functional feature list (Py API)</h5>
   <div class="chartingvirus">
-    <div *ngIf="default">
-      This is default content
-    </div>
-    <div *ngIf="roleslist">
+    <div *ngIf="default || highbug">
       <table>
         <tr>
-          <th></th>
-          <th>Admin</th>
-          <th>AdvancedTrader</th>
-          <th>BasicTrader</th>
-          <th>Analytics</th>
-          <th>Student</th>
-          <th>TechStu</th>
+          <th>Type</th>
+          <th>Title</th>
+          <th>Severity</th>
         </tr>
         <tr>
-          <td>Home</td>
-          <td>X</td>
-          <td>X</td>
-          <td>X</td>
-          <td>X</td>
-          <td>X</td>
-          <td>X</td>
-        </tr>
-        <tr>
-          <td>Tutoring</td>
-          <td>X</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>X</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Techie</td>
-          <td>X</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>X</td>
-        </tr>
-        <tr>
-          <td>Explore</td>
-          <td>X</td>
-          <td>X</td>
-          <td></td>
-          <td>X</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Analytics</td>
-          <td>X</td>
-          <td>X</td>
-          <td></td>
-          <td>X</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>All Users</td>
-          <td>X</td>
-          <td>X</td>
-          <td>X</td>
-          <td>X</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Monitor</td>
-          <td>X</td>
-          <td>X</td>
-          <td>X</td>
           <td></td>
           <td></td>
           <td></td>
         </tr>
         <tr>
-          <td>Progress</td>
-          <td>X</td>
-          <td>X</td>
-          <td>X</td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Docs</td>
-          <td>X</td>
-          <td>X</td>
-          <td>X</td>
-          <td>X</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Admin</td>
-          <td>X</td>
-          <td></td>
-          <td></td>
           <td></td>
           <td></td>
           <td></td>
         </tr>
       </table>
     </div>
+    <div *ngIf="roleslist">
+      <table>
+        <tr>
+          <th></th><th>Admin</th><th>AdvancedTrader</th><th>BasicTrader</th><th>Analytics</th><th>Student</th><th>TechStu</th>
+        </tr>
+        <tr>
+          <td>Home</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td>
+        </tr>
+        <tr>
+          <td>Tutoring</td><td>X</td><td></td><td></td><td></td><td>X</td><td></td>
+        </tr>
+        <tr>
+          <td>Techie</td><td>X</td><td></td><td></td><td></td><td></td><td>X</td>
+        </tr>
+        <tr>
+          <td>Explore</td><td>X</td><td>X</td><td></td><td>X</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>Analytics</td><td>X</td><td>X</td><td></td><td>X</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>All Users</td><td>X</td><td>X</td><td>X</td><td>X</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>Monitor</td><td>X</td><td>X</td><td>X</td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>Progress</td><td>X</td><td>X</td><td>X</td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>Docs</td><td>X</td><td>X</td><td>X</td><td>X</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>Admin</td><td>X</td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+      </table>
+    </div>
     <div *ngIf="newuser">
+      <p>newuser</p>
 
     </div>
+    <div *ngIf="medbug">
+      <p>Medbug</p>
+    </div>
+    <div *ngIf="lowbug">
+      <p>Lowbug</p>
+
+    </div>
+    <div *ngIf="openStyle">
+      <p>Open styling UI</p>
+    </div>
+    <div *ngIf="openfeat">
+      <p>Open functional (Py API)</p>
+
+    </div>
+
   </div>
 
 

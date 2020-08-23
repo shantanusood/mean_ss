@@ -4,39 +4,10 @@
   <span>
     <ul>
       <li>
-        <a [routerLink]="'/external'" routerLinkActive="hme" (click)="setUSEcon()">US Economic</a>
+        <a [routerLink]="'/external'" routerLinkActive="hme" >Trades for - {{nameSel}}</a>
 
-        <ul *ngIf="us_e">
-          <li><a (click)="change('Vol')">Volume</a></li>
-          <li><a (click)="change('Chart')">Chart</a></li>
-          <li><a href="/corona/#opening3">Examples</a></li>
-        </ul>
-      </li>
-      <li>
-        <a [routerLink]="'/external'" routerLinkActive="hme" (click)="setUSSoc()">US Social</a>
-
-        <ul *ngIf="us_s">
-          <li><a (click)="change('Vol')">Volume</a></li>
-          <li><a (click)="change('Chart')">Chart</a></li>
-          <li><a href="/corona/#opening3">Examples</a></li>
-        </ul>
-      </li>
-      <li>
-        <a [routerLink]="'/external'" routerLinkActive="hme" (click)="setWorldEcon()">World Economic</a>
-
-        <ul *ngIf="world_e">
-          <li><a (click)="change('Vol')">Volume</a></li>
-          <li><a (click)="change('Chart')">Chart</a></li>
-          <li><a href="/corona/#opening3">Examples</a></li>
-        </ul>
-      </li>
-      <li>
-        <a [routerLink]="'/external'" routerLinkActive="hme" (click)="setWorldSoc()">World Social</a>
-
-        <ul *ngIf="world_s">
-          <li><a (click)="change('Vol')">Volume</a></li>
-          <li><a (click)="change('Chart')">Chart</a></li>
-          <li><a href="/corona/#opening3">Examples</a></li>
+        <ul>
+          <li *ngFor="let t of dt"><a (click)="change(t.ticker)" style="cursor: pointer;">{{t.ticker}}</a></li>
         </ul>
       </li>
     </ul>

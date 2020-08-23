@@ -12,7 +12,7 @@ export class CoronaleftComponent implements OnInit {
 
   home = false;
   chome:number = 1;
-  ext = false;
+  ext = true;
   cext:number = 1;
   strat = false;
   cstrat:number = 1;
@@ -32,9 +32,9 @@ export class CoronaleftComponent implements OnInit {
     }else if(type==='ext'){
       this.cext = this.cext + 1;
       if(this.cext%2===0 || this.cext===0){
-        this.ext = true;
-      }else{
         this.ext = false;
+      }else{
+        this.ext = true;
       }
     }else if(type==='strat'){
       this.cstrat = this.cstrat + 1;

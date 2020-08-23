@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 })
 export class CoronaserviceService {
 
-  private messageSource = new BehaviorSubject<string>("Default Message");
+  private messageSource = new BehaviorSubject<string>("<- Click on ticker to see trades");
   currentMessage = this.messageSource.asObservable();
 
   constructor() {

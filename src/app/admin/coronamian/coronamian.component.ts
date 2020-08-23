@@ -15,6 +15,13 @@ export class CoronamianComponent implements OnInit {
   newuser: boolean = false;
   default: boolean = true;
 
+  highbug:boolean = false;
+  medbug:boolean = false;
+  lowbug: boolean = false;
+
+  openStyle: boolean = false;
+  openfeat: boolean = false;
+
   constructor(private http: HttpClient, private serv: CoronaserviceService) {}
 
   chart = [];
@@ -26,10 +33,65 @@ export class CoronamianComponent implements OnInit {
           this.roleslist = true;
           this.newuser = false;
           this.default = false;
+          this.highbug = false;
+          this.medbug = false;
+          this.lowbug = false;
+          this.openStyle = false;
+          this.openfeat = false;
         }else if(message==='Chart'){
           this.newuser = true;
           this.roleslist = false;
           this.default = false;
+          this.highbug = false;
+          this.medbug = false;
+          this.lowbug = false;
+          this.openStyle = false;
+          this.openfeat = false;
+        }else if(message==='high'){
+          this.newuser = false;
+          this.roleslist = false;
+          this.default = false;
+          this.highbug = true;
+          this.medbug = false;
+          this.lowbug = false;
+          this.openStyle = false;
+          this.openfeat = false;
+        }else if(message==='medium'){
+          this.newuser = false;
+          this.roleslist = false;
+          this.default = false;
+          this.highbug = false;
+          this.medbug = true;
+          this.lowbug = false;
+          this.openStyle = false;
+          this.openfeat = false;
+        }else if(message==='low'){
+          this.newuser = false;
+          this.roleslist = false;
+          this.default = false;
+          this.highbug = false;
+          this.medbug = false;
+          this.lowbug = true;
+          this.openStyle = false;
+          this.openfeat = false;
+        }else if(message==='style'){
+          this.newuser = false;
+          this.roleslist = false;
+          this.default = false;
+          this.highbug = false;
+          this.medbug = false;
+          this.lowbug = false;
+          this.openStyle = true;
+          this.openfeat = false;
+        }else if(message==='func'){
+          this.newuser = false;
+          this.roleslist = false;
+          this.default = false;
+          this.highbug = false;
+          this.medbug = false;
+          this.lowbug = false;
+          this.openStyle = false;
+          this.openfeat = true;
         }
     });
   }

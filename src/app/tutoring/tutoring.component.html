@@ -2,8 +2,9 @@
   <div class="search">
     <form class="input-group-form">
       <igx-input-group class="autocomplete">
+
         <label style="color: wheat;font-size: 4.5mm;" igxLabel for="town"
-          >&nbsp;&nbsp;&nbsp;Search external data&nbsp;&nbsp; (Start
+          >&nbsp;&nbsp;&nbsp;Search other users&nbsp;&nbsp; (Start
           typing anything)</label>
         <input
           igxInput
@@ -12,7 +13,9 @@
           [igxAutocomplete]="townsPanel"
           [(ngModel)]="townSelected"
         />
+        <a href="">Test</a>
       </igx-input-group>
+
       <igx-drop-down #townsPanel maxHeight="500px">
         <igx-drop-down-item
           *ngFor="let town of towns | contains: townSelected"
@@ -23,7 +26,8 @@
       </igx-drop-down>
     </form>
   </div>
+  <button mat-button><img (click)="onClickRefresh()" style="width: 25px; height: 25px; display: inline-block;" src="/assets/refresh.png"></button>
 
-  <app-left></app-left>
-  <app-main></app-main>
+  <app-left [nameSel]="townSelected" [refreshed]="refreshed"></app-left>
+  <app-main [nameSel]="townSelected" [refreshed]="refreshed"></app-main>
 </div>

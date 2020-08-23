@@ -28,7 +28,7 @@ import { DocsComponent } from './docs/docs.component';
 import { SearchComponent, AutocompletePipeStartsWith } from './docs/search/search.component';
 import { LeftpanComponent } from './docs/leftpan/leftpan.component';
 import { DocpanComponent } from './docs/docpan/docpan.component';
-import { IgxAutocompleteModule, IgxDropDownModule, IgxInputGroupModule } from 'igniteui-angular';
+import { IgxAutocompleteModule, IgxDropDownModule, IgxInputGroupModule, IgxButtonModule } from 'igniteui-angular';
 import { HomedocComponent } from './docs/docpan/homedoc/homedoc.component';
 import { ExtdocComponent } from './docs/docpan/extdoc/extdoc.component';
 import { StratdocComponent } from './docs/docpan/stratdoc/stratdoc.component';
@@ -96,6 +96,7 @@ import { TechieComponent } from './techie/techie.component';
     BrowserAnimationsModule,
     IgxAutocompleteModule,
     IgxDropDownModule,
+    IgxButtonModule,
     IgxInputGroupModule,
     FormsModule,
     ReactiveFormsModule

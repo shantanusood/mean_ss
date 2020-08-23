@@ -1,7 +1,6 @@
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Chart } from "chart.js";
 import { CoronaserviceService } from "services/coronaservice.service";
 
 @Component({
@@ -9,101 +8,96 @@ import { CoronaserviceService } from "services/coronaservice.service";
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnChanges {
   chart_title: String = "";
   description:string = "";
 
-  val:String = "";
-  baseUrl = "http://58fb7171.ngrok.io/";
+  dt: object[];
+  ticker: object;
+  //readonly baseUrl = "http://localhost:5000/";
+  readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
+  @Input()
+  nameSel: string;
+  @Input()
+  refreshed: string;
 
+  selectedUser: any;
+  msg: string = "spy";
   constructor(private http: HttpClient, private serv: CoronaserviceService) {}
 
   chart = [];
 
+  ngOnChanges(changes: SimpleChanges) {
+    this.selectedUser = changes.nameSel;
+    //this.ngOnInit();
+  }
+
   ngOnInit() {
     this.serv.currentMessage.subscribe(message => {
-        if(message==='Vol'){
-          this.chart_title = "S&P 500 TTM Volume";
-          this.description = "This chart represents the trailing twelve months value for the whatever it may"
-                              +"This chart represents the trailing twelve months value for the whatever it"
-                              +"This chart represents the trailing twelve months value for the whatever ";
-          const url = this.baseUrl + 'filters/^^GSPC/hist';
-          this.http.get(url).subscribe(res => {
-            console.log(res);
-            this.chart = this.charting(res['Volume'], res['Date'], 'bar');
-          });
-        }else if(message==='Chart'){
-          this.chart_title = "S&P 500 TTM Adj Close change";
-          this.description = "This chart represents the trailing twelve months VOLUME for the whatever it may"
-                              +"This chart represents the trailing twelve months VOLUME for the whatever it"
-                              +"This chart represents the trailing twelve months VOLUME for the whatever ";
-          const url = this.baseUrl + 'filters/^^GSPC/hist';
-          this.http.get(url).subscribe(res => {
-            console.log(res);
-            this.chart = this.charting(res['Adj Close**'], res['Date'], 'line');
-          });
-        }else{
-          this.chart_title = "This is a test!";
-          this.description = "This chart represents the trailing twelve months VOLUME for the whatever it may"
-                              +"This chart represents the trailing twelve months VOLUME for the whatever it"
-                              +"This chart represents the trailing twelve months VOLUME for the whatever ";
-          const url = this.baseUrl + 'filters/^^GSPC/hist';
-          this.http.get(url).subscribe(res => {
-            console.log(res);
-            this.chart = this.charting(res['Adj Close**'], res['Date'], 'line');
-          });
-        }
-    });
-  }
-
-
-  charting(data_input, labels_input, chart_type) {
-    return new Chart("viruscanvas", {
-      type: chart_type,
-      data: {
-        labels: labels_input,
-        datasets: [
-          {
-            data: data_input,
-            fill: false,
-            borderColor: "wheat",
-            backgroundColor: "wheat",
-            pointHoverBackgroundColor: "wheat",
-            pointHoverBorderColor: "wheat"
+      this.msg = message;
+      this.http.get(this.baseUrl + "data/"+this.nameSel+"/monitoring/raw").subscribe((data) => {
+        this.dt = data as object[];
+        this.dt.forEach(vals =>{
+          if(vals['ticker']===this.msg){
+            this.ticker = vals['positions']
           }
-        ]
-      },
-      options: {
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [
-            {
-              display: true,
-              ticks: {
-                fontColor: "wheat" // this here
-              },
-              gridLines: {
-                color: "black",
-                zeroLineColor: "wheat"
-              }
+        });
+      });
+   });
+
+  }
+  process(tickerdata: object): object[] {
+    var retVal: object[] = new Array();
+
+    for(var k in tickerdata){
+      var call: string[] = tickerdata[k]['call']
+      var put: string[] = tickerdata[k]['put']
+      var exp: string[] = tickerdata[k]['exp']
+      var coll: string[] = tickerdata[k]['coll']
+      var prem: string[] = tickerdata[k]['prem']
+
+      if(call.length>0){
+        for(var s in call){
+          var trs: string[] = new Array();
+          trs.push(this.msg);
+          if(coll[s]==="0"){
+            trs.push("Covered Call");
+            trs.push(exp[s]);
+            trs.push(coll[s]);
+            trs.push(call[s]);
+            trs.push("-");
+            trs.push(prem[s]);
+          }else {
+            if(call[s]==="0"){
+              trs.push("Put Credit spread");
+              trs.push(exp[s]);
+              trs.push(coll[s]);
+              trs.push("-");
+              trs.push(put[s]);
+              trs.push(prem[s]);
+            }else if(put[s]==="0"){
+              trs.push("Call Credit spread");
+              trs.push(exp[s]);
+              trs.push(coll[s]);
+              trs.push(call[s]);
+              trs.push("-");
+              trs.push(prem[s]);
+            }else{
+              trs.push("Iron Condor");
+              trs.push(exp[s]);
+              trs.push(coll[s]);
+              trs.push(call[s]);
+              trs.push(put[s]);
+              trs.push(prem[s]);
             }
-          ],
-          yAxes: [
-            {
-              display: true,
-              ticks: {
-                fontColor: "wheat"
-              },
-              gridLines: {
-                color: "wheat",
-                zeroLineColor: "wheat"
-              }
-            }
-          ]
+          }
+
+          retVal.push(trs);
         }
       }
-    });
+    }
+    return retVal;
   }
+
+
 }
