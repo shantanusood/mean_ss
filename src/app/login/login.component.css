@@ -37,3 +37,90 @@ text-align: left;
 .this td:first-child, th:first-child {
    border-left: none;
 }
+
+.content {
+  position: relative;
+  display: inline-block;
+    top: 50%;
+    left: 20%;
+    max-width: 80%;
+}
+
+.social {
+    position: relative;
+    margin: 0px auto;
+    left: 42%;
+    display: inline-block;
+}
+
+.that {
+  margin: 0px auto;
+  display: inline-block;
+  padding: 2.5px;
+  padding-top: 10px;
+  border-collapse:separate;
+  border:solid wheat 1px;
+  border-radius:10px;
+  -moz-border-radius:6px;
+}
+
+.that td, th {
+  border-left:solid wheat 1px;
+  border-top:solid wheat 1px;
+}
+
+.that th {
+  background-color: rosybrown;
+  border-top: none;
+}
+
+.that td:first-child, th:first-child {
+   border-left: none;
+}
+
+.one {
+  margin-right: 20px;
+  display: inline-block;
+  padding: 20px;
+  border-collapse:separate;
+  border:solid wheat 1px;
+  border-radius:10px;
+  -moz-border-radius:6px;
+}
+
+.one td, th {
+  border-left:solid wheat 1px;
+  border-top:solid wheat 1px;
+}
+
+.one th {
+  background-color: rosybrown;
+  border-top: none;
+}
+
+.one td:first-child, th:first-child {
+   border-left: none;
+}
+
+.two {
+  display: inline-block;
+  padding: 20px;
+  border-collapse:separate;
+  border:solid wheat 1px;
+  border-radius:10px;
+  -moz-border-radius:6px;
+}
+
+.two td, th {
+  border-left:solid wheat 1px;
+  border-top:solid wheat 1px;
+}
+
+.two th {
+  background-color: rosybrown;
+  border-top: none;
+}
+
+.two td:first-child, th:first-child {
+   border-left: none;
+}

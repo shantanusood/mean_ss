@@ -1,31 +1,21 @@
 .content {
-  padding: 20px;
-  width: 80%;
-  display: flex;
-  margin-left: 10%;
-  margin-right: 10%;
-  height: auto;
+  position: relative;
+  display: inline-block;
+    top: 50%;
+    left: 20%;
+    max-width: 80%;
 }
-.content1 {
-  padding: 20px;
-  width: 80%;
-  display: flex;
-  margin-left: 10%;
-  margin-right: 10%;
-  height: auto;
-}
-.content01 {
-  padding: 20px;
-}
+
 .social {
-  margin: 0;
-    position: absolute;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%)
+    position: relative;
+    margin: 0px auto;
+    left: 42%;
+    display: inline-block;
 }
 
 .this {
+  margin: 0px auto;
+  display: inline-block;
   padding: 2.5px;
   padding-top: 10px;
   border-collapse:separate;
@@ -49,6 +39,8 @@
 }
 
 .one {
+  margin-right: 20px;
+  display: inline-block;
   padding: 20px;
   border-collapse:separate;
   border:solid wheat 1px;
@@ -71,6 +63,7 @@
 }
 
 .two {
+  display: inline-block;
   padding: 20px;
   border-collapse:separate;
   border:solid wheat 1px;
@@ -93,6 +86,8 @@
 }
 
 .three {
+  margin-right: 20px;
+  display: inline-block;
   padding: 20px;
   border-collapse:separate;
   border:solid wheat 1px;
@@ -115,6 +110,7 @@
 }
 
 .four {
+  display: inline-block;
   padding: 20px;
   border-collapse:separate;
   border:solid wheat 1px;

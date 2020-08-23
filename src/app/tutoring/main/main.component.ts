@@ -14,8 +14,8 @@ export class MainComponent implements OnInit, OnChanges {
 
   dt: object[];
   ticker: object;
-  readonly baseUrl = "http://localhost:5000/";
-  //readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
+  //readonly baseUrl = "http://localhost:5000/";
+  readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
   @Input()
   nameSel: string;
   @Input()
