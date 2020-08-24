@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit {
   correct: boolean = false;
   role_list: object[];
 
-  //readonly baseUrl = "http://localhost:5000/";
-  readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
+  readonly baseUrl = "http://localhost:5000/";
+  //readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
 
   onClickLogin(){
     this.username = (document.getElementById("username") as HTMLInputElement).value;
@@ -28,7 +28,9 @@ export class LoginComponent implements OnInit {
       this.role_list.forEach(d => {
         if(d['userid']===this.username){
           this.http.get(this.baseUrl + "data/"+this.username+"/getit").subscribe((data) => {
-            if(this.pin==data){
+            console.log(this.pin);
+            console.log(this.pin==data['this']);
+            if(this.pin==data['this']){
               this.ds.sendData(this.username);
             }
           });
