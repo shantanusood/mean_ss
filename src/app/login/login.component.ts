@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit {
   correct: boolean = false;
   role_list: object[];
 
-  readonly baseUrl = "http://localhost:5000/";
-  //readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
+  //readonly baseUrl = "http://localhost:5000/";
+  readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
 
   onClickLogin(){
     this.username = (document.getElementById("username") as HTMLInputElement).value;
