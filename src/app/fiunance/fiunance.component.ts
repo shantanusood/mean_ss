@@ -32,11 +32,25 @@ export class FiunanceComponent implements OnInit {
   addtext:string = "+";
   retExp: string[] ;
 
+  account_1: string;
+  account_2: string;
+  account_3: string;
+
   ngOnInit() {
     this.ds.current.subscribe(message => this.username = message);
     this.http.get(this.baseUrl + "data/"+this.username+"/expiration").subscribe((data) => {
       this.dt = data as object;
     });
+    this.http
+      .get(
+        this.baseUrl +
+          "data/"+this.username+"/accounts")
+      .subscribe((data) => {
+        console.log(data);
+        this.account_1 = data['fidelity'];
+        this.account_2 = data['robinhood'];
+        this.account_3 = data['tastyworks'];
+      });
     this.getData();
   }
 

@@ -79,7 +79,6 @@ export class ProgressComponent implements OnInit {
         this.baseUrl +
           "data/"+this.username+"/accounts")
       .subscribe((data) => {
-        console.log(data);
         this.account_1 = data['fidelity'];
         this.account_2 = data['robinhood'];
         this.account_3 = data['tastyworks'];
