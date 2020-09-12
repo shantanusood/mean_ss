@@ -35,7 +35,7 @@
     "igniteui-angular": "^8.2.31",
     "jszip": "^3.5.0",
     "minireset.css": "~0.0.4",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "papaparse": "^5.2.0",
     "path": "^0.12.7",
     "resize-observer-polyfill": "^1.5.1",
