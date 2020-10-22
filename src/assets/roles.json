@@ -17,10 +17,6 @@
 	},
 	{
 		"userid":"studentuser",
-		"role": "student"
-	},
-	{
-		"userid":"techuser",
-		"role": "techstu"
+		"role": "tenant"
 	}
 ]
