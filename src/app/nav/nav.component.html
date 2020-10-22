@@ -1,7 +1,7 @@
 <div class="topnav">
   <a [routerLink]="'/'" routerLinkActive="hme" >Home</a>
-  <a [routerLink]="'/tutor'" routerLinkActive="tut" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('student')!=-1">Tutoring</a>
-  <a [routerLink]="'/tech'" routerLinkActive="tut" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('techstu')!=-1">Techie</a>
+  <a [routerLink]="'/tutor'" routerLinkActive="tut" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('student')!=-1">Pay Rent</a>
+  <a [routerLink]="'/tech'" routerLinkActive="tut" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('techstu')!=-1">Work Order</a>
   <a [routerLink]="'/explore'" routerLinkActive="exp" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">Explore</a>
   <a [routerLink]="'/strategy'" routerLinkActive="hth" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">Analytics</a>
   <a [routerLink]="'/external'" routerLinkActive="edu" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('analytics')!=-1">All Users</a>
