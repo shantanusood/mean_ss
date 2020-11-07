@@ -8,7 +8,7 @@
 		"role": "basictrader"
 	},
 	{
-		"userid":"advuser",
+		"userid":"testtenant",
 		"role": "advancedtrader"
 	},
 	{
@@ -16,7 +16,7 @@
 		"role": "analytics"
 	},
 	{
-		"userid":"studentuser",
+		"userid":"tessttenant",
 		"role": "tenant"
 	}
 ]
