@@ -1,7 +1,14 @@
+
+
 <h5 style="text-align: center; color: wheat;">Login to continue, don't have an account? <br><u>Email</u>: silpaservicesllc@gmail.com</h5>
 <br>
-<div class="login">
-
+<div *ngIf="loading else loaded" style="text-align: center;">
+  <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
+    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    </div></div>
+</div>
+<ng-template #loaded>
+  <div class="login">
 
     <table class="this">
       <tr >
@@ -12,7 +19,7 @@
         <td style="border: solid wheat 0px; font-size: 1.8em;"><mat-label>Pin: </mat-label></td>
         <td style="border: solid wheat 0px;"><input matInput type="text" id="pin" style="height: 35px !important;"></td>
       </tr>
-      <tr *ngIf="correct"><td colSpan="2" style="color: red; border: solid wheat 0px;">Incorrect username & pin combination!</td></tr>
+      <tr *ngIf="correct"><td colSpan="2" style="color: red; border: solid wheat 0px;">Incorrect username & pin combination! TRY AGAIN</td></tr>
       <tr>
         <td colspan="2" style="border: solid wheat 0px; padding-top: 20px; width: 100px !important; text-align: center;">
             <button mat-raised-button (click)="onClickLogin()"><span style="font-size: 2em;">Login &nbsp;</span>
@@ -27,9 +34,10 @@
 
 
   </table>
-<br>
-</div>
 
+</div>
+</ng-template>
+<!--
 <div class="content">
   <table class="one" >
     <tr>
@@ -109,4 +117,4 @@
 
 <br>
 <br>
-<br>
+<br>-->
