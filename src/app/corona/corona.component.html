@@ -1,90 +1,159 @@
 <div class="container">
+<div class="admin_content" *ngIf="roles.indexOf('admin')!=-1">
 
-  <div class="content">
-    <table class="one" >
+  <table class="one" >
+    <tr>
+      <th colspan="2">Edit existing property</th>
+    </tr>
+    <tr>
+      <td>Joseph R. Biden Jr. was </td>
+      <td>Some states will report.</td>
+
+    </tr>
+  </table>
+  <table class="two" >
+    <tr>
+      <th colspan="2">Add new property</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>Joseph R. Biden Jr. was </td>
+      <td>Some states will report.</td>
+
+    </tr>
+    <tr>
+      <td>Joseph R. Biden Jr. was </td>
+      <td>Some states will report.</td>
+
+    </tr>
+
+  </table>
+</div>
+<div class="tenant_content" *ngIf="roles.indexOf('tenant')!=-1">
+  <table class="one" >
+    <tr>
+      <th colspan="2">Your property</th>
+    </tr>
+    <tr>
+      <td colspan="2"><img src="/assets/house.jpg" style="width: 400px; height: auto;"/></td>
+    </tr>
+    <tr>
+      <th colspan="2">Edit existing property</th>
+    </tr>
+    <tr>
+      <td>Joseph R. Biden Jr. was </td>
+      <td>Some states will report.</td>
+
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+  </table>
+  <table class="two" >
+    <tr>
+      <th colspan="2">Details about your property</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>Joseph R. Biden Jr. was elected the 46th president .</td>
+      <td>Some states will report a vast majority of votes.</td>
+    </tr>
+    <tr>
+      <td>.</td>
+      <td>.</td>
+    </tr>
+    <tr>
+      <td>.</td>
+      <td>.</td>
+    </tr>
+    <tr>
+      <td>.</td>
+      <td>.</td>
+    </tr>
+    <tr>
+      <td>.</td>
+      <td>.</td>
+    </tr>
+  </table>
+</div>
+  <div class="content" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('analytics')!=-1">
+    <table class="three" >
       <tr>
         <td colspan="4" style="border:0px">
-          <h6 *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">
+          <h6 >
             Only credit spread strategies & covered calls are suported!
           </h6>
         </td>
       </tr>
-      <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">
+      <tr  >
         <th>Strategies</th>
         <th>Supported?</th>
         <th>Strategies</th>
         <th>Supported?</th>
       </tr>
-      <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">
+      <tr  >
         <td style="border: 0px">Covered Calls</td>
         <td style="border: 0px; text-align: center;"><img src="/assets/green.png" style="width: 40px; height: auto;"/></td>
         <td style="border: 0px">Short Put</td>
         <td style="border: 0px; text-align: center;"><img src="/assets/red.png" style="width: 40px; height: auto;"/></td>
       </tr>
-      <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">
+      <tr  >
         <td style="border: 0px">Credit(Short) Put Spread</td>
         <td style="border: 0px; text-align: center;"><img src="/assets/green.png" style="width: 40px; height: auto;"/></td>
         <td style="border: 0px">Debit(Long) Put Spread</td>
         <td style="border: 0px; text-align: center;"><img src="/assets/red.png" style="width: 40px; height: auto;"/></td>
       </tr>
-      <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">
+      <tr  >
         <td style="border: 0px">Credit(Short) Call Spread</td>
         <td style="border: 0px; text-align: center;"><img src="/assets/green.png" style="width: 40px; height: auto;"/></td>
         <td style="border: 0px">Debit(Long) Call Spread</td>
         <td style="border: 0px; text-align: center;"><img src="/assets/red.png" style="width: 40px; height: auto;"/></td>
       </tr>
-      <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">
+      <tr  >
         <td style="border: 0px">Iron Condor (Short)</td>
         <td style="border: 0px; text-align: center;"><img src="/assets/green.png" style="width: 40px; height: auto;"/></td>
         <td style="border: 0px">Strangle (Short or Long)</td>
         <td style="border: 0px; text-align: center;"><img src="/assets/red.png" style="width: 40px; height: auto;"/></td>
       </tr>
-      <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">
+      <tr  >
         <td style="border: 0px">Iron Butterfly (Short)</td>
         <td style="border: 0px; text-align: center;"><img src="/assets/green.png" style="width: 40px; height: auto;"/></td>
         <td style="border: 0px">Straddle (Short or Long)</td>
         <td style="border: 0px; text-align: center;"><img src="/assets/red.png" style="width: 40px; height: auto;"/></td>
       </tr>
     </table>
-    <table class="two">
-      <tr>
-        <td style="border: 0px" colspan="2">This is the header</td>
-      </tr>
-      <tr>
-        <td style="border: 0px" colspan="2"><iframe width="515" height="300" src="https://www.youtube.com/embed/dexOhg3pYa0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
-      </tr>
-    </table>
-    <table class="three">
-      <tr>
-        <td style="border: 0px" colspan="2">This is the header</td>
-      </tr>
-      <tr>
-        <td style="border: 0px" colspan="2"><iframe width="515" height="300" src="https://www.youtube.com/embed/dexOhg3pYa0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
-      </tr>
-    </table>
     <table class="four">
-      <tr>
-        <td style="border: 0px" colspan="2">This is the header</td>
+      <tr  >
+        <td style="border: 0px" colspan="2">How to use this application? Watch below</td>
       </tr>
-      <tr>
+      <tr  >
         <td style="border: 0px" colspan="2"><iframe width="515" height="300" src="https://www.youtube.com/embed/dexOhg3pYa0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
       </tr>
     </table>
   </div>
   <br>
-  <div class="social">
+  <div class="social" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('analytics')!=-1">
     <table class="this">
       <tr>
-        <td style="border: 0px"><span *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">
-          <button mat-button><a href="https://www.facebook.com/OptionsWithShan" target="_blank"><img src="/assets/facebook.png" style="width: 40px; height:auto"></a></button>
-        </span></td>
-        <td style="border: 0px"><span *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">
+        <td style="border: 0px">
+          <button mat-button><a href="https://www.youtube.com/channel/UCshcClu1tCelZoY54HmyciQ" target="_blank"><img src="/assets/youtube.png" style="width: 40px; height:auto"></a></button>
+        </td>
+        <td style="border: 0px">
           <button mat-button><a href="https://twitter.com/tradershan89" target="_blank"><img src="/assets/twitter.png" style="width: 50px; height:auto"></a></button>
-        </span></td>
-        <td style="border: 0px"><button mat-button><a href="https://www.linkedin.com/in/ssood89/" target="_blank"><img src="/assets/Linkedin.png" style="width: 50px; height:auto"></a></button></td>
-        <td style="border: 0px"><span *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('techstu')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">
+        </td>
+        <td style="border: 0px">
+          <button mat-button><a href="https://www.linkedin.com/in/ssood89/" target="_blank"><img src="/assets/Linkedin.png" style="width: 50px; height:auto"></a></button>
+        </td>
+        <td style="border: 0px">
           <button mat-button><a href="https://github.com/shantanusood/" target="_blank"><img src="/assets/github.png" style="width: 60px; height:auto"></a></button>
-        </span></td>
+        </td>
 
       </tr>
     </table>

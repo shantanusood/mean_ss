@@ -1,1 +1,13 @@
-<p>techie works!</p>
+<div class="container">
+  <div class="monitor">
+    <div class="admin" *ngIf="roles.indexOf('admin')!=-1">
+      <p>Admin Test</p>
+
+    </div>
+    <div class="history" *ngIf="roles.indexOf('tenant')!=-1">
+      <p>History Test</p>
+
+    </div>
+  </div>
+
+</div>

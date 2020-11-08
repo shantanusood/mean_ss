@@ -1,24 +1,68 @@
 <div class="container">
   <div class="monitor">
-<div class="pay">
-  <h5 style="color: wheat;">Welcome, {{username}}</h5>
-  <h5>Make a payment:</h5>
-  <h4>Amount outstanding: $500.00</h4>
-</div>
-<div class="history">
-
+<div  class="admin" *ngIf="roles.indexOf('admin')!=-1" style="color: aliceblue;"><label><b><u>Select tenant:</u></b> &nbsp; &nbsp; &nbsp;</label>
+  <select class="form-control" id="inputdefault" name = "portal" #portalSelect>
+    <option [value]="c.userid" *ngFor="let c of role_list" ><span *ngIf="c.role.indexOf('tenant')!=-1">{{c.userid}}</span></option>
+  </select>
   <table>
     <tr>
-      <th>test1</th>
-      <th>test2</th>
-      <th>test3</th>
+      <th colspan="8" style="border: none;"><u>Upcoming payments and payment history</u></th>
+    </tr>
+    <tr>
+      <th>Due Date</th>
+      <th>Paid Date</th>
+      <th>Rent payment amount</th>
+      <th>Utilities amount</th>
+      <th>Late charges</th>
+      <th>Additional debits/credits</th>
+      <th>Total</th>
+      <th>Payment status</th>
+      <th>Edit</th>
     </tr>
     <tr>
       <td>1</td>
       <td>2</td>
       <td>3</td>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+      <td style="font-size: 2em;"><u>7</u></td>
+      <td style="text-align: center;"><img src="/assets/green.png" style="width: 25px; height: auto;"/></td>
+      <td><button mat-button>Edit</button></td>
     </tr>
   </table>
+  <br>
+</div>
+<div class="history" *ngIf="roles.indexOf('tenant')!=-1">
+  <h5 style="color: wheat;">Welcome, {{username}}</h5>
+  <h4 style="color: aliceblue;">Amount outstanding: $500.00</h4>
+<br>
+  <table>
+    <tr>
+      <th colspan="8" style="border: none;"><u>Upcoming payments and payment history</u></th>
+    </tr>
+    <tr>
+      <th>Due Date</th>
+      <th>Paid Date</th>
+      <th>Rent payment amount</th>
+      <th>Utilities amount</th>
+      <th>Late charges</th>
+      <th>Additional debits/credits</th>
+      <th>Total</th>
+      <th>Payment status</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+      <td style="font-size: 2em;"><u>7</u></td>
+      <td style="text-align: center;"><img src="/assets/green.png" style="width: 25px; height: auto;"/></td>
+    </tr>
+  </table>
+  <br>
 </div>
 </div>
 </div>

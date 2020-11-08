@@ -2,3 +2,19 @@
   padding: 20px;
   margin-top: -30px;
 }
+
+.admin {
+  position: relative;
+  display: inline-block;
+    top: 50%;
+    left: 20%;
+    max-width: 80%;
+}
+
+.history {
+  position: relative;
+  display: inline-block;
+    top: 50%;
+    left: 20%;
+    max-width: 80%;
+}
