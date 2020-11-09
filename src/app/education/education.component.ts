@@ -30,6 +30,12 @@ export class EducationComponent implements OnInit {
     return data['address']
   }
 
+  getEmail(data: any){
+    return data['email']
+  }
+  getPhone(data: any){
+    return data['phone']
+  }
   getHistory(data: any){
     return data['history']
   }

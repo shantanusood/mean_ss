@@ -31,8 +31,15 @@
   <button mat-button><img (click)="onClickRefresh()" style="width: 25px; height: 25px; display: inline-block;" src="/assets/refresh.png"></button>
 <br>
 <br>
-<br>
   <table>
+    <tr>
+      <td style="border: none;">Email:</td>
+      <td colspan="7" style="border: none;">{{ getEmail(data) }}</td>
+    </tr>
+    <tr>
+      <td style="border: none;">Phone:</td>
+      <td colspan="7" style="border: none;">{{ getPhone(data) }}</td>
+    </tr>
     <tr>
       <th colspan="8" style="border: none;"><u>Upcoming payments and payment history</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span style="text-align: right;"><button mat-raised-button (click)="send()">Send new</button></span></th>
