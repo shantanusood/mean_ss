@@ -49,10 +49,10 @@
       <th>Edit</th>
       <th>Delete</th>
     </tr>
-    <tr *ngFor="let x of data.history; index as i">
+    <tr *ngFor="let x of getHistory(data); index as i">
       <td>{{ x.due_date }}</td>
       <td>{{ x.paid_date }}</td>
-      <td>${{ data.recurring }}</td>
+      <td>${{ x.rent }}</td>
       <td>${{ x.utilities }}</td>
       <td>${{ x.late }}</td>
       <td>${{ x.additional }}</td>
@@ -82,7 +82,7 @@
   <br>
 </div>
 <div class="history" *ngIf="roles.indexOf('tenant')!=-1">
-  <h5 style="color: wheat;">Welcome, <u>{{username}}</u>, your address is <i>{{data.address}}</i></h5>
+  <h5 style="color: wheat;">Welcome, <u>{{username}}</u>, your address is <i>{{getAddress(data)}}</i></h5>
   <h4 style="color: aliceblue;" *ngIf="!outstanding_bool">Amount outstanding: ${{outstanding}}</h4>
   <h4 style="color: aliceblue;" *ngIf="outstanding_bool">Amount outstanding: $0</h4>
 <br>
@@ -100,10 +100,10 @@
       <th>Total</th>
       <th>Payment status</th>
     </tr>
-    <tr *ngFor="let x of data.history; index as i">
+    <tr *ngFor="let x of getHistory(data); index as i">
       <td>{{ x.due_date }}</td>
       <td>{{ x.paid_date }}</td>
-      <td>${{ data.recurring }}</td>
+      <td>${{ x.rent }}</td>
       <td>${{ x.utilities }}</td>
       <td>${{ x.late }}</td>
       <td>${{ x.additional }}</td>

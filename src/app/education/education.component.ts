@@ -26,6 +26,14 @@ export class EducationComponent implements OnInit {
 
   type:string = "";
 
+  getAddress(data: any){
+    return data['address']
+  }
+
+  getHistory(data: any){
+    return data['history']
+  }
+
   constructor(private http: HttpClient, private ds: CoronaserviceService) {
     this.ds.current.subscribe(message => this.username = message);
     this.http.get('/assets/roles.json').subscribe((data) => {
