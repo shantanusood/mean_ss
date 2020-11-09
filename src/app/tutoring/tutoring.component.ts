@@ -28,7 +28,7 @@ export class TutoringComponent implements OnInit {
       this.roles = data as object[];
       this.roles.forEach(x => {
         if(x['role']=='admin' || x['role']=='basictrader' || x['role']=='advancedtrader')
-        this.towns.push(x['userid']);
+          this.towns.push(x['userid']);
       })
     });
 

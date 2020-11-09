@@ -1,12 +1,41 @@
 <div class="container">
   <div class="monitor">
-<div  class="admin" *ngIf="roles.indexOf('admin')!=-1" style="color: aliceblue;"><label><b><u>Select tenant:</u></b> &nbsp; &nbsp; &nbsp;</label>
-  <select class="form-control" id="inputdefault" name = "portal" #portalSelect>
-    <option [value]="c.userid" *ngFor="let c of role_list" ><span *ngIf="c.role.indexOf('tenant')!=-1">{{c.userid}}</span></option>
-  </select>
+<div  class="admin" *ngIf="roles.indexOf('admin')!=-1" style="color: aliceblue;">
+  <div class="search">
+    <form class="input-group-form">
+      <igx-input-group class="autocomplete">
+
+        <label style="color: wheat;font-size: 4.5mm;" igxLabel for="town"
+          >&nbsp;&nbsp;&nbsp;Search tenants&nbsp;&nbsp; (Start
+          typing anything)</label>
+        <input
+          igxInput
+          name="town"
+          type="text"
+          [igxAutocomplete]="townsPanel"
+          [(ngModel)]="townSelected"
+        />
+        <a href="">Test</a>
+      </igx-input-group>
+
+      <igx-drop-down #townsPanel maxHeight="500px">
+        <igx-drop-down-item
+          *ngFor="let town of towns | contains: townSelected"
+          [value]="town"
+        >
+          {{ town }}
+        </igx-drop-down-item>
+      </igx-drop-down>
+    </form>
+  </div>
+  <button mat-button><img (click)="onClickRefresh()" style="width: 25px; height: 25px; display: inline-block;" src="/assets/refresh.png"></button>
+<br>
+<br>
+<br>
   <table>
     <tr>
-      <th colspan="8" style="border: none;"><u>Upcoming payments and payment history</u></th>
+      <th colspan="8" style="border: none;"><u>Upcoming payments and payment history</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span style="text-align: right;"><button mat-raised-button (click)="send()">Send new</button></span></th>
     </tr>
     <tr>
       <th>Due Date</th>
@@ -18,24 +47,44 @@
       <th>Total</th>
       <th>Payment status</th>
       <th>Edit</th>
+      <th>Delete</th>
     </tr>
-    <tr>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-      <td>4</td>
-      <td>5</td>
-      <td>6</td>
-      <td style="font-size: 2em;"><u>7</u></td>
-      <td style="text-align: center;"><img src="/assets/green.png" style="width: 25px; height: auto;"/></td>
-      <td><button mat-button>Edit</button></td>
+    <tr *ngFor="let x of data.history; index as i">
+      <td>{{ x.due_date }}</td>
+      <td>{{ x.paid_date }}</td>
+      <td>${{ data.recurring }}</td>
+      <td>${{ x.utilities }}</td>
+      <td>${{ x.late }}</td>
+      <td>${{ x.additional }}</td>
+      <td style="font-size: 2em;"><u>${{ x.total }}</u></td>
+      <td style="text-align: center;" *ngIf="x.status.indexOf('Y')!=-1"><img src="/assets/green.png" style="width: 25px; height: auto;"/></td>
+      <td style="text-align: center;" *ngIf="x.status.indexOf('N')!=-1"><img src="/assets/red.png" style="width: 25px; height: auto;"/></td>
+      <td ><button mat-raised-button (click)="edit()">Edit</button>
+        <div *ngIf="add" style="float:right; background-color:wheat; padding: 5px; margin-top: 20px; margin-right: 50px; position:fixed; right: 0; top: 6.5%; z-index: 9;">
+          <br>
+          <table class="add">
+            <tr><td>Due date:</td> <td><input matInput type="text" value="{{x.due_date}}" id="due_date"></td></tr>
+            <tr><td>Paid date: </td> <td><input matInput type="text" value="{{x.paid_date}}" id="paid_date"></td></tr>
+            <tr><td>Rent: </td> <td><input matInput type="text" value="{{x.rent}}" id="rent"></td></tr>
+            <tr><td>Utilities: </td> <td><input matInput type="text" value="{{x.utilities}}" id="utilities"></td></tr>
+            <tr><td>Late charge: </td> <td><input matInput type="text" value="{{x.late}}" id="late"></td></tr>
+            <tr><td>Additional: </td> <td><input matInput type="text" value="{{x.additional}}" id="add"></td></tr>
+            <tr><td>Total: </td> <td><input matInput type="text" value="{{x.total}}" id="total"></td></tr>
+            <tr><td>Status: </td> <td><input matInput type="text" value="{{x.status}}" id="status"></td></tr>
+            <tr><td></td><td><button mat-button (click)="editVals()" style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
+
+        </table>
+        </div>
+      </td>
+      <td *ngIf="x.status.indexOf('N')!=-1"><button mat-raised-button (click)="delete(x.due_date, x.paid_date, x.rent, x.utilities, x.late, x.additional, x.total, x.status)">Delete</button></td>
     </tr>
   </table>
   <br>
 </div>
 <div class="history" *ngIf="roles.indexOf('tenant')!=-1">
-  <h5 style="color: wheat;">Welcome, {{username}}</h5>
-  <h4 style="color: aliceblue;">Amount outstanding: $500.00</h4>
+  <h5 style="color: wheat;">Welcome, <u>{{username}}</u>, your address is <i>{{data.address}}</i></h5>
+  <h4 style="color: aliceblue;" *ngIf="!outstanding_bool">Amount outstanding: ${{outstanding}}</h4>
+  <h4 style="color: aliceblue;" *ngIf="outstanding_bool">Amount outstanding: $0</h4>
 <br>
   <table>
     <tr>
@@ -51,15 +100,16 @@
       <th>Total</th>
       <th>Payment status</th>
     </tr>
-    <tr>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-      <td>4</td>
-      <td>5</td>
-      <td>6</td>
-      <td style="font-size: 2em;"><u>7</u></td>
-      <td style="text-align: center;"><img src="/assets/green.png" style="width: 25px; height: auto;"/></td>
+    <tr *ngFor="let x of data.history; index as i">
+      <td>{{ x.due_date }}</td>
+      <td>{{ x.paid_date }}</td>
+      <td>${{ data.recurring }}</td>
+      <td>${{ x.utilities }}</td>
+      <td>${{ x.late }}</td>
+      <td>${{ x.additional }}</td>
+      <td style="font-size: 2em;"><u>${{ x.total }}</u></td>
+      <td style="text-align: center;" *ngIf="x.status.indexOf('Y')!=-1"><img src="/assets/green.png" style="width: 25px; height: auto;"/></td>
+      <td style="text-align: center;" *ngIf="x.status.indexOf('N')!=-1"><img src="/assets/red.png" style="width: 25px; height: auto;"/></td>
     </tr>
   </table>
   <br>

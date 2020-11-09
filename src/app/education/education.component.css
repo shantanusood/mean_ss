@@ -18,3 +18,21 @@
     left: 20%;
     max-width: 80%;
 }
+.search {
+  width: 250px;
+  padding: 0%;
+  display: inline-block;
+  margin-left: 10%;
+  margin-right: auto;
+}
+igx-drop-down {
+  padding: 2%;
+}
+.add {
+  padding: 1px;
+}
+
+.add td {
+  color: black;
+  border: none;
+}
