@@ -47,8 +47,7 @@ export class CoronaComponent implements OnInit{
   addNewProperty(){
     this.obj = {
       name: (document.getElementById("propname") as HTMLInputElement).value,
-      address: (document.getElementById("propaddress") as HTMLInputElement).value,
-      desc: (document.getElementById("desc") as HTMLInputElement).value
+      address: (document.getElementById("propaddress") as HTMLInputElement).value
     }
     this.http.post(this.baseUrl +'properties/add', this.obj).subscribe((data) => {
       this.message = true;

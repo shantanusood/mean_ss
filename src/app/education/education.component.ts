@@ -9,6 +9,7 @@ import { CoronaserviceService } from '../coronaservice.service';
 })
 export class EducationComponent implements OnInit {
 
+  loading = false;
   public towns = [];
   public townSelected = "shantanusood";
   username: string;
@@ -20,6 +21,8 @@ export class EducationComponent implements OnInit {
   refreshed: number = 0;
   add = false;
   count:number = 0;
+  requested:boolean = false;
+  hasRequested:boolean;
 
   //readonly baseUrl = "http://localhost:5000/";
   readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
@@ -39,7 +42,37 @@ export class EducationComponent implements OnInit {
   getHistory(data: any){
     return data['history']
   }
-
+  getStatus(data: any){
+    return data['status']
+  }
+  getExpiry(data: any){
+    return data['expiry']
+  }
+  getDurations(data: any){
+    return data['durations'];
+  }
+  getRequest(data: any){
+    return data['request'];
+  }
+  extention(){
+    this.requested = true;
+  }
+  getExtention(duration: String){
+    this.loading = true;
+    this.http
+      .get(
+        this.baseUrl +
+          "data/"+this.username+"/rental/extend/"+duration)
+      .subscribe((data) => {
+        this.data = data;
+        if(this.data['request']=="false"){
+          this.hasRequested = true;
+        }else{
+          this.hasRequested = false;
+        }
+        this.loading = false;
+      });
+  }
   constructor(private http: HttpClient, private ds: CoronaserviceService) {
     this.ds.current.subscribe(message => this.username = message);
     this.http.get('/assets/roles.json').subscribe((data) => {
@@ -63,6 +96,11 @@ export class EducationComponent implements OnInit {
           "data/"+this.username+"/rental/history")
       .subscribe((data) => {
         this.data = data;
+        if(this.data['request']=="false"){
+          this.hasRequested = true;
+        }else{
+          this.hasRequested = false;
+        }
       });
       this.http
       .get(
@@ -72,6 +110,24 @@ export class EducationComponent implements OnInit {
         this.outstanding = data;
         if(this.outstanding=='0'){
           this.outstanding_bool = true;
+        }
+      });
+
+    }
+
+    approveExt(){
+      this.http
+      .get(
+        this.baseUrl +
+          "data/"+this.townSelected+"/rental/extend/approve/"+
+          (document.getElementById("extend") as HTMLInputElement).value
+          )
+      .subscribe((data) => {
+        this.data = data;
+        if(this.data['request']=="false"){
+          this.hasRequested = true;
+        }else{
+          this.hasRequested = false;
         }
       });
     }
@@ -93,6 +149,11 @@ export class EducationComponent implements OnInit {
           "data/"+this.townSelected+"/rental/history")
       .subscribe((data) => {
         this.data = data;
+        if(this.data['request']=="false"){
+          this.hasRequested = true;
+        }else{
+          this.hasRequested = false;
+        }
       });
     }
     edit(){
