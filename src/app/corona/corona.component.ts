@@ -11,20 +11,24 @@ export class CoronaComponent implements OnInit{
 
   public towns = [];
   public townSelected;
+  properties;
+  property: object ={
+    address : '',
+    image : '',
+    desc: ''
+  };
+  myproperty: object;
 
-  stocks = false;
-  etfs = false;
-  index = false;
-  mutual = false;
-  futures = false;
-  currency = false;
-  options = false;
+  obj = {};
+  message:boolean=false;
 
   username: string;
   roles: string;
   role_list: object[];
 
   type:string = "";
+  //readonly baseUrl = "http://localhost:5000/";
+  readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
 
   constructor(private http: HttpClient, private ds: CoronaserviceService) {
     this.ds.current.subscribe(message => this.username = message);
@@ -38,15 +42,56 @@ export class CoronaComponent implements OnInit{
         console.log(d['role']);
       });
     });
-      this.towns = [
-          "New York", "Washington, D.C.", "London", "Berlin", "Sofia", "Rome", "Kiev",
-          'Copenhagen', "Paris", "Barcelona", "Vienna", "Athens", "Dublin", "Yerevan",
-          "Oslo", "Helsinki", "Stockholm", "Prague", "Istanbul", "El Paso", "Florence", "Moscow",
-          "Jambol", "Talin", "Zlatna Panega", "Queenstown", "Gabrovo", "Ugurchin", "Xanthi"
-        ];
+      this.towns = [];
   }
-  ngOnInit() {
+  addNewProperty(){
+    this.obj = {
+      name: (document.getElementById("propname") as HTMLInputElement).value,
+      address: (document.getElementById("propaddress") as HTMLInputElement).value,
+      desc: (document.getElementById("desc") as HTMLInputElement).value
+    }
+    this.http.post(this.baseUrl +'properties/add', this.obj).subscribe((data) => {
+      this.message = true;
+    });
+  }
 
+  getProperty(){
+    this.http.get(this.baseUrl +'properties/'+this.townSelected+'/get').subscribe((data) => {
+      this.property = data;
+    });
+  }
+
+  getMyProperty(){
+    this.http.get(this.baseUrl +'data/'+this.username+'/rental/history').subscribe((data) => {
+      console.log(data);
+      this.myproperty = data as object;
+      console.log(this.myproperty);
+      this.http.get(this.baseUrl +'properties/'+this.myproperty['propetyname']+'/get').subscribe((data) => {
+        this.property = data;
+      });
+    });
+  }
+
+  updateProperty(){
+    this.property = {
+      address : (document.getElementById("address") as HTMLInputElement).value,
+      image : (document.getElementById("image") as HTMLInputElement).value,
+      desc : (document.getElementById("desc") as HTMLInputElement).value
+    }
+    console.log(this.property);
+    this.http.post(this.baseUrl +'properties/'+this.townSelected+'/update', this.property).subscribe((data) => {
+      console.log(data);
+    });
+  }
+
+  ngOnInit() {
+    this.getMyProperty();
+    this.http.get(this.baseUrl +'properties/get', this.obj).subscribe((data) => {
+      this.properties = data as object[];
+      this.properties.forEach(d => {
+          this.towns.push(d);
+      });
+    });
   }
 }
 

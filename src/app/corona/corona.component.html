@@ -1,36 +1,46 @@
 <div class="container">
 <div class="admin_content" *ngIf="roles.indexOf('admin')!=-1">
 
-  <table class="one" >
-    <tr>
-      <th colspan="2">Edit existing property</th>
-    </tr>
-    <tr>
-      <td>Joseph R. Biden Jr. was </td>
-      <td>Some states will report.</td>
+  <table class="one">
+    <br>
+    <tr><td colspan="3"><h5><u>Update new property</u></h5></td><td colspan="2" style="padding: 10px; border-top: solid wheat 1px; border-left: solid wheat 1px; border-right: solid wheat 1px; border-bottom: none;"><h5><u>Add new property</u></h5></td><td style="border:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+    <tr><td colspan="2" style="min-width: 400px;">
+      <div class="search">
+        <form class="input-group-form">
+          <igx-input-group class="autocomplete">
 
-    </tr>
-  </table>
-  <table class="two" >
-    <tr>
-      <th colspan="2">Add new property</th>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <td>Joseph R. Biden Jr. was </td>
-      <td>Some states will report.</td>
+            <label style="color: wheat;font-size: 4.5mm;" igxLabel for="town"
+              >&nbsp;&nbsp;&nbsp;Search properties&nbsp;&nbsp; (Start
+              typing anything)</label>
+            <input
+              igxInput
+              name="town"
+              type="text"
+              [igxAutocomplete]="townsPanel"
+              [(ngModel)]="townSelected"
+            />
+            <a href="">Test</a>
+          </igx-input-group>
 
-    </tr>
-    <tr>
-      <td>Joseph R. Biden Jr. was </td>
-      <td>Some states will report.</td>
-
-    </tr>
-
-  </table>
+          <igx-drop-down #townsPanel maxHeight="500px">
+            <igx-drop-down-item
+              *ngFor="let town of towns | contains: townSelected"
+              [value]="town"
+            >
+              {{ town }}
+            </igx-drop-down-item>
+          </igx-drop-down>
+        </form>
+      </div>
+      <button mat-button><img (click)="getProperty()" style="width: 25px; height: 25px; display: inline-block;" src="/assets/refresh.png"></button>
+    <br>
+    <br>
+    </td><td style="border:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="border-top: none; border-left: solid wheat 1px; border-right: none; border-bottom: none; padding:20px;">Name:<br>Address:</td> <td style="border-top: none; border-left: none; border-right: solid wheat 1px; border-bottom: none; padding:20px;"><input matInput type="text" id="propname"><br><input matInput type="text" id="propaddress"></td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Address:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td> <td style="border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input matInput type="text" id="address" value="{{property['address']}}" style="border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="border:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="border-top: none; border-left: solid wheat 1px; border-right: none; border-bottom: solid wheat 1px;"><span style=" color: green;" *ngIf="message">Successfully added!</span></td><td style="border-top: none; border-left: none; border-right: solid wheat 1px; border-bottom: solid wheat 1px;"><button mat-button (click)="addNewProperty()" style="display: block; margin-left: auto; margin-right: auto; border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ImageName:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td> <td style="border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input matInput type="text" id="image" value="{{property['image']}}" style="border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td> <td style="border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input matInput type="text" id="desc" value="{{property['desc']}}" style="border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  <tr><td style="border: none;"></td><td><button mat-button (click)="updateProperty()" style="display: block; margin-left: auto; margin-right: auto; border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Update&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td><td style="border:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+</table>
 </div>
 <div class="tenant_content" *ngIf="roles.indexOf('tenant')!=-1">
   <table class="one" >
@@ -38,19 +48,15 @@
       <th colspan="2">Your property</th>
     </tr>
     <tr>
-      <td colspan="2"><img src="/assets/house.jpg" style="width: 400px; height: auto;"/></td>
+      <td colspan="2"><img src="/assets/{{property['image']}}.jpg" style="width: 400px; height: auto;"/></td>
     </tr>
     <tr>
-      <th colspan="2">Edit existing property</th>
+      <td>Address</td>
+      <td>{{property['address']}}</td>
     </tr>
     <tr>
-      <td>Joseph R. Biden Jr. was </td>
-      <td>Some states will report.</td>
-
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>2</td>
+      <td>Description</td>
+      <td>{{property['desc']}}</td>
     </tr>
   </table>
   <table class="two" >

@@ -61,21 +61,22 @@
   border-collapse:separate;
   border:solid wheat 1px;
   border-radius:10px;
+  max-width: 800px;
   -moz-border-radius:6px;
 }
 
 .one td, th {
-  border-left:solid wheat 1px;
-  border-top:solid wheat 1px;
+  border-left:solid wheat 0px;
+  border-top:solid wheat 0px;
 }
 
 .one th {
   background-color: rosybrown;
-  border-top: none;
+  border: none;
 }
 
 .one td:first-child, th:first-child {
-   border-left: none;
+   border: none;
 }
 
 .two {
@@ -88,17 +89,17 @@
 }
 
 .two td, th {
-  border-left:solid wheat 1px;
-  border-top:solid wheat 1px;
+  border-left:solid wheat 0px;
+  border-top:solid wheat 0px;
 }
 
 .two th {
   background-color: rosybrown;
-  border-top: none;
+  border: none;
 }
 
 .two td:first-child, th:first-child {
-   border-left: none;
+   border: none;
 }
 
 .three {
@@ -146,4 +147,14 @@
 
 .four td:first-child, th:first-child {
    border-left: none;
+}
+igx-drop-down {
+  padding: 2%;
+}
+.search {
+  width: 250px;
+  padding: 0%;
+  display: inline-block;
+  margin-left: 10%;
+  margin-right: auto;
 }
