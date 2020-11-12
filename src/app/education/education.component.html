@@ -39,24 +39,24 @@
   <br>
     <table>
       <tr>
-        <td style="border: none;">Email:</td>
-        <td colspan="7" style="border: none;">{{ getEmail(data) }}</td>
+        <td colspan="2" style="border: none;">Email:</td>
+        <td colspan="6" style="border: none;">{{ getEmail(data) }}</td>
       </tr>
       <tr>
-        <td style="border: none;">Phone:</td>
-        <td colspan="7" style="border: none;">{{ getPhone(data) }}</td>
+        <td colspan="2" style="border: none;">Phone:</td>
+        <td colspan="6" style="border: none;">{{ getPhone(data) }}</td>
       </tr>
       <tr>
-        <td style="border: none;">Lease status:</td>
-        <td colspan="7" style="border: none;">{{ getStatus(data) }}</td>
+        <td colspan="2" style="border: none;">Lease status:</td>
+        <td colspan="6" style="border: none;">{{ getStatus(data) }}</td>
       </tr>
       <tr>
-        <td style="border: none;">Lease expires:</td>
-        <td colspan="7" style="border: none;">{{ getExpiry(data) }}</td>
+        <td colspan="2" style="border: none;">Lease expires:</td>
+        <td colspan="6" style="border: none;">{{ getExpiry(data) }}</td>
       </tr>
       <tr>
-        <td style="border: none;">Request:</td>
-        <td colspan="7" style="border: none;">{{ getRequest(data) }} &nbsp;&nbsp;&nbsp;<span *ngIf="!hasRequested"><input matInput type="text" id="extend">&nbsp;&nbsp;<button mat-raised-button (click)="approveExt()">Approve</button></span><span *ngIf="hasRequested">No</span></td>
+        <td colspan="2" style="border: none;">Request:</td>
+        <td colspan="6" style="border: none;">{{ getRequest(data) }} &nbsp;&nbsp;&nbsp;<span *ngIf="!hasRequested"><input matInput type="text" id="extend">&nbsp;&nbsp;<button mat-raised-button (click)="approveExt()">Approve</button></span><span *ngIf="hasRequested">No</span></td>
       </tr>
       <tr>
         <th colspan="8" style="border: none;"><u>Upcoming payments and payment history</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -113,12 +113,12 @@
   <br>
     <table>
       <tr>
-        <td style="border: none;">Lease status:</td>
-        <td colspan="7" style="border: none; color: green;">{{ getStatus(data) }}</td>
+        <td colspan="2" style="border: none;">Lease status:</td>
+        <td colspan="6" style="border: none; color: green;">{{ getStatus(data) }}</td>
       </tr>
       <tr>
-        <td style="border: none;">Lease expires:</td>
-        <td colspan="7" style="border: none;">{{ getExpiry(data) }} &nbsp;&nbsp;&nbsp;<span *ngIf="hasRequested"><span *ngIf="!requested" style="color: green;">
+        <td colspan="2" style="border: none;">Lease expires:</td>
+        <td colspan="6" style="border: none;">{{ getExpiry(data) }} &nbsp;&nbsp;&nbsp;<span *ngIf="hasRequested"><span *ngIf="!requested" style="color: green;">
           <button mat-raised-button (click)="extention()">Request Extension</button></span>
           <span *ngIf="requested" style="color: red;">Select duration: &nbsp;&nbsp;<span *ngFor="let x of getDurations(data)"><button mat-button (click)="getExtention(x)"><u>{{x}}</u></button>
           </span></span></span><span *ngIf="!hasRequested" style="color: green;">Lease extention request processing</span></td>

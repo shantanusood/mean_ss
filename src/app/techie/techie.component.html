@@ -1,13 +1,144 @@
-<div class="container">
-  <div class="monitor">
-    <div class="admin" *ngIf="roles.indexOf('admin')!=-1">
-      <p>Admin Test</p>
-
-    </div>
-    <div class="history" *ngIf="roles.indexOf('tenant')!=-1">
-      <p>History Test</p>
-
-    </div>
-  </div>
-
+<div *ngIf="loading else loaded" style="text-align: center;">
+  <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
+    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    </div></div>
 </div>
+<ng-template #loaded>
+
+  <div class="container">
+    <div class="monitor">
+      <div class="admin" *ngIf="roles.indexOf('admin')!=-1">
+        <div class="search">
+          <form class="input-group-form">
+            <igx-input-group class="autocomplete">
+
+              <label style="color: wheat;font-size: 4.5mm;" igxLabel for="town"
+                >&nbsp;&nbsp;&nbsp;Search for properties&nbsp;&nbsp; (Start
+                typing anything)</label>
+              <input
+                igxInput
+                name="town"
+                type="text"
+                [igxAutocomplete]="townsPanel"
+                [(ngModel)]="townSelected"
+              />
+              <a href="">Test</a>
+            </igx-input-group>
+
+            <igx-drop-down #townsPanel maxHeight="500px">
+              <igx-drop-down-item
+                *ngFor="let town of towns | contains: townSelected"
+                [value]="town"
+              >
+                {{ town }}
+              </igx-drop-down-item>
+            </igx-drop-down>
+          </form>
+        </div>
+        <button mat-button><img (click)="onClickRefresh()" style="width: 25px; height: 25px; display: inline-block;" src="/assets/refresh.png"></button>
+      <br>
+      <br>
+      <table>
+        <tr>
+          <th>S No.</th>
+          <th>Emergency</th>
+          <th>Location in property</th>
+          <th>Description</th>
+          <th>Submitted by</th>
+          <th>Address</th>
+          <th>Submit date</th>
+          <th>Status</th>
+          <th>Changes Status</th>
+          <th>Delete</th>
+        </tr>
+        <tr *ngFor="let x of workorder_selected; let i = index">
+          <td>{{i + 1}}</td>
+          <td>{{ getEmergency(workorder_selected, i)}}</td>
+          <td>{{ getLocation(workorder_selected, i)}}</td>
+          <td>{{ getDescription(workorder_selected, i)}}</td>
+          <td>{{ getSubmitBy(workorder_selected, i)}}</td>
+          <td>{{ getAddress(workorder_selected, i) }}</td>
+          <td>{{ getSubmitDate(workorder_selected, i)}}</td>
+          <td *ngIf="getStatus(workorder_selected, i).indexOf('In progress')!=-1" style="background-color: red;">{{ getStatus(workorder_selected, i)}}</td>
+          <td *ngIf="getStatus(workorder_selected, i).indexOf('Completed')!=-1" style="background-color: green;">{{ getStatus(workorder_selected, i)}}</td>
+          <th><button mat-raised-button >Mark completed</button></th>
+          <th><button mat-raised-button >Delete</button></th>
+        </tr>
+      </table>
+      <br>
+      <br>
+
+      </div>
+      <div class="history" *ngIf="roles.indexOf('tenant')!=-1">
+        <table>
+          <tr>
+            <td colspan="4"><u>According to your lease</u></td>
+          </tr>
+          <tr>
+            <td>Tenant responsible for:</td>
+            <td><ul>
+              <li>o Appliances</li>
+              <li>o Walls & flooring</li>
+              <li>o Paint & tiles</li>
+            </ul></td>
+            <td>Landlord responsible for:</td>
+            <td><ul>
+              <li>o Plumbing</li>
+              <li>o Gas & Electric issues</li>
+              <li>o Heating, hot water issues</li>
+              <li>o Windows and roof</li>
+            </ul></td>
+          </tr>
+        </table>
+        <br>
+        <table>
+          <tr>
+            <th>S No.</th>
+            <th>Emergency</th>
+            <th>Location in property</th>
+            <th>Description</th>
+            <th>Submitted by</th>
+            <th>Address</th>
+            <th>Submit date</th>
+            <th>Status</th>
+          </tr>
+          <tr style="background-color: wheat; color: black;">
+            <td style="color: red;"><b>Add new</b></td>
+            <td>
+              <select (change)="selectOption($event.target.value)">
+                <option value="">&nbsp;</option>
+                <option value="Emergency">Emergency</option>
+                <option value="Not an Emergency">Not an Emergency</option>
+              </select>
+            </td>
+            <td><input type="text" id="location"></td>
+            <td><input type="text" id="description"></td>
+            <td style="color: black;"><b>{{username}}</b></td>
+            <td style="color: black;"><b>{{address}}</b></td>
+            <td style="color: black;"><b>{{date | date: 'dd-MM-yyyy HH:mm'}}</b></td>
+            <td><button mat-raised-button (click)="addToWorkOrder()" >Submit</button></td>
+
+          </tr>
+          <tr *ngIf="!workorder_bool">
+            <td>0</td>
+            <td colspan="6">No past work order yet for this property</td>
+          </tr>
+          <tr *ngFor="let x of workorder; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{ getEmergency(workorder, i)}}</td>
+            <td>{{ getLocation(workorder, i)}}</td>
+            <td>{{ getDescription(workorder, i)}}</td>
+            <td>{{ getSubmitBy(workorder, i)}}</td>
+            <td>{{ address }}</td>
+            <td>{{ getSubmitDate(workorder, i)}}</td>
+            <td *ngIf="getStatus(workorder, i).indexOf('In progress')!=-1" style="background-color: red;">{{ getStatus(workorder, i)}}</td>
+            <td *ngIf="getStatus(workorder, i).indexOf('Completed')!=-1" style="background-color: green;">{{ getStatus(workorder, i)}}</td>
+          </tr>
+        </table>
+        <br>
+        <br>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
