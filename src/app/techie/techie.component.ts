@@ -10,6 +10,7 @@ import { CoronaserviceService } from '../coronaservice.service';
 })
 export class TechieComponent implements OnInit {
 
+  admin_inprogress: object[];
   cur_property:String;
   address:String;
   workorder: object[];
@@ -91,6 +92,9 @@ export class TechieComponent implements OnInit {
         }
       });
     });
+    this.http.get(this.baseUrl +'properties/inprogress').subscribe((data) => {
+      this.workorder_selected = data as object[];
+    });
   }
 
   onClickRefresh(){
@@ -134,10 +138,46 @@ export class TechieComponent implements OnInit {
   }
   getAddress(workorder: object[], index: number){
     if(workorder.length>0){
-      return this.data['address']
+      return workorder[index]['address']
     }else{
       return "NA";
     }
+  }
+  del_obj;
+  compl_obj;
+  delete(_address: String, _time:String,){
+    this.loading = true;
+    this.del_obj = {
+      address : _address,
+      time: _time
+    }
+    this.http
+    .post(
+      this.baseUrl +
+        "properties/workorder/delete", this.del_obj)
+    .subscribe((data) => {
+      this.http.get(this.baseUrl +'properties/inprogress').subscribe((data) => {
+        this.workorder_selected = data as object[];
+      });
+      this.loading = false;
+    });
+  }
+  completed(_address: String, _time:String,){
+    this.loading = true;
+    this.compl_obj = {
+      address : _address,
+      time: _time
+    }
+    this.http
+    .post(
+      this.baseUrl +
+        "properties/workorder/completed", this.compl_obj)
+    .subscribe((data) => {
+      this.http.get(this.baseUrl +'properties/inprogress').subscribe((data) => {
+        this.workorder_selected = data as object[];
+      });
+      this.loading = false;
+    });
   }
 
   getSubmitDate(workorder: object[], index: number){

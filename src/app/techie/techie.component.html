@@ -61,8 +61,8 @@
           <td>{{ getSubmitDate(workorder_selected, i)}}</td>
           <td *ngIf="getStatus(workorder_selected, i).indexOf('In progress')!=-1" style="background-color: red;">{{ getStatus(workorder_selected, i)}}</td>
           <td *ngIf="getStatus(workorder_selected, i).indexOf('Completed')!=-1" style="background-color: green;">{{ getStatus(workorder_selected, i)}}</td>
-          <th><button mat-raised-button >Mark completed</button></th>
-          <th><button mat-raised-button >Delete</button></th>
+          <th><button mat-raised-button (click)="completed(getAddress(workorder_selected, i),  getSubmitDate(workorder_selected, i))">Mark completed</button></th>
+          <th><button mat-raised-button (click)="delete(getAddress(workorder_selected, i), getSubmitDate(workorder_selected, i))" *ngIf="getStatus(workorder_selected, i).indexOf('In progress')!=-1">Delete</button></th>
         </tr>
       </table>
       <br>
