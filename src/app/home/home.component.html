@@ -211,33 +211,17 @@
   </table>
 </ng-template>
 
-<div *ngIf="loading else loaded2" style="text-align: center;">
-  <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
-    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-    </div></div>
-</div>
-
   <div *ngIf="chart" class="charting">
     <p style="width:100%;text-align:center;color: wheat;">{{chart_title}}<p>
     <canvas id="canvas">
-      <ng-template #loaded2>
       {{ chart }}
-    </ng-template>
   </canvas>
-  </div>
-
-  <div *ngIf="barloading else loaded3" style="text-align: center;">
-    <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
-      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-      </div></div>
   </div>
 
   <div *ngIf="barchart" class="barcharting">
     <p style="width:100%;text-align:center;color: wheat;">{{barchart_title}}<p>
     <canvas id="canvas2">
-      <ng-template #loaded3>
       {{ barchart }}
-    </ng-template>
     </canvas>
   </div>
 </div>
