@@ -1,4 +1,5 @@
 <div class="container">
+
 <div class="example-form-field">
     <button mat-raised-button  (click)="changeType('Stocks')">
         Stocks
@@ -193,22 +194,14 @@
 </div>
 
     <a *ngIf="ticker" routerLink="/{{type}}/{{ticker}}" mat-button class="completeRes">Get Complete Research Document for {{ticker | uppercase}}</a>
-    <div *ngIf="loading else loaded" style="text-align: center;">
+
+    <div *ngIf="tableloading else loaded" style="text-align: center;">
       <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
         <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
         </div></div>
     </div>
-    <div *ngIf="barloading else loaded2" style="text-align: center;">
-      <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
-        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-        </div></div>
-    </div>
-    <div *ngIf="tableloading else loaded3" style="text-align: center;">
-      <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
-        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-        </div></div>
-    </div>
-    <ng-template #loaded3>
+
+    <ng-template #loaded>
     <table class="mat-elevation-z8">
 
     <tr *ngFor="let items of response| keyvalue: originalOrder">
@@ -218,13 +211,33 @@
   </table>
 </ng-template>
 
+<div *ngIf="loading else loaded2" style="text-align: center;">
+  <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
+    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    </div></div>
+</div>
+
   <div *ngIf="chart" class="charting">
     <p style="width:100%;text-align:center;color: wheat;">{{chart_title}}<p>
-    <canvas id="canvas"><ng-template #loaded>{{ chart }}</ng-template></canvas>
+    <canvas id="canvas">
+      <ng-template #loaded2>
+      {{ chart }}
+    </ng-template>
+  </canvas>
+  </div>
+
+  <div *ngIf="barloading else loaded3" style="text-align: center;">
+    <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
+      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+      </div></div>
   </div>
 
   <div *ngIf="barchart" class="barcharting">
     <p style="width:100%;text-align:center;color: wheat;">{{barchart_title}}<p>
-    <canvas id="canvas2"><ng-template #loaded2>{{ barchart }}</ng-template></canvas>
+    <canvas id="canvas2">
+      <ng-template #loaded3>
+      {{ barchart }}
+    </ng-template>
+    </canvas>
   </div>
 </div>
