@@ -1,6 +1,7 @@
 import {formatDate} from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { AppSettings } from '../AppSettings';
 import { CoronaserviceService } from '../coronaservice.service';
 
 @Component({
@@ -31,8 +32,7 @@ export class TechieComponent implements OnInit {
   date = new Date();
   selectedOption: String;
 
-  //readonly baseUrl = "http://localhost:5000/";
-  readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
+  readonly baseUrl = AppSettings.baseUrl;
 
   constructor(private http: HttpClient, private ds: CoronaserviceService) {
 

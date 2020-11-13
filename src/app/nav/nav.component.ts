@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { AppSettings } from '../AppSettings';
 
 @Component({
   selector: 'app-nav',
@@ -10,8 +11,8 @@ export class NavComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  //readonly baseUrl = "http://localhost:5000/";
-  readonly baseUrl = "http://shantanusood.pythonanywhere.com/";
+  readonly baseUrl = AppSettings.baseUrl;
+
 
   countx: number = 0;
   open: boolean = false;

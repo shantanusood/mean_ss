@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Chart } from 'chart.js';
 import { CoronaserviceService } from './../../coronaservice.service';
+import { AppSettings } from 'src/app/AppSettings';
 
 @Component({
   selector: 'app-progress',
@@ -15,8 +16,8 @@ export class ProgressComponent implements OnInit {
 
   }
   closedTrd: object[];
-  //readonly baseUrl = "http://localhost:5000/";
-  readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
+  readonly baseUrl = AppSettings.baseUrl;
+
   data: object[];
   chart:Chart = [];
   frontMonth:Chart = [];

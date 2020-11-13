@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { AppSettings } from '../AppSettings';
 import { CoronaserviceService } from '../coronaservice.service';
 
 @Component({
@@ -24,8 +25,8 @@ export class EducationComponent implements OnInit {
   requested:boolean = false;
   hasRequested:boolean;
 
-  //readonly baseUrl = "http://localhost:5000/";
-  readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
+  readonly baseUrl = AppSettings.baseUrl;
+
 
   type:string = "";
 

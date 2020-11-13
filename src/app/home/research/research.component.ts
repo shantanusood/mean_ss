@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HomeComponent } from '../home.component';
 import { Chart } from 'chart.js';
+import { AppSettings } from 'src/app/AppSettings';
 
 @Component({
   selector: 'app-research',
@@ -12,7 +13,8 @@ import { Chart } from 'chart.js';
 })
 export class ResearchComponent implements OnInit {
 
-  readonly baseUrl = 'http://localhost:5000/';
+  readonly baseUrl = AppSettings.baseUrl;
+
   ticker: string = "";
   type: string = "";
 

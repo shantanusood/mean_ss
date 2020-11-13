@@ -3,6 +3,7 @@ import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { CoronaserviceService } from 'services/coronaservice.service';
 import { HttpClient } from '@angular/common/http';
+import { AppSettings } from 'src/app/AppSettings';
 @Component({
   selector: 'app-left',
   templateUrl: './left.component.html',
@@ -14,8 +15,8 @@ export class LeftComponent implements OnInit {
   constructor(private ruuter: Router, private serv: CoronaserviceService, private http: HttpClient) {}
 
   value: String = '';
-  //readonly baseUrl = "http://localhost:5000/";
-  readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
+  readonly baseUrl = AppSettings.baseUrl;
+
 
   @Input()
   nameSel: string;

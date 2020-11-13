@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Chart } from 'chart.js';
+import { AppSettings } from '../AppSettings';
 
 @Component({
   selector: 'app-home',
@@ -9,8 +10,10 @@ import { Chart } from 'chart.js';
 })
 export class HomeComponent implements OnInit {
 
- //readonly baseUrl = "http://localhost:5000/";
- readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
+  readonly baseUrl = AppSettings.baseUrl;
+  loading = false;
+  barloading = false;
+  tableloading = false;
   response: any;
 
   ticker: string = "";
@@ -104,19 +107,23 @@ export class HomeComponent implements OnInit {
           }],
         }
       }
+
     });
   }
 
   ngOnInit() {
 
-    var vol: string = "QQQ";
+    var vol: string = "SPY";
     this.chart_title = vol + " TTM Volume";
     this.barchart_title = vol + " TTM Adj Close change";
     const url = this.baseUrl + 'filters/^' + vol + '/hist';
+    this.loading = true;
     this.http.get(url).subscribe(res => {
       this.chart = this.charting(res['Adj Close**'], res['Date'], 'line', 'canvas2');
       this.barchart = this.charting(res['Volume'], res['Date'], 'bar', 'canvas');
+      this.loading = false;
     });
+
   }
 
   originalOrder = (a: any, b: any): number => {
@@ -129,31 +136,40 @@ export class HomeComponent implements OnInit {
   }
 
   clickQuote() {
+    this.tableloading = true;
     const url = this.baseUrl + 'data/quote/' + ((document.getElementById('quoteInput') as HTMLInputElement).value);
     this.http.get(url).subscribe(res => {
       this.response = res;
+      this.tableloading = false;
     });
   }
   clickBalSheet(){
+    this.tableloading = true;
     const url = this.baseUrl + 'data/bs/' + ((document.getElementById('quoteInput') as HTMLInputElement).value);
     this.http.get(url).subscribe(res => {
       this.response = res;
+      this.tableloading = false;
     });
   }
   clickFinancial(){
+    this.tableloading = true;
     const url = this.baseUrl + 'data/fin/' + ((document.getElementById('quoteInput') as HTMLInputElement).value);
     this.http.get(url).subscribe(res => {
       this.response = res;
+      this.tableloading = false;
     });
   }
   clickCashFlow(){
+    this.tableloading = true;
     const url = this.baseUrl + 'data/cf/' + ((document.getElementById('quoteInput') as HTMLInputElement).value);
     this.http.get(url).subscribe(res => {
       this.response = res;
+      this.tableloading = false;
     });
   }
 
   clickGrowth(){
+    this.loading = true;
     Chart.helpers.each(Chart.instances, function (instance) {
       if (instance.chart.canvas.id === 'canvas') {
         instance.destroy();
@@ -167,10 +183,12 @@ export class HomeComponent implements OnInit {
     this.http.get(url).subscribe(res => {
       this.response = res;
       this.chart = this.charting(res[str], [2019, 2018, 2017], 'line', 'canvas');
+      this.loading = false;
     });
 
   }
   clickCash(){
+    this.loading = true;
     Chart.helpers.each(Chart.instances, function (instance) {
       if (instance.chart.canvas.id === 'canvas') {
         instance.destroy();
@@ -184,10 +202,13 @@ export class HomeComponent implements OnInit {
     this.http.get(url).subscribe(res => {
       this.response = res;
       this.chart = this.charting(res[str], [2019, 2018, 2017], 'line', 'canvas');
+      this.loading = false;
     });
 
   }
   clickProfit(){
+    this.loading = true;
+    this.barloading = true;
     Chart.helpers.each(Chart.instances, function (instance) {
       if (instance.chart.canvas.id === 'canvas') {
         instance.destroy();
@@ -208,10 +229,13 @@ export class HomeComponent implements OnInit {
       this.response = res;
       this.chart = this.charting(res[str][0], [2019, 2018, 2017, 2016], 'bar', 'canvas');
       this.barchart = this.charting(res[str][1], [2019, 2018, 2017], 'line', 'canvas2');
+      this.loading = false;
+      this.barloading = false;
     });
 
   }
   clickRatio(){
+    this.loading = true;
     Chart.helpers.each(Chart.instances, function (instance) {
       if (instance.chart.canvas.id === 'canvas') {
         instance.destroy();
@@ -225,10 +249,13 @@ export class HomeComponent implements OnInit {
     this.http.get(url).subscribe(res => {
       this.response = res;
       this.chart = this.charting(res[str], [2019, 2018, 2017, 2016], 'line', 'canvas');
+      this.loading = false;
     });
 
   }
   clickPerformance(){
+    this.loading = true;
+    this.barloading = true;
     Chart.helpers.each(Chart.instances, function (instance) {
       if (instance.chart.canvas.id === 'canvas') {
         instance.destroy();
@@ -253,6 +280,7 @@ export class HomeComponent implements OnInit {
         keys.push(key);
       });
       this.chart = this.charting(values, keys, 'bar', 'canvas');
+      this.loading = false;
     });
     this.http.get(url2).subscribe(res => {
       let keys : string[] = [];
@@ -262,9 +290,13 @@ export class HomeComponent implements OnInit {
         keys.push(key);
       });
       this.barchart = this.charting(values, keys, 'bar', 'canvas2');
+      this.barloading = false;
     });
   }
+
   clickHoldings(){
+    this.loading = true;
+    this.barloading = true;
     Chart.helpers.each(Chart.instances, function (instance) {
       if (instance.chart.canvas.id === 'canvas') {
         instance.destroy();
@@ -286,19 +318,27 @@ export class HomeComponent implements OnInit {
     const url2 = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/hld/weight';
     this.http.get(url2).subscribe(res => {
       this.chart = this.charting(res['Percent'], res['Sector'], 'bar', 'canvas');
+      this.loading = false;
     });
     const url = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/hld';
     this.http.get(url).subscribe(res => {
       this.chart = this.charting(res['Assets'], res['Name'], 'bar', 'canvas2');
+      this.barloading = false;
+
     });
   }
   clickRisk(){
+    this.tableloading = true;
     const url = this.baseUrl + 'filters/^' + ((document.getElementById('quoteInput') as HTMLInputElement).value) + '/risk';
     this.http.get(url).subscribe(res => {
       this.response = res;
+      this.tableloading = false;
+
     });
   }
   clickHistory(){
+    this.loading = true;
+    this.barloading = true;
     Chart.helpers.each(Chart.instances, function (instance) {
       if (instance.chart.canvas.id === 'canvas') {
         instance.destroy();
@@ -317,6 +357,9 @@ export class HomeComponent implements OnInit {
     this.http.get(url).subscribe(res => {
       this.chart = this.charting(res['Adj Close**'], res['Date'], 'line', 'canvas2');
       this.barchart = this.charting(res['Volume'], res['Date'], 'bar', 'canvas');
+      this.loading = false;
+      this.barloading = false;
     });
+
   }
 }

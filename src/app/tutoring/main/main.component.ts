@@ -2,6 +2,7 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { CoronaserviceService } from "services/coronaservice.service";
+import { AppSettings } from 'src/app/AppSettings';
 
 @Component({
   selector: 'app-main',
@@ -14,8 +15,7 @@ export class MainComponent implements OnInit, OnChanges {
 
   dt: object[];
   ticker: object;
-  //readonly baseUrl = "http://localhost:5000/";
-  readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
+  readonly baseUrl = AppSettings.baseUrl;
   @Input()
   nameSel: string;
   @Input()

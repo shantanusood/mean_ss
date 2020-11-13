@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CoronaserviceService} from './../coronaservice.service';
 import { HttpClient } from '@angular/common/http';
+import { AppSettings } from '../AppSettings';
 
 @Component({
   selector: 'app-login',
@@ -19,8 +20,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   test = 0;
 
-  //readonly baseUrl = "http://localhost:5000/";
-  readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
+  readonly baseUrl = AppSettings.baseUrl;
 
   onClickLogin(){
     this.loading = true;

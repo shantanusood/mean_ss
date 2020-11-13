@@ -1,6 +1,7 @@
 import { Component, HostListener, Inject, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CoronaserviceService } from './../coronaservice.service';
+import { AppSettings } from './../AppSettings';
 
 @Component({
   selector: 'app-corona',
@@ -27,8 +28,7 @@ export class CoronaComponent implements OnInit{
   role_list: object[];
 
   type:string = "";
-  //readonly baseUrl = "http://localhost:5000/";
-  readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
+  readonly baseUrl = AppSettings.baseUrl;
 
   constructor(private http: HttpClient, private ds: CoronaserviceService) {
     this.ds.current.subscribe(message => this.username = message);

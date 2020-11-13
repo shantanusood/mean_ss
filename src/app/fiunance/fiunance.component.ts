@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EaseInOut } from 'igniteui-angular/lib/animations/easings';
 import { AstMemoryEfficientTransformer } from '@angular/compiler';
 import { CoronaserviceService } from '../coronaservice.service';
+import { AppSettings } from '../AppSettings';
 
 export interface DialogData {
   animal: string;
@@ -26,8 +27,8 @@ export class FiunanceComponent implements OnInit {
   loading = true;
   dt: object;
   count:number = 0;
-  //readonly baseUrl = "http://localhost:5000/";
-  readonly baseUrl = "https://shantanusood.pythonanywhere.com/";
+  readonly baseUrl = AppSettings.baseUrl;
+
   add = false;
   addtext:string = "+";
   retExp: string[] ;
