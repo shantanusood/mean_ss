@@ -14,10 +14,12 @@ export class CoronamianComponent implements OnInit {
   obj: object;
   data: object;
   page: String;
+  due_date:String;
   type: String;
   val:String = "";
   roleslist: boolean = false;
   newuser: boolean = false;
+  tasks: boolean = false;
   default: boolean = true;
 
   highbug:boolean = false;
@@ -39,6 +41,7 @@ export class CoronamianComponent implements OnInit {
         if(message==='Vol'){
           this.roleslist = true;
           this.newuser = false;
+          this.tasks = false;
           this.default = false;
           this.highbug = false;
           this.medbug = false;
@@ -48,6 +51,17 @@ export class CoronamianComponent implements OnInit {
         }else if(message==='Chart'){
           this.newuser = true;
           this.roleslist = false;
+          this.tasks = false;
+          this.default = false;
+          this.highbug = false;
+          this.medbug = false;
+          this.lowbug = false;
+          this.openStyle = false;
+          this.openfeat = false;
+        }else if(message==='Tasks'){
+          this.newuser = false;
+          this.roleslist = false;
+          this.tasks = true;
           this.default = false;
           this.highbug = false;
           this.medbug = false;
@@ -57,6 +71,7 @@ export class CoronamianComponent implements OnInit {
         }else if(message==='high'){
           this.newuser = false;
           this.roleslist = false;
+          this.tasks = false;
           this.default = false;
           this.highbug = true;
           this.medbug = false;
@@ -66,6 +81,7 @@ export class CoronamianComponent implements OnInit {
         }else if(message==='medium'){
           this.newuser = false;
           this.roleslist = false;
+          this.tasks = false;
           this.default = false;
           this.highbug = false;
           this.medbug = true;
@@ -75,6 +91,7 @@ export class CoronamianComponent implements OnInit {
         }else if(message==='low'){
           this.newuser = false;
           this.roleslist = false;
+          this.tasks = false;
           this.default = false;
           this.highbug = false;
           this.medbug = false;
@@ -84,6 +101,7 @@ export class CoronamianComponent implements OnInit {
         }else if(message==='style'){
           this.newuser = false;
           this.roleslist = false;
+          this.tasks = false;
           this.default = false;
           this.highbug = false;
           this.medbug = false;
@@ -93,6 +111,7 @@ export class CoronamianComponent implements OnInit {
         }else if(message==='func'){
           this.newuser = false;
           this.roleslist = false;
+          this.tasks = false;
           this.default = false;
           this.highbug = false;
           this.medbug = false;
@@ -105,7 +124,9 @@ export class CoronamianComponent implements OnInit {
       this.data = data;
   });
   }
-
+  getTasks(data: object){
+    return data['tasks']
+  }
   getHigh(data: object){
     return data['high']
   }
@@ -128,6 +149,9 @@ export class CoronamianComponent implements OnInit {
    selectType(value: String) {
     this.type = value;
     console.log(this.type);
+   }
+   changeDueDate(){
+     this.type = (document.getElementById("due_date") as HTMLInputElement).value;
    }
   add(type: String){
     this.obj = {

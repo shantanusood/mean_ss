@@ -3,6 +3,7 @@
   <h5 *ngIf="default || highbug">High bugs list</h5>
   <h5 *ngIf="roleslist">What are all the roles defined in the app</h5>
   <h5 *ngIf="newuser">How to create a new user</h5>
+  <h5 *ngIf="tasks">Tasks to be done</h5>
   <h5 *ngIf="medbug">Medium bugs list</h5>
   <h5 *ngIf="lowbug">Low bugs list</h5>
   <h5 *ngIf="openStyle">Open styling feature list (UI)</h5>
@@ -52,6 +53,44 @@
           <td>{{x.description}}</td>
           <td>{{x.type}}</td>
           <td style="border: none;"><button mat-raised-button (click)="delete(x.page, x.description, x.type, 'high')">Delete</button></td>
+        </tr>
+
+      </table>
+    </div>
+    <div *ngIf="tasks">
+      <table class ="bugtable">
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Due date</th>
+        </tr>
+        <tr style="color: black;">
+          <td style="background-color: wheat; ">
+            <select id="selectPage" (change)="selectPage($event.target.value)">
+              <option value="">&nbsp;</option>
+              <option value="Job">Job</option>
+              <option value="Investment">Investment</option>
+              <option value="Healthr">Health</option>
+              <option value="Finance">Finance</option>
+              <option value="Business">Business</option>
+              <option value="Personal">Personal</option>
+              <option value="NA">NA</option>
+            </select>
+          </td>
+          <td style="width: 50%; background-color: wheat; "><textarea type="text" id="description" placeholder="Describe the bug.."></textarea></td>
+          <td style="background-color: wheat; ">
+            <input type="date" id="due_date" name="trip-start" (change)="changeDueDate()"
+       value="2020-11-11"
+       min="2018-01-01" max="2022-12-31">
+          </td>
+          <td style="border: none;"><button mat-raised-button (click)="add('tasks')">Add</button></td>
+
+        </tr>
+        <tr *ngFor="let x of getTasks(data)">
+          <td>{{x.page}}</td>
+          <td>{{x.description}}</td>
+          <td>{{x.type}}</td>
+          <td style="border: none;"><button mat-raised-button (click)="delete(x.page, x.description, x.type, 'tasks')">Delete</button></td>
         </tr>
 
       </table>
