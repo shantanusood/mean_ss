@@ -1,15 +1,15 @@
 <div class="docpan">
 
-  <h5 *ngIf="default || highbug">High bugs list</h5>
+  <h5 *ngIf="highbug">High bugs list</h5>
   <h5 *ngIf="roleslist">What are all the roles defined in the app</h5>
   <h5 *ngIf="newuser">How to create a new user</h5>
-  <h5 *ngIf="tasks">Tasks to be done</h5>
+  <h5 *ngIf="default || tasks">Tasks to be done</h5>
   <h5 *ngIf="medbug">Medium bugs list</h5>
   <h5 *ngIf="lowbug">Low bugs list</h5>
   <h5 *ngIf="openStyle">Open styling feature list (UI)</h5>
   <h5 *ngIf="openfeat">Open functional feature list (Py API)</h5>
   <div class="chartingvirus">
-    <div *ngIf="default || highbug">
+    <div *ngIf="highbug">
       <table class ="bugtable">
         <tr>
           <th>Page</th>
@@ -57,7 +57,7 @@
 
       </table>
     </div>
-    <div *ngIf="tasks">
+    <div *ngIf="default || tasks">
       <table class ="bugtable">
         <tr>
           <th>Type</th>

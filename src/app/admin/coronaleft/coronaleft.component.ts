@@ -10,9 +10,9 @@ import { CoronaserviceService } from 'services/coronaservice.service';
 export class CoronaleftComponent implements OnInit {
   constructor(private ruuter: Router, private serv: CoronaserviceService) {}
 
-  home = false;
+  home = true;
   chome:number = 1;
-  ext = true;
+  ext = false;
   cext:number = 1;
   strat = false;
   cstrat:number = 1;
