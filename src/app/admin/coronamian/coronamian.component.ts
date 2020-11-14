@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Chart } from "chart.js";
 import { CoronaserviceService } from "services/coronaservice.service";
+import { AppSettings } from 'src/app/AppSettings';
 
 @Component({
   selector: "app-coronamian",
@@ -9,7 +10,11 @@ import { CoronaserviceService } from "services/coronaservice.service";
   styleUrls: ["./coronamian.component.css"]
 })
 export class CoronamianComponent implements OnInit {
-
+  readonly baseUrl = AppSettings.baseUrl;
+  obj: object;
+  data: object;
+  page: String;
+  type: String;
   val:String = "";
   roleslist: boolean = false;
   newuser: boolean = false;
@@ -22,7 +27,9 @@ export class CoronamianComponent implements OnInit {
   openStyle: boolean = false;
   openfeat: boolean = false;
 
-  constructor(private http: HttpClient, private serv: CoronaserviceService) {}
+  constructor(private http: HttpClient, private serv: CoronaserviceService) {
+
+  }
 
   chart = [];
 
@@ -94,6 +101,59 @@ export class CoronamianComponent implements OnInit {
           this.openfeat = true;
         }
     });
+    this.http.get(this.baseUrl + "data/bug/get").subscribe((data) => {
+      this.data = data;
+  });
   }
 
+  getHigh(data: object){
+    return data['high']
+  }
+  getMedium(data: object){
+    return data['medium']
+  }
+  getLow(data: object){
+    return data['low']
+  }
+  getStyle(data: object){
+    return data['style']
+  }
+  getFunctional(data: object){
+    return data['functional']
+  }
+  selectPage(value: String) {
+    this.page = value;
+    console.log(this.page);
+   }
+   selectType(value: String) {
+    this.type = value;
+    console.log(this.type);
+   }
+  add(type: String){
+    this.obj = {
+      page : this.page,
+      description: (document.getElementById("description") as HTMLInputElement).value,
+      type: this.type
+    }
+    this.http.post( this.baseUrl +
+        "data/bug/add/"+type, this.obj)
+    .subscribe((data) => {
+      this.data = data;
+
+    });
+  }
+  delete(_page: String, _desc:String, _type:String, type: String){
+    this.obj = {
+      page : _page,
+      description: _desc,
+      type: _type
+    }
+    this.http
+    .post(
+      this.baseUrl +
+        "data/bug/delete/"+type, this.obj)
+    .subscribe((data) => {
+        this.data = data;
+    });
+  }
 }

@@ -180,6 +180,23 @@ export class TechieComponent implements OnInit {
     });
   }
 
+  inprogress(_address: String, _time:String,){
+    this.loading = true;
+    this.compl_obj = {
+      address : _address,
+      time: _time
+    }
+    this.http
+    .post(
+      this.baseUrl +
+        "properties/workorder/inprogress", this.compl_obj)
+    .subscribe((data) => {
+      this.http.get(this.baseUrl +'properties/inprogress').subscribe((data) => {
+        this.workorder_selected = data as object[];
+      });
+      this.loading = false;
+    });
+  }
   getSubmitDate(workorder: object[], index: number){
     if(workorder.length>0){
       return workorder[index]['submitdate']

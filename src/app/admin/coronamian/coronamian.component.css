@@ -14,3 +14,37 @@
   color: aliceblue;
   max-width: 800px;
 }
+.bugtable {
+  width: 120%;
+  color: aliceblue;
+}
+.bugtable td {
+  min-width: 0px;
+}
+#description {
+  width:100%;
+  resize: vertical;
+  padding:15px;
+  border-radius:15px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  height: 75px;
+}
+#selectPage {
+  width:100%;
+  resize: vertical;
+  padding:15px;
+  border-radius:15px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  height: 45px;
+}
+#selectType {
+  width:100%;
+  resize: vertical;
+  padding:15px;
+  border-radius:15px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  height: 45px;
+}

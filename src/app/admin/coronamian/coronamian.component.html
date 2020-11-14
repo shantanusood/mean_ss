@@ -9,22 +9,51 @@
   <h5 *ngIf="openfeat">Open functional feature list (Py API)</h5>
   <div class="chartingvirus">
     <div *ngIf="default || highbug">
-      <table>
+      <table class ="bugtable">
         <tr>
+          <th>Page</th>
+          <th>Description</th>
           <th>Type</th>
-          <th>Title</th>
-          <th>Severity</th>
         </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
+        <tr style="color: black;">
+          <td style="background-color: wheat; ">
+            <select id="selectPage" (change)="selectPage($event.target.value)">
+              <option value="">&nbsp;</option>
+              <option value="Home">Home</option>
+              <option value="Pay Rent">Pay Rent</option>
+              <option value="Work Order">Work Order</option>
+              <option value="Explore">Explore</option>
+              <option value="Analytics">Analytics</option>
+              <option value="All Users">All Users</option>
+              <option value="Monitor">Monitor</option>
+              <option value="Progress">Progress</option>
+              <option value="Docs">Docs</option>
+              <option value="Admin">Admin</option>
+              <option value="Login">Login</option>
+              <option value="Login">Navigation</option>
+              <option value="NA">NA</option>
+            </select>
+          </td>
+          <td style="width: 50%; background-color: wheat; "><textarea type="text" id="description" placeholder="Describe the bug.."></textarea></td>
+          <td style="background-color: wheat; ">
+            <select id="selectType" (change)="selectType($event.target.value)">
+              <option value="">&nbsp;</option>
+              <option value="UI functional">UI functional</option>
+              <option value="UI styling">UI styling</option>
+              <option value="Mobile styling">Mobile styling</option>
+              <option value="API">API</option>
+            </select>
+          </td>
+          <td style="border: none;"><button mat-raised-button (click)="add('high')">Add</button></td>
+
         </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
+        <tr *ngFor="let x of getHigh(data)">
+          <td>{{x.page}}</td>
+          <td>{{x.description}}</td>
+          <td>{{x.type}}</td>
+          <td style="border: none;"><button mat-raised-button (click)="delete(x.page, x.description, x.type, 'high')">Delete</button></td>
         </tr>
+
       </table>
     </div>
     <div *ngIf="roleslist">
@@ -80,17 +109,196 @@
 
     </div>
     <div *ngIf="medbug">
-      <p>Medbug</p>
+
+      <table class ="bugtable">
+        <tr>
+          <th>Page</th>
+          <th>Description</th>
+          <th>Type</th>
+        </tr>
+        <tr style="color: black;">
+          <td style="background-color: wheat; ">
+            <select id="selectPage" (change)="selectPage($event.target.value)">
+              <option value="">&nbsp;</option>
+              <option value="Home">Home</option>
+              <option value="Pay Rent">Pay Rent</option>
+              <option value="Work Order">Work Order</option>
+              <option value="Explore">Explore</option>
+              <option value="Analytics">Analytics</option>
+              <option value="All Users">All Users</option>
+              <option value="Monitor">Monitor</option>
+              <option value="Progress">Progress</option>
+              <option value="Docs">Docs</option>
+              <option value="Admin">Admin</option>
+              <option value="Login">Login</option>
+              <option value="Login">Navigation</option>
+              <option value="NA">NA</option>
+            </select>
+          </td>
+          <td style="width: 50%; background-color: wheat; "><textarea type="text" id="description" placeholder="Describe the bug.."></textarea></td>
+          <td style="background-color: wheat; ">
+            <select id="selectType" (change)="selectType($event.target.value)">
+              <option value="">&nbsp;</option>
+              <option value="UI functional">UI functional</option>
+              <option value="UI styling">UI styling</option>
+              <option value="Mobile styling">Mobile styling</option>
+              <option value="API">API</option>
+            </select>
+          </td>
+          <td style="border: none;"><button mat-raised-button (click)="add('medium')">Add</button></td>
+
+        </tr>
+        <tr *ngFor="let x of getMedium(data)">
+          <td>{{x.page}}</td>
+          <td>{{x.description}}</td>
+          <td>{{x.type}}</td>
+          <td style="border: none;"><button mat-raised-button (click)="delete(x.page, x.description, x.type, 'medium')">Delete</button></td>
+        </tr>
+
+      </table>
     </div>
     <div *ngIf="lowbug">
-      <p>Lowbug</p>
+      <table class ="bugtable">
+        <tr>
+          <th>Page</th>
+          <th>Description</th>
+          <th>Type</th>
+        </tr>
+        <tr style="color: black;">
+          <td style="background-color: wheat; ">
+            <select id="selectPage" (change)="selectPage($event.target.value)">
+              <option value="">&nbsp;</option>
+              <option value="Home">Home</option>
+              <option value="Pay Rent">Pay Rent</option>
+              <option value="Work Order">Work Order</option>
+              <option value="Explore">Explore</option>
+              <option value="Analytics">Analytics</option>
+              <option value="All Users">All Users</option>
+              <option value="Monitor">Monitor</option>
+              <option value="Progress">Progress</option>
+              <option value="Docs">Docs</option>
+              <option value="Admin">Admin</option>
+              <option value="Login">Login</option>
+              <option value="Login">Navigation</option>
+              <option value="NA">NA</option>
+            </select>
+          </td>
+          <td style="width: 50%; background-color: wheat; "><textarea type="text" id="description" placeholder="Describe the bug.."></textarea></td>
+          <td style="background-color: wheat; ">
+            <select id="selectType" (change)="selectType($event.target.value)">
+              <option value="">&nbsp;</option>
+              <option value="UI functional">UI functional</option>
+              <option value="UI styling">UI styling</option>
+              <option value="Mobile styling">Mobile styling</option>
+              <option value="API">API</option>
+            </select>
+          </td>
+          <td style="border: none;"><button mat-raised-button (click)="add('low')">Add</button></td>
+
+        </tr>
+        <tr *ngFor="let x of getLow(data)">
+          <td>{{x.page}}</td>
+          <td>{{x.description}}</td>
+          <td>{{x.type}}</td>
+          <td style="border: none;"><button mat-raised-button (click)="delete(x.page, x.description, x.type, 'low')">Delete</button></td>
+        </tr>
+
+      </table>
 
     </div>
     <div *ngIf="openStyle">
-      <p>Open styling UI</p>
+      <table class ="bugtable">
+        <tr>
+          <th>Page</th>
+          <th>Description</th>
+          <th>Type</th>
+        </tr>
+        <tr style="color: black;">
+          <td style="background-color: wheat; ">
+            <select id="selectPage" (change)="selectPage($event.target.value)">
+              <option value="">&nbsp;</option>
+              <option value="Home">Home</option>
+              <option value="Pay Rent">Pay Rent</option>
+              <option value="Work Order">Work Order</option>
+              <option value="Explore">Explore</option>
+              <option value="Analytics">Analytics</option>
+              <option value="All Users">All Users</option>
+              <option value="Monitor">Monitor</option>
+              <option value="Progress">Progress</option>
+              <option value="Docs">Docs</option>
+              <option value="Admin">Admin</option>
+              <option value="Login">Login</option>
+              <option value="Login">Navigation</option>
+              <option value="NA">NA</option>
+            </select>
+          </td>
+          <td style="width: 50%; background-color: wheat; "><textarea type="text" id="description" placeholder="Describe the bug.."></textarea></td>
+          <td style="background-color: wheat; ">
+            <select id="selectType" (change)="selectType($event.target.value)">
+              <option value="">&nbsp;</option>
+              <option value="UI">UI</option>
+              <option value="Mobile">Mobile</option>
+              <option value="Both UI & Mobile">Both UI & Mobile</option>
+            </select>
+          </td>
+          <td style="border: none;"><button mat-raised-button (click)="add('style')">Add</button></td>
+
+        </tr>
+        <tr *ngFor="let x of getStyle(data)">
+          <td>{{x.page}}</td>
+          <td>{{x.description}}</td>
+          <td>{{x.type}}</td>
+          <td style="border: none;"><button mat-raised-button (click)="delete(x.page, x.description, x.type, 'style')">Delete</button></td>
+        </tr>
+
+      </table>
     </div>
     <div *ngIf="openfeat">
-      <p>Open functional (Py API)</p>
+      <table class ="bugtable">
+        <tr>
+          <th>Page</th>
+          <th>Description</th>
+          <th>Type</th>
+        </tr>
+        <tr style="color: black;">
+          <td style="background-color: wheat; ">
+            <select id="selectPage" (change)="selectPage($event.target.value)">
+              <option value="">&nbsp;</option>
+              <option value="Home">Home</option>
+              <option value="Pay Rent">Pay Rent</option>
+              <option value="Work Order">Work Order</option>
+              <option value="Explore">Explore</option>
+              <option value="Analytics">Analytics</option>
+              <option value="All Users">All Users</option>
+              <option value="Monitor">Monitor</option>
+              <option value="Progress">Progress</option>
+              <option value="Docs">Docs</option>
+              <option value="Admin">Admin</option>
+              <option value="Login">Login</option>
+              <option value="Login">Navigation</option>
+              <option value="NA">NA</option>
+            </select>
+          </td>
+          <td style="width: 50%; background-color: wheat; "><textarea type="text" id="description" placeholder="Describe the bug.."></textarea></td>
+          <td style="background-color: wheat; ">
+            <select id="selectType" (change)="selectType($event.target.value)">
+              <option value="">&nbsp;</option>
+              <option value="UI">UI</option>
+              <option value="API">API</option>
+              <option value="UI & API Both">UI & API Both</option>
+            </select>
+          </td>
+          <td style="border: none;"><button mat-raised-button (click)="add('functional')">Add</button></td>
+
+        </tr>
+        <tr *ngFor="let x of getFunctional(data)">
+          <td>{{x.page}}</td>
+          <td>{{x.description}}</td>
+          <td>{{x.type}}</td>
+          <td style="border: none;"><button mat-raised-button (click)="delete(x.page, x.description, x.type, 'functional')">Delete</button></td>
+        </tr>
+
+      </table>
 
     </div>
 

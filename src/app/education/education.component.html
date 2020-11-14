@@ -62,11 +62,11 @@
         <td colspan="2" style="border: none;">Request:</td>
         <td colspan="6" style="border: none;">{{ getRequest(data) }} &nbsp;&nbsp;&nbsp;<span *ngIf="!hasRequested"><input matInput type="text" id="extend">&nbsp;&nbsp;<button mat-raised-button (click)="approveExt()">Approve</button></span><span *ngIf="hasRequested">No</span></td>
       </tr>
-      <tr>
+      <tr *ngIf="username!=townSelected">
         <th colspan="8" style="border: none;"><u>Upcoming payments and payment history</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span style="text-align: right;"><button mat-raised-button (click)="send()">Send new</button></span></th>
+          <span style="text-align: right;"><button mat-raised-button (click)="send()" *ngIf="username!=townSelected">Send new</button></span></th>
       </tr>
-      <tr>
+      <tr *ngIf="username!=townSelected">
         <th>Due Date</th>
         <th>Paid Date</th>
         <th>Rent payment amount</th>
@@ -79,16 +79,16 @@
         <th>Delete</th>
       </tr>
       <tr *ngFor="let x of getHistory(data); index as i">
-        <td>{{ x.due_date }}</td>
-        <td>{{ x.paid_date }}</td>
-        <td>${{ x.rent }}</td>
-        <td>${{ x.utilities }}</td>
-        <td>${{ x.late }}</td>
-        <td>${{ x.additional }}</td>
-        <td style="font-size: 2em;"><u>${{ x.total }}</u></td>
-        <td style="text-align: center;" *ngIf="x.status.indexOf('Y')!=-1"><img src="/assets/green.png" style="width: 25px; height: auto;"/></td>
-        <td style="text-align: center;" *ngIf="x.status.indexOf('N')!=-1"><img src="/assets/red.png" style="width: 25px; height: auto;"/></td>
-        <td ><button mat-raised-button (click)="edit()">Edit</button>
+        <td *ngIf="username!=townSelected">{{ x.due_date }}</td>
+        <td *ngIf="username!=townSelected">{{ x.paid_date }}</td>
+        <td *ngIf="username!=townSelected">${{ x.rent }}</td>
+        <td *ngIf="username!=townSelected">${{ x.utilities }}</td>
+        <td *ngIf="username!=townSelected">${{ x.late }}</td>
+        <td *ngIf="username!=townSelected">${{ x.additional }}</td>
+        <td  *ngIf="username!=townSelected" style="font-size: 2em;"><u>${{ x.total }}</u></td>
+        <td style="text-align: center;" *ngIf="x.status.indexOf('Y')!=-1 && username!=townSelected"><img src="/assets/green.png" style="width: 25px; height: auto;"/></td>
+        <td style="text-align: center;" *ngIf="x.status.indexOf('N')!=-1 && username!=townSelected"><img src="/assets/red.png" style="width: 25px; height: auto;"/></td>
+        <td *ngIf="username!=townSelected"><button mat-raised-button (click)="edit()">Edit</button>
           <div *ngIf="add" style="float:right; background-color:wheat; padding: 5px; margin-top: 20px; margin-right: 50px; position:fixed; right: 0; top: 6.5%; z-index: 9;">
             <br>
             <table class="add">
@@ -105,7 +105,7 @@
           </table>
           </div>
         </td>
-        <td *ngIf="x.status.indexOf('N')!=-1"><button mat-raised-button (click)="delete(x.due_date, x.paid_date, x.rent, x.utilities, x.late, x.additional, x.total, x.status)">Delete</button></td>
+        <td *ngIf="x.status.indexOf('N')!=-1 && username!=townSelected"><button mat-raised-button (click)="delete(x.due_date, x.paid_date, x.rent, x.utilities, x.late, x.additional, x.total, x.status)">Delete</button></td>
       </tr>
     </table>
     <br>
