@@ -1,5 +1,5 @@
 .chartingvirus{
-  padding: 2%;
+  padding: 1%;
   margin-top: 0px;
   width: 100%;
   height: inherit;
@@ -15,7 +15,7 @@
   max-width: 800px;
 }
 .bugtable {
-  width: 120%;
+  width: 100%;
   color: aliceblue;
 }
 .bugtable td {
@@ -24,7 +24,7 @@
 #description {
   width:100%;
   resize: vertical;
-  padding:15px;
+  padding:10px;
   border-radius:15px;
   border:0;
   box-shadow:4px 4px 10px rgba(0,0,0,0.06);

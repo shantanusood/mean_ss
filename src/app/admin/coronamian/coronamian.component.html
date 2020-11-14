@@ -12,11 +12,14 @@
     <div *ngIf="highbug">
       <table class ="bugtable">
         <tr>
+          <th style="border: none;"></th>
           <th>Page</th>
           <th>Description</th>
           <th>Type</th>
         </tr>
+
         <tr style="color: black;">
+          <td style="border: none; "><button mat-button (click)="add('high')"><b style="font-size: 8mm; color: white;">+</b></button></td>
           <td style="background-color: wheat; ">
             <select id="selectPage" (change)="selectPage($event.target.value)">
               <option value="">&nbsp;</option>
@@ -45,14 +48,13 @@
               <option value="API">API</option>
             </select>
           </td>
-          <td style="border: none;"><button mat-raised-button (click)="add('high')">Add</button></td>
 
         </tr>
         <tr *ngFor="let x of getHigh(data)">
+          <td style="border: none;"><button mat-button (click)="delete(x.page, x.description, x.type, 'high')"><b style="font-size: 5mm; color:tomato;">x</b></button></td>
           <td>{{x.page}}</td>
           <td>{{x.description}}</td>
           <td>{{x.type}}</td>
-          <td style="border: none;"><button mat-raised-button (click)="delete(x.page, x.description, x.type, 'high')">Delete</button></td>
         </tr>
 
       </table>
@@ -60,11 +62,15 @@
     <div *ngIf="default || tasks">
       <table class ="bugtable">
         <tr>
+          <th style="border: none;"></th>
           <th>Type</th>
           <th>Description</th>
           <th>Due date</th>
         </tr>
         <tr style="color: black;">
+          <td style="border: none; ">
+              <button mat-button (click)="add('tasks')"><b style="font-size: 8mm; color: white;">+</b></button>
+          </td>
           <td style="background-color: wheat; ">
             <select id="selectPage" (change)="selectPage($event.target.value)">
               <option value="">&nbsp;</option>
@@ -83,14 +89,14 @@
        value="2020-11-11"
        min="2018-01-01" max="2022-12-31">
           </td>
-          <td style="border: none;"><button mat-raised-button (click)="add('tasks')">Add</button></td>
+          <td style="border: none;"></td>
 
         </tr>
         <tr *ngFor="let x of getTasks(data)">
+          <td style="border: none;"><button mat-button (click)="delete(x.page, x.description, x.type, 'tasks')"><b style="font-size: 5mm; color:tomato;">x</b></button></td>
           <td>{{x.page}}</td>
           <td>{{x.description}}</td>
           <td>{{x.type}}</td>
-          <td style="border: none;"><button mat-raised-button (click)="delete(x.page, x.description, x.type, 'tasks')">Delete</button></td>
         </tr>
 
       </table>
@@ -151,11 +157,14 @@
 
       <table class ="bugtable">
         <tr>
+          <th style="border: none;"></th>
           <th>Page</th>
           <th>Description</th>
           <th>Type</th>
         </tr>
         <tr style="color: black;">
+          <td style="border: none;"><button mat-button (click)="add('medium')"><b style="font-size: 8mm; color: white;">+</b></button></td>
+
           <td style="background-color: wheat; ">
             <select id="selectPage" (change)="selectPage($event.target.value)">
               <option value="">&nbsp;</option>
@@ -184,14 +193,13 @@
               <option value="API">API</option>
             </select>
           </td>
-          <td style="border: none;"><button mat-raised-button (click)="add('medium')">Add</button></td>
 
         </tr>
         <tr *ngFor="let x of getMedium(data)">
+          <td style="border: none;"><button mat-button (click)="delete(x.page, x.description, x.type, 'medium')"><b style="font-size: 5mm; color:tomato;">x</b></button></td>
           <td>{{x.page}}</td>
           <td>{{x.description}}</td>
           <td>{{x.type}}</td>
-          <td style="border: none;"><button mat-raised-button (click)="delete(x.page, x.description, x.type, 'medium')">Delete</button></td>
         </tr>
 
       </table>
@@ -199,11 +207,13 @@
     <div *ngIf="lowbug">
       <table class ="bugtable">
         <tr>
+          <th style="border: none;"></th>
           <th>Page</th>
           <th>Description</th>
           <th>Type</th>
         </tr>
         <tr style="color: black;">
+          <td style="border: none;"><button mat-button (click)="add('low')"><b style="font-size: 8mm; color: white;">+</b></button></td>
           <td style="background-color: wheat; ">
             <select id="selectPage" (change)="selectPage($event.target.value)">
               <option value="">&nbsp;</option>
@@ -232,14 +242,13 @@
               <option value="API">API</option>
             </select>
           </td>
-          <td style="border: none;"><button mat-raised-button (click)="add('low')">Add</button></td>
 
         </tr>
         <tr *ngFor="let x of getLow(data)">
+          <td style="border: none;"><button mat-button (click)="delete(x.page, x.description, x.type, 'low')"><b style="font-size: 5mm; color:tomato;">x</b></button></td>
           <td>{{x.page}}</td>
           <td>{{x.description}}</td>
           <td>{{x.type}}</td>
-          <td style="border: none;"><button mat-raised-button (click)="delete(x.page, x.description, x.type, 'low')">Delete</button></td>
         </tr>
 
       </table>
@@ -248,11 +257,13 @@
     <div *ngIf="openStyle">
       <table class ="bugtable">
         <tr>
+          <th style="border: none;"></th>
           <th>Page</th>
           <th>Description</th>
           <th>Type</th>
         </tr>
         <tr style="color: black;">
+          <td style="border: none;"><button mat-button (click)="add('style')"><b style="font-size: 8mm; color: white;">+</b></button></td>
           <td style="background-color: wheat; ">
             <select id="selectPage" (change)="selectPage($event.target.value)">
               <option value="">&nbsp;</option>
@@ -280,14 +291,13 @@
               <option value="Both UI & Mobile">Both UI & Mobile</option>
             </select>
           </td>
-          <td style="border: none;"><button mat-raised-button (click)="add('style')">Add</button></td>
 
         </tr>
         <tr *ngFor="let x of getStyle(data)">
+          <td style="border: none;"><button mat-button (click)="delete(x.page, x.description, x.type, 'style')"><b style="font-size: 5mm; color:tomato;">x</b></button></td>
           <td>{{x.page}}</td>
           <td>{{x.description}}</td>
           <td>{{x.type}}</td>
-          <td style="border: none;"><button mat-raised-button (click)="delete(x.page, x.description, x.type, 'style')">Delete</button></td>
         </tr>
 
       </table>
@@ -295,11 +305,14 @@
     <div *ngIf="openfeat">
       <table class ="bugtable">
         <tr>
+          <th style="border: none;"></th>
           <th>Page</th>
           <th>Description</th>
           <th>Type</th>
         </tr>
         <tr style="color: black;">
+          <td style="border: none;"><button mat-button (click)="add('functional')"><b style="font-size: 8mm; color: white;">+</b></button></td>
+
           <td style="background-color: wheat; ">
             <select id="selectPage" (change)="selectPage($event.target.value)">
               <option value="">&nbsp;</option>
@@ -327,14 +340,13 @@
               <option value="UI & API Both">UI & API Both</option>
             </select>
           </td>
-          <td style="border: none;"><button mat-raised-button (click)="add('functional')">Add</button></td>
 
         </tr>
         <tr *ngFor="let x of getFunctional(data)">
+          <td style="border: none;"><button mat-button (click)="delete(x.page, x.description, x.type, 'functional')"><b style="font-size: 5mm; color:tomato;">x</b></button></td>
           <td>{{x.page}}</td>
           <td>{{x.description}}</td>
           <td>{{x.type}}</td>
-          <td style="border: none;"><button mat-raised-button (click)="delete(x.page, x.description, x.type, 'functional')">Delete</button></td>
         </tr>
 
       </table>
