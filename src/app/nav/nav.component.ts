@@ -17,6 +17,7 @@ export class NavComponent implements OnInit {
   countx: number = 0;
   open: boolean = false;
   msg: string;
+  msg2: string;
 
   roles: string;
 
@@ -44,7 +45,13 @@ export class NavComponent implements OnInit {
         this.data = data;
         this.email = data['email'];
         this.phone = data['phone'];
+        this.msg2 = "Changed Successfully!";
+      },
+      (error) => {
+        this.msg2 = error['status'] + " - " + error['statusText'];
+        console.log(error);
       });
+
   }
 
   ngOnInit() {
@@ -110,6 +117,9 @@ export class NavComponent implements OnInit {
   openUserMenu(){
     this.countx++;
     if(this.countx%2==0){
+
+    this.msg ="";
+    this.msg2 ="";
       this.open = false;
     }else{
       this.open = true;
