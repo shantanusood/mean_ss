@@ -60,6 +60,12 @@ export class FiunanceComponent implements OnInit {
     console.log("Clicked - Init");
     this.http.get(this.baseUrl + "data/"+this.username+"/monitoring").subscribe((data) => {
       this.arrBirds = data as string[];
+
+      for(var k in this.arrBirds){
+        this.arrBirds[k]['ordered']['call'].reverse();
+        this.arrBirds[k]['ordered']['put'].reverse();
+      }
+
       this.loading = false;
     });
 
