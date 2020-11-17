@@ -22,9 +22,50 @@ export class NavComponent implements OnInit {
 
   role_list: object[];
 
+  account_1: string;
+  account_2: string;
+  account_3: string;
+  data: object;
+  email: String;
+  phone:String;
+
   @Input() username: string;
 
+  update(){
+    this.http
+      .get(
+        this.baseUrl +
+          "data/"+this.username+"/"
+          + (document.getElementById("email") as HTMLInputElement).value
+          + "/"
+          + (document.getElementById("phone") as HTMLInputElement).value
+          )
+      .subscribe((data) => {
+        this.data = data;
+        this.email = data['email'];
+        this.phone = data['phone'];
+      });
+  }
+
   ngOnInit() {
+    this.http
+      .get(
+        this.baseUrl +
+          "data/"+this.username+"/rental/history")
+      .subscribe((data) => {
+        this.data = data;
+        this.email = data['email'];
+        this.phone = data['phone'];
+      });
+    this.http
+      .get(
+        this.baseUrl +
+          "data/"+this.username+"/accounts")
+      .subscribe((data) => {
+        this.account_1 = data['fidelity'];
+        this.account_2 = data['robinhood'];
+        this.account_3 = data['tastyworks'];
+      });
     this.http.get('/assets/roles.json').subscribe((data) => {
       this.role_list = data as object[];
       this.role_list.forEach(d => {
@@ -54,6 +95,15 @@ export class NavComponent implements OnInit {
       (error) => {
         this.msg = error['status'] + " - " + error['statusText'];
         console.log(error);
+      });
+      this.http
+      .get(
+        this.baseUrl +
+          "data/"+this.username+"/accounts")
+      .subscribe((data) => {
+        this.account_1 = data['fidelity'];
+        this.account_2 = data['robinhood'];
+        this.account_3 = data['tastyworks'];
       });
   }
 
