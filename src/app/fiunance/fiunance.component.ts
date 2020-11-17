@@ -22,6 +22,7 @@ export class FiunanceComponent implements OnInit {
   constructor(private http: HttpClient, public dialog: MatDialog, private ds: CoronaserviceService) {}
 
   arrBirds: string[];
+  selectedOption:String;
   mySubscription: any;
   addedRes: string[];
   loading = true;
@@ -33,9 +34,15 @@ export class FiunanceComponent implements OnInit {
   addtext:string = "+";
   retExp: string[] ;
 
+  strategy:String;
+  cur_date = new Date();
   account_1: string;
   account_2: string;
   account_3: string;
+  covered:boolean = false;
+  callspread:boolean = false;
+  putspread:boolean = false;
+  account: String;
 
   ngOnInit() {
     this.ds.current.subscribe(message => this.username = message);
@@ -47,7 +54,6 @@ export class FiunanceComponent implements OnInit {
         this.baseUrl +
           "data/"+this.username+"/accounts")
       .subscribe((data) => {
-        console.log(data);
         this.account_1 = data['fidelity'];
         this.account_2 = data['robinhood'];
         this.account_3 = data['tastyworks'];
@@ -57,7 +63,6 @@ export class FiunanceComponent implements OnInit {
 
   getData() {
     this.loading = true;
-    console.log("Clicked - Init");
     this.http.get(this.baseUrl + "data/"+this.username+"/monitoring").subscribe((data) => {
       this.arrBirds = data as string[];
 
@@ -70,7 +75,29 @@ export class FiunanceComponent implements OnInit {
     });
 
   }
-
+  selectStrat(value: String){
+    if(value=='Covered Call'){
+      this.covered = true;
+      this.callspread = false;
+      this.putspread = false;
+    }else if(value=='Credit Call Spread'){
+      this.callspread = true;
+      this.covered = false;
+      this.putspread = false
+    }else if(value=='Credit Put Spread'){
+      this.putspread = true;
+      this.callspread = false;
+      this.covered = false;
+    }else{
+      this.covered = false;
+      this.callspread = false;
+      this.putspread = false;
+    }
+    this.strategy = value;
+  }
+  selectOption(value: String) {
+    this.selectedOption = value;
+   }
   processTopExpiration(input: object){
     this.retExp = new Array();
     for(var key in input){
@@ -144,65 +171,80 @@ export class FiunanceComponent implements OnInit {
         this.addtext = "-";
       }
   }
-
+  date: string;
+  changeDueDate(){
+    this.date = (document.getElementById("exp") as HTMLInputElement).value;
+  }
   onClickAddVals() {
-    var width_num: Number = Number((document.getElementById("contracts") as HTMLInputElement).value)*Number((document.getElementById("collateral") as HTMLInputElement).value);
-    var width: string = String(width_num);
-    this.http
-      .get(
-        this.baseUrl +
-        "data/"+this.username+"/monitoring/add/" +
-          (document.getElementById("account") as HTMLInputElement).value +
-          "/" +
-          (document.getElementById("ticker") as HTMLInputElement).value +
-          "/" +
-          width +
-          "/" +
-          (document.getElementById("exp") as HTMLInputElement).value +
-          "/" +
-          (document.getElementById("call") as HTMLInputElement).value +
-          "/" +
-          (document.getElementById("put") as HTMLInputElement).value +
-          "/" +
-          (document.getElementById("premium") as HTMLInputElement).value
-      )
-      .subscribe((data) => {
-        this.addedRes = data as string[];
-        //console.log(data);
-      },
-      (error) => {
-        this.addedRes = error as string[];
-      });
-    this.http
-      .get(
-        this.baseUrl +
-        "data/"+this.username+"/progress/add/" +
-          (document.getElementById("account") as HTMLInputElement).value +
-          "/" +
-          (document.getElementById("ticker") as HTMLInputElement).value +
-          "/" +
-          (document.getElementById("contracts") as HTMLInputElement).value +
-          "/" +
-          (document.getElementById("collateral") as HTMLInputElement).value +
-          "/" +
-          (document.getElementById("exp") as HTMLInputElement).value +
-          "/" +
-          (document.getElementById("call") as HTMLInputElement).value +
-          "/" +
-          (document.getElementById("put") as HTMLInputElement).value +
-          "/" +
-          (document.getElementById("premium") as HTMLInputElement).value
-      )
-      .subscribe((data) => {
-        //console.log(data);
-      },
-      (error) => {
-        if(error['status'].toString() === '404'){
-          this.addedRes = ['All fields required'];
-        }else{
-          this.addedRes = error['status'] as string[];
+    console.log(this.selectedOption);
+    this.http.get(
+      this.baseUrl + "data/"+this.username+"/accounts").subscribe((data) => {
+        console.log(data);
+        if(this.selectedOption===data['fidelity']){
+          this.account = 'fidelity';
+        }else if(this.selectedOption===data['robinhood']){
+          this.account = 'robinhood';
+        }else if(this.selectedOption===data['tastyworks']){
+          this.account = 'tastyworks';
         }
-      });
+      var width_num: Number = Number((document.getElementById("contracts") as HTMLInputElement).value)*Number((document.getElementById("collateral") as HTMLInputElement).value);
+      var width: string = String(width_num);
+      this.http
+        .get(
+          this.baseUrl +
+          "data/"+this.username+"/monitoring/add/" +
+          this.account +
+            "/" +
+            (document.getElementById("ticker") as HTMLInputElement).value +
+            "/" +
+            width +
+            "/" +
+            this.date +
+            "/" +
+            (document.getElementById("call") as HTMLInputElement).value +
+            "/" +
+            (document.getElementById("put") as HTMLInputElement).value +
+            "/" +
+            (document.getElementById("premium") as HTMLInputElement).value
+        )
+        .subscribe((data) => {
+          this.addedRes = data as string[];
+          //console.log(data);
+        },
+        (error) => {
+          this.addedRes = error as string[];
+        });
+      this.http
+        .get(
+          this.baseUrl +
+          "data/"+this.username+"/progress/add/" +
+            this.account +
+            "/" +
+            (document.getElementById("ticker") as HTMLInputElement).value +
+            "/" +
+            (document.getElementById("contracts") as HTMLInputElement).value +
+            "/" +
+            (document.getElementById("collateral") as HTMLInputElement).value +
+            "/" +
+            this.date +
+            "/" +
+            (document.getElementById("call") as HTMLInputElement).value +
+            "/" +
+            (document.getElementById("put") as HTMLInputElement).value +
+            "/" +
+            (document.getElementById("premium") as HTMLInputElement).value
+        )
+        .subscribe((data) => {
+          //console.log(data);
+        },
+        (error) => {
+          if(error['status'].toString() === '404'){
+            this.addedRes = ['All fields required'];
+          }else{
+            this.addedRes = error['status'] as string[];
+          }
+        });
+    });
   }
 }
 
