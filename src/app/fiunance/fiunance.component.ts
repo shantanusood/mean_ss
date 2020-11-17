@@ -76,7 +76,7 @@ export class FiunanceComponent implements OnInit {
   }
 
   reverseIt(input: any[]){
-    return input.reverse();
+    return input;
   }
 
   processKey(input: object){
