@@ -1,5 +1,6 @@
 import { Component, HostListener, Inject, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AppSettings } from '../AppSettings';
 
 @Component({
   selector: 'app-tutoring',
@@ -11,6 +12,7 @@ export class TutoringComponent implements OnInit {
   public towns = [];
   public townSelected = "shantanusood";
 
+  readonly baseUrl = AppSettings.baseUrl;
   stocks = false;
   etfs = false;
   index = false;
@@ -24,7 +26,7 @@ export class TutoringComponent implements OnInit {
   type:string = "";
 
   constructor(private http: HttpClient) {
-    this.http.get('/assets/roles.json').subscribe((data) => {
+    this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
       this.roles = data as object[];
       this.roles.forEach(x => {
         if(x['role']=='admin' || x['role']=='basictrader' || x['role']=='advancedtrader')

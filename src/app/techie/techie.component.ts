@@ -37,7 +37,7 @@ export class TechieComponent implements OnInit {
   constructor(private http: HttpClient, private ds: CoronaserviceService) {
 
     this.ds.current.subscribe(message => this.username = message);
-    this.http.get('/assets/roles.json').subscribe((data) => {
+    this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
       this.role_list = data as object[];
       this.role_list.forEach(d => {
         if(d['userid']===this.username){

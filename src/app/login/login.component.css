@@ -4,9 +4,8 @@
 .login {
   text-align: center;
   display: inline-block;
-  margin-left: 25%;
-    margin-right:25%;
-    width: 50%;
+  display: flex;
+  justify-content: center;
 }
 
 .login h2 {
@@ -14,9 +13,6 @@ text-align: left;
 }
 
 .this {
-  margin-left: 25%;
-  margin-right:25%;
-  width: 50%;
   padding: 20px;
   border-collapse:separate;
   border:solid wheat 1px;
@@ -204,3 +200,31 @@ text-align: left;
   transform-origin: 0 0; /* see note above */
 }
 .ldio-tbsvbued4f div { box-sizing: content-box; }
+
+#inputs {
+  /*width:100%;*/
+  resize: vertical;
+  padding:5px;
+  border-radius:5px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  height: 20px;
+}
+#questions {
+  width:100%;
+  resize: vertical;
+  padding:10px;
+  border-radius:5px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  height: 60px;
+}
+#answers {
+  width:100%;
+  resize: vertical;
+  padding:5px;
+  border-radius:5px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  height: 30px;
+}

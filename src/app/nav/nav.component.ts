@@ -73,7 +73,7 @@ export class NavComponent implements OnInit {
         this.account_2 = data['robinhood'];
         this.account_3 = data['tastyworks'];
       });
-    this.http.get('/assets/roles.json').subscribe((data) => {
+    this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
       this.role_list = data as object[];
       this.role_list.forEach(d => {
         if(d['userid']===this.username){

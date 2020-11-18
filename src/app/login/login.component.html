@@ -1,6 +1,6 @@
 
 
-<h5 style="text-align: center; color: wheat;">Login to continue, don't have an account? <br><u>Email</u>: silpaservicesllc@gmail.com</h5>
+<!--<h5 style="text-align: center; color: wheat;">Login to continue, don't have an account? <br><u>Email</u>: silpaservicesllc@gmail.com</h5>-->
 <br>
 <div *ngIf="loading else loaded" style="text-align: center;">
   <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
@@ -8,18 +8,22 @@
     </div></div>
 </div>
 <ng-template #loaded>
-  <div class="login">
-
+  <div class="login" *ngIf="login">
     <table class="this">
       <tr >
         <td style="border: solid wheat 0px; font-size: 1.8em;"><mat-label>Username: </mat-label></td>
-        <td style="border: solid wheat 0px;"><input matInput type="text" id="username" style="height: 35px !important;"></td>
+        <td style="border: solid wheat 0px;"><input matInput type="text" id="username" value="{{username}}" style="height: 35px !important;"></td>
       </tr>
       <tr >
         <td style="border: solid wheat 0px; font-size: 1.8em;"><mat-label>Pin: </mat-label></td>
-        <td style="border: solid wheat 0px;"><input matInput type="text" id="pin" style="height: 35px !important;"></td>
+        <td style="border: solid wheat 0px;"><input matInput type="text" id="pin" value="{{pin}}" style="height: 35px !important;"></td>
+      </tr>
+      <tr>
+        <td style="border: none; text-align: left;">&nbsp;</td>
+        <td style="border: none; text-align: left;"><button mat-button (click)="forgot()" style="font-size: 1.2em;"><u><i>Forgot your pin?</i></u></button></td>
       </tr>
       <tr *ngIf="correct"><td colSpan="2" style="color: red; border: solid wheat 0px;">Incorrect username & pin combination! TRY AGAIN</td></tr>
+
       <tr>
         <td colspan="2" style="border: solid wheat 0px; padding-top: 20px; width: 100px !important; text-align: center;">
             <button mat-raised-button (click)="onClickLogin()"><span style="font-size: 2em;">Login &nbsp;</span>
@@ -30,11 +34,90 @@
             </button>
         </td>
       </tr>
+      <tr>
+        <td  colspan="2" style="border-bottom: wheat solid 1px; border-top: none; border-left: none; border-right: none; text-align: left;"></td>
 
+      </tr>
+      <tr> <td style="border: none; text-align: center;" colspan="2"> Don't have an account? <button mat-button (click)="setSignup()">Sign up</button></td></tr>
+    </table>
+</div>
+<div class="login" *ngIf="signup">
+  <table class="this">
+    <tr >
+      <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Username: </mat-label></td>
+      <td style="border: solid wheat 0px;"><input matInput type="text" id="username" style="height: 25px !important;"></td>
+    </tr>
+    <tr >
+      <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Secret question: </mat-label></td>
+      <td style="border: solid wheat 0px;"><textarea matInput type="text" id="questions" placeholder="Enter your question.."></textarea></td>
+    </tr>
+    <tr >
+      <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Answer: </mat-label></td>
+      <td style="border: solid wheat 0px;"><input matInput type="text" id="answers" ></td>
+    </tr>
+    <tr *ngIf="correct"><td colSpan="2" style="color: red; border: solid wheat 0px;">Incorrect username & pin combination! TRY AGAIN</td></tr>
+    <tr>
+      <td colspan="2" style="border: solid wheat 0px; padding-top: 20px; width: 100px !important; text-align: center;">
+          <button mat-raised-button (click)="onClickSignup()"><span style="font-size: 2em;">Sign Up &nbsp;</span>
+            <mat-icon style="
+              height:48px !important;
+              width:48px !important;
+              font-size:48px !important;" class="material-icons">login</mat-icon>
+          </button>
+      </td>
+    </tr>
+    <tr><td colspan="2" style="border-bottom: wheat solid 1px; border-top: none; border-left: none; border-right: none;">&nbsp;</td></tr>
+    <tr> <td style="border: none; text-align: center;" colspan="2">Back to login.. <button mat-button (click)="setLogin()">Login</button></td></tr>
 
+</table>
+</div>
+<div class="login" *ngIf="forgotit">
+  <table class="this">
+    <tr >
+      <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Username: </mat-label></td>
+      <td style="border: solid wheat 0px;"><input matInput type="text" id="username" style="height: 25px !important;"></td>
+    </tr>
+    <tr>
+      <td style="border:none">&nbsp;</td>
+      <td style="border:none"><button mat-button (click)="getQuestion()">Get secret question</button></td>
+    </tr>
+    <tr *ngIf="question_bool">
+      <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Secret question: </mat-label></td>
+      <td style="border: solid wheat 0px;">{{question}}</td>
+    </tr>
+    <tr *ngIf="question_bool">
+      <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Answer: </mat-label></td>
+      <td style="border: solid wheat 0px;"><input matInput type="text" id="answers" ></td>
+    </tr>
+    <tr *ngIf="correct"><td colSpan="2" style="color: red; border: solid wheat 0px;">Incorrect answer! TRY AGAIN</td></tr>
+    <tr *ngIf="question_bool">
+      <td colspan="2" style="border: solid wheat 0px; padding-top: 20px; width: 100px !important; text-align: center;">
+          <button mat-raised-button (click)="getPin()"><span style="font-size: 2em;">Get pin &nbsp;</span>
+            <mat-icon style="
+              height:48px !important;
+              width:48px !important;
+              font-size:48px !important;" class="material-icons">login</mat-icon>
+          </button>
+      </td>
+    </tr>
+    <tr><td colspan="2" style="border-bottom: wheat solid 1px; border-top: none; border-left: none; border-right: none;">&nbsp;</td></tr>
+    <tr> <td style="border: none; text-align: center;" colspan="2">Back to login.. <button mat-button (click)="setLogin()">Login</button></td></tr>
+</table>
+</div>
+<div class="login" *ngIf="pin_bool">
+  <table class="this">
+    <tr>
+      <td style="border:none; font-size: 1.2em;"> <mat-label>Username: </mat-label> </td>
+      <td style="border:none; font-size: 1.2em;"><mat-label></mat-label>{{username}}<mat-label></mat-label></td>
+    </tr>
+    <tr>
+      <td style="border:none; font-size: 1.2em;"> <mat-label>Your pin is: </mat-label> </td>
+      <td style="border:none; font-size: 1.2em;"><mat-label></mat-label>{{pin}}<mat-label></mat-label></td>
+    </tr>
 
+    <tr><td colspan="2" style="border-bottom: wheat solid 1px; border-top: none; border-left: none; border-right: none; color: red;">Please save this pin to use in future!</td></tr>
+    <tr> <td style="border: none; text-align: center;" colspan="2">Back to login.. <button mat-raised-button (click)="setLogin()">Login</button></td></tr>
   </table>
-
 </div>
 </ng-template>
 <!--
