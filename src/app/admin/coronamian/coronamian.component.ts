@@ -25,7 +25,7 @@ export class CoronamianComponent implements OnInit {
   highbug:boolean = false;
   medbug:boolean = false;
   lowbug: boolean = false;
-
+  date = new Date();
   openStyle: boolean = false;
   openfeat: boolean = false;
 

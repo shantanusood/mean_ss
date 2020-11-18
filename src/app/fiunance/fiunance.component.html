@@ -77,7 +77,11 @@
   <div class="monitor">
     <table *ngFor="let x of arrBirds" >
       <tr style="color:aliceblue; font-size: 7.5mm;">{{x.ticker | uppercase}} - {{x.total}}
-        <span><button mat-button (click)="onClickDelete(x)"><b style="color:tomato;">x</b></button></span>
+        <span *ngIf="!closeTop"><button mat-button (click)="sure()"><b style="color:tomato;">x</b></button></span>
+        <span *ngIf="closeTop">
+          <button mat-button (click)="onClickDelete(x)"><b style="color:tomato;">Sure?</b></button>
+          <button mat-button (click)="no()"><b style="color:tomato;">No!</b></button>
+        </span>
       </tr>
       <hr>
       <tr *ngFor="let y of reverseIt(x.ordered.call)">

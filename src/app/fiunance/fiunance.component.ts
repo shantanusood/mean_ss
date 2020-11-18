@@ -44,6 +44,15 @@ export class FiunanceComponent implements OnInit {
   putspread:boolean = false;
   account: String;
 
+  closeTop: boolean = false;
+  sure(){
+    this.closeTop = true;
+  }
+  no(){
+    this.closeTop = false;
+  }
+
+
   ngOnInit() {
     this.ds.current.subscribe(message => this.username = message);
     this.http.get(this.baseUrl + "data/"+this.username+"/expiration").subscribe((data) => {
@@ -138,6 +147,7 @@ export class FiunanceComponent implements OnInit {
       .subscribe((data) => {
         //console.log(data);
       });
+      this.closeTop = false;
   }
 
   animal: string;
