@@ -115,9 +115,12 @@
       <td style="border:none; font-size: 1.2em;"><mat-label></mat-label>{{pin}}<mat-label></mat-label></td>
     </tr>
 
-    <tr><td colspan="2" style="border-bottom: wheat solid 1px; border-top: none; border-left: none; border-right: none; color: red;">Please save this pin to use in future!</td></tr>
+    <tr><td colspan="2" style="border-bottom: wheat solid 1px; border-top: none; border-left: none; border-right: none; color: green;">Success! Please save this pin to use in future!</td></tr>
     <tr> <td style="border: none; text-align: center;" colspan="2">Back to login.. <button mat-raised-button (click)="setLogin()">Login</button></td></tr>
   </table>
+</div>
+<div class="login" *ngIf="checkuseer">
+   <span style="color: red; font-size: 1.1em;"><u>{{user}}</u></span> &nbsp;<mat-label style="color: tomato; font-size: 1.1em;">{{userexists}} </mat-label>
 </div>
 </ng-template>
 <!--

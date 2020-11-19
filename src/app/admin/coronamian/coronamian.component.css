@@ -58,3 +58,10 @@
   height: 45px;
 }
 
+.search {
+  width: 250px;
+  padding: 0%;
+  display: inline-block;
+  margin-left: 10%;
+  margin-right: auto;
+}

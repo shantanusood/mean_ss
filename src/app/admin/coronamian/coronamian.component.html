@@ -3,12 +3,46 @@
   <h5 *ngIf="highbug">High bugs list</h5>
   <h5 *ngIf="roleslist">What are all the roles defined in the app</h5>
   <h5 *ngIf="newuser">How to create a new user</h5>
+  <h5 *ngIf="deleteuser">Delete user</h5>
   <h5 *ngIf="default || tasks">Tasks to be done</h5>
   <h5 *ngIf="medbug">Medium bugs list</h5>
   <h5 *ngIf="lowbug">Low bugs list</h5>
   <h5 *ngIf="openStyle">Open styling feature list (UI)</h5>
   <h5 *ngIf="openfeat">Open functional feature list (Py API)</h5>
   <div class="chartingvirus">
+    <div *ngIf="deleteuser">
+      <div class="search">
+        <form class="input-group-form">
+          <igx-input-group class="autocomplete">
+
+            <label style="color: wheat;font-size: 4.5mm;" igxLabel for="town"
+              >&nbsp;&nbsp;&nbsp;Search users&nbsp;&nbsp; (Start
+              typing anything)</label>
+            <input
+              igxInput
+              name="town"
+              type="text"
+              [igxAutocomplete]="townsPanel"
+              [(ngModel)]="townSelected"
+            />
+            <a href="">Test</a>
+          </igx-input-group>
+
+          <igx-drop-down #townsPanel maxHeight="500px">
+            <igx-drop-down-item
+              *ngFor="let town of towns | contains: townSelected"
+              [value]="town"
+            >
+              {{ town }}
+            </igx-drop-down-item>
+          </igx-drop-down>
+        </form>
+      </div>
+      <button mat-button><img (click)="onClickRefresh()" style="width: 25px; height: 25px; display: inline-block;" src="/assets/refresh.png"></button>
+    <br>
+    <br>
+    <button mat-button (click)="deleteUser()"><b style="font-size: 8mm; color: white;">Delete user: {{townSelected}}</b></button>
+    </div>
     <div *ngIf="highbug">
       <table class ="bugtable">
         <tr>

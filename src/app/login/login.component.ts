@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
     this.login = true;
     this.forgotit = false;
     this.pin_bool = false;
+    this.checkuseer = false;
     this.correct = false;
   }
   setSignup(){
@@ -43,8 +44,10 @@ export class LoginComponent implements OnInit {
     this.login = false;
     this.correct = false;
     this.forgotit = false;
+    this.checkuseer = false;
   }
   forgot(){
+    this.checkuseer = false;
     this.pin_bool = false;
     this.signup = false;
     this.login = false;
@@ -68,32 +71,61 @@ export class LoginComponent implements OnInit {
   }
   signup_obj: object;
   newrole: String;
+  checkuseer:boolean = false;
+  userexists:string = "";
+  user:string = "";
+  questions:String = "";
+  answers:String = "";
   onClickSignup(){
+    this.checkuseer = false;
     this.loading = true;
-    if(((document.getElementById("questions") as HTMLInputElement).value)=="tenant"){
-      this.newrole = "tenant";
-    }else{
-      this.newrole = "basictrader";
-    }
-    this.signup_obj = {
-      userid: (document.getElementById("username") as HTMLInputElement).value,
-      role: this.newrole,
-      question: (document.getElementById("questions") as HTMLInputElement).value,
-      answer: (document.getElementById("answers") as HTMLInputElement).value
+    this.userexists = (document.getElementById("username") as HTMLInputElement).value;
+    this.questions = ((document.getElementById("questions") as HTMLInputElement).value);
+    this.answers = ((document.getElementById("answers") as HTMLInputElement).value);
+    this.user = this.userexists;
+    this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
+      this.role_list = data as object[];
+      this.role_list.forEach(d => {
+        if(this.userexists==d['userid']){
+          this.checkuseer = true;
+        }
+      });
+      if(this.checkuseer){
+        this.loading = false;
+        this.pin_bool = false;
+        this.forgotit = false;
+          this.login = false;
+          this.signup = true;
+          this.loading = false;
+        this.userexists = " taken, please try again!";
+      }else{
+        if(this.questions=="tenant"){
+          this.newrole = "tenant";
+        }else{
+          this.newrole = "basictrader";
+        }
+        this.signup_obj = {
+          userid: this.user,
+          role: this.newrole,
+          question: this.questions,
+          answer: this.answers
 
-    }
-    this.http.post(this.baseUrl+'data/newuser', this.signup_obj).subscribe((data) => {
-      console.log("done")
+        }
+        this.http.post(this.baseUrl+'data/newuser', this.signup_obj).subscribe((data) => {
+          console.log("done")
+        });
+        this.username = this.user;
+        this.http.get(this.baseUrl + "data/"+this.username+"/getit").subscribe((data2) => {
+          this.pin = data2['this'];
+          this.pin_bool = true;
+          this.forgotit = false;
+          this.login = false;
+          this.signup = false;
+          this.loading = false;
+        });
+      }
     });
-    this.username = (document.getElementById("username") as HTMLInputElement).value;
-    this.http.get(this.baseUrl + "data/"+this.username+"/getit").subscribe((data2) => {
-      this.pin = data2['this'];
-      this.pin_bool = true;
-      this.forgotit = false;
-      this.login = false;
-      this.signup = false;
-      this.loading = false;
-    });
+
   }
   getPin(){
     this.username = (document.getElementById("username") as HTMLInputElement).value;

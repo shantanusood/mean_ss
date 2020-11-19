@@ -21,6 +21,11 @@ export class CoronamianComponent implements OnInit {
   newuser: boolean = false;
   tasks: boolean = false;
   default: boolean = true;
+  deleteuser:boolean= false;
+
+
+  public towns = [];
+  public townSelected = "";
 
   highbug:boolean = false;
   medbug:boolean = false;
@@ -28,13 +33,35 @@ export class CoronamianComponent implements OnInit {
   date = new Date();
   openStyle: boolean = false;
   openfeat: boolean = false;
+  refreshed: number = 0;
+  username: String;
+  role_list: object[];
+
 
   constructor(private http: HttpClient, private serv: CoronaserviceService) {
-
+    this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
+      this.role_list = data as object[];
+      this.role_list.forEach(d => {
+        if(d['role']=='admin'){
+          console.log("");
+        }else{
+          this.towns.push(d['userid']);
+        }
+      });
+    });
   }
 
+  deleteUser(){
+
+    this.http.get(this.baseUrl+'data/deleteuser/'+this.townSelected).subscribe((data) => {
+      console.log("deleted");
+    });
+  }
   chart = [];
 
+  onClickRefresh(){
+    this.refreshed = this.refreshed + 1;
+  }
 
   ngOnInit() {
     this.serv.currentMessage.subscribe(message => {
@@ -48,6 +75,7 @@ export class CoronamianComponent implements OnInit {
           this.lowbug = false;
           this.openStyle = false;
           this.openfeat = false;
+          this.deleteuser = false;
         }else if(message==='Chart'){
           this.newuser = true;
           this.roleslist = false;
@@ -58,8 +86,21 @@ export class CoronamianComponent implements OnInit {
           this.lowbug = false;
           this.openStyle = false;
           this.openfeat = false;
+          this.deleteuser = false;
+        }else if(message==='Del'){
+          this.newuser = false;
+          this.roleslist = false;
+          this.tasks = false;
+          this.default = false;
+          this.highbug = false;
+          this.medbug = false;
+          this.lowbug = false;
+          this.openStyle = false;
+          this.openfeat = false;
+          this.deleteuser = true;
         }else if(message==='Tasks'){
           this.newuser = false;
+          this.deleteuser = false;
           this.roleslist = false;
           this.tasks = true;
           this.default = false;
@@ -78,6 +119,7 @@ export class CoronamianComponent implements OnInit {
           this.lowbug = false;
           this.openStyle = false;
           this.openfeat = false;
+          this.deleteuser = false;
         }else if(message==='medium'){
           this.newuser = false;
           this.roleslist = false;
@@ -88,6 +130,7 @@ export class CoronamianComponent implements OnInit {
           this.lowbug = false;
           this.openStyle = false;
           this.openfeat = false;
+          this.deleteuser = false;
         }else if(message==='low'){
           this.newuser = false;
           this.roleslist = false;
@@ -98,6 +141,7 @@ export class CoronamianComponent implements OnInit {
           this.lowbug = true;
           this.openStyle = false;
           this.openfeat = false;
+          this.deleteuser = false;
         }else if(message==='style'){
           this.newuser = false;
           this.roleslist = false;
@@ -108,6 +152,7 @@ export class CoronamianComponent implements OnInit {
           this.lowbug = false;
           this.openStyle = true;
           this.openfeat = false;
+          this.deleteuser = false;
         }else if(message==='func'){
           this.newuser = false;
           this.roleslist = false;
@@ -118,6 +163,7 @@ export class CoronamianComponent implements OnInit {
           this.lowbug = false;
           this.openStyle = false;
           this.openfeat = true;
+          this.deleteuser = false;
         }
     });
     this.http.get(this.baseUrl + "data/bug/get").subscribe((data) => {
