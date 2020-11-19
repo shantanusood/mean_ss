@@ -27,20 +27,25 @@ sub {
 }
 
 .monitor {
-  padding: 20px;
+  padding: 10px;
+  border: pink solid 0px;
   margin-top: 30px;
 }
-
-.monitor table {
+.inner {
+  padding: 10px;
+  display: inline-flex;
+  overflow: auto;
+  border: aqua solid 0px;
+}
+.inner table {
   border: wheat dashed 2px;
-  padding: 20px;
+  padding: 10px;
   width: 300px;
   display:inline-table;
 }
 
-.monitor tr {
+.inner tr {
   text-align: center;
-  padding: 20px;
   height: 20px;
 }
 

@@ -75,7 +75,8 @@
   <ng-template #loaded>
 
   <div class="monitor">
-    <table *ngFor="let x of arrBirds" >
+    <div class="inner" *ngFor="let x of arrBirds" >
+    <table>
       <tr style="color:aliceblue; font-size: 7.5mm;">{{x.ticker | uppercase}} - {{x.total}}
         <span *ngIf="!closeTop"><button mat-button (click)="sure()"><b style="color:tomato;">x</b></button></span>
         <span *ngIf="closeTop">
@@ -110,7 +111,7 @@
       </tr>
     </table>
 
-
+  </div>
   </div>
 
 </ng-template>
