@@ -63,5 +63,54 @@
   padding: 0%;
   display: inline-block;
   margin-left: 10%;
-  margin-right: auto;
+  margin-right: 10%;
+}
+#questions {
+  width:100%;
+  resize: vertical;
+  padding:10px;
+  border-radius:5px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  height: 60px;
+}
+#username {
+  width:100%;
+  resize: vertical;
+  padding:5px;
+  border-radius:5px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  height: 30px;
+}
+
+#answers {
+  width:100%;
+  resize: vertical;
+  padding:5px;
+  border-radius:5px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  height: 30px;
+}
+.this {
+  padding: 20px;
+  border-collapse:separate;
+  border:solid wheat 1px;
+  border-radius:10px;
+  -moz-border-radius:6px;
+}
+
+.this td, th {
+  border-left:solid wheat 1px;
+  border-top:solid wheat 1px;
+}
+
+.this th {
+  background-color: rosybrown;
+  border-top: none;
+}
+
+.this td:first-child, th:first-child {
+   border-left: none;
 }

@@ -2,7 +2,7 @@
 
   <h5 *ngIf="highbug">High bugs list</h5>
   <h5 *ngIf="roleslist">What are all the roles defined in the app</h5>
-  <h5 *ngIf="newuser">How to create a new user</h5>
+  <h5 *ngIf="newuser">Create a new user</h5>
   <h5 *ngIf="deleteuser">Delete user</h5>
   <h5 *ngIf="default || tasks">Tasks to be done</h5>
   <h5 *ngIf="medbug">Medium bugs list</h5>
@@ -11,6 +11,10 @@
   <h5 *ngIf="openfeat">Open functional feature list (Py API)</h5>
   <div class="chartingvirus">
     <div *ngIf="deleteuser">
+      <br>
+      <table class="this">
+        <tr>
+          <td colspan="2" style="border: none;">
       <div class="search">
         <form class="input-group-form">
           <igx-input-group class="autocomplete">
@@ -38,10 +42,14 @@
           </igx-drop-down>
         </form>
       </div>
-      <button mat-button><img (click)="onClickRefresh()" style="width: 25px; height: 25px; display: inline-block;" src="/assets/refresh.png"></button>
-    <br>
-    <br>
-    <button mat-button (click)="deleteUser()"><b style="font-size: 8mm; color: white;">Delete user: {{townSelected}}</b></button>
+      <button mat-button></button>
+    </td></tr>
+    <tr>
+      <td style="border: none;"><span style="color: aliceblue;">Delete user: </span></td>
+      <td style="border: none;"><button mat-raised-button (click)="deleteUser()">> {{townSelected}} <</button></td>
+    </tr>
+
+  </table>
     </div>
     <div *ngIf="highbug">
       <table class ="bugtable">
@@ -138,7 +146,7 @@
     <div *ngIf="roleslist">
       <table>
         <tr>
-          <th></th><th>Admin</th><th>AdvancedTrader</th><th>BasicTrader</th><th>Analytics</th><th>Tenent</th>
+          <th></th><th>Admin</th><th>AdvancedTrader</th><th>BasicTrader</th><th>Analytics</th><th>Tenant</th>
         </tr>
         <tr>
           <td>Home</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td>
@@ -173,19 +181,46 @@
       </table>
     </div>
     <div *ngIf="newuser">
-      <ol style="color: aliceblue;">
-        <li>
-          Add userid and role in /assets/roles.json
-        </li>
-        <li>
-          Create folder with name same as username in python service at https://www.pythonanywhere.com/user/shantanusood/files/home/shantanusood/data
-        </li>
-        <li>
-          Upload all json data files from location C:\Users\13476\OneDrive\Desktop\Data Archiving and BackUp\Work\Code Repo\YahooFinDataAnalytics\data\testtenant to the newly created folder
-        </li>
-
-      </ol>
-
+      <span style="color: aliceblue;">To create a user with role 'basictrader', simply registered as normal, but to create a user with role 'tenant' put the secret question value as 'tenant' and secret answer to be the tenant zip code.</span>
+      <br>
+      <br>
+      <table class="this" *ngIf="signup">
+        <tr >
+          <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Username: </mat-label></td>
+          <td style="border: solid wheat 0px;"><input matInput type="text" id="username" style="height: 25px !important;"></td>
+        </tr>
+        <tr>
+          <td colspan="2" *ngIf="checkuseer" style="border: none; color: red;">{{user}} - {{userexists}}</td>
+        </tr>
+        <tr >
+          <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Secret question: </mat-label></td>
+          <td style="border: solid wheat 0px;"><textarea matInput type="text" id="questions" placeholder="Enter your question.."></textarea></td>
+        </tr>
+        <tr >
+          <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Answer: </mat-label></td>
+          <td style="border: solid wheat 0px;"><input matInput type="text" id="answers" ></td>
+        </tr>
+      <tr>
+          <td colspan="2" style="border: solid wheat 0px; padding-top: 20px; width: 100px !important; text-align: center;">
+              <button mat-raised-button (click)="onClickSignup()"><span style="font-size: 2em;">Sign Up &nbsp;</span>
+                <mat-icon style="
+                  height:48px !important;
+                  width:48px !important;
+                  font-size:48px !important;" class="material-icons">login</mat-icon>
+              </button>
+          </td>
+        </tr>
+    </table>
+    <table class="this" *ngIf="pin_bool">
+      <tr>
+        <td style="border:none; font-size: 1.2em;"> <mat-label>Username: </mat-label> </td>
+        <td style="border:none; font-size: 1.2em;"><mat-label></mat-label>{{username}}<mat-label></mat-label></td>
+      </tr>
+      <tr>
+        <td style="border:none; font-size: 1.2em;"> <mat-label>Your pin is: </mat-label> </td>
+        <td style="border:none; font-size: 1.2em;"><mat-label></mat-label>{{pin}}<mat-label></mat-label></td>
+      </tr>
+    </table>
     </div>
     <div *ngIf="medbug">
 

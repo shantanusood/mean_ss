@@ -18,6 +18,7 @@ export class NavComponent implements OnInit {
   open: boolean = false;
   msg: string;
   msg2: string;
+  msg3: string;
 
   roles: string;
 
@@ -29,6 +30,9 @@ export class NavComponent implements OnInit {
   data: object;
   email: String;
   phone:String;
+
+  question:String;
+  answer:String;
 
   @Input() username: string;
 
@@ -78,12 +82,39 @@ export class NavComponent implements OnInit {
       this.role_list.forEach(d => {
         if(d['userid']===this.username){
           this.roles = d['role'];
+          this.question = d['question'];
+          this.answer = d['answer'];
         }
         console.log(d['userid']);
         console.log(d['role']);
       });
     });
 
+  }
+  secretqa: object;
+  secret(){
+    this.secretqa = {
+      question: (document.getElementById("question") as HTMLInputElement).value,
+      answer: (document.getElementById("answer") as HTMLInputElement).value
+    }
+    this.http
+    .post(this.baseUrl + "data/roles/updateqa/" + this.username, this.secretqa)
+    .subscribe((data) => {
+      this.role_list = data as object[];
+      this.role_list.forEach(d => {
+        if(d['userid']===this.username){
+          this.question = d['question'];
+          this.answer = d['answer'];
+        }
+        console.log(d['userid']);
+        console.log(d['role']);
+      });
+      this.msg3 = "Changed Successfully!";
+    },
+    (error) => {
+      this.msg3 = error['status'] + " - " + error['statusText'];
+      console.log(error);
+    });
   }
 
   changeAcc(){
@@ -120,6 +151,7 @@ export class NavComponent implements OnInit {
 
     this.msg ="";
     this.msg2 ="";
+    this.msg3 ="";
       this.open = false;
     }else{
       this.open = true;

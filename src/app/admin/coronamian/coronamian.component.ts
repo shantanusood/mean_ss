@@ -22,7 +22,9 @@ export class CoronamianComponent implements OnInit {
   tasks: boolean = false;
   default: boolean = true;
   deleteuser:boolean= false;
-
+  question:String = "";
+  answer:String = "";
+  question_bool:boolean = false;
 
   public towns = [];
   public townSelected = "";
@@ -36,7 +38,17 @@ export class CoronamianComponent implements OnInit {
   refreshed: number = 0;
   username: String;
   role_list: object[];
-
+  signup_obj: object;
+  newrole: String;
+  checkuseer:boolean = false;
+  userexists:string = "";
+  user:string = "";
+  questions:String = "";
+  answers:String = "";
+  pin: string;
+  loading: boolean = false;
+  signup:boolean = true;
+  pin_bool:boolean = false;
 
   constructor(private http: HttpClient, private serv: CoronaserviceService) {
     this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
@@ -61,6 +73,51 @@ export class CoronamianComponent implements OnInit {
 
   onClickRefresh(){
     this.refreshed = this.refreshed + 1;
+  }
+
+  onClickSignup(){
+    this.checkuseer = false;
+    this.loading = true;
+    this.userexists = (document.getElementById("username") as HTMLInputElement).value;
+    this.questions = ((document.getElementById("questions") as HTMLInputElement).value);
+    this.answers = ((document.getElementById("answers") as HTMLInputElement).value);
+    this.user = this.userexists;
+    this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
+      this.role_list = data as object[];
+      this.role_list.forEach(d => {
+        if(this.userexists==d['userid']){
+          this.checkuseer = true;
+        }
+      });
+      if(this.checkuseer){
+          this.loading = false;
+        this.userexists = " taken, please try again!";
+      }else{
+        if(this.questions=="tenant"){
+          this.newrole = "tenant";
+        }else{
+          this.newrole = "basictrader";
+        }
+        this.signup_obj = {
+          userid: this.user,
+          role: this.newrole,
+          question: this.questions,
+          answer: this.answers
+
+        }
+        this.http.post(this.baseUrl+'data/newuser', this.signup_obj).subscribe((data) => {
+          console.log("done")
+        });
+        this.username = this.user;
+        this.http.get(this.baseUrl + "data/"+this.username+"/getit").subscribe((data2) => {
+          this.pin = data2['this'];
+          this.pin_bool = true;
+          this.signup = false;
+          this.loading = false;
+        });
+      }
+    });
+
   }
 
   ngOnInit() {
