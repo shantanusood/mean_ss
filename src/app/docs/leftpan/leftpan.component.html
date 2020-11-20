@@ -4,38 +4,21 @@
   <span>
 
     <ul>
-      <li><a [routerLink]="'/docs/home'" routerLinkActive="hme" (click)="open('home')">Homepage Docs</a>
-
-        <ul *ngIf="home">
-          <li><a href="/docs/home/#opening1">Backend Api</a></li>
-          <li><a href="/docs/home/#opening2">User Interface</a></li>
-          <li><a href="/docs/home/#opening3">Examples</a></li>
-        </ul>
-
+      <li>
+        <span *ngIf="twit_bool"><a (click)="change('Tasks'); twit()"  style="cursor: pointer; font-size: 1.1em; background-color: wheat; color: black; width: 100%;">Twitter </a></span>
+        <span *ngIf="!twit_bool"><a (click)="change('Tasks'); twit()"  style="cursor: pointer;">Twitter </a></span>
       </li>
-      <li><a [routerLink]="'/docs/ext'" routerLinkActive="hme" (click)="open('ext')">External Data Docs</a>
-
-        <ul *ngIf="ext">
-          <li><a href="/docs/ext/#opening1">Backend Api</a></li>
-          <li><a href="/docs/ext/#opening2">User Interface</a></li>
-          <li><a href="/docs/ext/#opening3">Examples</a></li>
-        </ul>
+      <li>
+        <span *ngIf="faq_bool" > <a (click)="change('Vol'); faq()"  style="cursor: pointer; font-size: 1.1em; background-color: wheat; color: black; width: 100%;">FAQs </a></span>
+        <span *ngIf="!faq_bool" > <a (click)="change('Vol'); faq()"  style="cursor: pointer;">FAQs </a></span>
       </li>
-      <li><a [routerLink]="'/docs/strat'" routerLinkActive="hme" (click)="open('strat')">Strategies Docs</a>
-
-        <ul *ngIf="strat">
-          <li><a href="/docs/strat/#opening1">Backend Api</a></li>
-          <li><a href="/docs/strat/#opening2">User Interface</a></li>
-          <li><a href="/docs/strat/#opening3">Examples</a></li>
-        </ul>
+      <li>
+        <span *ngIf="train_bool"><a (click)="change('Chart'); train()" style="cursor: pointer; font-size: 1.1em; background-color: wheat; color: black; width: 100%;">Training </a></span>
+        <span *ngIf="!train_bool"><a (click)="change('Chart'); train()" style="cursor: pointer;">Training </a></span>
       </li>
-      <li><a [routerLink]="'/docs/predict'" routerLinkActive="hme" (click)="open('predict')">Predictions Docs</a>
-
-        <ul *ngIf="predict">
-          <li><a href="/docs/predict/#opening1">Backend Api</a></li>
-          <li><a href="/docs/predict/#opening2">User Interface</a></li>
-          <li><a href="/docs/predict/#opening3">Examples</a></li>
-        </ul>
+      <li>
+        <span *ngIf="ment_bool"><a (click)="change('Del'); ment()" style="cursor: pointer; font-size: 1.1em; background-color: wheat; color: black; width: 100%;">Mentorship </a></span>
+        <span *ngIf="!ment_bool"><a (click)="change('Del'); ment()" style="cursor: pointer;">Mentorship </a></span>
       </li>
     </ul>
 

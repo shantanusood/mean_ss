@@ -1,6 +1,7 @@
 import { Component, HostListener, Inject, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppSettings } from '../AppSettings';
+import { CoronaserviceService } from '../coronaservice.service';
 
 @Component({
   selector: 'app-tutoring',
@@ -10,7 +11,7 @@ import { AppSettings } from '../AppSettings';
 export class TutoringComponent implements OnInit {
 
   public towns = [];
-  public townSelected = "shantanusood";
+  public townSelected = "";
 
   readonly baseUrl = AppSettings.baseUrl;
   stocks = false;
@@ -22,10 +23,12 @@ export class TutoringComponent implements OnInit {
   options = false;
   roles: object[];
   refreshed: number = 0;
-
+  username: string;
   type:string = "";
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private ds: CoronaserviceService) {
+    this.ds.current.subscribe(message => this.username = message);
+    this.townSelected = this.username;
     this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
       this.roles = data as object[];
       this.roles.forEach(x => {

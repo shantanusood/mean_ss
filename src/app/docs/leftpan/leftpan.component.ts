@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CoronaserviceService } from 'services/coronaservice.service';
 
 @Component({
   selector: 'app-leftpan',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class LeftpanComponent implements OnInit {
 
-  constructor(private ruuter: Router) { }
+  constructor(private ruuter: Router, private serv: CoronaserviceService) { }
 
   home = false;
   chome:number = 0;
@@ -18,6 +19,45 @@ export class LeftpanComponent implements OnInit {
   cstrat:number = 0;
   predict = false;
   cpredict:number = 0;
+  ngAfterViewInit(): void {
+    (<any>window).twttr.widgets.load();
+}
+  twit_bool: boolean = true;
+  faq_bool: boolean = false;
+  train_bool: boolean = false;
+  ment_bool: boolean = false;
+  twit(){
+    this.ngAfterViewInit();
+      this.twit_bool = true;
+      this.faq_bool = false;
+      this.train_bool = false;
+      this.ment_bool = false;
+  }
+  faq(){
+      this.faq_bool = true;
+      this.twit_bool = false;
+      this.train_bool = false;
+      this.ment_bool = false;
+
+  }
+  train(){
+      this.train_bool = true;
+      this.twit_bool = false;
+      this.faq_bool = false;
+      this.ment_bool = false;
+
+  }
+  ment(){
+      this.ment_bool = true;
+      this.twit_bool = false;
+      this.train_bool = false;
+      this.faq_bool = false;
+
+  }
+
+  change(val:string){
+    this.serv.changeMessage(val);
+  }
 
   open(type:String){
     if(type==='home'){
@@ -52,15 +92,7 @@ export class LeftpanComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.ruuter.url.includes('home')){
-      this.home = true;
-    }else if(this.ruuter.url.includes('ext')){
-      this.ext = true;
-    }else if(this.ruuter.url.includes('strat')){
-      this.strat = true;
-    }else if(this.ruuter.url.includes('predict')){
-      this.predict = true;
-    }
+    this.ngAfterViewInit();
   }
 
 }

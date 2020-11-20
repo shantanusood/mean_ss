@@ -11,7 +11,8 @@ import { AppSettings } from 'src/app/AppSettings';
 })
 export class ProgressComponent implements OnInit {
   username: string;
-
+  roles: string;
+  role_list: object[];
   constructor(private http: HttpClient, private ds: CoronaserviceService) {
 
   }
@@ -75,6 +76,7 @@ export class ProgressComponent implements OnInit {
 
     this.type_key = this.type;
     this.ds.current.subscribe(message => this.username = message);
+
     this.http
       .get(
         this.baseUrl +
@@ -87,6 +89,16 @@ export class ProgressComponent implements OnInit {
     this.gainsProgress();
     this.charting();
     this.currentProgress();
+    this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
+      this.role_list = data as object[];
+      this.role_list.forEach(d => {
+        if(d['userid']===this.username){
+          this.roles = d['role'];
+        }
+        console.log(d['userid']);
+        console.log(d['role']);
+      });
+    });
   }
 
   closeExpired(){

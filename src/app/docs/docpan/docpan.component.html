@@ -1,19 +1,19 @@
 <div class="docpan">
 
-  <h5>How to navigate docs</h5>
-  <p id="opening1"></p>
+  <h5 *ngIf="default || tasks">Twitter feed</h5>
+  <h5 *ngIf="roleslist">FAQs</h5>
+  <h5 *ngIf="newuser">Training</h5>
+  <h5 *ngIf="deleteuser">Mentorship</h5>
+  <div class="chartingvirus">
+    <div *ngIf="default || tasks">
+      <a class="twitter-timeline" data-width="800" data-height="1200" data-theme="dark" href="https://twitter.com/tradershan89">Tweets by tradershan89</a>
+      <br>
+      <br>
+    </div>
+    <div *ngIf="roleslist" ><p style="color:aliceblue"></p></div>
+    <div *ngIf="newuser"><p style="color:aliceblue"></p></div>
+    <div *ngIf="deleteuser"><p style="color:aliceblue"></p></div>
 
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-
-  <h5>How to Search for tickers</h5>
-  <p id="opening2"></p>
-
-  <br/>
-  <br/>
-  <br/>
-  <br/>
+  </div>
 
 </div>

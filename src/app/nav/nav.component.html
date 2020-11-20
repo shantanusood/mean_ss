@@ -4,10 +4,10 @@
   <a [routerLink]="'/tech'" routerLinkActive="tut" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('tenant')!=-1">Work Order</a>
   <a [routerLink]="'/explore'" routerLinkActive="exp" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">Explore</a>
   <a [routerLink]="'/strategy'" routerLinkActive="hth" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">Analytics</a>
-  <a [routerLink]="'/external'" routerLinkActive="edu" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('analytics')!=-1">All Users</a>
+  <a [routerLink]="'/external'" routerLinkActive="edu" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('analytics')!=-1">Search</a>
   <a [routerLink]="'/predict'" routerLinkActive="fin" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">Monitor</a>
   <a [routerLink]="'/progress'" routerLinkActive="pro" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">Progress</a>
-  <a [routerLink]="'/docs'" routerLinkActive="doc" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">Docs</a>
+  <a [routerLink]="'/docs'" routerLinkActive="doc" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">Help</a>
   <a [routerLink]="'/admin'" routerLinkActive="adm" *ngIf="roles.indexOf('admin')!=-1">Admin</a>
   <a *ngIf="open else thisone" style="float: right; cursor:pointer; background-color: wheat; color:rosybrown ;" (click)="openUserMenu()"><span style="height: auto;">{{username}}</span></a>
   <ng-template #thisone><a style="float: right; cursor:pointer;" (click)="openUserMenu()"><span style="height: auto;">{{username}}</span></a></ng-template>

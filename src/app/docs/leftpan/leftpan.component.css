@@ -1,7 +1,7 @@
 .leftpan {
   overflow: hidden;
   text-align: center;
-  width: 20%;
+  width: 18%;
   border: solid black 0px;
   height: inherit;
   display: inline-block;
@@ -10,6 +10,7 @@
 }
 .leftpan span {
   display: inline-block;
+  width: auto;
   padding: 2%;
 }
 
@@ -17,13 +18,14 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
-  width: auto;
+  width: 100%;
   background-color: #333;
 }
 
 .leftpan li a {
   display: block;
   color: wheat;
+  width: 100%;
   padding: 8px 16px;
   text-decoration: none;
 }

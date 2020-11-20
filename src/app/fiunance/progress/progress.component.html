@@ -14,64 +14,6 @@
   </div>
 </div>
 
-<div class="percent">
-  <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Percent PNL
-    <button mat-button style="float: right;"><img (click)="currentProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
-    <button mat-raised-button style="float: right;" (click)="closeExpired()"><span style="color: red">x</span> Expired</button>
-  </p>
-  <span style="color: red;">{{closedTrd}}</span>
-  <div *ngIf="loading else loaded" style="text-align: center;">
-    <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
-      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-      </div></div>
-  </div>
-
-  <ng-template #loaded>
-
-    <table>
-      <tr>
-        <td style="border: 0px;"></td>
-        <td colspan="2" style="border: 0px;"><span style="color: orange;">{{account_1}}</span></td>
-        <td colspan="2" style="border: 0px;"><span style="color: rosybrown;">{{account_2}}</span></td>
-        <td colspan="2" style="border: 0px"><span style="color: rgb(243, 138, 126);">{{account_3}}</span></td>
-      </tr>
-      <tr>
-        <th>Ticker</th>
-        <th>call-put</th>
-        <th>Expiry</th>
-        <th>Buy</th>
-        <th>Current</th>
-        <th>PNL</th>
-        <th>% Chng</th>
-      </tr>
-      <tr *ngFor="let x of current;">
-
-          <td *ngFor="let y of x | slice:1; let i = index" >
-            <span *ngIf="x[0].indexOf('fidelity')!=-1 && i!=6"  style="color:orange">
-              {{y}}
-            </span>
-            <span *ngIf="x[0].indexOf('robinhood')!=-1 && i!=6"  style="color:rosybrown">
-              {{y}}
-            </span>
-            <span *ngIf="x[0].indexOf('tastyworks')!=-1 && i!=6"  style="color:rgb(243, 138, 126)">
-              {{y}}
-            </span>
-            <span *ngIf="i==6 && y.indexOf('-')!=-1"  style="color:red">{{y}}%
-              <!--<span *ngIf="!retValGreater(y, -75.0)" style="border: solid red 0.5px;">{{y}}%</span>
-              <span *ngIf="!retValGreater(y, -50.0) && retValGreater(y, -75.0)" style="border: dashed red 0.5px;">{{y}}%</span>
-              <span *ngIf="retValGreater(y, -50.0)">{{y}}%</span>-->
-            </span>
-            <span *ngIf="i==6 && y.indexOf('-')==-1"  style="color:green">{{y}}%
-              <!--<span *ngIf="retValGreater(y, 75.0)" style="border: solid green 0.5px;">{{y}}%</span>
-              <span *ngIf="retValGreater(y, 50.0) && !retValGreater(y, 75.0)" style="border: dashed green 0.5px;">{{y}}%</span>
-              <span *ngIf="!retValGreater(y, 50.0)">{{y}}%</span>-->
-            </span>
-          </td>
-        </tr>
-    </table>
-  </ng-template>
-</div>
-
 <div *ngIf="chart" class="charting_hist" >
   <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Daily historic performance - {{type_key | uppercase}}
     <span style="color: green;" *ngIf="perc_change.indexOf('-')==-1">{{perc_change}}</span>
@@ -148,5 +90,62 @@
       &nbsp;&nbsp;Retirement:&nbsp; <input matInput type="text" id="retirement_c" style="width: 60px;">
       <button mat-button (click)="addDataHistoric()"><u>Add</u></button>
   </div>
+</div>
+<div class="percent" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1">
+  <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Percent PNL
+    <button mat-button style="float: right;"><img (click)="currentProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
+    <button mat-raised-button style="float: right;" (click)="closeExpired()"><span style="color: red">x</span> Expired</button>
+  </p>
+  <span style="color: red;">{{closedTrd}}</span>
+  <div *ngIf="loading else loaded" style="text-align: center;">
+    <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
+      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+      </div></div>
+  </div>
+
+  <ng-template #loaded>
+
+    <table>
+      <tr>
+        <td style="border: 0px;"></td>
+        <td colspan="2" style="border: 0px;"><span style="color: orange;">{{account_1}}</span></td>
+        <td colspan="2" style="border: 0px;"><span style="color: rosybrown;">{{account_2}}</span></td>
+        <td colspan="2" style="border: 0px"><span style="color: rgb(243, 138, 126);">{{account_3}}</span></td>
+      </tr>
+      <tr>
+        <th>Ticker</th>
+        <th>call-put</th>
+        <th>Expiry</th>
+        <th>Buy</th>
+        <th>Current</th>
+        <th>PNL</th>
+        <th>% Chng</th>
+      </tr>
+      <tr *ngFor="let x of current;">
+
+          <td *ngFor="let y of x | slice:1; let i = index" >
+            <span *ngIf="x[0].indexOf('fidelity')!=-1 && i!=6"  style="color:orange">
+              {{y}}
+            </span>
+            <span *ngIf="x[0].indexOf('robinhood')!=-1 && i!=6"  style="color:rosybrown">
+              {{y}}
+            </span>
+            <span *ngIf="x[0].indexOf('tastyworks')!=-1 && i!=6"  style="color:rgb(243, 138, 126)">
+              {{y}}
+            </span>
+            <span *ngIf="i==6 && y.indexOf('-')!=-1"  style="color:red">{{y}}%
+              <!--<span *ngIf="!retValGreater(y, -75.0)" style="border: solid red 0.5px;">{{y}}%</span>
+              <span *ngIf="!retValGreater(y, -50.0) && retValGreater(y, -75.0)" style="border: dashed red 0.5px;">{{y}}%</span>
+              <span *ngIf="retValGreater(y, -50.0)">{{y}}%</span>-->
+            </span>
+            <span *ngIf="i==6 && y.indexOf('-')==-1"  style="color:green">{{y}}%
+              <!--<span *ngIf="retValGreater(y, 75.0)" style="border: solid green 0.5px;">{{y}}%</span>
+              <span *ngIf="retValGreater(y, 50.0) && !retValGreater(y, 75.0)" style="border: dashed green 0.5px;">{{y}}%</span>
+              <span *ngIf="!retValGreater(y, 50.0)">{{y}}%</span>-->
+            </span>
+          </td>
+        </tr>
+    </table>
+  </ng-template>
 </div>
 </div>
