@@ -29,7 +29,8 @@ sub {
 .monitor {
   padding: 10px;
   border: pink solid 0px;
-  margin-top: 30px;
+  margin-top: 10px;
+  margin-right: 7%;
 }
 .inner {
   padding: 10px;
@@ -137,4 +138,23 @@ sub {
   border:0;
   box-shadow:4px 4px 10px rgba(0,0,0,0.06);
   height: 30px;
+}
+.topbar {
+  align-content: center;
+  border: solid 0px wheat ;
+  margin: 0 auto;
+  padding: 3px;
+  margin-top: 20px;
+  margin-right: 10px;
+  position: absolute;
+  right: 3%;
+  left: 3%;
+  top: 2%;
+  z-index: 9;
+  max-width: 92%;
+  color: wheat;
+}
+.topbar table{
+  align-self: center;
+  margin: 0 auto;
 }

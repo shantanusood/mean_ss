@@ -3,7 +3,7 @@
     <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
     </div></div>
 </div>
-<div style="float: right; position:fixed; margin-right: 10px; right: 0; top: 2%; z-index: 10;">
+<div style="float: right; position:fixed; margin-right: 10px; right: 10px; top: 2%; z-index: 10;">
   <br>
   <table>
     <tr><button mat-button><img (click)="onClickRefresh()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></tr>
@@ -15,13 +15,16 @@
   </table>
 
 </div>
-<div style="float: right; position:fixed; margin-right: 20px; right: 0; top: 15%; z-index: -1;">
+<div style="padding: 8px; float: right; position:fixed; margin-right: 20px; right: 0; top: 15%; z-index: -1; background-color: rgb(78, 73, 73);">
   <table>
-  <tr>&nbsp;</tr>
   <tr style="color: orange; text-align: center; z-index: -1;">{{account_1}}</tr>
   <tr style="color: rosybrown; text-align: center; z-index: -1;">{{account_2}}</tr>
   <tr style="color: rgb(243, 138, 126); text-align: center; z-index: -1;">{{account_3}}</tr>
-
+  <tr>&nbsp;</tr>
+  <tr *ngFor="let x of processTopExpiration(dt)" style="color: wheat;">
+    <span *ngIf="x.indexOf('-')!=-1">{{x}}:</span>
+    <span *ngIf="x.indexOf('-')==-1" style="color: aliceblue;">{{x}}</span>
+  </tr>
 </table>
 </div>
 
@@ -64,16 +67,7 @@
 </table>
 </div>
 <div class="container" >
-  <div style="border: solid 0px wheat ; font-size: 1.4em; font-weight: bold; margin: 0 auto; padding: 3px; margin-top: 20px; margin-right: 10px; position: absolute; right: 30%; left: 30%; top: 2%; z-index: 9; width: 40%; color: wheat;">
-    <table>
-      <td style="border: 0px; " *ngFor="let x of processTopExpiration(dt)">
-        <span *ngIf="x.indexOf('-')!=-1" style="text-decoration: underline;">{{x}}:</span>
-        <span *ngIf="x.indexOf('-')==-1">{{x}}</span>
-      </td>
-    </table>
-  </div>
   <ng-template #loaded>
-
   <div class="monitor">
     <div class="inner" *ngFor="let x of arrBirds" >
     <table>

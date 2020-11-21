@@ -13,7 +13,7 @@ export class CoronaleftComponent implements OnInit {
   home = true;
   chome:number = 1;
   ext = false;
-  cext:number = 1;
+  cext:number = 0;
   strat = false;
   cstrat:number = 1;
 
