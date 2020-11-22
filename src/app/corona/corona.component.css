@@ -61,7 +61,6 @@
   border-collapse:separate;
   border:solid wheat 1px;
   border-radius:10px;
-  max-width: 800px;
   -moz-border-radius:6px;
 }
 
@@ -75,8 +74,10 @@
   border: none;
 }
 
+.one tr:nth-child(odd) {background: rgb(78, 73, 73);}
 .one td:first-child, th:first-child {
    border: none;
+   font-style: italic;
 }
 
 .two {
@@ -97,9 +98,11 @@
   background-color: rosybrown;
   border: none;
 }
+.two tr:nth-child(odd) {background: rgb(78, 73, 73);}
 
 .two td:first-child, th:first-child {
    border: none;
+   font-style: italic;
 }
 
 .three {
@@ -157,4 +160,27 @@ igx-drop-down {
   display: inline-block;
   margin-left: 10%;
   margin-right: auto;
+}
+.desc {
+  word-wrap: normal;
+  max-width: 300px;
+  display: block;
+}
+#desc {
+  width:200%;
+  resize: vertical;
+  padding:10px;
+  border-radius:5px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  height: 60px;
+}
+.inputs {
+  width:100%;
+  resize: vertical;
+  padding:5px;
+  border-radius:5px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  height: 30px;
 }

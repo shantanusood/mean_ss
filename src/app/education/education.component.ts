@@ -33,7 +33,15 @@ export class EducationComponent implements OnInit {
   getAddress(data: any){
     return data['address']
   }
-
+  getPropName(data: any){
+    return data['propetyname']
+  }
+  getRecurring(data: any){
+    return data['recurring']
+  }
+  getDurationList(data: any){
+    return data['durations']
+  }
   getEmail(data: any){
     return data['email']
   }
@@ -72,6 +80,27 @@ export class EducationComponent implements OnInit {
           this.hasRequested = false;
         }
         this.loading = false;
+      });
+  }
+  msg:String;
+  userdetails =  {};
+  updateUserDetails(){
+    this.userdetails = {
+      propetyname: (document.getElementById("propetyname") as HTMLInputElement).value,
+      recurring: (document.getElementById("recurring") as HTMLInputElement).value,
+      durations: (document.getElementById("durations") as HTMLInputElement).value,
+      status: (document.getElementById("status") as HTMLInputElement).value,
+      email: (document.getElementById("email") as HTMLInputElement).value,
+      phone: (document.getElementById("phone") as HTMLInputElement).value,
+      expiry: (document.getElementById("expiry") as HTMLInputElement).value
+    }
+    this.http
+      .post(
+        this.baseUrl +
+          "data/"+this.townSelected+"/updatetenant", this.userdetails)
+      .subscribe((data) => {
+        this.data = data;
+        this.msg = 'Update Success!';
       });
   }
   constructor(private http: HttpClient, private ds: CoronaserviceService) {

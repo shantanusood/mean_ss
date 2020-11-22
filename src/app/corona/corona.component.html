@@ -35,56 +35,127 @@
     <br>
     <br>
     </td><td style="border:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="border-top: none; border-left: solid wheat 1px; border-right: none; border-bottom: none; padding:20px;">Name:<br>Address:</td> <td style="border-top: none; border-left: none; border-right: solid wheat 1px; border-bottom: none; padding:20px;"><input matInput type="text" id="propname"><br><input matInput type="text" id="propaddress"></td></tr>
-    <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Address:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td> <td style="border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input matInput type="text" id="address" value="{{property['address']}}" style="border: none;" disabled>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="border:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="border-top: none; border-left: solid wheat 1px; border-right: none; border-bottom: solid wheat 1px;"><span style=" color: green;" *ngIf="message">Successfully added!</span></td><td style="border-top: none; border-left: none; border-right: solid wheat 1px; border-bottom: solid wheat 1px;"><button mat-button (click)="addNewProperty()" style="display: block; margin-left: auto; margin-right: auto; border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
-    <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ImageName:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td> <td style="border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input matInput type="text" id="image" value="{{property['image']}}" style="border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-      <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td> <td style="border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input matInput type="text" id="desc" value="{{property['desc']}}" style="border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <tr><td>Address:</td> <td style="border: none;">
+      <input matInput type="text" id="address" value="{{property['address']}}" style="border: none;" disabled>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="border:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="border-top: none; border-left: solid wheat 1px; border-right: none; border-bottom: solid wheat 1px;"><span style=" color: green;" *ngIf="message">Successfully added!</span></td><td style="border-top: none; border-left: none; border-right: solid wheat 1px; border-bottom: solid wheat 1px;"><button mat-button (click)="addNewProperty()" style="display: block; margin-left: auto; margin-right: auto; border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
+    <tr><td>ImageName:</td> <td style="border: none;">
+      <input matInput type="text" id="image" value="{{property['image']}}" style="border: none;">
+      </td>
+    <tr><td>Description:</td> <td style="border: none;">
+      <textarea matInput type="text" id="desc" value="{{property['desc']}}" style="border: none;"></textarea>
+    </td>
+    <tr><td>Circuit breaker location:</td> <td style="border: none;">
+      <input matInput type="text" id="circuitbreaker" value="{{property['circuitbreaker']}}" style="border: none;" class="inputs">
+      </td>
+    <tr><td>Water shut off:</td> <td style="border: none;">
+      <input matInput type="text" id="watermain" value="{{property['watermain']}}" style="border: none;" class="inputs">
+      </td>
+    <tr><td>Alarm system installed:</td> <td style="border: none;">
+      <input matInput type="text" id="alarm" value="{{property['alarm']}}" style="border: none;" class="inputs">
+      </td>
+    <tr><td>Fire safety:</td> <td style="border: none;">
+      <input matInput type="text" id="fire" value="{{property['fire']}}" style="border: none;" class="inputs">
+      </td>
+    <tr><td>Central heat type:</td> <td style="border: none;">
+      <input matInput type="text" id="centralheat" value="{{property['centralheat']}}" style="border: none;" class="inputs">
+      </td>
+    <tr><td>Age of heat source:</td> <td style="border: none;">
+      <input matInput type="text" id="heatage" value="{{property['heatage']}}" style="border: none;" class="inputs">
+      </td>
+    <tr><td>Pet policy:</td> <td style="border: none;">
+      <input matInput type="text" id="pet" value="{{property['pet']}}" style="border: none;" class="inputs">
+      </td>
+    <tr><td>Nearest police precinct:</td> <td style="border: none;">
+      <input matInput type="text" id="police" value="{{property['police']}}" style="border: none;" class="inputs">
+      </td>
+    <tr><td>Nearest hospital:</td> <td style="border: none;">
+      <input matInput type="text" id="hospital" value="{{property['hospital']}}" style="border: none;" class="inputs">
+      </td>
+    <tr><td>Nearest DMV:</td> <td style="border: none;">
+      <input matInput type="text" id="dmv" value="{{property['dmv']}}" style="border: none;" class="inputs">
+      </td>
   <tr><td style="border: none;"></td><td><button mat-button (click)="updateProperty()" style="display: block; margin-left: auto; margin-right: auto; border: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Update&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td><td style="border:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 </table>
 </div>
 <div class="tenant_content" *ngIf="roles.indexOf('tenant')!=-1">
   <table class="one" >
     <tr>
-      <th colspan="2">Your property</th>
+      <th colspan="2" style="background-color: rgb(78, 73, 73); text-align: center; font-size: 1.1em; color: chocolate; text-decoration: none; font-style: normal;">DETAILS ABOUT YOUR RENTAL</th>
     </tr>
     <tr>
       <td colspan="2"><img src="/assets/{{property['image']}}.jpg" style="width: 400px; height: auto;"/></td>
     </tr>
     <tr>
-      <td>Address</td>
-      <td>{{property['address']}}</td>
+      <td style="border: none;">Address</td>
+      <td style="border: none;" class="desc">{{property['address']}}</td>
     </tr>
     <tr>
-      <td>Description</td>
-      <td>{{property['desc']}}</td>
+      <td style="border: none;">Circuit breaker location</td>
+      <td style="border: none;">{{property['circuitbreaker']}}</td>
+    </tr>
+    <tr>
+      <td style="border: none;">Water shut off </td>
+      <td style="border: none;">{{property['watermain']}}</td>
+    </tr>
+    <tr>
+      <td style="border: none;">Alarm system installed</td>
+      <td style="border: none;">{{property['alarm']}}</td>
+    </tr>
+    <tr>
+      <td style="border: none;">Fire safety</td>
+      <td style="border: none;">{{property['fire']}}</td>
+    </tr>
+    <tr>
+      <td style="border: none;">Central heat type</td>
+      <td style="border: none;">{{property['centralheat']}}</td>
+    </tr>
+    <tr>
+      <td style="border: none;">Age of heat source</td>
+      <td style="border: none;">{{property['heatage']}}</td>
     </tr>
   </table>
   <table class="two" >
     <tr>
-      <th colspan="2">Details about your property</th>
+      <th colspan="2" style="background-color: rgb(78, 73, 73); text-align: center; font-size: 1.1em; color: chocolate; text-decoration: none; font-style: normal;">LEASE AGREEMENT</th>
     </tr>
     <tr>
-      <td>1</td>
-      <td>2</td>
+      <td style="border: none;">Rental Description</td>
+      <td style="border: none;" class="desc">{{property['desc']}}</td>
     </tr>
     <tr>
-      <td>Joseph R. Biden Jr. was elected the 46th president .</td>
-      <td>Some states will report a vast majority of votes.</td>
+      <td style="border: none;">Lease status:</td>
+      <td style="border: none; color: green;">{{ getStatus(data) }}</td>
     </tr>
     <tr>
-      <td>.</td>
-      <td>.</td>
+      <td style="border: none;">Lease expires:</td>
+        <td style="border: none;">{{ getExpiry(data) }} &nbsp;&nbsp;&nbsp;<span *ngIf="hasRequested"><span *ngIf="!requested" style="color: green;">
+          <button mat-raised-button (click)="extention()">Request Extension</button></span>
+          <span *ngIf="requested" style="color: red;">Select duration: &nbsp;&nbsp;<span *ngFor="let x of getDurations(data)"><button mat-button (click)="getExtention(x)"><u>{{x}}</u></button>
+          </span></span></span><span *ngIf="!hasRequested" style="color: green;">Lease extention request processing</span></td>
     </tr>
     <tr>
-      <td>.</td>
-      <td>.</td>
+      <td style="border: none;">Download</td>
+      <td style="border: none;">2</td>
     </tr>
     <tr>
-      <td>.</td>
-      <td>.</td>
+      <td style="border: none;">Security deposit</td>
+      <td style="border: none;">2</td>
     </tr>
     <tr>
-      <td>.</td>
-      <td>.</td>
+      <td style="border: none;">Pet policy</td>
+      <td style="border: none;">{{property['pet']}}</td>
+    </tr>
+    <tr>
+      <td style="border: none;">Nearest police precinct</td>
+      <td style="border: none;">{{property['police']}}</td>
+    </tr>
+    <tr>
+      <td style="border: none;">Nearest hospital</td>
+      <td style="border: none;">{{property['hospital']}}</td>
+    </tr>
+    <tr>
+      <td style="border: none;">Nearest DMV</td>
+      <td style="border: none;">{{property['dmv']}}</td>
     </tr>
   </table>
 </div>

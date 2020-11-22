@@ -39,24 +39,41 @@
   <br>
     <table>
       <tr>
+        <td colspan="2" style="border: none;">Attach property:</td>
+        <td colspan="3" style="border: none;"> <input matInput type="text" id="propetyname" value="{{getPropName(data)}}" style="border: none;" class="inputs"></td>
+      </tr>
+      <tr>
+        <td colspan="2" style="border: none;">Recurring rent:</td>
+        <td colspan="3" style="border: none;"> <input matInput type="text" id="recurring" value="{{getRecurring(data)}}" style="border: none;" class="inputs"></td>
+      </tr>
+      <tr>
+        <td colspan="2" style="border: none;">Durations:</td>
+        <td colspan="3" style="border: none;"> <input matInput type="text" id="durations" value="{{getDurationList(data)}}" style="border: none;" class="inputs"></td>
+      </tr>
+      <tr>
         <td colspan="2" style="border: none;">Email:</td>
-        <td colspan="6" style="border: none;">{{ getEmail(data) }}</td>
+        <td colspan="3" style="border: none;"> <input matInput type="text" id="email" value="{{getEmail(data)}}" style="border: none;" class="inputs"></td>
       </tr>
       <tr>
         <td colspan="2" style="border: none;">Phone:</td>
-        <td colspan="6" style="border: none;">{{ getPhone(data) }}</td>
+        <td colspan="3" style="border: none;"> <input matInput type="text" id="phone" value="{{getPhone(data)}}" style="border: none;" class="inputs"></td>
       </tr>
       <tr>
         <td colspan="2" style="border: none;">Address:</td>
-        <td colspan="6" style="border: none;">{{ getAddress(data) }}</td>
+        <td colspan="3" style="border: none;">{{ getAddress(data) }}</td>
       </tr>
       <tr>
         <td colspan="2" style="border: none;">Lease status:</td>
-        <td colspan="6" style="border: none;">{{ getStatus(data) }}</td>
+        <td colspan="3" style="border: none;"> <input matInput type="text" id="status" value="{{getStatus(data)}}" style="border: none;" class="inputs"></td>
       </tr>
       <tr>
         <td colspan="2" style="border: none;">Lease expires:</td>
-        <td colspan="6" style="border: none;">{{ getExpiry(data) }}</td>
+        <td colspan="3" style="border: none;"> <input matInput type="text" id="expiry" value="{{getExpiry(data)}}" style="border: none;" class="inputs"></td>
+      </tr>
+      <tr>
+        <td colspan="2" style="border: none;"></td>
+        <td colspan="2" style="border: none;"><button mat-raised-button (click)="updateUserDetails()">Update user details</button></td>
+        <td colspan="4" *ngIf="msg" style="color: green;">{{msg}}</td>
       </tr>
       <tr>
         <td colspan="2" style="border: none;">Request:</td>
