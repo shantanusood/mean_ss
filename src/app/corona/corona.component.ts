@@ -1,7 +1,9 @@
 import { Component, HostListener, Inject, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { saveAs } from "file-saver";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CoronaserviceService } from './../coronaservice.service';
 import { AppSettings } from './../AppSettings';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-corona',
@@ -133,6 +135,20 @@ export class CoronaComponent implements OnInit{
         this.loading = false;
       });
   }
+  download() {
+    this.downloadReport().subscribe(
+      (data) => {
+        saveAs(data, this.username+'lease.pdf');
+      },
+      err => {
+        alert("Problem while downloading the file.");
+        console.error(err);
+      }
+    );
+  }
+  downloadReport(): Observable<any>{
+		return this.http.get('./assets/'+this.username+'lease.pdf', { responseType: "blob" });
+   }
   ngOnInit() {
     this.ds.current.subscribe(message => this.username = message);
     this.getMyProperty();

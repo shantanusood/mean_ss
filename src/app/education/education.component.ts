@@ -63,6 +63,9 @@ export class EducationComponent implements OnInit {
   getRequest(data: any){
     return data['request'];
   }
+  getDeposit(data: any){
+    return data['deposit'];
+  }
   extention(){
     this.requested = true;
   }
@@ -88,6 +91,7 @@ export class EducationComponent implements OnInit {
     this.userdetails = {
       propetyname: (document.getElementById("propetyname") as HTMLInputElement).value,
       recurring: (document.getElementById("recurring") as HTMLInputElement).value,
+      deposit: (document.getElementById("deposit") as HTMLInputElement).value,
       durations: (document.getElementById("durations") as HTMLInputElement).value,
       status: (document.getElementById("status") as HTMLInputElement).value,
       email: (document.getElementById("email") as HTMLInputElement).value,
