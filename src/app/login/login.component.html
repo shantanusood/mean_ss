@@ -10,11 +10,15 @@
   <div class="login" *ngIf="login">
     <table class="this">
       <tr >
-        <td style="border: solid wheat 0px; font-size: 1.8em;"><mat-label>Username: </mat-label></td>
+        <td style="border: solid wheat 0px; font-size: 1.8em;"><mat-label>Username:
+          <span *ngIf="required_username" style="color: red;">*</span>
+        </mat-label></td>
         <td style="border: solid wheat 0px;"><input matInput type="text" id="username" value="{{username}}" style="height: 35px !important;"></td>
       </tr>
       <tr >
-        <td style="border: solid wheat 0px; font-size: 1.8em;"><mat-label>Pin: </mat-label></td>
+        <td style="border: solid wheat 0px; font-size: 1.8em;"><mat-label>Pin:
+          <span *ngIf="required_pin" style="color: red;">*</span>
+        </mat-label></td>
         <td style="border: solid wheat 0px;"><input matInput type="text" id="pin" value="{{pin}}" style="height: 35px !important;"></td>
       </tr>
       <tr>
@@ -22,10 +26,11 @@
         <td style="border: none; text-align: left;"><button mat-button (click)="forgot()" style="font-size: 1.2em;"><u><i>Forgot your pin?</i></u></button></td>
       </tr>
       <tr *ngIf="correct"><td colSpan="2" style="color: red; border: solid wheat 0px;">Incorrect username & pin combination! TRY AGAIN</td></tr>
+      <tr *ngIf="required_username || required_pin"><td colSpan="2" style="color: red; border: solid wheat 0px;">*required</td></tr>
 
       <tr>
         <td colspan="2" style="border: solid wheat 0px; padding-top: 20px; width: 100px !important; text-align: center;">
-            <button mat-raised-button (click)="onClickLogin()"><span style="font-size: 2em;">Login &nbsp;</span>
+            <button mat-raised-button (click)="clickedLogin()"><span style="font-size: 2em;">Login &nbsp;</span>
               <mat-icon style="
                 height:48px !important;
                 width:48px !important;
@@ -43,21 +48,27 @@
 <div class="login" *ngIf="signup">
   <table class="this">
     <tr >
-      <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Username: </mat-label></td>
+      <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Username:
+        <span *ngIf="required_username" style="color: red;">*</span>
+      </mat-label></td>
       <td style="border: solid wheat 0px;"><input matInput type="text" id="username" style="height: 25px !important;"></td>
     </tr>
     <tr >
-      <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Secret question: </mat-label></td>
+      <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Secret question:
+        <span *ngIf="required_question" style="color: red;">*</span>
+      </mat-label></td>
       <td style="border: solid wheat 0px;"><textarea matInput type="text" id="questions" placeholder="Enter your question.."></textarea></td>
     </tr>
     <tr >
-      <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Answer: </mat-label></td>
+      <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Answer:
+        <span *ngIf="required_answer" style="color: red;">*</span>
+      </mat-label></td>
       <td style="border: solid wheat 0px;"><input matInput type="text" id="answers" ></td>
     </tr>
-    <tr *ngIf="correct"><td colSpan="2" style="color: red; border: solid wheat 0px;">Incorrect username & pin combination! TRY AGAIN</td></tr>
+    <tr *ngIf="required_username || required_question || required_answer"><td colSpan="2" style="color: red; border: solid wheat 0px;">*required</td></tr>
     <tr>
       <td colspan="2" style="border: solid wheat 0px; padding-top: 20px; width: 100px !important; text-align: center;">
-          <button mat-raised-button (click)="onClickSignup()"><span style="font-size: 2em;">Sign Up &nbsp;</span>
+          <button mat-raised-button (click)="clickedSignup()"><span style="font-size: 2em;">Sign Up &nbsp;</span>
             <mat-icon style="
               height:48px !important;
               width:48px !important;
@@ -73,12 +84,17 @@
 <div class="login" *ngIf="forgotit">
   <table class="this">
     <tr >
-      <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Username: </mat-label></td>
+      <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Username:
+        <span *ngIf="required_username" style="color: red;">*</span>
+      </mat-label></td>
       <td style="border: solid wheat 0px;"><input matInput type="text" id="username" style="height: 25px !important;"></td>
     </tr>
+    <tr *ngIf="required_username"><td colSpan="2" style="color: red; border: solid wheat 0px;">*required</td></tr>
+    <tr *ngIf="question_err"><td colSpan="2" style="color: red; border: solid wheat 0px;">{{question_err}}</td></tr>
+
     <tr>
       <td style="border:none">&nbsp;</td>
-      <td style="border:none"><button mat-button (click)="getQuestion()">Get secret question</button></td>
+      <td style="border:none"><button mat-button (click)="questionClicked()">Get secret question</button></td>
     </tr>
     <tr *ngIf="question_bool">
       <td style="border: solid wheat 0px; font-size: 1.2em;"><mat-label>Secret question: </mat-label></td>

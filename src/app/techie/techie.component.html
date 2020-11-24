@@ -106,13 +106,18 @@
                 <option value="Emergency">Emergency</option>
                 <option value="Not an Emergency">Not an Emergency</option>
               </select>
+              <span *ngIf="required_msg" style="color: red; font-size: 0.7em;">REQUIRED</span>
             </td>
-            <td><textarea type="text" id="location" placeholder="Location.."></textarea></td>
-            <td style="width: 25%;"><textarea type="text" id="description" placeholder="Describe the issue.."></textarea></td>
+            <td><textarea type="text" id="location" placeholder="Location.."></textarea>
+              <span *ngIf="required_location" style="color: red; font-size: 0.7em;">REQUIRED</span>
+            </td>
+            <td style="width: 25%;"><textarea type="text" id="description" placeholder="Describe the issue.."></textarea>
+              <span *ngIf="required_desc" style="color: red; font-size: 0.7em;">REQUIRED</span>
+            </td>
             <td style="color: black;"><b>{{username}}</b></td>
             <td style="color: black;"><b>{{address}}</b></td>
             <td style="color: black;"><b>{{date | date: 'dd-MM-yyyy HH:mm'}}</b></td>
-            <td><button mat-raised-button (click)="addToWorkOrder()" >Submit</button></td>
+            <td><button mat-raised-button (click)="workorderclick()" >Submit</button></td>
 
           </tr>
           <tr *ngIf="!workorder_bool">

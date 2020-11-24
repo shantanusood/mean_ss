@@ -52,6 +52,31 @@ export class TechieComponent implements OnInit {
   selectOption(value: String) {
    this.selectedOption = value;
   }
+  required_msg:String;
+  required_location:String;
+  required_desc:String;
+  workorderclick(){
+    if(this.selectedOption==undefined || this.selectedOption.length==0){
+      this.required_msg = "*";
+    }else{
+      this.required_msg = "";
+    }
+    if((document.getElementById("location") as HTMLInputElement).value.length==0){
+      this.required_location = "*";
+    }else{
+      this.required_location = "";
+    }
+    if((document.getElementById("description") as HTMLInputElement).value.length==0){
+      this.required_desc = "*";
+    }else{
+      this.required_desc = "";
+    }
+    if(this.required_msg || this.required_location || this.required_desc ){
+      console.log("requirement not fulfilled");
+    }else{
+      this.addToWorkOrder();
+    }
+  }
   addToWorkOrder(){
     this.loading = true;
     this.obj = {

@@ -129,8 +129,9 @@
     <tr>
       <td style="border: none;">Lease expires:</td>
         <td style="border: none;">{{ getExpiry(data) }} &nbsp;&nbsp;&nbsp;<span *ngIf="hasRequested"><span *ngIf="!requested" style="color: green;">
+          <br>
           <button mat-raised-button (click)="extention()">Request Extension</button></span>
-          <span *ngIf="requested" style="color: red;">Select duration: &nbsp;&nbsp;<span *ngFor="let x of getDurations(data)"><button mat-button (click)="getExtention(x)"><u>{{x}}</u></button>
+          <span *ngIf="requested" style="color: red; max-width: 280px; word-wrap: normal; display: block;">Duration: &nbsp;&nbsp;<span *ngFor="let x of getDurations(data)"><button mat-button (click)="getExtention(x)"><u>{{x}}</u></button>
           </span></span></span><span *ngIf="!hasRequested" style="color: green;">Lease extention request processing</span></td>
     </tr>
     <tr>
