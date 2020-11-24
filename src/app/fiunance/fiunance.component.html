@@ -31,13 +31,15 @@
 <div *ngIf="add" style="float:right; background-color:wheat; padding: 5px; margin-top: 20px; margin-right: 10px; position:fixed; right: 0; top: 6.5%; z-index: 9;">
   <br>
   <table class="add">
-    <tr><td>Account:</td> <td><select class="inputs" (change)="selectOption($event.target.value)">
+    <tr><td>Account:<span *ngIf="required_msg" style="color: red; font-size: 1.2em;">{{required_msg}}</span></td>
+      <td><select class="inputs" (change)="selectOption($event.target.value)">
       <option value="">&nbsp;</option>
       <option value="{{account_1}}">{{account_1}}</option>
       <option value="{{account_2}}">{{account_2}}</option>
       <option value="{{account_3}}">{{account_3}}</option>
     </select></td></tr>
-    <tr><td>Strategy:</td> <td><select class="inputs" (change)="selectStrat($event.target.value)">
+    <tr><td>Strategy:<span *ngIf="required_strategy" style="color: red; font-size: 1.2em;">{{required_strategy}}</span></td>
+      <td><select class="inputs" (change)="selectStrat($event.target.value)">
       <option value="">&nbsp;</option>
       <option value="Covered Call">Covered Call</option>
       <option value="Iron Condor">Iron Condor</option>
@@ -46,23 +48,31 @@
       <option value="Credit Call Spread">Credit Call Spread</option>
     </select></td></tr>
     <!--<tr><td>Account2:</td> <td><input matInput type="text" id="account"></td></tr>-->
-    <tr><td>Ticker: </td> <td><input class="inputs" matInput type="text" id="ticker"></td></tr>
-    <tr><td>Contracts: </td> <td><input class="inputs" matInput type="number" id="contracts"></td></tr>
-    <tr><td>Collateral: </td> <td>
+    <tr><td>Ticker: <span *ngIf="required_ticker" style="color: red; font-size: 1.2em;">{{required_ticker}}</span></td>
+      <td><input class="inputs" matInput type="text" id="ticker"></td></tr>
+    <tr><td>Contracts: <span *ngIf="required_contract" style="color: red; font-size: 1.2em;">{{required_contract}}</span></td>
+      <td><input class="inputs" matInput type="number" id="contracts"></td></tr>
+    <tr><td>Collateral: <span *ngIf="required_coll" style="color: red; font-size: 1.2em;">{{required_coll}}</span></td>
+      <td>
       <span *ngIf="!covered"><input class="inputs" matInput type="number" id="collateral"></span>
       <span *ngIf="covered"><input class="inputs" matInput type="number" id="collateral" value="0" disabled></span>
     </td></tr>
-    <tr><td>Expiration: </td> <td><input class="inputs" matInput type="date" id="exp" name="trip-start" (change)="changeDueDate()" value="{{cur_date}}" min="2020-01-01" max="2023-01-01"></td></tr>
-    <tr><td>Call side: </td> <td>
+    <tr><td>Expiration: <span *ngIf="required_exp" style="color: red; font-size: 1.2em;">{{required_exp}}</span></td>
+      <td><input class="inputs" matInput type="date" id="exp" name="trip-start" (change)="changeDueDate()" value="{{cur_date}}" min="2020-01-01" max="2023-01-01"></td></tr>
+    <tr><td>Call side: <span *ngIf="required_call" style="color: red; font-size: 1.2em;">{{required_call}}</span></td>
+      <td>
       <span *ngIf="!putspread"><input class="inputs" matInput type="number" id="call"></span>
       <span *ngIf="putspread"><input class="inputs" value="0" matInput type="number" id="call" disabled></span>
     </td></tr>
-    <tr><td>Put side: </td> <td>
+    <tr><td>Put side: <span *ngIf="required_put" style="color: red; font-size: 1.2em;">{{required_put}}</span></td>
+      <td>
       <span *ngIf="!covered && !callspread"><input class="inputs" matInput type="number" id="put"></span>
       <span *ngIf="covered || callspread"><input class="inputs" matInput type="number" id="put" value="0" disabled></span>
     </td></tr>
-    <tr><td>Premium: </td> <td><input class="inputs" matInput type="number" id="premium"></td></tr>
-    <tr><td></td><td><button mat-button (click)="onClickAddVals()" style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
+    <tr><td>Premium: <span *ngIf="required_prem" style="color: red; font-size: 1.2em;">{{required_prem}}</span></td>
+      <td><input class="inputs" matInput type="number" id="premium"></td></tr>
+    <tr><td></td><td><button mat-button (click)="clickAdd()" style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
+    <tr><td colspan="2"><span *ngIf="required_msg || required_strategy || required_ticker || required_contract || required_coll || required_exp || required_call || required_put || required_prem" style="color: red;">*required</span></td></tr>
     <tr *ngIf="addedRes"><td colspan="2" style="color: green;">{{addedRes}}</td></tr>
     <tr *ngIf="addedResErr"><td colspan="2" style="color: red;">{{addedResErr}}</td></tr>
 

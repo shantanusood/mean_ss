@@ -189,12 +189,103 @@ export class FiunanceComponent implements OnInit {
       }else{
         this.add = true;
         this.addtext = "-";
+        this.selectedOption = undefined;
+        this.strategy = undefined;
+        this.required_ticker = undefined;
+        this.required_count = undefined;
+        this.required_coll = undefined;
+        this.required_exp = undefined;
+        this.required_call = undefined;
+        this.required_put = undefined;
+        this.required_prem = undefined;
+        this.required_count = 0;
       }
   }
   date: string;
   changeDueDate(){
     this.date = (document.getElementById("exp") as HTMLInputElement).value;
   }
+  required_count:number=0;
+  required_msg:String;
+  required_strategy:String;
+  required_ticker:String;
+  required_contract:String;
+  required_coll:String;
+  required_exp:String;
+  required_call:String;
+  required_put:String;
+  required_prem:String;
+  clickAdd(){
+    if(this.selectedOption==undefined || this.selectedOption.length==0){
+      this.required_msg = "*";
+      this.required_count = 1;
+    }else{
+      this.required_msg = "";
+      this.required_count = 0;
+    }
+    if(this.strategy==undefined || this.strategy.length==0){
+      this.required_count = 1;
+      this.required_strategy = "*";
+    }else{
+      this.required_count = 0;
+      this.required_strategy = "";
+    }
+    if((document.getElementById("ticker") as HTMLInputElement).value.length==0){
+      this.required_ticker = "*";
+      this.required_count = 1;
+    }else{
+      this.required_count = 0;
+      this.required_ticker = "";
+    }
+    if((document.getElementById("contracts") as HTMLInputElement).value.length==0){
+      this.required_contract = "*";
+      this.required_count = 1;
+    }else{
+      this.required_count = 0;
+      this.required_contract = "";
+    }
+    if((document.getElementById("collateral") as HTMLInputElement).value.length==0){
+      this.required_coll = "*";
+      this.required_count = 1;
+    }else{
+      this.required_count = 0;
+      this.required_coll = "";
+    }
+    if((document.getElementById("exp") as HTMLInputElement).value.length==0){
+      this.required_exp = "*";
+      this.required_count = 1;
+    }else{
+      this.required_count = 0;
+      this.required_exp = "";
+    }
+    if((document.getElementById("call") as HTMLInputElement).value.length==0){
+      this.required_call = "*";
+      this.required_count = 1;
+    }else{
+      this.required_count = 0;
+      this.required_call = "";
+    }
+    if((document.getElementById("put") as HTMLInputElement).value.length==0){
+      this.required_put = "*";
+      this.required_count = 1;
+    }else{
+      this.required_count = 0;
+      this.required_put = "";
+    }
+    if((document.getElementById("premium") as HTMLInputElement).value.length==0){
+      this.required_prem = "*";
+      this.required_count = 1;
+    }else{
+      this.required_count = 0;
+      this.required_prem = "";
+    }
+    if(this.required_msg || this.required_strategy || this.required_ticker || this.required_contract || this.required_coll || this.required_exp || this.required_call || this.required_put || this.required_prem){
+      console.log("requirement not fulfilled");
+    }else{
+      this.onClickAddVals();
+    }
+  }
+
   onClickAddVals() {
     console.log(this.selectedOption);
     this.http.get(
