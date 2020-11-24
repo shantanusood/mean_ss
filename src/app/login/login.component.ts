@@ -213,7 +213,9 @@ export class LoginComponent implements OnInit {
       this.onClickLogin();
     }
   }
+  username_wrong:String;
   onClickLogin(){
+    var count_test = 0;
     this.loading = true;
     this.username = (document.getElementById("username") as HTMLInputElement).value;
     this.pin = (document.getElementById("pin") as HTMLInputElement).value;
@@ -221,6 +223,7 @@ export class LoginComponent implements OnInit {
       this.role_list = data as object[];
       this.role_list.forEach(d => {
         if(d['userid']===this.username){
+          count_test = 1;
           this.http.get(this.baseUrl + "data/"+this.username+"/getit").subscribe((data) => {
             if(this.pin==data['this']){
               this.ds.sendData(this.username);
@@ -230,7 +233,15 @@ export class LoginComponent implements OnInit {
             this.loading = false;
           });
         }
+        this.loading = false;
+
       });
+      if(count_test==0){
+        this.username_wrong = "Incorrect username!";
+      }else{
+        this.username_wrong = undefined;
+      }
+
     });
 
   }

@@ -25,7 +25,9 @@
         <td style="border: none; text-align: left;">&nbsp;</td>
         <td style="border: none; text-align: left;"><button mat-button (click)="forgot()" style="font-size: 1.2em;"><u><i>Forgot your pin?</i></u></button></td>
       </tr>
-      <tr *ngIf="correct"><td colSpan="2" style="color: red; border: solid wheat 0px;">Incorrect username & pin combination! TRY AGAIN</td></tr>
+
+      <tr *ngIf="username_wrong"><td colSpan="2" style="color: red; border: solid wheat 0px;">{{username_wrong}} TRY AGAIN</td></tr>
+      <tr *ngIf="correct"><td colSpan="2" style="color: red; border: solid wheat 0px;">Incorrect pin! TRY AGAIN</td></tr>
       <tr *ngIf="required_username || required_pin"><td colSpan="2" style="color: red; border: solid wheat 0px;">*required</td></tr>
 
       <tr>
