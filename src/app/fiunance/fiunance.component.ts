@@ -284,6 +284,10 @@ export class Dialog {
     msg: String;
     correct: String;
     msgbool: boolean = true;
+    getContracts(data: any){
+      return data['contracts'];
+
+    }
     verify(contracts, val, price:String){
       console.log(contracts);
       console.log(val);
