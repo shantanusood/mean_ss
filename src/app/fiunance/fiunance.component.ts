@@ -193,6 +193,7 @@ export class FiunanceComponent implements OnInit {
         this.strategy = undefined;
         this.required_ticker = undefined;
         this.required_count = undefined;
+        this.required_contract = undefined;
         this.required_coll = undefined;
         this.required_exp = undefined;
         this.required_call = undefined;
