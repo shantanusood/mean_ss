@@ -1,2 +1,35 @@
-<div><p>Closing price</p>Cost: <input matInput [(ngModel)]="data.animal">Contracts: <input matInput [(ngModel)]="data.name"></div>
-    <div mat-dialog-actions><button mat-button [mat-dialog-close]="data" cdkFocusInitial>Close Trade</button></div>
+<div>
+
+  <table style="border: none; color: black; width: 100%;">
+    <tr>
+      <th style="border: none; color: black; width: 100%;" colspan="2">Close contract position</th>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; width: 100%;">Available to close</td>
+      <td style="border: none; color: black; width: 100%;">{{data.contracts}}</td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; width: 100%;">Closing Price</td>
+      <td style="border: none; color: black; width: 100%;"><input type="number" matInput [(ngModel)]="data.animal" style="width: 60px;"></td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; width: 100%;">Number of Contracts</td>
+      <td style="border: none; color: black; width: 100%;"><input type="number" min="1" max="{{data.contracts}}" display="1" matInput [(ngModel)]="data.name" style="width: 60px;"></td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; width: 100%;"></td>
+      <td style="border: none; color: black; width: 100%;">
+        <div mat-dialog-actions>
+          <span *ngIf="msgbool"><button mat-button (click)="verify(data.contracts, data.name, data.animal)">Verify</button></span>
+          <span *ngIf="!msgbool"><button mat-button [mat-dialog-close]="data" cdkFocusInitial>Close Trade</button></span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; width: 100%;" colspan="2">
+        <p style="color: red;">{{msg}}</p>
+        <p style="color: green;">{{correct}}</p>
+      </td>
+    </tr>
+  </table>
+</div>

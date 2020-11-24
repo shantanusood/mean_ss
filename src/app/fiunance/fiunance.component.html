@@ -63,11 +63,15 @@
     </td></tr>
     <tr><td>Premium: </td> <td><input class="inputs" matInput type="number" id="premium"></td></tr>
     <tr><td></td><td><button mat-button (click)="onClickAddVals()" style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
-    <tr *ngIf="addedRes"><td colspan="2" style="color: red;">{{addedRes}}</td></tr>
+    <tr *ngIf="addedRes"><td colspan="2" style="color: green;">{{addedRes}}</td></tr>
+    <tr *ngIf="addedResErr"><td colspan="2" style="color: red;">{{addedResErr}}</td></tr>
+
 </table>
 </div>
 <div class="container" >
   <ng-template #loaded>
+    <p style="font-size: 1.2em; float: right; position:fixed; margin-right: 10px; right: 60px; top: 2%; z-index: 10; color: red;" *ngIf="refresh">
+      <span class="blink_me">Refresh to see your changes --> </span></p>
   <div class="monitor">
     <div class="inner" *ngFor="let x of arrBirds" >
     <table>

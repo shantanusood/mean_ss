@@ -158,3 +158,18 @@ sub {
   align-self: center;
   margin: 0 auto;
 }
+
+.dialog {
+  border: none;
+  color: black;
+}
+.dialog-overview-example-dialog {
+  width: 700px !important;
+}
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% { opacity: 0; }
+}

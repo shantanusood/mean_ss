@@ -25,6 +25,7 @@ export class FiunanceComponent implements OnInit {
   selectedOption:String;
   mySubscription: any;
   addedRes: string[];
+  addedResErr: string[];
   loading = true;
   dt: object;
   count:number = 0;
@@ -52,6 +53,7 @@ export class FiunanceComponent implements OnInit {
     this.closeTop = false;
   }
 
+  refresh: boolean = false;
 
   ngOnInit() {
     this.ds.current.subscribe(message => this.username = message);
@@ -140,6 +142,7 @@ export class FiunanceComponent implements OnInit {
   onClickRefresh(){
     console.log("Clicked");
     this.getData();
+    this.refresh = false;
   }
   onClickDelete(ticker: any) {
     this.http
@@ -148,24 +151,31 @@ export class FiunanceComponent implements OnInit {
         //console.log(data);
       });
       this.closeTop = false;
+      this.refresh = true;
   }
 
   animal: string;
   name: string;
   onClickDeleteStrike(ticker: any, account: string, type: string, strike: any) {
-    const dialogRef = this.dialog.open(Dialog, {
-      width: '250px',
-      data: {name: this.name, animal: this.animal}
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result['animal'];
-      this.name = result['name'];
-      this.http
-      .get(this.baseUrl + "data/"+this.username+"/monitoring/delete/" + ticker.ticker + "/" + account+ "/" + type + "/" + strike+ "/" + this.animal+ "/" + this.name)
-      .subscribe((data) => {
-        //console.log(data);
+    this.http
+      .get(this.baseUrl + "data/"+this.username+"/monitoring/delete/getcontracts/" + ticker.ticker + "/" + account+ "/" + type + "/" + strike)
+      .subscribe((datax) => {
+        const dialogRef = this.dialog.open(Dialog, {
+          width: '300px',
+          data: {name: this.name, animal: this.animal, contracts: datax['contracts']}
+        });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.animal = result['animal'];
+        this.name = result['name'];
+        this.http
+        .get(this.baseUrl + "data/"+this.username+"/monitoring/delete/" + ticker.ticker + "/" + account+ "/" + type + "/" + strike+ "/" + this.animal+ "/" + this.name)
+        .subscribe((data) => {
+          this.refresh = true;
+          //console.log(data);
+        });
       });
     });
 
@@ -219,10 +229,12 @@ export class FiunanceComponent implements OnInit {
         )
         .subscribe((data) => {
           this.addedRes = data as string[];
+          this.addedResErr = [];
           //console.log(data);
         },
         (error) => {
-          this.addedRes = error as string[];
+          this.addedRes = []
+          this.addedResErr = error["statusText"] as string[];
         });
       this.http
         .get(
@@ -255,6 +267,7 @@ export class FiunanceComponent implements OnInit {
           }
         });
     });
+    this.refresh = true;
   }
 }
 
@@ -268,8 +281,28 @@ export class Dialog {
     public dialogRef: MatDialogRef<Dialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+    msg: String;
+    correct: String;
+    msgbool: boolean = true;
+    verify(contracts, val, price:String){
+      console.log(contracts);
+      console.log(val);
+      console.log(price)
+      if(val == undefined || price == undefined){
+        this.msg = "Price and number of contracts are required!";
+      }else{
+        if(Number(val)>Number(contracts)){
+            this.msg = "Number of contracts must be smaller than or equal to: " + this.data['contracts'];
+        }else{
+            this.correct = "You may close the trade!";
+            this.msg = "";
+            this.msgbool = false;
+        }
+      }
+    }
+    onNoClick(): void {
+
+      this.dialogRef.close();
+    }
 
 }
