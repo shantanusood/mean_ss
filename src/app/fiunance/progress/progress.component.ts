@@ -18,12 +18,13 @@ export class ProgressComponent implements OnInit {
   }
   closedTrd: object[];
   readonly baseUrl = AppSettings.baseUrl;
+  recentdaily:String[];
 
   data: object[];
   chart:Chart = [];
   frontMonth:Chart = [];
   nextMonth:Chart = [];
-  loading = true;
+  loading = false;
 
   dataof: object[];
   index: number = 5;
@@ -98,6 +99,9 @@ export class ProgressComponent implements OnInit {
         console.log(d['userid']);
         console.log(d['role']);
       });
+    });
+    this.http.get(this.baseUrl+'data/'+this.username+'/daily/get').subscribe((data) => {
+      this.recentdaily = data as string[];
     });
   }
 
@@ -232,7 +236,7 @@ export class ProgressComponent implements OnInit {
   }
 
   currentProgress(){
-    this.loading = true;
+    //this.loading = true;
     this.http
       .get(
         this.baseUrl +
@@ -240,10 +244,12 @@ export class ProgressComponent implements OnInit {
       .subscribe((data) => {
         console.log(data);
         this.current = data as object[];
-        this.loading = false;
+        //this.loading = false;
       });
   }
-
+  addmsg:String[];
+  addmsg_done:String;
+  data_msg:String;
   addDataHistoric(){
     this.http
       .get(
@@ -266,8 +272,32 @@ export class ProgressComponent implements OnInit {
           (document.getElementById("retirement_c") as HTMLInputElement).value
       )
       .subscribe((data) => {
-        console.log(data);
+        this.addmsg_done = data[0];
+
+      },
+      (error) => {
+        if(error['status'].toString() === '404'){
+          this.addmsg = ['Error: All fields are required'];
+        }else{
+          this.addmsg = error['status'];
+        }
+        this.addmsg_done = undefined;
       });
+  }
+  del_obj:object;
+  sure_del:boolean = false;
+  sure(date_:String){
+    this.del_obj = {
+      date: date_
+    }
+    this.http
+      .post(
+        this.baseUrl +
+        "data/"+this.username+"/deletedaily", this.del_obj).subscribe((data) => {
+
+
+        });
+        this.sure_del = true;
   }
 
   retValGreater(val: string, num: string):boolean{
@@ -334,9 +364,56 @@ export class ProgressComponent implements OnInit {
         }
       });
     });
+    this.http.get(this.baseUrl+'data/'+this.username+'/daily/get').subscribe((data) => {
+      this.recentdaily = data as string[];
+    });
+    this.sure_del = false;
+    this.addmsg_done = undefined;
+  }
+  updatemsg:String[];
+  updatemsg_done:String;
+  updatedDaily(){
+    this.http
+      .get(
+        this.baseUrl +
+        "data/"+this.username+"/updatedaily/" +
+          (document.getElementById("fidelity_y") as HTMLInputElement).value +
+          "/" +
+          (document.getElementById("robinhood_y") as HTMLInputElement).value +
+          "/" +
+          (document.getElementById("tastyworks_y") as HTMLInputElement).value +
+          "/" +
+          (document.getElementById("retirement_y") as HTMLInputElement).value +
+          "/" +
+          (document.getElementById("fidelity_t") as HTMLInputElement).value +
+          "/" +
+          (document.getElementById("robinhood_t") as HTMLInputElement).value +
+          "/" +
+          (document.getElementById("tastyworks_t") as HTMLInputElement).value +
+          "/" +
+          (document.getElementById("retirement_t") as HTMLInputElement).value
+      )
+      .subscribe((data) => {
+        console.log(data);
+        this.updatemsg = undefined;
+      },
+      (error) => {
+        if(error['status'].toString() === '404'){
+          this.updatemsg = ['Error: All fields are required'];
+          this.updatemsg_done = undefined;
+        }else{
+          this.updatemsg = [];
+          this.updatemsg_done = "Success!";
+        }
+      });
+      this.http.get(this.baseUrl+'data/'+this.username+'/daily/get').subscribe((data) => {
+        this.recentdaily = data as string[];
+      });
+      this.loading = false;
+
+        this.charting() ;
 
   }
-
   filterHist(filter: string){
 
     Chart.helpers.each(Chart.instances, function (instance) {

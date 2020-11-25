@@ -2,7 +2,7 @@
 .charting_hist{
   padding: 5px;
   margin-top: 0px;
-  width: 65%;
+  width: 100%;
   height: inherit;
   display: inline-block;
   min-width: 500px;
@@ -123,4 +123,36 @@
   transform-origin: 0 0; /* see note above */
 }
 .ldio-tbsvbued4f div { box-sizing: content-box; }
+.login {
+  text-align: center;
+  display: inline-block;
+  display: flex;
+  justify-content: center;
+}
 
+.login h2 {
+text-align: left;
+}
+.this {
+  padding: 20px;
+  border-collapse:separate;
+  border:solid wheat 1px;
+  border-radius:10px;
+  -moz-border-radius:6px;
+}
+
+.this td, th {
+  border-left:solid wheat 1px;
+  border-top:solid wheat 1px;
+}
+
+.this th {
+  background-color: rosybrown;
+  border-top: none;
+}
+
+.this td:first-child, th:first-child {
+   border-left: none;
+}
+
+.this tr:nth-child(odd) {background: rgb(78, 73, 73);}

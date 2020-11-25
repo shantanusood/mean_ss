@@ -1,6 +1,180 @@
 <div class="container">
+  <div *ngIf="chart" class="charting_hist" >
+    <div style="float: left; width:70%">
+    <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Daily historic performance - {{type_key | uppercase}}
+      <span style="color: green;" *ngIf="perc_change.indexOf('-')==-1">{{perc_change}}</span>
+      <span style="color: red;" *ngIf="perc_change.indexOf('-')!=-1">{{perc_change}}</span>
+      <button mat-button style="float: right;"><img (click)="charting()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
+  <p>
+    <canvas id="canvas">{{ chart }}</canvas>
+
+    <div style="text-align: center; color: wheat;">
+      <button mat-button (click)="filterHist('All')">
+        All
+      </button>
+      <button mat-button (click)="filterHist('2Year')">
+        2 Year
+      </button>
+      <button mat-button (click)="filterHist('1Year')">
+          1 Year
+        </button>
+        &nbsp;&nbsp;
+        <button mat-button (click)="filterHist('YTD')">
+            YTD
+        </button>
+        &nbsp;&nbsp;
+        <button mat-button (click)="filterHist('6Mon')">
+            6 Mon
+        </button>
+        &nbsp;&nbsp;
+        <button mat-button  (click)="filterHist('3Mon')">
+            3 Mon
+        </button>
+        &nbsp;&nbsp;
+        <button mat-button (click)="filterHist('1Mon')">
+            1 Mon
+        </button>
+        <button mat-button (click)="filterHist('1Wk')">
+          1 Wk
+      </button>
+      <br><br>
+      </div >
+
+    <div style="text-align: center;">
+    <button mat-raised-button  (click)="changeType('fidelity')">
+        {{account_1}}
+      </button>
+      &nbsp;&nbsp;
+      <button mat-raised-button  (click)="changeType('robinhood')">
+        {{account_2}}
+      </button>
+      &nbsp;&nbsp;
+      <button mat-raised-button  (click)="changeType('tastyworks')">
+        {{account_3}}
+      </button>
+      &nbsp;&nbsp;
+      <button mat-raised-button  (click)="changeType('retirement')">
+          Retirement
+      </button>
+      &nbsp;&nbsp;
+      <button mat-raised-button  (click)="changeType('total')">
+          Total
+      </button>
+      <br><br>
+    </div >
+  </div>
+    <div style="color: wheat; border: solid wheat 0px; padding: 5px; text-align: center; width: 30%; float: left;">
+      <div class="login">
+      <table class="this">
+        <tr>
+          <th colspan="3" style="text-align: center; border: none; background-color:  rgb(78, 73, 73);">Add new data</th>
+        </tr>
+        <tr>
+          <td style="border: none; background-color:  rgb(78, 73, 73);"></td>
+          <td style="border: none; background-color:  rgb(78, 73, 73);">EOD Gain:</td>
+          <td style="border: none; background-color:  rgb(78, 73, 73);">Contribution:</td>
+        </tr>
+        <tr>
+          <td style="border: none;">{{account_1}}</td>
+          <td style="border: none;"><input matInput type="number" id="fidelity" style="width: 80px;"></td>
+          <td style="border: none;"><input matInput type="number" id="fidelity_c" style="width: 80px;" value="0"></td>
+        </tr>
+        <tr>
+          <td style="border: none;">{{account_2}}</td>
+          <td style="border: none;"><input matInput type="number" id="robinhood" style="width: 80px;"></td>
+          <td style="border: none;"><input matInput type="number" id="robinhood_c" style="width: 80px;" value="0"></td>
+        </tr>
+        <tr>
+          <td style="border: none;">{{account_3}}</td>
+          <td style="border: none;"><input matInput type="number" id="tastyworks" style="width: 80px;"></td>
+          <td style="border: none;"><input matInput type="number" id="tastyworks_c" style="width: 80px;" value="0"></td>
+        </tr>
+        <tr>
+          <td style="border: none;">Retirement</td>
+          <td style="border: none;"><input matInput type="number" id="retirement" style="width: 80px;"></td>
+          <td style="border: none;"><input matInput type="number" id="retirement_c" style="width: 80px;" value="0"></td>
+        </tr>
+        <tr *ngIf="addmsg">
+          <td colspan="3" style="color: red; border: none;">{{addmsg}}</td>
+        </tr>
+        <tr *ngIf="addmsg_done">
+          <td colspan="2" style="color: green; border: none;">{{addmsg_done}}: Please refresh</td>
+          <td style="border: none;"><button mat-button style="float: right;"><img (click)="charting()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></td>
+        </tr>
+        <tr>
+          <td colspan="3" style="text-align: center; border: none;"><button mat-button (click)="addDataHistoric()"><b>&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;</b></button></td>
+        </tr>
+      </table>
+    </div>
+    <br>
+    <div *ngIf="loading else loaded" style="text-align: center;">
+      <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        </div></div>
+    </div>
+
+    <ng-template #loaded>
+  <div class="login">
+    <table class="this" *ngIf="sure_del">
+      <tr>
+        <td style="border: none;"><span style="color: red;">Deleted, refresh to continue</span></td>
+      </tr>
+      <tr>
+        <td style="border: none;"><button mat-button style="float: right;"><img (click)="charting()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></td>
+      </tr>
+    </table>
+      <table class="this" *ngIf="!sure_del">
+        <tr>
+          <th colspan="3" style="text-align: center; border: none; background-color:  rgb(78, 73, 73);">Edit recent data</th>
+        </tr>
+        <tr>
+          <td style="border: none;"></td>
+          <td style="border: none;"><button mat-button (click)="sure(recentdaily[0][0])"><b style="color:tomato;">x</b></button></td>
+          <td style="border: none;"><button mat-button (click)="sure(recentdaily[1][0])"><b style="color:tomato;">x</b></button></td>
+        </tr>
+        <tr>
+          <td style="border: none;"></td>
+          <td style="border: none;">{{recentdaily[0][0]}}</td>
+          <td style="border: none;">{{recentdaily[1][0]}}</td>
+        </tr>
+        <tr>
+          <td style="border: none;">{{account_1}}</td>
+          <td style="border: none;"><input matInput type="number" id="fidelity_y" style="width: 80px;" value="{{recentdaily[0][1]}}"></td>
+          <td style="border: none;"><input matInput type="number" id="fidelity_t" style="width: 80px;" value="{{recentdaily[1][1]}}"></td>
+        </tr>
+        <tr>
+          <td style="border: none;">{{account_2}}</td>
+          <td style="border: none;"><input matInput type="number" id="robinhood_y" style="width: 80px;" value="{{recentdaily[0][2]}}"></td>
+          <td style="border: none;"><input matInput type="number" id="robinhood_t" style="width: 80px;" value="{{recentdaily[1][2]}}"></td>
+        </tr>
+        <tr>
+          <td style="border: none;">{{account_3}}</td>
+          <td style="border: none;"><input matInput type="number" id="tastyworks_y" style="width: 80px;" value="{{recentdaily[0][3]}}"></td>
+          <td style="border: none;"><input matInput type="number" id="tastyworks_t" style="width: 80px;" value="{{recentdaily[1][3]}}"></td>
+        </tr>
+        <tr>
+          <td style="border: none;">Retirement</td>
+          <td style="border: none;"><input matInput type="number" id="retirement_y" style="width: 80px;" value="{{recentdaily[0][4]}}"></td>
+          <td style="border: none;"><input matInput type="number" id="retirement_t" style="width: 80px;" value="{{recentdaily[1][4]}}"></td>
+        </tr>
+        <tr *ngIf="updatemsg">
+          <td colspan="3" style="color: red; border: none;">{{updatemsg}}</td>
+        </tr>
+        <tr *ngIf="updatemsg_done">
+          <td colspan="3" style="color: green; border: none;">{{updatemsg_done}}</td>
+        </tr>
+        <tr>
+          <td colspan="3" style="text-align: center; border: none;"><button mat-button (click)="updatedDaily()"><b>&nbsp;&nbsp;&nbsp;&nbsp;Update&nbsp;&nbsp;&nbsp;&nbsp;</b></button></td>
+        </tr>
+      </table>
+    </div>
+  </ng-template>
+    </div>
+  </div>
+  <hr>
     <div>
   <div class="charting_front">
+    <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Historic monthly progress</p>
     <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">{{monthone}}
       <button mat-button style="float: right;"><img (click)="gainsProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
       <canvas id="canvas_front">{{ frontMonth }}</canvas>
@@ -14,84 +188,7 @@
   </div>
 </div>
 
-<div *ngIf="chart" class="charting_hist" >
-  <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Daily historic performance - {{type_key | uppercase}}
-    <span style="color: green;" *ngIf="perc_change.indexOf('-')==-1">{{perc_change}}</span>
-    <span style="color: red;" *ngIf="perc_change.indexOf('-')!=-1">{{perc_change}}</span>
-    <button mat-button style="float: right;"><img (click)="charting()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
-<p>
-  <canvas id="canvas">{{ chart }}</canvas>
-
-  <div style="text-align: center; color: wheat;">
-    <button mat-button (click)="filterHist('All')">
-      All
-    </button>
-    <button mat-button (click)="filterHist('2Year')">
-      2 Year
-    </button>
-    <button mat-button (click)="filterHist('1Year')">
-        1 Year
-      </button>
-      &nbsp;&nbsp;
-      <button mat-button (click)="filterHist('YTD')">
-          YTD
-      </button>
-      &nbsp;&nbsp;
-      <button mat-button (click)="filterHist('6Mon')">
-          6 Mon
-      </button>
-      &nbsp;&nbsp;
-      <button mat-button  (click)="filterHist('3Mon')">
-          3 Mon
-      </button>
-      &nbsp;&nbsp;
-      <button mat-button (click)="filterHist('1Mon')">
-          1 Mon
-      </button>
-      <button mat-button (click)="filterHist('1Wk')">
-        1 Wk
-    </button>
-    <br><br>
-    </div >
-
-  <div style="text-align: center;">
-  <button mat-raised-button  (click)="changeType('fidelity')">
-      {{account_1}}
-    </button>
-    &nbsp;&nbsp;
-    <button mat-raised-button  (click)="changeType('robinhood')">
-      {{account_2}}
-    </button>
-    &nbsp;&nbsp;
-    <button mat-raised-button  (click)="changeType('tastyworks')">
-      {{account_3}}
-    </button>
-    &nbsp;&nbsp;
-    <button mat-raised-button  (click)="changeType('retirement')">
-        Retirement
-    </button>
-    &nbsp;&nbsp;
-    <button mat-raised-button  (click)="changeType('total')">
-        Total
-    </button>
-    <br><br>
-  </div >
-  <div style="color: wheat; border: solid wheat 0px; padding: 5px; text-align: center;">
-      &nbsp;&nbsp;<u>Data:</u>&nbsp;
-      &nbsp;&nbsp;{{account_1}}:&nbsp; <input matInput type="text" id="fidelity" style="width: 60px;">
-      &nbsp;&nbsp;{{account_2}}:&nbsp; <input matInput type="text" id="robinhood" style="width: 60px;">
-      &nbsp;&nbsp;{{account_3}}:&nbsp; <input matInput type="text" id="tastyworks" style="width: 60px;">
-      &nbsp;&nbsp;Retirement:&nbsp; <input matInput type="text" id="retirement" style="width: 60px;">
-      <br>
-      &nbsp;&nbsp;<u>Contributions:</u>&nbsp;
-      &nbsp;&nbsp;{{account_1}}:&nbsp; <input matInput type="text" id="fidelity_c" style="width: 60px;">
-      &nbsp;&nbsp;{{account_2}}:&nbsp; <input matInput type="text" id="robinhood_c" style="width: 60px;">
-      &nbsp;&nbsp;{{account_3}}:&nbsp; <input matInput type="text" id="tastyworks_c" style="width: 60px;">
-      &nbsp;&nbsp;Retirement:&nbsp; <input matInput type="text" id="retirement_c" style="width: 60px;">
-      <button mat-button (click)="addDataHistoric()"><u>Add</u></button>
-  </div>
-</div>
-<div class="percent" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1">
+<!--<div class="percent" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1">
   <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Percent PNL
     <button mat-button style="float: right;"><img (click)="currentProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
     <button mat-raised-button style="float: right;" (click)="closeExpired()"><span style="color: red">x</span> Expired</button>
@@ -133,19 +230,19 @@
             <span *ngIf="x[0].indexOf('tastyworks')!=-1 && i!=6"  style="color:rgb(243, 138, 126)">
               {{y}}
             </span>
-            <span *ngIf="i==6 && y.indexOf('-')!=-1"  style="color:red">{{y}}%
+            <span *ngIf="i==6 && y.indexOf('-')!=-1"  style="color:red">{{y}}%-->
               <!--<span *ngIf="!retValGreater(y, -75.0)" style="border: solid red 0.5px;">{{y}}%</span>
               <span *ngIf="!retValGreater(y, -50.0) && retValGreater(y, -75.0)" style="border: dashed red 0.5px;">{{y}}%</span>
               <span *ngIf="retValGreater(y, -50.0)">{{y}}%</span>-->
-            </span>
-            <span *ngIf="i==6 && y.indexOf('-')==-1"  style="color:green">{{y}}%
+            <!--</span>
+            <span *ngIf="i==6 && y.indexOf('-')==-1"  style="color:green">{{y}}%-->
               <!--<span *ngIf="retValGreater(y, 75.0)" style="border: solid green 0.5px;">{{y}}%</span>
               <span *ngIf="retValGreater(y, 50.0) && !retValGreater(y, 75.0)" style="border: dashed green 0.5px;">{{y}}%</span>
               <span *ngIf="!retValGreater(y, 50.0)">{{y}}%</span>-->
-            </span>
+             <!--</span>
           </td>
         </tr>
     </table>
   </ng-template>
-</div>
+</div>-->
 </div>
