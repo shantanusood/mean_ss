@@ -172,20 +172,31 @@
     </div>
   </div>
   <hr>
-    <div>
+    <div  class="charting_months">
+      <div class="charting_monthly">
+        <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Historic monthly progress</p>
+        <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">
+          <canvas id="canvas_monthly">{{ monthly }}</canvas>
+        </p>
+      </div>
+      <div  style="float: right; width:30%">
+        <div class="login">
   <div class="charting_front">
-    <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Historic monthly progress</p>
     <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">{{monthone}}
       <button mat-button style="float: right;"><img (click)="gainsProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
       <canvas id="canvas_front">{{ frontMonth }}</canvas>
     </p>
   </div>
+</div>
+<div class="login" >
   <div class="charting_next" >
     <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">{{monthtwo}}
       <button mat-button style="float: right;"><img (click)="gainsProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
     <canvas id="canvas_next">{{ nextMonth }}</canvas>
     </p>
   </div>
+</div>
+</div>
 </div>
 
 <!--<div class="percent" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1">

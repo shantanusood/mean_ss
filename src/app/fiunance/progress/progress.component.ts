@@ -24,9 +24,11 @@ export class ProgressComponent implements OnInit {
   chart:Chart = [];
   frontMonth:Chart = [];
   nextMonth:Chart = [];
+  monthly:Chart = [];
   loading = false;
 
   dataof: object[];
+  datamonthly:object[];
   index: number = 5;
   type: string = "total";
   perc_change: string = " ";
@@ -90,6 +92,7 @@ export class ProgressComponent implements OnInit {
     this.gainsProgress();
     this.charting();
     this.currentProgress();
+    this.gainsProgressMonthly();
     this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
       this.role_list = data as object[];
       this.role_list.forEach(d => {
@@ -115,7 +118,73 @@ export class ProgressComponent implements OnInit {
       });
 
   }
+  gainsProgressMonthly(){
+    Chart.helpers.each(Chart.instances, function (instance) {
+      if (instance.chart.canvas.id === "canvas_monthly") {
+        instance.destroy();
+        return;
+      }
+    });
+    this.http
+      .get(
+        this.baseUrl +
+        "data/"+this.username+"/gains/monthly")
+      .subscribe((data2) => {
+        this.datamonthly = data2 as object[];
+        this.monthly = new Chart("canvas_monthly", {
+          type: "bar",
+          data: {
+            labels: this.datamonthly[0],
+            datasets: [
+              {
+                data: this.datamonthly[1],
+                fill: false,
+                borderColor: "wheat",
+                backgroundColor: "wheat",
+                pointHoverBackgroundColor: "wheat",
+                pointHoverBorderColor: "wheat"
+              }
+            ]
+          },
+          options: {
+            showAllTooltips: true,
+            legend: {
+              display: false
+            },
+            plugins: {
+              datalabels: {
+                 display: true,
+                 align: 'center',
+                 anchor: 'center'
+              }
+           },
+            scales: {
+              xAxes: [{
+                display: true,
+                ticks: {
+                  fontColor: "wheat", // this here
+                },
+                gridLines: {
+                  color: 'black',
+                  zeroLineColor: 'wheat'
+                }
+              }],
+              yAxes: [{
+                display: true,
+                ticks: {
+                  fontColor: "wheat",
+                },
+                gridLines: {
+                  color: 'wheat',
+                  zeroLineColor: 'wheat'
+                }
+              }],
+            }
+          }
+        });
+      });
 
+  }
   gainsProgress(){
 
     Chart.helpers.each(Chart.instances, function (instance) {

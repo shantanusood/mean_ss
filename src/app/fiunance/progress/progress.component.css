@@ -7,10 +7,25 @@
   display: inline-block;
   min-width: 500px;
 }
+.charting_months {
+  padding: 5px;
+  margin-top: 0px;
+  width: 100%;
+  height: inherit;
+  display: inline-block;
+  min-width: 500px;
+}
+.charting_monthly{
+  padding: 5px;
+  margin-top: 0px;
+  width: 70%;
+  height: inherit;
+  display: inline-block;
+
+}
 .charting_front{
   padding: 5px;
   margin-top: 0px;
-  width: 32.5%;
   height: inherit;
   display: inline-block;
 }
@@ -18,7 +33,6 @@
 .charting_next{
   padding: 5px;
   margin-top: 0px;
-  width: 32.5%;
   height: inherit;
   display: inline-block;
 }
