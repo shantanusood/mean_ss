@@ -96,84 +96,67 @@
   <table class="one" >
     <tr>
       <th colspan="2" style="background-color: rgb(78, 73, 73); text-align: center; font-size: 1.1em; color: chocolate; text-decoration: none; font-style: normal;">DETAILS ABOUT YOUR RENTAL</th>
-    </tr>
-    <tr>
-      <td colspan="2"><img src="/assets/{{property['image']}}.jpg" style="width: 400px; height: auto;"/></td>
-    </tr>
-    <tr>
-      <td style="border: none;">Address</td>
-      <td style="border: none;" class="desc">{{property['address']}}</td>
-    </tr>
-    <tr>
-      <td style="border: none;">Circuit breaker location</td>
-      <td style="border: none;">{{property['circuitbreaker']}}</td>
-    </tr>
-    <tr>
-      <td style="border: none;">Water shut off </td>
-      <td style="border: none;">{{property['watermain']}}</td>
-    </tr>
-    <tr>
-      <td style="border: none;">Alarm system installed</td>
-      <td style="border: none;">{{property['alarm']}}</td>
-    </tr>
-    <tr>
-      <td style="border: none;">Fire safety</td>
-      <td style="border: none;">{{property['fire']}}</td>
-    </tr>
-    <tr>
-      <td style="border: none;">Central heat type</td>
-      <td style="border: none;">{{property['centralheat']}}</td>
-    </tr>
-    <tr>
-      <td style="border: none;">Age of heat source</td>
-      <td style="border: none;">{{property['heatage']}}</td>
-    </tr>
-  </table>
-  <table class="two" >
-    <tr>
+      <td rowspan="10" style="border: none; background-color:  rgb(65, 61, 61);"></td>
       <th colspan="2" style="background-color: rgb(78, 73, 73); text-align: center; font-size: 1.1em; color: chocolate; text-decoration: none; font-style: normal;">LEASE AGREEMENT</th>
     </tr>
     <tr>
+      <td colspan="2" rowspan="2"><img src="/assets/{{property['image']}}.jpg" style="width: 400px; height: auto;"/></td>
       <td style="border: none;">Rental Description</td>
       <td style="border: none;" class="desc">{{property['desc']}}</td>
     </tr>
     <tr>
+      <td style="border: none;">Lease expires:</td>
+      <td style="border: none;">{{ getExpiry(data) }} &nbsp;&nbsp;&nbsp;<span *ngIf="hasRequested"><span *ngIf="!requested" style="color: green;">
+        <br>
+        <button mat-raised-button (click)="extention()">Request Extension</button></span>
+        <span *ngIf="requested" style="color: red; max-width: 280px; word-wrap: normal; display: block;">Duration: &nbsp;&nbsp;<span *ngFor="let x of getDurations(data)"><button mat-button (click)="getExtention(x)"><u>{{x}}</u></button>
+        </span></span></span><span *ngIf="!hasRequested" style="color: green;">Lease extention request processing</span></td>
+
+    </tr>
+    <tr>
+      <td style="border: none;">Address</td>
+      <td style="border: none;" class="desc">{{property['address']}}</td>
       <td style="border: none;">Lease status:</td>
       <td style="border: none; color: green;">{{ getStatus(data) }}</td>
     </tr>
     <tr>
-      <td style="border: none;">Lease expires:</td>
-        <td style="border: none;">{{ getExpiry(data) }} &nbsp;&nbsp;&nbsp;<span *ngIf="hasRequested"><span *ngIf="!requested" style="color: green;">
-          <br>
-          <button mat-raised-button (click)="extention()">Request Extension</button></span>
-          <span *ngIf="requested" style="color: red; max-width: 280px; word-wrap: normal; display: block;">Duration: &nbsp;&nbsp;<span *ngFor="let x of getDurations(data)"><button mat-button (click)="getExtention(x)"><u>{{x}}</u></button>
-          </span></span></span><span *ngIf="!hasRequested" style="color: green;">Lease extention request processing</span></td>
-    </tr>
-    <tr>
+      <td style="border: none;">Water shut off </td>
+      <td style="border: none;">{{property['watermain']}}</td>
       <td style="border: none;">Download</td>
       <td style="border: none;"><button mat-raised-button (click)="download()">Download Lease</button></td>
     </tr>
     <tr>
+      <td style="border: none;">Alarm system installed</td>
+      <td style="border: none;">{{property['alarm']}}</td>
       <td style="border: none;">Security deposit</td>
       <td style="border: none;">{{data['deposit']}}</td>
     </tr>
     <tr>
+      <td style="border: none;">Fire safety</td>
+      <td style="border: none;">{{property['fire']}}</td>
       <td style="border: none;">Pet policy</td>
       <td style="border: none;">{{property['pet']}}</td>
     </tr>
     <tr>
+      <td style="border: none;">Central heat type</td>
+      <td style="border: none;">{{property['centralheat']}}</td>
       <td style="border: none;">Nearest police precinct</td>
       <td style="border: none;">{{property['police']}}</td>
     </tr>
     <tr>
+      <td style="border: none;">Age of heat source</td>
+      <td style="border: none;">{{property['heatage']}}</td>
       <td style="border: none;">Nearest hospital</td>
       <td style="border: none;">{{property['hospital']}}</td>
     </tr>
     <tr>
+      <td style="border: none;">Circuit breaker location</td>
+      <td style="border: none;">{{property['circuitbreaker']}}</td>
       <td style="border: none;">Nearest DMV</td>
       <td style="border: none;">{{property['dmv']}}</td>
     </tr>
   </table>
+
 </div>
   <div class="content" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('analytics')!=-1">
     <table class="three" >
@@ -183,12 +166,15 @@
             Only credit spread strategies & covered calls are suported!
           </h6>
         </td>
+        <td rowspan="7" style="border: none;"></td>
+        <td style="border: 0px; text-align: center;"><h6 >How to use this application? Watch below</h6></td>
       </tr>
       <tr  >
         <th>Strategies</th>
         <th>Supported?</th>
         <th>Strategies</th>
         <th>Supported?</th>
+        <td rowspan="6" style="border: none; text-align: center;"><iframe width="515" height="300" src="https://www.youtube.com/embed/dexOhg3pYa0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
       </tr>
       <tr  >
         <td style="border: 0px">Covered Calls</td>
@@ -221,14 +207,7 @@
         <td style="border: 0px; text-align: center;"><img src="/assets/red.png" style="width: 40px; height: auto;"/></td>
       </tr>
     </table>
-    <table class="four">
-      <tr  >
-        <td style="border: 0px" colspan="2">How to use this application? Watch below</td>
-      </tr>
-      <tr  >
-        <td style="border: 0px" colspan="2"><iframe width="515" height="300" src="https://www.youtube.com/embed/dexOhg3pYa0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
-      </tr>
-    </table>
+
   </div>
   <br>
   <div class="social" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('analytics')!=-1">
