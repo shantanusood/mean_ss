@@ -22,6 +22,7 @@ export class FiunanceComponent implements OnInit {
   constructor(private http: HttpClient, public dialog: MatDialog, private ds: CoronaserviceService) {}
 
   arrBirds: string[];
+  stocks: string[];
   selectedOption:String;
   mySubscription: any;
   addedRes: string[];
@@ -44,6 +45,7 @@ export class FiunanceComponent implements OnInit {
   callspread:boolean = false;
   putspread:boolean = false;
   account: String;
+  longstock:boolean = false;
 
   closeTop: boolean = false;
   sure(){
@@ -69,7 +71,22 @@ export class FiunanceComponent implements OnInit {
         this.account_2 = data['robinhood'];
         this.account_3 = data['tastyworks'];
       });
-    this.getData();
+      this.http.get(this.baseUrl + "data/"+this.username+"/stocks/get/temp").subscribe((data) => {
+        this.stocks = data as string[];
+        if(this.stocks.length==0){
+          this.stocks = undefined;
+        }
+      });
+      this.http.get(this.baseUrl + "data/"+this.username+"/monitoring/temp").subscribe((data) => {
+        this.arrBirds = data as string[];
+
+        for(var k in this.arrBirds){
+          this.arrBirds[k]['ordered']['call'].reverse();
+          this.arrBirds[k]['ordered']['put'].reverse();
+        }
+
+        this.loading = false;
+      });
   }
 
   getData() {
@@ -82,27 +99,40 @@ export class FiunanceComponent implements OnInit {
         this.arrBirds[k]['ordered']['put'].reverse();
       }
 
-      this.loading = false;
     });
+    this.http.get(this.baseUrl + "data/"+this.username+"/stocks/get").subscribe((data) => {
+      this.stocks = data as string[];
+      if(this.stocks.length==0){
+        this.stocks = undefined;
+      }
+      this.loading = false;
 
+    });
   }
   selectStrat(value: String){
     if(value=='Covered Call'){
       this.covered = true;
       this.callspread = false;
       this.putspread = false;
+      this.longstock = false;
     }else if(value=='Credit Call Spread'){
       this.callspread = true;
       this.covered = false;
       this.putspread = false
+      this.longstock = false;
     }else if(value=='Credit Put Spread'){
       this.putspread = true;
       this.callspread = false;
       this.covered = false;
+      this.longstock = false;
     }else{
       this.covered = false;
       this.callspread = false;
       this.putspread = false;
+      this.longstock = false;
+    }
+    if(value=='Long Stock'){
+      this.longstock = true;
     }
     this.strategy = value;
   }
@@ -198,6 +228,7 @@ export class FiunanceComponent implements OnInit {
         this.required_call = undefined;
         this.required_put = undefined;
         this.required_prem = undefined;
+        this.longstock = false;
       }
   }
   date: string;
@@ -265,7 +296,71 @@ export class FiunanceComponent implements OnInit {
       this.onClickAddVals();
     }
   }
+  clickAddStock(){
+    if(this.selectedOption==undefined || this.selectedOption.length==0){
+      this.required_msg = "*";
+    }else{
+      this.required_msg = "";
+    }
+    if(this.strategy==undefined || this.strategy.length==0){
+      this.required_strategy = "*";
+    }else{
+      this.required_strategy = "";
+    }
+    if((document.getElementById("ticker") as HTMLInputElement).value.length==0){
+      this.required_ticker = "*";
+    }else{
+      this.required_ticker = "";
+    }
+    if((document.getElementById("collateral") as HTMLInputElement).value.length==0){
+      this.required_coll = "*";
+    }else{
+      this.required_coll = "";
+    }
+    if((document.getElementById("premium") as HTMLInputElement).value.length==0){
+      this.required_prem = "*";
+    }else{
+      this.required_prem = "";
+    }
+    if(this.required_msg || this.required_strategy || this.required_ticker || this.required_coll || this.required_prem){
+      console.log("requirement not fulfilled");
+    }else{
+      this.addStock();
+    }
+  }
 
+  delStock(ticker: string){
+    this.http.get(
+      this.baseUrl + "data/"+this.username+"/delstocks/"+ticker).subscribe((data) => {
+        this.stocks = data as string[];
+      });
+  }
+  addStock(){
+    this.http.get(
+      this.baseUrl + "data/"+this.username+"/accounts").subscribe((data) => {
+        console.log(data);
+        if(this.selectedOption===data['fidelity']){
+          this.account = 'fidelity';
+        }else if(this.selectedOption===data['robinhood']){
+          this.account = 'robinhood';
+        }else if(this.selectedOption===data['tastyworks']){
+          this.account = 'tastyworks';
+        }
+        this.http.get(
+          this.baseUrl + "data/"+this.username+"/stocks/"+
+          (document.getElementById("ticker") as HTMLInputElement).value + "/"+
+          (document.getElementById("premium") as HTMLInputElement).value + "/"+
+          this.account + "/"+
+          (document.getElementById("collateral") as HTMLInputElement).value).subscribe((data) => {
+            this.stocks = data as string[];
+            if(this.stocks.length==0){
+              this.stocks = undefined;
+            }
+          });
+    });
+
+      this.refresh = true;
+  }
   onClickAddVals() {
     console.log(this.selectedOption);
     this.http.get(

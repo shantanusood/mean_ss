@@ -41,6 +41,7 @@
     <tr><td>Strategy:<span *ngIf="required_strategy" style="color: red; font-size: 1.2em;">{{required_strategy}}</span></td>
       <td><select class="inputs" (change)="selectStrat($event.target.value)">
       <option value="">&nbsp;</option>
+      <option value="Long Stock">Long Stock</option>
       <option value="Covered Call">Covered Call</option>
       <option value="Iron Condor">Iron Condor</option>
       <option value="Iron Butterfly">Iron Butterfly</option>
@@ -50,28 +51,31 @@
     <!--<tr><td>Account2:</td> <td><input matInput type="text" id="account"></td></tr>-->
     <tr><td>Ticker: <span *ngIf="required_ticker" style="color: red; font-size: 1.2em;">{{required_ticker}}</span></td>
       <td><input class="inputs" matInput type="text" id="ticker"></td></tr>
-    <tr><td>Contracts: <span *ngIf="required_contract" style="color: red; font-size: 1.2em;">{{required_contract}}</span></td>
+    <tr *ngIf="!longstock"><td>Contracts: <span *ngIf="required_contract" style="color: red; font-size: 1.2em;">{{required_contract}}</span></td>
       <td><input class="inputs" matInput type="number" id="contracts"></td></tr>
-    <tr><td>Collateral: <span *ngIf="required_coll" style="color: red; font-size: 1.2em;">{{required_coll}}</span></td>
+    <tr ><td> <span *ngIf="!longstock">Collateral</span><span *ngIf="longstock">Shares</span>:
+      <span *ngIf="required_coll" style="color: red; font-size: 1.2em;">{{required_coll}}</span></td>
       <td>
       <span *ngIf="!covered"><input class="inputs" matInput type="number" id="collateral"></span>
       <span *ngIf="covered"><input class="inputs" matInput type="number" id="collateral" value="0" disabled></span>
     </td></tr>
-    <tr><td>Expiration: <span *ngIf="required_exp" style="color: red; font-size: 1.2em;">{{required_exp}}</span></td>
+    <tr *ngIf="!longstock"><td>Expiration: <span *ngIf="required_exp" style="color: red; font-size: 1.2em;">{{required_exp}}</span></td>
       <td><input class="inputs" matInput type="date" id="exp" name="trip-start" (change)="changeDueDate()" value="{{cur_date}}" min="2020-01-01" max="2023-01-01"></td></tr>
-    <tr><td>Call side: <span *ngIf="required_call" style="color: red; font-size: 1.2em;">{{required_call}}</span></td>
+    <tr *ngIf="!longstock"><td>Call side: <span *ngIf="required_call" style="color: red; font-size: 1.2em;">{{required_call}}</span></td>
       <td>
       <span *ngIf="!putspread"><input class="inputs" matInput type="number" id="call"></span>
       <span *ngIf="putspread"><input class="inputs" value="0" matInput type="number" id="call" disabled></span>
     </td></tr>
-    <tr><td>Put side: <span *ngIf="required_put" style="color: red; font-size: 1.2em;">{{required_put}}</span></td>
+    <tr *ngIf="!longstock"><td>Put side: <span *ngIf="required_put" style="color: red; font-size: 1.2em;">{{required_put}}</span></td>
       <td>
       <span *ngIf="!covered && !callspread"><input class="inputs" matInput type="number" id="put"></span>
       <span *ngIf="covered || callspread"><input class="inputs" matInput type="number" id="put" value="0" disabled></span>
     </td></tr>
-    <tr><td>Premium: <span *ngIf="required_prem" style="color: red; font-size: 1.2em;">{{required_prem}}</span></td>
+    <tr><td><span *ngIf="!longstock">Premium</span><span *ngIf="longstock">Price</span>:
+      <span *ngIf="required_prem" style="color: red; font-size: 1.2em;">{{required_prem}}</span></td>
       <td><input class="inputs" matInput type="number" id="premium"></td></tr>
-    <tr><td></td><td><button mat-button (click)="clickAdd()" style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
+    <tr *ngIf="!longstock"><td></td><td><button mat-button (click)="clickAdd()" style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
+    <tr *ngIf="longstock"><td></td><td><button mat-button (click)="clickAddStock()" style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
     <tr><td colspan="2"><span *ngIf="required_msg || required_strategy || required_ticker || required_contract || required_coll || required_exp || required_call || required_put || required_prem" style="color: red;">*required</span></td></tr>
     <tr *ngIf="addedRes"><td colspan="2" style="color: green;">{{addedRes}}</td></tr>
     <tr *ngIf="addedResErr"><td colspan="2" style="color: red;">{{addedResErr}}</td></tr>
@@ -83,6 +87,47 @@
     <p style="font-size: 1.2em; float: right; position:fixed; margin-right: 10px; right: 60px; top: 2%; z-index: 10; color: red;" *ngIf="refresh">
       <span class="blink_me">Refresh to see your changes --> </span></p>
   <div class="monitor">
+    <div class="dividend" *ngIf="stocks">
+      <table>
+        <tr>
+          <th>Ticker</th>
+          <th>Current Price</th>
+          <th>Cost Basis</th>
+          <th>pnl %</th>
+          <th># shares</th>
+          <th>Div Yield</th>
+          <th>Pay date</th>
+          <th>Per share Amt</th>
+          <th>Total amount</th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let x of stocks">
+          <td *ngIf="x.account.indexOf('fidelity')!=-1" style="color:orange; ">{{x.ticker | uppercase}}</td>
+          <td *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.ticker | uppercase}}</td>
+          <td *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.ticker | uppercase}}</td>
+          <td style="color: white;  padding: 5px;"><i>{{x.current}}</i></td>
+          <td *ngIf="x.account.indexOf('fidelity')!=-1" style="color:orange; ">{{x.price}}</td>
+          <td *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.price}}</td>
+          <td *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.price}}</td>
+          <td *ngIf="x.pnl.indexOf('-')!=-1" style="color:red; ">{{x.pnl}}%</td>
+          <td *ngIf="x.pnl.indexOf('-')==-1" style="color:green; ">{{x.pnl}}%</td>
+          <td *ngIf="x.account.indexOf('fidelity')!=-1" style="color:orange; ">{{x.shares}}</td>
+          <td *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.shares}}</td>
+          <td *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.shares}}</td>
+          <td *ngIf="x.account.indexOf('fidelity')!=-1" style="color:orange; ">{{x.div}}</td>
+          <td *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.div}}</td>
+          <td *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.div}}</td>
+          <td *ngIf="x.account.indexOf('fidelity')!=-1" style="color:orange; ">{{x.date}}</td>
+          <td *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.date}}</td>
+          <td *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.date}}</td>
+          <td *ngIf="x.account.indexOf('fidelity')!=-1" style="color:orange; ">{{x.pershare}}</td>
+          <td *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.pershare}}</td>
+          <td *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.pershare}}</td>
+          <td style="color:aliceblue; ">${{x.total}}</td>
+          <td style="border: none;"><span><button mat-button (click)="delStock(x.ticker)"><b style="color:tomato;">x</b></button></span></td>
+        </tr>
+      </table>
+    </div>
     <div class="inner" *ngFor="let x of arrBirds" >
     <table>
       <tr style="color:aliceblue; font-size: 7.5mm;">{{x.ticker | uppercase}} - {{x.total}}
@@ -105,7 +150,7 @@
           {{processKey(y)}} <sup>{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
           <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, 'tastyworks', 'call', processKey(y))"><b style="color:tomato;">x</b></button></span>
       </tr>
-      <tr style="color:red; font-size: 8mm; border: dashed wheat 2px; padding: 5px;">{{x.price}}</tr>
+      <tr style="color: white; font-size: 8mm; border: dashed wheat 2px; padding: 5px;"><i>{{x.price}}</i></tr>
       <tr *ngFor="let y of reverseIt(x.ordered.put)">
         <td *ngIf="process(y)[0].indexOf('robinhood')!=-1 && processKey(y)!='0'" style="display:inline-block; color:rosybrown; font-size: 6mm; border: solid rosybrown 0px;">
           {{processKey(y)}} <sup>{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
