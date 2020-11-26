@@ -15,6 +15,7 @@ import { PredictdocComponent } from './docs/docpan/predictdoc/predictdoc.compone
 import { ResearchComponent } from './home/research/research.component';
 import { TechieComponent } from './techie/techie.component';
 import { AdminComponent } from './admin/admin.component';
+import { SubscribeComponent } from './subscribe/subscribe.component';
 
 const routes: Routes = [
   {path: '', component: CoronaComponent},
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: 'strategy', component: HealthComponent},
   {path: 'admin', component: AdminComponent},
   {path: 'docs', component: DocsComponent},
+  {path: 'subscribe', component: SubscribeComponent},
   {path: 'docs/home', component: HomedocComponent},
   {path: 'docs/ext', component: ExtdocComponent},
   {path: 'docs/strat', component: StratdocComponent},

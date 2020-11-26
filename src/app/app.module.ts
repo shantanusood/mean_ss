@@ -44,6 +44,7 @@ import { CoronamianComponent  } from './admin/coronamian/coronamian.component';
 import { EducationComponent } from './education/education.component';
 import { AdminComponent } from './admin/admin.component';
 import { TechieComponent } from './techie/techie.component';
+import { SubscribeComponent } from './subscribe/subscribe.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { TechieComponent } from './techie/techie.component';
     CoronamianComponent,
     EducationComponent,
     AdminComponent,
-    TechieComponent
+    TechieComponent,
+    SubscribeComponent
   ],
   imports: [
     AgGridModule.withComponents([]),
