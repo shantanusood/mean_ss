@@ -36,6 +36,8 @@ export class CoronaComponent implements OnInit{
   obj = {};
   message:boolean=false;
 
+  user_diffdays: any;
+
   username: string;
   roles: string;
   role_list: object[];
@@ -52,6 +54,15 @@ export class CoronaComponent implements OnInit{
       this.role_list.forEach(d => {
         if(d['userid']===this.username){
           this.roles = d['role'];
+          var date1 = new Date(d['join']);
+          var date2 = new Date();
+          var diff = Math.abs(date1.getTime() - date2.getTime());
+          this.user_diffdays = 14 - Math.ceil(diff / (1000 * 3600 * 24));
+          if(this.user_diffdays<0){
+            this.user_diffdays = "ENDED";
+          }else{
+            this.user_diffdays = String(this.user_diffdays) + " days";
+          }
         }
         console.log(d['userid']);
         console.log(d['role']);

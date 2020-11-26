@@ -3,7 +3,7 @@
   <h5 *ngIf="highbug">High bugs list</h5>
   <h5 *ngIf="roleslist">What are all the roles defined in the app</h5>
   <h5 *ngIf="newuser">Create a new user</h5>
-  <h5 *ngIf="deleteuser">Delete user</h5>
+  <h5 *ngIf="deleteuser">User management</h5>
   <h5 *ngIf="default || tasks">Tasks to be done</h5>
   <h5 *ngIf="medbug">Medium bugs list</h5>
   <h5 *ngIf="lowbug">Low bugs list</h5>
@@ -48,7 +48,32 @@
       <td style="border: none;"><span style="color: aliceblue;">Delete user: </span></td>
       <td style="border: none;"><button mat-raised-button (click)="deleteUser()">> {{townSelected}} <</button></td>
     </tr>
+    <tr>
+      <td style="border: none;"><span style="color: aliceblue;">Change status: </span>
+        <input matInput type="text" id="status" style="width: 80px;" ></td>
+      <td style="border: none;"><button mat-raised-button (click)="changestatus()">> {{townSelected}} <</button></td>
+    </tr>
+    <tr>
+      <td style="border: none;"><span style="color: aliceblue;">Change role: </span>
+        <select id="rolechange" (change)="Change($event.target.value)">
+          <option value="">&nbsp;</option>
+          <option value="basictrader">basictrader</option>
+          <option value="basictrader_new">basictrader_new</option>
+          <option value="advancedtrader">advancedtrader</option>
+          <option value="analytics">analytics</option>
+        </select>
+      </td>
+      <td style="border: none;"><button mat-raised-button (click)="changeRole()">> {{townSelected}} <</button></td>
+    </tr>
+    <br>
+    <tr>
+      <td colspan="2" style="border: none;"><b><u>User notifications</u></b></td>
+    </tr>
+    <hr>
+    <tr *ngFor="let x of notifications" ><td style="border: none;">{{x}}</td>
+      <td style="border: none;"><button mat-button (click)="deleteNotification(x)"><b style="font-size: 5mm; color:tomato;">x</b></button></td>
 
+    </tr>
   </table>
     </div>
     <div *ngIf="highbug">

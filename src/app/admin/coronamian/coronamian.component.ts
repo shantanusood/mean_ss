@@ -49,7 +49,7 @@ export class CoronamianComponent implements OnInit {
   loading: boolean = false;
   signup:boolean = true;
   pin_bool:boolean = false;
-
+  notifications:string[];
   constructor(private http: HttpClient, private serv: CoronaserviceService) {
     this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
       this.role_list = data as object[];
@@ -61,8 +61,26 @@ export class CoronamianComponent implements OnInit {
         }
       });
     });
+    this.http.get(this.baseUrl+'data/notifications/get').subscribe((data) => {
+      this.notifications = data as string[];
+    });
   }
+  notification:object;
+  deleteNotification(val:String){
+    this.notification = {
+      data: val
+    }
+    this.http.post(this.baseUrl+'data/notifications/delete', this.notification).subscribe((data) => {
+      this.notifications = data as string[];
+    });
+  }
+  changestatus(){
+    this.http.get(this.baseUrl+'data/roles/changestatus/'+this.townSelected+"/"+
+    (document.getElementById("status") as HTMLInputElement).value
+    ).subscribe((data) => {
 
+    });
+  }
   deleteUser(){
 
     this.http.get(this.baseUrl+'data/deleteuser/'+this.townSelected).subscribe((data) => {
@@ -245,10 +263,19 @@ export class CoronamianComponent implements OnInit {
   getFunctional(data: object){
     return data['functional']
   }
+  roleschange_val:String;
+  Change(value:String){
+    this.roleschange_val = value;
+  }
+  changeRole(){
+    this.http.get( this.baseUrl + "data/roles/change/"+this.townSelected+"/"+this.roleschange_val).subscribe((data) => {
+      this.role_list = data as object[];
+    });
+
+  }
   selectPage(value: String) {
     this.page = value;
-    console.log(this.page);
-   }
+  }
    selectType(value: String) {
     this.type = value;
     console.log(this.type);

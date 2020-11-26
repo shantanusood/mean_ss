@@ -63,7 +63,19 @@
       <br><br>
     </div >
   </div>
-    <div style="color: wheat; border: solid wheat 0px; padding: 5px; text-align: center; width: 30%; float: left;">
+
+
+<div style="color: wheat; border: solid wheat 0px; padding: 5px; text-align: center; width: 30%; float: left;">
+  <div *ngIf="roles.indexOf('new')!=-1 && user_diffdays.indexOf('ENDED')!=-1" style="height: 800px; background-color:  rgb(65, 61, 61); color: wheat; border: solid wheat 0px; padding: 5px; text-align: center; width: 30%; float: right; z-index: 10; position: absolute;" >
+    <table style="margin: 0 auto;">
+      <tr>
+        <td style="color: red; border: none;">Trail expired</td>
+      </tr>
+      <tr>
+        <td style="color: red;  border: none;"><button mat-button><u>Upgrade</u></button></td>
+      </tr>
+    </table>
+  </div>
       <div class="login">
       <table class="this">
         <tr>

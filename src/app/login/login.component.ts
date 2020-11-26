@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CoronaserviceService} from './../coronaservice.service';
 import { HttpClient } from '@angular/common/http';
 import { AppSettings } from '../AppSettings';
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -147,14 +148,15 @@ export class LoginComponent implements OnInit {
         if(this.questions=="tenant"){
           this.newrole = "tenant";
         }else{
-          this.newrole = "basictrader";
+          this.newrole = "basictrader_new";
         }
         this.signup_obj = {
           userid: this.user,
           role: this.newrole,
           question: this.questions,
-          answer: this.answers
-
+          answer: this.answers,
+          join: formatDate(new Date(), 'yyyy-MM-dd', 'en'),
+          status: "active"
         }
         this.http.post(this.baseUrl+'data/newuser', this.signup_obj).subscribe((data) => {
           console.log("done")

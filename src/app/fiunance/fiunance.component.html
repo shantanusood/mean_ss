@@ -27,7 +27,16 @@
   </tr>
 </table>
 </div>
-
+<div *ngIf="roles.indexOf('new')!=-1 && user_diffdays.indexOf('ENDED')!=-1 && add" style="height: 400px; width: 281px; float:right; background-color:wheat; padding: 5px; margin-top: 50px; margin-right: 10px; position:fixed; right: 0; top: 6.5%; z-index: 10;">
+  <table style="margin: 0 auto;">
+    <tr>
+      <td style="color: red; border: none;">Trail expired</td>
+    </tr>
+    <tr>
+      <td style="color: red;  border: none;"><button mat-button><u>Upgrade</u></button></td>
+    </tr>
+  </table>
+</div>
 <div *ngIf="add" style="float:right; background-color:wheat; padding: 5px; margin-top: 20px; margin-right: 10px; position:fixed; right: 0; top: 6.5%; z-index: 9;">
   <br>
   <table class="add">
@@ -81,6 +90,7 @@
     <tr *ngIf="addedResErr"><td colspan="2" style="color: red;">{{addedResErr}}</td></tr>
 
 </table>
+
 </div>
 <div class="container" >
   <ng-template #loaded>

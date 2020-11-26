@@ -35,6 +35,10 @@
     <tr><td>Answer:</td> <td><input class="inputs" matInput type="text" id="answer" value="{{answer}}"></td></tr>
     <tr style="border-bottom: dashed 1px rosybrown;"><td></td><td><button (click)="secret()" mat-button style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Update&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
     <tr *ngIf="msg3"><td colspan="2" style="color: green;">{{msg3}}</td></tr>
+    <tr *ngIf="roles=='basictrader' || roles=='advancedtrader' || roles=='analytics'"><td colspan="2"><button (click)="sendNotification('cancel')" mat-button style="display: block; margin-left: auto; margin-right: auto; ">Cancel Paid Account</button></td></tr>
+    <tr *ngIf="roles=='basictrader' || roles=='advancedtrader' || roles=='analytics' || roles=='basictrader_new'"><td colspan="2"><button (click)="sendNotification('delete')" mat-button style="display: block; margin-left: auto; margin-right: auto; ">Permanently Delete Account</button></td></tr>
+    <tr *ngIf="status.indexOf('cancel')!=-1"><td colspan="2" style="color: red;">Your paid membership will cancel in 24 hrs</td></tr>
+    <tr *ngIf="status.indexOf('delete')!=-1"><td colspan="2" style="color: red;">Your account will delete in 24 hrs</td></tr>
     <!--<tr><td></td><td><button mat-button style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>-->
 </table>
 </div>

@@ -184,3 +184,11 @@ igx-drop-down {
   box-shadow:4px 4px 10px rgba(0,0,0,0.06);
   height: 30px;
 }
+.trailversion table td{
+  border: none;
+}
+.trailversion table {
+  margin: 0px auto;
+
+}
+

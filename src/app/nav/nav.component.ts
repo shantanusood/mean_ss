@@ -57,6 +57,34 @@ export class NavComponent implements OnInit {
       });
 
   }
+  notification:object;
+  status:string;
+  sendNotification(value: String){
+
+    this.notification = {
+      data: this.username + " requested account " + value
+    }
+    this.http.post(
+        this.baseUrl + "data/notifications/add", this.notification)
+      .subscribe((data) => {
+        console.log(data);
+      });
+      this.http.get(
+          this.baseUrl + "data/roles/changestatus/"+this.username+"/"+value)
+        .subscribe((data) => {
+          this.role_list = data as object[];
+          this.role_list.forEach(d => {
+            if(d['userid']===this.username){
+              this.roles = d['role'];
+              this.question = d['question'];
+              this.answer = d['answer'];
+              this.status = d['status'];
+            }
+            console.log(d['userid']);
+            console.log(d['role']);
+          });
+        });
+  }
 
   ngOnInit() {
     this.http
@@ -84,6 +112,7 @@ export class NavComponent implements OnInit {
           this.roles = d['role'];
           this.question = d['question'];
           this.answer = d['answer'];
+          this.status = d['status'];
         }
         console.log(d['userid']);
         console.log(d['role']);

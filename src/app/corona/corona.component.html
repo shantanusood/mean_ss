@@ -1,4 +1,19 @@
 <div class="container">
+  <div class="trailversion" *ngIf="roles.indexOf('new')!=-1">
+    <table>
+      <tr>
+        <td style="color: aliceblue;">Trail version ends in: </td>
+        <td style="color: red;"><b>{{user_diffdays}}</b></td>
+        <td style="color: red;"><button mat-button><u>Upgrade</u></button></td>
+      </tr>
+      <tr>
+        <td style="color: aliceblue; font-size: 1.5em;">$14.99/month</td>
+        <td colspan="2" style="color: aliceblue;">Changes take affect 24 hrs after payment</td>
+      </tr>
+    </table>
+    <hr>
+    <br>
+  </div>
 <div class="admin_content" *ngIf="roles.indexOf('admin')!=-1">
 
   <table class="one">
