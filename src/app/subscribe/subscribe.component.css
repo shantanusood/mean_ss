@@ -1,0 +1,32 @@
+.login {
+  text-align: center;
+  display: inline-block;
+  display: flex;
+  justify-content: center;
+}
+
+.login h2 {
+text-align: left;
+}
+
+.this {
+  padding: 20px;
+  border-collapse:separate;
+  border:solid wheat 1px;
+  border-radius:10px;
+  -moz-border-radius:6px;
+}
+
+.this td, th {
+  border-left:solid wheat 1px;
+  border-top:solid wheat 1px;
+}
+
+.this th {
+  background-color: rosybrown;
+  border-top: none;
+}
+
+.this td:first-child, th:first-child {
+   border-left: none;
+}

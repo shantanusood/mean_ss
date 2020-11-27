@@ -1,22 +1,33 @@
-<p>Subscribe</p>
-<div id="paypal-button-container"></div>
-<script src="https://www.paypal.com/sdk/js?client-id=AYs7ESOOPfvy6OVRwsj2vAmgQ8Z6rWPEG5yginSPee4vw2wtng9hJem_CMBIav-ZG23Vc7H_RCzZmnpS&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
-<script>
-  paypal.Buttons({
-      style: {
-          shape: 'pill',
-          color: 'gold',
-          layout: 'horizontal',
-          label: 'subscribe'
-      },
-      createSubscription: function(data, actions) {
-        return actions.subscription.create({
-          'plan_id': 'P-2T462798M7820702YL7ABFNI'
-        });
-      },
-      onApprove: function(data, actions) {
-        alert(data.subscriptionID);
-      }
-  }).render('#paypal-button-container');
-</script>
 
+<div class="container">
+  <br>
+<div class="login" >
+  <table class="this">
+    <tr >
+      <td style="border: solid wheat 0px; font-size: 1.8em;"><mat-label>Paypal Email/Phone:
+        <span style="color: red;">*</span>
+      </mat-label></td>
+      <td style="border: solid wheat 0px;"><input matInput type="text" id="paypal" style="height: 35px !important;"></td>
+    </tr>
+
+    <tr>
+      <td colspan="2" style="border: solid wheat 0px; padding-top: 20px; width: 100px !important; text-align: center;">
+        <a href="https://py.pl/uErY5" target="_blank" style="text-decoration:none;"><button (click)="subscribeDetails()" mat-raised-button ><span style="font-size: 2em;">Upgrade &nbsp;</span>
+            <mat-icon style="
+              height:48px !important;
+              width:48px !important;
+              font-size:48px !important;" class="material-icons">login</mat-icon>
+          </button></a>
+      </td>
+    </tr>
+
+    <tr>
+      <td  colspan="2" style="border-top: wheat solid 1px; border-bottom: none; border-left: none; border-right: none; text-align: left; color: red;">
+        * Make sure to provide the same email/phone as you
+        <br>registered with paypal to activate your paid membership
+      </td>
+
+   </table>
+</div>
+<br>
+</div>
