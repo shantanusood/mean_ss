@@ -25,6 +25,14 @@ export class FiunanceComponent implements OnInit {
   role_list: object[];
   constructor(private http: HttpClient, public dialog: MatDialog, private ds: CoronaserviceService) {}
 
+  stock_close():boolean{
+    return false;
+  }
+
+  closeStock(){
+
+  }
+
   arrBirds: string[];
   stocks: string[];
   selectedOption:String;
@@ -51,14 +59,22 @@ export class FiunanceComponent implements OnInit {
   account: String;
   longstock:boolean = false;
 
-  closeTop: boolean = false;
-  sure(){
-    this.closeTop = true;
-  }
-  no(){
-    this.closeTop = false;
-  }
+  isTickerEmpty(data: object){
+    var count = 0;
+    Object.values(data['positions']).forEach(x => {
+      var y = x['exp'] as object[];
+      if(y.length>0){
+        count ++;
+      }
+    });
+    if(count>0){
+      return false;
 
+    }else{
+      return true;
+
+    }
+  }
   refresh: boolean = false;
 
   ngOnInit() {
@@ -203,7 +219,6 @@ export class FiunanceComponent implements OnInit {
       .subscribe((data) => {
         //console.log(data);
       });
-      this.closeTop = false;
       this.refresh = true;
   }
 
@@ -351,13 +366,27 @@ export class FiunanceComponent implements OnInit {
       this.addStock();
     }
   }
+  del_acc:String;
+  del_shares:String;
+  delStock(ticker: string, account: string, shares: string){
 
-  delStock(ticker: string){
-    this.http.get(
-      this.baseUrl + "data/"+this.username+"/delstocks/"+ticker).subscribe((data) => {
-        this.stocks = data as string[];
+        const dialogRef = this.dialog.open(Dialog2, {
+          width: '300px',
+          data: {stock: ticker, acc: account, available: shares, contracts: "0"}
+        });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog2 was closed');
+        this.del_shares = result['contracts']
+        this.http
+        .get(this.baseUrl + "data/"+this.username+"/delstocks/"+ticker+"/"+account+"/"+this.del_shares)
+        .subscribe((data) => {
+          this.stocks = data as string[];
+          this.refresh = true;
+        });
       });
-  }
+
+ }
   addStock(){
     this.http.get(
       this.baseUrl + "data/"+this.username+"/accounts").subscribe((data) => {
@@ -493,6 +522,27 @@ export class Dialog {
         }
       }
     }
+    onNoClick(): void {
+
+      this.dialogRef.close();
+    }
+
+}
+@Component({
+  selector: 'dialog-overview-example-dialog2',
+  templateUrl: './dialog2.html'
+})
+export class Dialog2 {
+
+  constructor(
+    public dialogRef: MatDialogRef<Dialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+    getAvailable(data: any){
+      return data['available'];
+
+    }
+
     onNoClick(): void {
 
       this.dialogRef.close();

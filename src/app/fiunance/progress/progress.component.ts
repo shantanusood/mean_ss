@@ -92,7 +92,6 @@ export class ProgressComponent implements OnInit {
       });
     this.gainsProgress();
     this.charting();
-    this.currentProgress();
     this.gainsProgressMonthly();
     this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
       this.role_list = data as object[];
@@ -118,16 +117,6 @@ export class ProgressComponent implements OnInit {
     });
   }
 
-  closeExpired(){
-    this.http
-      .get(
-        this.baseUrl +
-          "data/"+this.username+"/progress/close")
-      .subscribe((data) => {
-        this.closedTrd = data as object[];
-      });
-
-  }
   gainsProgressMonthly(){
     Chart.helpers.each(Chart.instances, function (instance) {
       if (instance.chart.canvas.id === "canvas_monthly") {

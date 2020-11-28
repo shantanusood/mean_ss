@@ -134,17 +134,15 @@
           <td *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.pershare}}</td>
           <td *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.pershare}}</td>
           <td style="color:aliceblue; ">${{x.total}}</td>
-          <td style="border: none;"><span><button mat-button (click)="delStock(x.ticker)"><b style="color:tomato;">x</b></button></span></td>
+          <td style="border: none;"><span><button mat-button (click)="delStock(x.ticker, x.account, x.shares)"><b style="color:tomato;">x</b></button></span></td>
         </tr>
       </table>
     </div>
     <div class="inner" *ngFor="let x of arrBirds" >
     <table>
       <tr style="color:aliceblue; font-size: 7.5mm;">{{x.ticker | uppercase}} - {{x.total}}
-        <span *ngIf="!closeTop"><button mat-button (click)="sure()"><b style="color:tomato;">x</b></button></span>
-        <span *ngIf="closeTop">
-          <button mat-button (click)="onClickDelete(x)"><b style="color:tomato;">Sure?</b></button>
-          <button mat-button (click)="no()"><b style="color:tomato;">No!</b></button>
+        <span *ngIf="isTickerEmpty(x)">
+          <button mat-button (click)="onClickDelete(x)"><b style="color:tomato;">x</b></button>
         </span>
       </tr>
       <hr>

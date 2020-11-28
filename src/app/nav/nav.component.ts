@@ -40,7 +40,7 @@ export class NavComponent implements OnInit {
     this.http
       .get(
         this.baseUrl +
-          "data/"+this.username+"/"
+          "data/"+this.username+"/updatedmycontact/"
           + (document.getElementById("email") as HTMLInputElement).value
           + "/"
           + (document.getElementById("phone") as HTMLInputElement).value

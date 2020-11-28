@@ -1,0 +1,21 @@
+<div>
+
+  <table style="border: none; color: black; width: 100%;">
+    <tr>
+      <th style="border: none; color: black; width: 100%;" colspan="2">Shares available to close for {{data.stock}} = {{getAvailable(data)}}</th>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; width: 100%;">Close shares #:</td>
+      <td style="border: none; color: black; width: 100%;"><input type="number" min="1" max="{{getAvailable(data)}}" display="1" matInput [(ngModel)]="data.contracts" style="width: 60px;"></td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; width: 100%;"></td>
+      <td style="border: none; color: black; width: 100%;">
+        <div mat-dialog-actions>
+          <span ><button mat-button [mat-dialog-close]="data" cdkFocusInitial>Close Trade</button></span>
+        </div>
+      </td>
+    </tr>
+
+  </table>
+</div>

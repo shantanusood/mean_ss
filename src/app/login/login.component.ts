@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
     var count_test = 0;
     this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
       this.role_list = data as object[];
-      this.username = (document.getElementById("username") as HTMLInputElement).value;
+      this.username = (document.getElementById("username") as HTMLInputElement).value.replace(/\s/g, "");
       this.role_list.forEach(d => {
         if(d['userid']==this.username){
           this.question_bool = true;
@@ -125,9 +125,9 @@ export class LoginComponent implements OnInit {
   onClickSignup(){
     this.checkuseer = false;
     this.loading = true;
-    this.userexists = (document.getElementById("username") as HTMLInputElement).value;
+    this.userexists = (document.getElementById("username") as HTMLInputElement).value.replace(/\s/g, "");
     this.questions = ((document.getElementById("questions") as HTMLInputElement).value);
-    this.answers = ((document.getElementById("answers") as HTMLInputElement).value);
+    this.answers = ((document.getElementById("answers") as HTMLInputElement).value).replace(/\s/g, "");
     this.user = this.userexists;
     this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
       this.role_list = data as object[];
@@ -175,8 +175,8 @@ export class LoginComponent implements OnInit {
 
   }
   getPin(){
-    this.username = (document.getElementById("username") as HTMLInputElement).value;
-    this.answer = (document.getElementById("answers") as HTMLInputElement).value;
+    this.username = (document.getElementById("username") as HTMLInputElement).value.replace(/\s/g, "");
+    this.answer = (document.getElementById("answers") as HTMLInputElement).value.replace(/\s/g, "");
     this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
       this.role_list = data as object[];
       this.role_list.forEach(d => {
@@ -219,7 +219,7 @@ export class LoginComponent implements OnInit {
   onClickLogin(){
     var count_test = 0;
     this.loading = true;
-    this.username = (document.getElementById("username") as HTMLInputElement).value;
+    this.username = (document.getElementById("username") as HTMLInputElement).value.replace(/\s/g, "");
     this.pin = (document.getElementById("pin") as HTMLInputElement).value;
     this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
       this.role_list = data as object[];
