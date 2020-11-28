@@ -11,6 +11,13 @@ export interface DialogData {
   name: string;
 }
 
+export interface Dialog2Data {
+  stock: String,
+  acc: String,
+  available: String,
+  contracts: String
+}
+
 @Component({
   selector: "app-fiunance",
   templateUrl: "./fiunance.component.html",
@@ -536,7 +543,7 @@ export class Dialog2 {
 
   constructor(
     public dialogRef: MatDialogRef<Dialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: Dialog2Data) {}
 
     getAvailable(data: any){
       return data['available'];

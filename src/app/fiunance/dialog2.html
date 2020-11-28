@@ -6,7 +6,9 @@
     </tr>
     <tr>
       <td style="border: none; color: black; width: 100%;">Close shares #:</td>
-      <td style="border: none; color: black; width: 100%;"><input type="number" min="1" max="{{getAvailable(data)}}" display="1" matInput [(ngModel)]="data.contracts" style="width: 60px;"></td>
+      <td style="border: none; color: black; width: 100%;">
+        <input type="number" min="1" max="{{getAvailable(data)}}" display="1" matInput [(ngModel)]="data.contracts" style="width: 60px;">
+      </td>
     </tr>
     <tr>
       <td style="border: none; color: black; width: 100%;"></td>
