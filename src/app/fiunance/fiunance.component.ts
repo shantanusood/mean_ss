@@ -542,7 +542,14 @@ export class Dialog2 {
       return data['available'];
 
     }
+    getStock(data){
+      return data['stock'];
 
+    }
+    getContracts(data: any){
+      return data['contracts'];
+
+    }
     onNoClick(): void {
 
       this.dialogRef.close();
