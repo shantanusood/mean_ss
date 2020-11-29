@@ -73,7 +73,11 @@ export class FiunanceComponent implements OnInit {
       if(y.length>0){
         count ++;
       }
+      if(Number(data['price'])==0){
+        count = 0;
+      }
     });
+
     if(count>0){
       return false;
 

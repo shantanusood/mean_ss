@@ -1,7 +1,7 @@
 .leftpan {
   overflow: hidden;
   text-align: center;
-  width: 18%;
+  width: 20%;
   border: solid black 0px;
   height: inherit;
   display: inline-block;
@@ -26,7 +26,7 @@
   display: block;
   color: wheat;
   width: 100%;
-  padding: 8px 16px;
+  padding: 8px 10px;
   text-decoration: none;
 }
 

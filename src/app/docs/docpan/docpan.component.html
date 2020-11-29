@@ -1,19 +1,252 @@
 <div class="docpan">
 
-  <h5 *ngIf="default || tasks">Twitter feed</h5>
-  <h5 *ngIf="roleslist">FAQs</h5>
+  <h5 *ngIf="default || tasks">FAQs</h5>
   <h5 *ngIf="newuser">Training</h5>
   <h5 *ngIf="deleteuser">Mentorship</h5>
+  <h5 *ngIf="roleslist">Report bug</h5>
   <div class="chartingvirus">
     <div *ngIf="default || tasks">
-      <a class="twitter-timeline" data-width="800" data-height="1200" data-theme="dark" href="https://twitter.com/tradershan89">Tweets by tradershan89</a>
-      <br>
-      <br>
+      <p style="color:aliceblue">FAQs</p>
     </div>
-    <div *ngIf="roleslist" ><p style="color:aliceblue"></p></div>
-    <div *ngIf="newuser"><p style="color:aliceblue"></p></div>
-    <div *ngIf="deleteuser"><p style="color:aliceblue"></p></div>
+    <div *ngIf="newuser">
+      <div class="trainingbox" *ngIf="count == 1">
+        <div class="internal">
+          <h6>What is a stock?</h6>
+          <iframe src="https://www.youtube.com/embed/fn3y1hNVgA4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <h6>Credit to: <a href="https://www.youtube.com/user/wallstsurvivor" target="_blank">Wall Street Survivor</a></h6>
+          <button id="buttonright" (click)="inc()" mat-button>Next ></button>
+        </div>
+
+      </div>
+      <div class="trainingbox" *ngIf="count == 2">
+        <div class="internal">
+          <h6>What is an etf?</h6>
+          <iframe src="https://www.youtube.com/embed/GtlzSpoDags" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <h6>Credit to: <a href="https://www.youtube.com/user/wallstsurvivor" target="_blank">Wall Street Survivor</a></h6>
+          <button id="buttonleft" (click)="dec()" mat-button> < Previous</button>
+          <button id="buttonright" (click)="inc()" mat-button>Next ></button>
+        </div>
+
+      </div>
+      <div class="trainingbox" *ngIf="count == 3">
+        <div class="internal">
+          <h6>What are dividends? </h6>
+          <iframe src="https://www.youtube.com/embed/wTCJfPtFvNM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <h6>Credit to: <a href="https://www.youtube.com/channel/UCToe3dspZyw2L_JY-JmP3Mw" target="_blank">TD Ameritrade</a></h6>
+          <button id="buttonleft" (click)="dec()" mat-button> < Previous</button>
+          <button id="buttonright" (click)="inc()" mat-button>Next ></button>
+        </div>
+
+      </div>
+
+      <div class="trainingbox" *ngIf="count == 4">
+        <div class="internal">
+          <h6>What are options derivatives? Basics of call and put</h6>
+          <iframe src="https://www.youtube.com/embed/VJgHkAqohbU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <h6>Credit to: <a href="https://www.youtube.com/channel/UCFCEuCsyWP0YkP3CZ3Mr01Q" target="_blank">The Plain Bagel</a></h6>
+          <button id="buttonleft" (click)="dec()" mat-button> < Previous</button>
+          <button id="buttonright" (click)="inc()" mat-button>Next ></button>
+        </div>
+
+      </div>
+
+      <div class="trainingbox" *ngIf="count == 5">
+        <div class="internal">
+          <h6>What is a covered call?</h6>
+          <iframe src="https://www.youtube.com/embed/q_6qqdMpFqQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <h6>Credit to: <a href="https://www.youtube.com/user/tastytrade1" target="_blank">tastytrade</a></h6>
+          <button id="buttonleft" (click)="dec()" mat-button> < Previous</button>
+          <button id="buttonright" (click)="inc()" mat-button>Next ></button>
+        </div>
+
+      </div>
+
+      <div class="trainingbox" *ngIf="count == 6">
+        <div class="internal">
+          <h6>Make money using dividends and covered call on your existing investments?</h6>
+          <iframe src="https://www.youtube.com/embed/GoOkBNQtV_E" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <h6>Credit to: <a href="https://www.youtube.com/channel/UCshcClu1tCelZoY54HmyciQ" target="_blank">Shan in NYC</a></h6>
+          <button id="buttonleft" (click)="dec()" mat-button> < Previous</button>
+          <button id="buttonright" (click)="inc()" mat-button>Next ></button>
+        </div>
+
+      </div>
+
+      <div class="trainingbox" *ngIf="count == 7">
+        <div class="internal">
+          <h6>What are option greeks?</h6>
+          <iframe src="https://www.youtube.com/embed/_BL2Q1BA0rw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <h6>Credit to: <a href="https://www.youtube.com/user/tastytrade1" target="_blank">tastytrade</a></h6>
+          <button id="buttonleft" (click)="dec()" mat-button> < Previous</button>
+          <button id="buttonright" (click)="inc()" mat-button>Next ></button>
+        </div>
+
+      </div>
+
+      <div class="trainingbox" *ngIf="count == 8">
+        <div class="internal">
+          <h6>What are multi leg options, call credit spread and iron condor?</h6>
+          <iframe src="https://www.youtube.com/embed/yX43RYerHhU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <h6>Credit to: <a href="https://www.youtube.com/user/bullzandbearz" target="_blank">Option Alpha</a></h6>
+          <button id="buttonleft" (click)="dec()" mat-button> < Previous</button>
+          <button id="buttonright" (click)="inc()" mat-button>Next ></button>
+        </div>
+
+      </div>
+
+      <div class="trainingbox" *ngIf="count == 9">
+        <div class="internal">
+          <h6>Monthly income with spreads - robinhood</h6>
+          <iframe src="https://www.youtube.com/embed/_xvLnSb3fP4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <h6>Credit to: <a href="https://www.youtube.com/channel/UCAdHc06OIXROHa3KCJTziKQ" target="_blank">Market Gains</a></h6>
+          <button id="buttonleft" (click)="dec()" mat-button> < Previous</button>
+          <button id="buttonright" (click)="inc()" mat-button>Next ></button>
+        </div>
+
+      </div>
+
+      <div class="trainingbox" *ngIf="count == 10">
+        <div class="internal">
+          <h6>Income with Iron condors</h6>
+          <iframe src="https://www.youtube.com/embed/Z4M8tZ_Kn6c" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <h6>Credit to: <a href="https://www.youtube.com/user/tradersfly" target="_blank">Sasha Evdakov: Tradersfly</a></h6>
+          <button id="buttonleft" (click)="dec()" mat-button> < Previous</button>
+          <button id="buttonright" (click)="inc()" mat-button>Next ></button>
+        </div>
+
+      </div>
+      <div class="trainingbox" *ngIf="count == 11">
+        <div class="internal">
+          <h6>What is implied volatility</h6>
+          <iframe src="https://www.youtube.com/embed/DvLmayY1S7Q" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <h6>Credit to: <a href="https://www.youtube.com/channel/UCYOHtOzMZGwXBLZX1Ltf78g" target="_blank">projectoption</a></h6>
+          <button id="buttonleft" (click)="dec()" mat-button> < Previous</button>
+          <button id="buttonright" (click)="inc()" mat-button>Next ></button>
+        </div>
+
+      </div>
+
+      <div class="trainingbox" *ngIf="count == 12">
+        <div class="internal">
+          <h6>How does volatility affect your profits?</h6>
+          <iframe src="https://www.youtube.com/embed/h0IaTQvoV7g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <h6>Credit to: <a href="https://www.youtube.com/channel/UCYOHtOzMZGwXBLZX1Ltf78g" target="_blank">projectoption</a></h6>
+          <button id="buttonleft" (click)="dec()" mat-button> < Previous</button>
+          <button id="buttonright" (click)="inc()" mat-button>Next ></button>
+        </div>
+
+      </div>
+
+      <div class="trainingbox" *ngIf="count == 13">
+        <div class="internal">
+          <h6>Trade management is key</h6>
+          <iframe src="https://www.youtube.com/embed/VtKWj0cun3s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <h6>Credit to: <a href="https://www.youtube.com/user/tastytrade1" target="_blank">tastytrade</a></h6>
+          <button id="buttonleft" (click)="dec()" mat-button> < Previous</button>
+          <button id="buttonright" (click)="inc()" mat-button>Next ></button>
+        </div>
+
+      </div>
+
+      <div class="trainingbox" *ngIf="count == 14">
+        <div class="internal">
+          <h6>Closing at 50% profit and limiting losses</h6>
+          <iframe src="https://www.youtube.com/embed/IrM1V2qMJgA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <h6>Credit to: <a href="https://www.youtube.com/user/tastytrade1" target="_blank">tastytrade</a></h6>
+          <button id="buttonleft" (click)="dec()" mat-button> < Previous</button>
+          <button id="buttonright" (click)="inc()" mat-button>Next ></button>
+        </div>
+
+      </div>
+      <div class="trainingbox" *ngIf="count == 15">
+        <div class="internal">
+          <h6>Mentorship: make my own video for it</h6>
+          <iframe src="https://www.youtube.com/embed/GtlzSpoDags" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <h6>Credit to: <a href="https://www.youtube.com/channel/UCshcClu1tCelZoY54HmyciQ" target="_blank">Shan in NYC</a></h6>
+          <button id="buttonleft" (click)="dec()" mat-button> < Previous</button>
+        </div>
+
+      </div>
+
+
+      <div class="jump">
+        <table>
+          <tr>
+            <th colspan="2">JUMP TO</th>
+          </tr>
+          <tr>
+            <td>1.&nbsp;</td>
+            <td><button mat-button (click)="jump(1)">What is a stock?</button></td>
+          </tr>
+          <tr>
+            <td>2.&nbsp;</td>
+            <td><button mat-button (click)="jump(2)">What is an etf?</button></td>
+          </tr>
+          <tr>
+            <td>3.&nbsp;</td>
+            <td><button mat-button (click)="jump(3)">What are dividends?</button></td>
+          </tr>
+          <tr>
+            <td>4.&nbsp;</td>
+            <td><button mat-button (click)="jump(4)">What are options derivatives? Basics of call and put</button></td>
+          </tr>
+          <tr>
+            <td>5.&nbsp;</td>
+            <td><button mat-button (click)="jump(5)">What is a covered call?</button></td>
+          </tr>
+          <tr>
+            <td>6.&nbsp;</td>
+            <td><button mat-button (click)="jump(6)">How can you make money using dividends and covered call on your existing investments?</button></td>
+          </tr>
+          <tr>
+            <td>7.&nbsp;</td>
+            <td><button mat-button (click)="jump(7)">What are option greeks?</button></td>
+          </tr>
+          <tr>
+            <td>8.&nbsp;</td>
+            <td><button mat-button (click)="jump(8)">What are multi leg options, call credit spread and iron condor?</button></td>
+          </tr>
+          <tr>
+            <td>9.&nbsp;</td>
+            <td><button mat-button (click)="jump(9)">Monthly income with spreads - robinhood</button></td>
+          </tr>
+          <tr>
+            <td>10.&nbsp;</td>
+            <td><button mat-button (click)="jump(10)">Income with Iron condors</button></td>
+          </tr>
+          <tr>
+            <td>11.&nbsp;</td>
+            <td><button mat-button (click)="jump(11)">What is implied volatility</button></td>
+          </tr>
+          <tr>
+            <td>12.&nbsp;</td>
+            <td><button mat-button (click)="jump(12)">How does volatility affect your profits?</button></td>
+          </tr>
+          <tr>
+            <td>13.&nbsp;</td>
+            <td><button mat-button (click)="jump(13)">Trade management is key</button></td>
+          </tr>
+          <tr>
+            <td>14.&nbsp;</td>
+            <td><button mat-button (click)="jump(14)">Closing at 50% profit and limiting losses</button></td>
+          </tr>
+          <tr>
+            <td>15.&nbsp;</td>
+            <td><button mat-button (click)="jump(15)">Mentorship: make my own video for it</button></td>
+          </tr>
+
+        </table>
+
+      </div>
+    </div>
+    <div *ngIf="deleteuser">
+      <p style="color:aliceblue">Mentorship</p>
+    </div>
+    <div *ngIf="roleslist" >
+      <p style="color:aliceblue">Report bug</p>
+    </div>
 
   </div>
 
 </div>
+<br>

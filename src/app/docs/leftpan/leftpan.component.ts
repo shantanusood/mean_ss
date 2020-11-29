@@ -19,37 +19,33 @@ export class LeftpanComponent implements OnInit {
   cstrat:number = 0;
   predict = false;
   cpredict:number = 0;
-  ngAfterViewInit(): void {
-    (<any>window).twttr.widgets.load();
-}
-  twit_bool: boolean = true;
-  faq_bool: boolean = false;
+  faq_bool: boolean = true;
+  report_bool: boolean = false;
   train_bool: boolean = false;
   ment_bool: boolean = false;
-  twit(){
-    this.ngAfterViewInit();
-      this.twit_bool = true;
-      this.faq_bool = false;
+  faq(){
+      this.faq_bool = true;
+      this.report_bool = false;
       this.train_bool = false;
       this.ment_bool = false;
   }
-  faq(){
-      this.faq_bool = true;
-      this.twit_bool = false;
+  report(){
+      this.report_bool = true;
+      this.faq_bool = false;
       this.train_bool = false;
       this.ment_bool = false;
 
   }
   train(){
       this.train_bool = true;
-      this.twit_bool = false;
+      this.report_bool = false;
       this.faq_bool = false;
       this.ment_bool = false;
 
   }
   ment(){
       this.ment_bool = true;
-      this.twit_bool = false;
+      this.report_bool = false;
       this.train_bool = false;
       this.faq_bool = false;
 
@@ -92,7 +88,7 @@ export class LeftpanComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ngAfterViewInit();
+
   }
 
 }

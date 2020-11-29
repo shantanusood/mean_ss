@@ -1,0 +1,63 @@
+.trainingbox {
+
+
+}
+.internal {
+  border: wheat solid 0px;
+  width: 80%;
+  padding: 20px;
+  display: block;
+  overflow: auto;
+}
+.internal iframe {
+  width: 100%;
+  height: calc(100vw * 0.25);
+  min-width:200px;
+  max-width: 700px;
+  min-height:200px;
+}
+.internal a {
+  text-decoration: none;
+  color: wheat;
+}
+.internal a:hover {
+  text-decoration: underline;
+  color: wheat;
+}
+.internal #buttonleft {
+  padding: 10px;
+  font-size: 1.2em;
+  color: wheat;
+  float: left;
+}
+
+.internal #buttonright {
+  padding: 10px;
+  font-size: 1.2em;
+  color: wheat;
+  float: right;
+}
+
+.internal h6 {
+  padding: 10px;
+  background-color:  rgb(59, 56, 56) ;
+  color: wheat;
+}
+.jump{
+  padding: 20px;
+}
+.jump table {
+  border: none;
+}
+.jump table tr{
+  border: none;
+}
+.jump table tr td{
+  border: none;
+}
+.jump table tr th{
+  border: none;
+}
+.jump table tr:nth-child(odd) {
+  background: rgb(59, 56, 56);
+}
