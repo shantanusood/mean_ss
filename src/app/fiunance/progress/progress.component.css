@@ -7,35 +7,6 @@
   display: inline-block;
   min-width: 500px;
 }
-.charting_months {
-  padding: 5px;
-  margin-top: 0px;
-  width: 100%;
-  height: inherit;
-  display: inline-block;
-  min-width: 500px;
-}
-.charting_monthly{
-  padding: 5px;
-  margin-top: 0px;
-  width: 70%;
-  height: inherit;
-  display: inline-block;
-
-}
-.charting_front{
-  padding: 5px;
-  margin-top: 0px;
-  height: inherit;
-  display: inline-block;
-}
-
-.charting_next{
-  padding: 5px;
-  margin-top: 0px;
-  height: inherit;
-  display: inline-block;
-}
 
 .percent {
   overflow:scroll;
@@ -137,16 +108,7 @@
   transform-origin: 0 0; /* see note above */
 }
 .ldio-tbsvbued4f div { box-sizing: content-box; }
-.login {
-  text-align: center;
-  display: inline-block;
-  display: flex;
-  justify-content: center;
-}
 
-.login h2 {
-text-align: left;
-}
 .this {
   padding: 20px;
   border-collapse:separate;
@@ -170,3 +132,147 @@ text-align: left;
 }
 
 .this tr:nth-child(odd) {background: rgb(78, 73, 73);}
+#closetrade {
+  padding:14px;
+  color:red;
+}
+#closetrade:hover {
+  cursor: pointer;
+  padding:14px;
+  color:wheat;
+
+}
+@media only screen and (max-width: 900px){
+  .mobile-view {
+    display: none;
+  }
+  .chart_inside{
+    float: left;
+    width:100%
+  }
+  .charting_months {
+    padding: 5px;
+    margin-top: 0px;
+    width: 100%;
+    height: inherit;
+    display: inline-block;
+    min-width: 500px;
+  }
+  .charting_monthly{
+    padding: 5px;
+    margin-top: 0px;
+    width: 100%;
+    height: inherit;
+    display: inline-block;
+
+  }
+  .charting_monthly_last{
+    border: wheat solid 0px;
+    width: 100%;
+  }
+  .charting_front{
+    padding: 5px;
+    max-width: 300px;
+    margin-top: 0px;
+    height: inherit;
+    display: inline-block;
+  }
+
+  .charting_next{
+    padding: 5px;
+    max-width: 300px;
+    margin-top: 0px;
+    height: inherit;
+    display: inline-block;
+  }
+  .login.one {
+    display: inline-flex;
+  overflow: auto;
+  }
+
+  .login.one h2 {
+  text-align: left;
+  }
+  .login.two {
+    display: inline-flex;
+  overflow: auto;
+  }
+
+  .login.two h2 {
+  text-align: left;
+  }
+}
+@media only screen and (min-width: 900px){
+  .mobile-view-off {
+    display: none;
+  }
+  .chart_inside{
+    float: left;
+    width:70%
+  }
+  .charting_months {
+    padding: 5px;
+    margin-top: 0px;
+    width: 100%;
+    height: inherit;
+    display: inline-block;
+    min-width: 500px;
+  }
+  .charting_monthly{
+    padding: 5px;
+    margin-top: 0px;
+    width: 70%;
+    height: inherit;
+    display: inline-block;
+
+  }
+  .charting_monthly_last{
+    float: right;
+    width:30%
+
+  }
+  .charting_front{
+    padding: 5px;
+    margin-top: 0px;
+    height: inherit;
+    display: inline-block;
+  }
+
+  .charting_next{
+    padding: 5px;
+    margin-top: 0px;
+    height: inherit;
+    display: inline-block;
+  }
+  .login {
+    text-align: center;
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+  }
+
+  .login h2 {
+  text-align: left;
+  }
+
+  .login.one {
+    text-align: center;
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+  }
+
+  .login.one h2 {
+  text-align: left;
+  }
+  .login.two {
+    text-align: center;
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+  }
+
+  .login.two h2 {
+  text-align: left;
+  }
+}

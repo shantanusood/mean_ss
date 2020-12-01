@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Chart } from 'chart.js';
 import { CoronaserviceService } from './../../coronaservice.service';
 import { AppSettings } from 'src/app/AppSettings';
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-progress',
@@ -45,6 +46,27 @@ export class ProgressComponent implements OnInit {
   gains: object[];
 
   current: object[];
+
+  clickedAdd: boolean = false;
+
+  formatTheDate(x){
+    return formatDate(new Date(x), 'yyyy-MM-dd', 'en');
+
+  }
+
+  onClickAddNewData(){
+    this.clickedAdd = true;
+  }
+  onClickCloseAddNewData(){
+    this.clickedAdd = false;
+  }
+  clickedEdit: boolean = false;
+  onClickEditData(){
+    this.clickedEdit = true;
+  }
+  onClickCloseEditData(){
+    this.clickedEdit = false;
+  }
 
   changeType(type: string){
     Chart.helpers.each(Chart.instances, function (instance) {
@@ -445,6 +467,8 @@ export class ProgressComponent implements OnInit {
       .get(
         this.baseUrl +
         "data/"+this.username+"/updatedaily/" +
+        this.formatTheDate((document.getElementById("date_y") as HTMLInputElement).value) +
+          "/" +
           (document.getElementById("fidelity_y") as HTMLInputElement).value +
           "/" +
           (document.getElementById("robinhood_y") as HTMLInputElement).value +
@@ -452,6 +476,8 @@ export class ProgressComponent implements OnInit {
           (document.getElementById("tastyworks_y") as HTMLInputElement).value +
           "/" +
           (document.getElementById("retirement_y") as HTMLInputElement).value +
+          "/" +
+          this.formatTheDate((document.getElementById("date_t") as HTMLInputElement).value) +
           "/" +
           (document.getElementById("fidelity_t") as HTMLInputElement).value +
           "/" +

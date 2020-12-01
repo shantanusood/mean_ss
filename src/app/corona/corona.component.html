@@ -1,4 +1,4 @@
-  <div id="paypal-button-container"></div>
+
   <div class="container">
 
   <div class="trailversion" *ngIf="roles.indexOf('new')!=-1">
@@ -163,20 +163,28 @@
   <div class="content" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('analytics')!=-1">
     <table class="three" >
       <tr>
+        <th class="mobile-view-off" colspan="4">How to use this application? Watch below</th>
+      </tr>
+      <tr>
+        <td class="mobile-view-off" colspan="4" style="border: none; text-align: center;"><iframe width="350" height="225" src="https://www.youtube.com/embed/dexOhg3pYa0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
+      </tr>
+
+      <tr>
+        <td class="mobile-view" style="border: 0px; text-align: center;"><h6 >How to use this application? Watch below</h6></td>
+        <td class="mobile-view" rowspan="7" style="border: none;"></td>
+
         <td colspan="4" style="border:0px">
           <h6 >
             Only credit spread strategies & covered calls are suported!
           </h6>
         </td>
-        <td rowspan="7" style="border: none;"></td>
-        <td style="border: 0px; text-align: center;"><h6 >How to use this application? Watch below</h6></td>
       </tr>
       <tr  >
+        <td class="mobile-view" rowspan="6" style="border: none; text-align: center;"><iframe width="515" height="300" src="https://www.youtube.com/embed/dexOhg3pYa0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
         <th>Strategies</th>
         <th>Supported?</th>
         <th>Strategies</th>
         <th>Supported?</th>
-        <td rowspan="6" style="border: none; text-align: center;"><iframe width="515" height="300" src="https://www.youtube.com/embed/dexOhg3pYa0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
       </tr>
       <tr  >
         <td style="border: 0px">Covered Calls</td>
@@ -233,7 +241,6 @@
 
   </div>
 
-  <br>
   <br>
   <br>
 

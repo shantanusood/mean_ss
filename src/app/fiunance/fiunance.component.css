@@ -25,6 +25,13 @@ sub {
   color: black;
   border: none;
 }
+.dividend {
+  margin: auto;
+-webkit-transform: translateX(-20px); /* 10px to left */
+-moz-transform: translateX(-20px); /* 10px to left */
+-ms-transform: translateX(-20px); /* 10px to left */
+ transform: translateX(-20px); /* 10px to left */
+}
 .dividend table {
   margin: 0 auto;
 }
@@ -45,20 +52,20 @@ sub {
   color: wheat;
 }
 .monitor {
-  padding: 10px;
+  padding: 5px;
   border: pink solid 0px;
   margin-top: 1px;
   margin-right: 7%;
 }
 .inner {
-  padding: 10px;
+  padding: 5px;
   display: inline-flex;
   overflow: auto;
   border: aqua solid 0px;
 }
 .inner table {
   border: wheat dashed 2px;
-  padding: 10px;
+  padding: 5px;
   width: 300px;
   display:inline-table;
 }
@@ -190,4 +197,29 @@ sub {
 
 @keyframes blinker {
   50% { opacity: 0; }
+}
+#closetrade {
+  padding:14px;
+  color:red;
+}
+#closetrade:hover {
+  cursor: pointer;
+  padding:14px;
+  color:wheat;
+
+}
+#rolltrade {
+  padding:14px;
+  color: aliceblue;
+}
+#rolltrade:hover {
+  cursor: pointer;
+  padding:14px;
+  color:wheat;
+
+}
+@media only screen and (max-width: 800px){
+  .mobile-view {
+    display: none;
+  }
 }

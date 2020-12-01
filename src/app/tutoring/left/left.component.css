@@ -73,3 +73,9 @@ list-style: none;
  left: -20px;
  transform: translateY(-50%) rotate(-45deg);
 }
+@media only screen and (max-width: 800px){
+
+  .mobile-view {
+    display: none;
+  }
+}

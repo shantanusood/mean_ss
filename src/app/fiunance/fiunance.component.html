@@ -6,24 +6,24 @@
 <div style="float: right; position:fixed; margin-right: 10px; right: 10px; top: 2%; z-index: 10;">
   <br>
   <table>
-    <tr><button mat-button><img (click)="onClickRefresh()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></tr>
+    <tr><button mat-button><img (click)="onClickRefresh()" matTooltip="Refresh pag data" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></tr>
      <tr><button mat-button (click)="onClickAdd()">
-       <b style="font-size: 10mm; color: white; " *ngIf="addtext.indexOf('-')==-1">{{addtext}}</b>
-       <b style="font-size: 10mm; color: black; " *ngIf="addtext.indexOf('+')==-1">{{addtext}}</b>
+       <b style="font-size: 10mm; color: white; "  matTooltip="Open trade box"  *ngIf="addtext.indexOf('-')==-1">{{addtext}}</b>
+       <b style="font-size: 10mm; color: black; "  matTooltip="Close trade box"  *ngIf="addtext.indexOf('+')==-1">{{addtext}}</b>
       </button>
       </tr>
   </table>
 
 </div>
-<div style="padding: 8px; float: right; position:fixed; margin-right: 20px; right: 0; top: 15%; z-index: -1; background-color: rgb(78, 73, 73);">
-  <table>
-  <tr style="color: orange; text-align: center; z-index: -1;">{{account_1}}</tr>
-  <tr style="color: rosybrown; text-align: center; z-index: -1;">{{account_2}}</tr>
-  <tr style="color: rgb(243, 138, 126); text-align: center; z-index: -1;">{{account_3}}</tr>
+<div style="max-width: 80px; padding: 8px; float: right; position:fixed; margin-right: 10px; right: 0; top: 20%; z-index: -1; background-color: rgb(78, 73, 73);">
+  <table style="table-layout: fixed; width: 100%;">
+  <tr><td style="color: orange; width: 100%; z-index: -1; word-wrap:break-word; border: none; white-space: normal;">{{account_1}}</td></tr>
+  <tr><td  style="color: rosybrown; width: 100%; z-index: -1; word-wrap:break-word; border: none; white-space: normal;">{{account_2}}</td></tr>
+  <tr><td style="color: rgb(243, 138, 126); width: 100%; z-index: -1; word-wrap:break-word; border: none; white-space: normal;">{{account_3}}</td></tr>
   <tr>&nbsp;</tr>
-  <tr *ngFor="let x of processTopExpiration(dt)" style="color: wheat;">
+  <tr *ngFor="let x of processTopExpiration(dt)" style="color: wheat;"><td style=" border: none;">
     <span *ngIf="x.indexOf('-')!=-1">{{x}}:</span>
-    <span *ngIf="x.indexOf('-')==-1" style="color: aliceblue;">{{x}}</span>
+    <span *ngIf="x.indexOf('-')==-1" style="color: aliceblue;">{{x}}</span></td>
   </tr>
 </table>
 </div>
@@ -101,14 +101,14 @@
       <table>
         <tr>
           <th>Ticker</th>
-          <th>Current Price</th>
-          <th>Cost Basis</th>
+          <th>Price</th>
+          <th class="mobile-view" >Cost Basis</th>
           <th>pnl %</th>
-          <th># shares</th>
-          <th>Div Yield</th>
-          <th>Pay date</th>
-          <th>Per share Amt</th>
-          <th>Total amount</th>
+          <th class="mobile-view" ># shares</th>
+          <th class="mobile-view" >Div Yield</th>
+          <th class="mobile-view" >Pay date</th>
+          <th class="mobile-view" >Per share Amt</th>
+          <th>Amount</th>
           <th></th>
         </tr>
         <tr *ngFor="let x of stocks">
@@ -116,59 +116,97 @@
           <td *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.ticker | uppercase}}</td>
           <td *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.ticker | uppercase}}</td>
           <td style="color: white;  padding: 5px;"><i>{{x.current}}</i></td>
-          <td *ngIf="x.account.indexOf('fidelity')!=-1" style="color:orange; ">{{x.price}}</td>
-          <td *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.price}}</td>
-          <td *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.price}}</td>
+          <td class="mobile-view" *ngIf="x.account.indexOf('fidelity')!=-1" style="color:orange; ">{{x.price}}</td>
+          <td class="mobile-view" *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.price}}</td>
+          <td class="mobile-view" *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.price}}</td>
           <td *ngIf="x.pnl.indexOf('-')!=-1" style="color:red; ">{{x.pnl}}%</td>
           <td *ngIf="x.pnl.indexOf('-')==-1" style="color:green; ">{{x.pnl}}%</td>
-          <td *ngIf="x.account.indexOf('fidelity')!=-1" style="color:orange; ">{{x.shares}}</td>
-          <td *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.shares}}</td>
-          <td *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.shares}}</td>
-          <td *ngIf="x.account.indexOf('fidelity')!=-1" style="color:orange; ">{{x.div}}</td>
-          <td *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.div}}</td>
-          <td *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.div}}</td>
-          <td *ngIf="x.account.indexOf('fidelity')!=-1" style="color:orange; ">{{x.date}}</td>
-          <td *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.date}}</td>
-          <td *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.date}}</td>
-          <td *ngIf="x.account.indexOf('fidelity')!=-1" style="color:orange; ">{{x.pershare}}</td>
-          <td *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.pershare}}</td>
-          <td *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.pershare}}</td>
+          <td class="mobile-view" *ngIf="x.account.indexOf('fidelity')!=-1" style="color:orange; ">{{x.shares}}</td>
+          <td class="mobile-view" *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.shares}}</td>
+          <td class="mobile-view" *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.shares}}</td>
+          <td class="mobile-view" *ngIf="x.account.indexOf('fidelity')!=-1" style="color:orange; ">{{x.div}}</td>
+          <td class="mobile-view" *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.div}}</td>
+          <td class="mobile-view" *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.div}}</td>
+          <td class="mobile-view" *ngIf="x.account.indexOf('fidelity')!=-1" style="color:orange; ">{{x.date}}</td>
+          <td class="mobile-view" *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.date}}</td>
+          <td class="mobile-view" *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.date}}</td>
+          <td class="mobile-view" *ngIf="x.account.indexOf('fidelity')!=-1" style="color:orange; ">{{x.pershare}}</td>
+          <td class="mobile-view" *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.pershare}}</td>
+          <td class="mobile-view" *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.pershare}}</td>
           <td style="color:aliceblue; ">${{x.total}}</td>
-          <td style="border: none;"><span><button mat-button (click)="delStock(x.ticker, x.account, x.shares)"><b style="color:tomato;">x</b></button></span></td>
+          <td style="border: none;"><span><mat-icon id="closetrade"
+            matTooltip="Close position" (click)="delStock(x.ticker, x.account, x.shares)" class="material-icons">close</mat-icon></span></td>
         </tr>
       </table>
     </div>
     <div class="inner" *ngFor="let x of arrBirds" >
     <table>
-      <tr style="color:aliceblue; font-size: 7.5mm;">{{x.ticker | uppercase}} - {{x.total}}
+      <tr style="color:aliceblue; font-size: 7.5mm;">{{x.ticker | uppercase}} - <span matTooltip="Collateral for {{x.ticker}}">{{x.total}}</span>
         <span *ngIf="isTickerEmpty(x)">
-          <button mat-button (click)="onClickDelete(x)"><b style="color:tomato;">x</b></button>
+          <mat-icon id="closetrade" (click)="onClickDelete(x)" matTooltip="Close ticker"  class="material-icons">close</mat-icon>
         </span>
       </tr>
       <hr>
       <tr *ngFor="let y of reverseIt(x.ordered.call)">
         <td *ngIf="process(y)[0].indexOf('robinhood')!=-1 && processKey(y)!='0'" style="display:inline-block; color:rosybrown; font-size: 6mm; border: solid rosybrown 0px;">
-          {{processKey(y)}} <sup>{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
-          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, 'robinhood', 'call', processKey(y))"><b style="color:tomato;">x</b></button></span>
+          {{processKey(y)}} <sup matTooltip="%OTM, Expiry, Collateral">{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
+          <span style="float: right;">
+            <!--<button mat-button (click)="onClickDeleteStrike(x, 'robinhood', 'call', processKey(y))"><b style="color:tomato;">x</b></button>-->
+            <mat-icon id="closetrade" matTooltip="Close position"  (click)="onClickDeleteStrike(x, 'robinhood', 'call', processKey(y))" class="material-icons">close</mat-icon>
+          </span>
+          <span style="float: right;">
+            <mat-icon id="rolltrade" (click)="rolltrade(x, y, 'call', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
+          </span>
         </td>
         <td *ngIf="process(y)[0].indexOf('fidelity')!=-1 && processKey(y)!='0'" style="display:inline-block; color:orange; font-size: 6mm; border: solid orange 0px;">
-          {{processKey(y)}} <sup>{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
-          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, 'fidelity', 'call', processKey(y))"><b style="color:tomato;">x</b></button></span>
-        <td *ngIf="process(y)[0].indexOf('tastyworks')!=-1 && processKey(y)!='0'" style="display:inline-block; color:rgb(243, 138, 126); font-size: 6mm; border: solid salmon 0px;">
-          {{processKey(y)}} <sup>{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
-          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, 'tastyworks', 'call', processKey(y))"><b style="color:tomato;">x</b></button></span>
+          {{processKey(y)}} <sup matTooltip="%OTM, Expiry, Collateral">{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
+          <span style="float: right;">
+            <!--<button mat-button (click)="onClickDeleteStrike(x, 'fidelity', 'call', processKey(y))"><b style="color:tomato;">x</b></button></span>-->
+            <mat-icon id="closetrade" matTooltip="Close position"  (click)="onClickDeleteStrike(x, 'fidelity', 'call', processKey(y))" class="material-icons">close</mat-icon>
+            </span>
+          <span style="float: right;">
+            <mat-icon id="rolltrade" (click)="rolltrade(x, y, 'call', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
+          </span>
+
+          <td *ngIf="process(y)[0].indexOf('tastyworks')!=-1 && processKey(y)!='0'" style="display:inline-block; color:rgb(243, 138, 126); font-size: 6mm; border: solid salmon 0px;">
+          {{processKey(y)}} <sup matTooltip="%OTM, Expiry, Collateral">{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
+          <span style="float: right;">
+            <mat-icon id="closetrade" matTooltip="Close position"  (click)="onClickDeleteStrike(x, 'tastyworks', 'call', processKey(y))" class="material-icons">close</mat-icon>
+            <!--<button style="padding: -4px !important;" mat-button (click)="onClickDeleteStrike(x, 'tastyworks', 'call', processKey(y))" style="padding: 0px !important;"><b style="color:tomato;">x</b></button>-->
+            </span>
+          <span style="float: right;">
+            <mat-icon id="rolltrade" (click)="rolltrade(x, y, 'call', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
+          </span>
       </tr>
-      <tr style="color: white; font-size: 8mm; border: dashed wheat 2px; padding: 5px;"><i>{{x.price}}</i></tr>
+      <tr style="color: white; font-size: 8mm; border: dashed wheat 2px; padding: 5px;"><i matTooltip="Current price for {{x.ticker}}">{{x.price}}</i></tr>
       <tr *ngFor="let y of reverseIt(x.ordered.put)">
         <td *ngIf="process(y)[0].indexOf('robinhood')!=-1 && processKey(y)!='0'" style="display:inline-block; color:rosybrown; font-size: 6mm; border: solid rosybrown 0px;">
-          {{processKey(y)}} <sup>{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
-          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, 'robinhood', 'put', processKey(y))"><b style="color:tomato;">x</b></button></span>
+          {{processKey(y)}} <sup matTooltip="%OTM, Expiry, Collateral">{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
+          <span style="float: right;">
+            <mat-icon id="closetrade" matTooltip="Close position"  (click)="onClickDeleteStrike(x, 'robinhood', 'put', processKey(y))" class="material-icons">close</mat-icon>
+            <!--<button style="padding: -4px !important;" mat-button (click)="onClickDeleteStrike(x, 'robinhood', 'put', processKey(y))" style="padding: 0px !important;"><b style="color:tomato;">x</b></button>-->
+          </span>
+          <span style="float: right;">
+              <mat-icon id="rolltrade" (click)="rolltrade(x, y, 'put', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
+          </span>
         <td *ngIf="process(y)[0].indexOf('fidelity')!=-1 && processKey(y)!='0'" style="display:inline-block; color:orange; font-size: 6mm; border: solid orange 0px;">
-          {{processKey(y)}} <sup>{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
-          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, 'fidelity', 'put', processKey(y))"><b style="color:tomato;">x</b></button></span>
+          {{processKey(y)}} <sup matTooltip="%OTM, Expiry, Collateral">{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
+          <span style="float: right;">
+            <mat-icon id="closetrade" matTooltip="Close position"  (click)="onClickDeleteStrike(x, 'fidelity', 'put', processKey(y))" class="material-icons">close</mat-icon>
+            <!--<button style="padding: -4px !important;" mat-button (click)="onClickDeleteStrike(x, 'fidelity', 'put', processKey(y))" style="padding: 0px !important;"><b style="color:tomato;">x</b></button>-->
+          </span>
+          <span style="float: right;">
+              <mat-icon id="rolltrade" (click)="rolltrade(x, y, 'put', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
+          </span>
         <td *ngIf="process(y)[0].indexOf('tastyworks')!=-1 && processKey(y)!='0'" style="display:inline-block; color:rgb(243, 138, 126); font-size: 6mm; border: solid salmon 0px;">
-          {{processKey(y)}} <sup>{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
-          <span style="float: right;"><button mat-button (click)="onClickDeleteStrike(x, 'tastyworks', 'put', processKey(y))"><b style="color:tomato;">x</b></button></span>
+          {{processKey(y)}} <sup matTooltip="%OTM, Expiry, Collateral">{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
+          <span style="float: right;">
+            <mat-icon id="closetrade" matTooltip="Close position"  (click)="onClickDeleteStrike(x, 'tastyworks', 'put', processKey(y))" class="material-icons">close</mat-icon>
+            <!--<button style="padding: -4px !important;" mat-button (click)="onClickDeleteStrike(x, 'tastyworks', 'put', processKey(y))" style="padding: 0px !important;"><b style="color:tomato;">x</b></button>-->
+          </span>
+          <span style="float: right;">
+              <mat-icon id="rolltrade" (click)="rolltrade(x, y, 'put', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
+          </span>
       </tr>
     </table>
 

@@ -11,7 +11,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { TutoringComponent, AutocompletePipeExtData } from './tutoring/tutoring.component';
-import { FiunanceComponent, Dialog, Dialog2 } from './fiunance/fiunance.component';
+import { FiunanceComponent, Dialog, Dialog2, Dialog3 } from './fiunance/fiunance.component';
 import { HealthComponent } from './health/health.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -45,11 +45,13 @@ import { EducationComponent } from './education/education.component';
 import { AdminComponent } from './admin/admin.component';
 import { TechieComponent } from './techie/techie.component';
 import { SubscribeComponent } from './subscribe/subscribe.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
     Dialog,
     Dialog2,
+    Dialog3,
     AppComponent,
     NavComponent,
     HeaderComponent,
@@ -95,6 +97,7 @@ import { SubscribeComponent } from './subscribe/subscribe.component';
     MatIconModule,
     MatListModule,
     MatTableModule,
+    MatTooltipModule,
     MatFormFieldModule,
     BrowserAnimationsModule,
     IgxAutocompleteModule,
@@ -104,7 +107,7 @@ import { SubscribeComponent } from './subscribe/subscribe.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  entryComponents: [Dialog, Dialog2],
+  entryComponents: [Dialog, Dialog2, Dialog3],
   providers: [CoronaserviceService],
   bootstrap: [AppComponent]
 })

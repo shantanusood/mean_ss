@@ -1,12 +1,26 @@
 <div class="docpan">
 
-  <h5 *ngIf="default || tasks">FAQs</h5>
-  <h5 *ngIf="newuser">Training</h5>
-  <h5 *ngIf="deleteuser">Mentorship</h5>
-  <h5 *ngIf="roleslist">Report bug</h5>
+  <h5 *ngIf="default || tasks">&nbsp;&nbsp;&nbsp;FAQs</h5>
+  <h5 *ngIf="newuser">&nbsp;&nbsp;&nbsp;Training</h5>
+  <h5 *ngIf="deleteuser">&nbsp;&nbsp;&nbsp;Mentorship</h5>
+  <h5 *ngIf="roleslist">&nbsp;&nbsp;&nbsp;Report bug</h5>
   <div class="chartingvirus">
     <div *ngIf="default || tasks">
-      <p style="color:aliceblue">FAQs</p>
+      <div class="trainingbox">
+      <div class="internal">
+        <h6>Step by step guide on how to work this application</h6>
+        <iframe src="https://www.youtube.com/embed/fn3y1hNVgA4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+
+      <h6 style="color: wheat; font-weight: bold; padding: 20px;">Answer to some of your questions:</h6>
+    </div>
+      <div *ngFor="let item of data;let i = index;">
+        <button class="accordion" (click)="toggleAccordian($event, i)"> {{item.parentName}} </button>
+        <div class="panel" *ngFor="let child of item.childProperties" hide="!item.isActive">
+        <p> {{child.propertyName}} </p>
+      </div>
+      </div>
+
     </div>
     <div *ngIf="newuser">
       <div class="trainingbox" *ngIf="count == 1">
@@ -240,10 +254,67 @@
       </div>
     </div>
     <div *ngIf="deleteuser">
-      <p style="color:aliceblue">Mentorship</p>
+      <div class="trainingbox">
+        <div class="internal">
+          <h6>Book one on one session with me:</h6>
+          <iframe src="https://www.youtube.com/embed/fn3y1hNVgA4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <h6 style="color: wheat; font-weight: bold; padding: 20px;">Contact me through any of the below means and I will get back to you:</h6>
+        <div *ngFor="let item of contact;let i = index;">
+          <button class="accordion" (click)="toggleAccordian($event, i)"> {{item.parentName}} </button>
+          <div class="panel" *ngFor="let child of item.childProperties" hide="!item.isActive">
+          <p> {{child.propertyName}} </p>
+        </div>
+        </div>
+      </div>
     </div>
     <div *ngIf="roleslist" >
-      <p style="color:aliceblue">Report bug</p>
+      <table class ="bugtable">
+        <tr>
+          <th style="border: none;"></th>
+          <th>Page</th>
+          <th>Description</th>
+          <th>Type</th>
+        </tr>
+
+        <tr style="color: black;">
+          <td style="border: none; "><button mat-button (click)="addClick('high')"><b style="font-size: 8mm; color: white;">+</b></button></td>
+          <td style="background-color: wheat; ">
+            <select id="selectPage" (change)="selectPage($event.target.value)">
+              <option value="">&nbsp;</option>
+              <option value="Home">Home</option>
+              <option value="Login">Login</option>
+              <option value="Monitor">Monitor</option>
+              <option value="Progress">Progress</option>
+              <option value="Search">Search</option>
+              <option value="Help">Help</option>
+              <option value="NA">NA</option>
+            </select>
+            <span *ngIf="required_page" style="color: red; font-size: 0.7em;">REQUIRED</span>
+          </td>
+          <td style="width: 50%; background-color: wheat; "><textarea type="text" id="description" placeholder="Describe the bug.."></textarea>
+            <span *ngIf="required_desc" style="color: red; font-size: 0.7em;">REQUIRED</span>
+          </td>
+          <td style="background-color: wheat; ">
+            <select id="selectType" (change)="selectType($event.target.value)">
+              <option value="">&nbsp;</option>
+              <option value="UI functional">UI functional</option>
+              <option value="UI styling">UI styling</option>
+              <option value="Mobile styling">Mobile styling</option>
+            </select>
+            <span *ngIf="required_type" style="color: red; font-size: 0.7em;">REQUIRED</span>
+          </td>
+
+        </tr>
+        <tr *ngFor="let x of getHigh(datax)">
+          <td style="border: none;">&nbsp;</td>
+          <td>{{x.page}}</td>
+          <td>{{x.description}}</td>
+          <td>{{x.type}}</td>
+        </tr>
+
+      </table>
     </div>
 
   </div>

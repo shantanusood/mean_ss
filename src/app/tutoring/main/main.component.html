@@ -1,18 +1,17 @@
 <div class="docpan">
-  <h5>{{msg | uppercase}} - {{nameSel}}</h5>
+  <h5> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{msg | uppercase}} - {{nameSel}}</h5>
   <div class="chartingvirus">
     <table>
       <tr>
-        <th>Ticker</th>
         <th>Strategy</th>
         <th>Expiry</th>
-        <th>Collateral</th>
+        <th>Coll ateral</th>
         <th>Short call</th>
         <th>Short put</th>
-        <th>Premium/contract</th>
+        <th>Prem.</th>
       </tr>
       <tr *ngFor="let x of process(ticker)">
-        <td *ngFor="let y of x">{{y}}</td>
+        <td *ngFor="let y of x | slice:1">{{y}}</td>
       </tr>
     </table>
   </div>

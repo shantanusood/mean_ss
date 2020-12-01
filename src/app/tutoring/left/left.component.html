@@ -4,7 +4,7 @@
   <span>
     <ul>
       <li>
-        <a [routerLink]="'/external'" routerLinkActive="hme" >Trades for - {{nameSel}}</a>
+        <span class="mobile-view"><a [routerLink]="'/external'" routerLinkActive="hme" >{{nameSel}}</a></span>
 
         <ul>
           <li *ngFor="let t of dt"><a (click)="change(t.ticker)" style="cursor: pointer;">{{t.ticker}}</a></li>

@@ -5,19 +5,19 @@
 
     <ul>
       <li>
-        <span *ngIf="faq_bool"><a (click)="change('Tasks'); faq()"  style="cursor: pointer; font-size: 1.1em; background-color: wheat; color: black; width: 100%;">FAQs </a></span>
+        <span *ngIf="faq_bool"><a (click)="change('Tasks'); faq()"  style="cursor: pointer; background-color: wheat; color: black; width: 100%;">FAQs</a></span>
         <span *ngIf="!faq_bool"><a (click)="change('Tasks'); faq()"  style="cursor: pointer;">FAQs </a></span>
       </li>
       <li>
-        <span *ngIf="train_bool"><a (click)="change('Chart'); train()" style="cursor: pointer; font-size: 1.1em; background-color: wheat; color: black; width: 100%;">Training </a></span>
+        <span *ngIf="train_bool"><a (click)="change('Chart'); train()" style="cursor: pointer; background-color: wheat; color: black; width: 100%;">Training</a></span>
         <span *ngIf="!train_bool"><a (click)="change('Chart'); train()" style="cursor: pointer;">Training </a></span>
       </li>
       <li>
-        <span *ngIf="ment_bool"><a (click)="change('Del'); ment()" style="cursor: pointer; font-size: 1.1em; background-color: wheat; color: black; width: 100%;">Mentorship </a></span>
+        <span *ngIf="ment_bool"><a (click)="change('Del'); ment()" style="cursor: pointer; background-color: wheat; color: black; width: 100%; border: none; white-space: normal; word-wrap:break-word;">Mentorship</a></span>
         <span *ngIf="!ment_bool"><a (click)="change('Del'); ment()" style="cursor: pointer;">Mentorship </a></span>
       </li>
-      <li>
-        <span *ngIf="report_bool" > <a (click)="change('Vol'); report()"  style="cursor: pointer; font-size: 1.1em; background-color: wheat; color: black; width: 100%;">Report bug</a></span>
+      <li class="mobile-view">
+        <span *ngIf="report_bool" > <a (click)="change('Vol'); report()"  style="cursor: pointer;  background-color: wheat; color: black; width: 100%;">Report bug</a></span>
         <span *ngIf="!report_bool" > <a (click)="change('Vol'); report()"  style="cursor: pointer;">Report bug </a></span>
       </li>
     </ul>

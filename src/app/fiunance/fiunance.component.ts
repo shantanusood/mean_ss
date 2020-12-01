@@ -5,6 +5,7 @@ import { EaseInOut } from 'igniteui-angular/lib/animations/easings';
 import { AstMemoryEfficientTransformer } from '@angular/compiler';
 import { CoronaserviceService } from '../coronaservice.service';
 import { AppSettings } from '../AppSettings';
+import {TooltipPosition} from '@angular/material/tooltip';
 
 export interface DialogData {
   animal: string;
@@ -16,6 +17,24 @@ export interface Dialog2Data {
   acc: String,
   available: String,
   contracts: String
+}
+
+export interface Dialog3Data {
+  stock: object,
+  datax: string[],
+  type: string,
+  strike: string,
+  contracts: string,
+  ret: {
+    contracts: string,
+    price: string,
+    opencontracts: string,
+    opencollateral: string,
+    openexpiry: string,
+    opencall: string,
+    openput: string,
+    premium: string
+  }
 }
 
 @Component({
@@ -244,7 +263,7 @@ export class FiunanceComponent implements OnInit {
           width: '300px',
           data: {name: this.name, animal: this.animal, contracts: datax['contracts']}
         });
-
+        console.log(datax['premium'])
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
         this.animal = result['animal'];
@@ -498,6 +517,69 @@ export class FiunanceComponent implements OnInit {
     });
     this.refresh = true;
   }
+
+  rolltrade(data: any, vals: any, _type: string, _strike: any){
+    this.http.get(this.baseUrl + "data/"+this.username+"/monitoring/delete/getcontracts/" +
+      data.ticker + "/" + vals[_strike][0]+ "/" + _type + "/" + _strike).subscribe((datax) => {
+
+        const dialogRef = this.dialog.open(Dialog3, {
+          width: '600px',
+          data: {
+            stock: data, datax: vals as string[], type: _type, strike: _strike, contracts: datax['contracts'],
+            ret: {
+              contracts: "",
+              price: "",
+              opencontracts: "",
+              opencollateral: "",
+              openexpiry: "",
+              opencall: "",
+              openput: "",
+              premium: ""
+            }
+          }
+        });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result['ret']['opencall']);
+        //Close the trade
+        this.http
+        .get(this.baseUrl + "data/"+this.username+"/monitoring/delete/" + data.ticker + "/" + vals[_strike][0]
+              + "/" + _type + "/" + _strike+ "/" + result['ret']['price']+ "/" + result['ret']['contracts'])
+        .subscribe((data) => {
+          //console.log(data);
+        });
+
+        //Open new trade
+        this.http.get(this.baseUrl +
+              "data/"+this.username+"/monitoring/add/" + vals[_strike][0] + "/" + data.ticker + "/" + result['ret']['opencollateral'] + "/" +
+              result['ret']['openexpiry'] + "/" + result['ret']['opencall'] + "/" + result['ret']['openput'] + "/" + result['ret']['premium']
+            ).subscribe((data) => {
+              this.addedRes = data as string[];
+              this.addedResErr = [];
+            },
+          (error) => {
+            this.addedRes = []
+            this.addedResErr = error["statusText"] as string[];
+          });
+
+        this.http.get(this.baseUrl +
+            "data/"+this.username+"/progress/add/" + vals[_strike][0] + "/" + data.ticker + "/" + result['ret']['opencontracts'] + "/" +
+            result['ret']['opencollateral'] + "/" + result['ret']['openexpiry'] + "/" + result['ret']['opencall'] + "/" + result['ret']['openput']
+            + "/" + result['ret']['premium']).subscribe((data) => {
+            //console.log(data);
+          },
+          (error) => {
+            if(error['status'].toString() === '404'){
+              this.addedRes = ['All fields required'];
+            }else{
+              this.addedRes = error['status'] as string[];
+            }
+          });
+        this.refresh = true;
+      });
+    });
+  }
+
 }
 
 @Component({
@@ -537,7 +619,6 @@ export class Dialog {
 
       this.dialogRef.close();
     }
-
 }
 @Component({
   selector: 'dialog-overview-example-dialog2',
@@ -564,6 +645,132 @@ export class Dialog2 {
     onNoClick(): void {
 
       this.dialogRef.close();
+    }
+
+}
+
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: './dialog3.html'
+})
+export class Dialog3 {
+
+  constructor(public dialogRef: MatDialogRef<Dialog>,
+    @Inject(MAT_DIALOG_DATA) public data: Dialog3Data) {
+
+
+    }
+
+    close_call: string;
+    close_put: string;
+    close_collateral: string;
+    msg: String;
+    correct: String;
+    msgbool: boolean = true;
+
+    getClickedPosition(vals: string[], strike: string){
+
+      var account:string = vals[strike][0];
+      var contracts:string = this.data.contracts;
+      var collateral:string = vals[strike][2];
+      var expiry:string = vals[strike][1];
+      var call:string;
+      var put: string;
+      var premium:string = vals[strike][3];
+      var positions: object = this.data.stock['positions'][account];
+
+      for(let i = 0; i < positions[this.data.type].length; i++){
+        if(positions[this.data.type][i]==this.data.strike && positions['exp'][i]==expiry && positions['coll'][i]==collateral && positions['prem'][i]==premium){
+          call = positions['call'][i];
+          put = positions['put'][i];
+          this.close_call = call;
+          this.close_put = put;
+        }
+      }
+
+      //this.data.ret.contracts = contracts;
+      //this.data.ret.opencontracts = contracts;
+      //this.data.ret.opencollateral = collateral;
+      //this.data.ret.opencall = call;
+      //this.data.ret.openput = put;
+
+      if(this.close_put=='0'){
+        (<HTMLInputElement> document.getElementById("closeput")).disabled = true;
+        this.data.ret.openput = put;
+      }
+      if(this.close_call=='0'){
+        (<HTMLInputElement> document.getElementById("closecall")).disabled = true;
+        this.data.ret.opencall = call;
+      }
+      if(collateral=='0'){
+        (<HTMLInputElement> document.getElementById("closecollateral")).disabled = true;
+        this.data.ret.opencollateral = collateral;
+      }
+
+      return [account, contracts, collateral, expiry, call, put, premium];
+
+    }
+
+    onNoClick(): void {
+
+      this.dialogRef.close();
+    }
+
+
+    required_closecontract = undefined;
+    required_cost = undefined;
+    required_coll = undefined;
+    required_exp = undefined;
+    required_call = undefined;
+    required_put = undefined;
+    required_prem = undefined;
+    required_contract = undefined;
+    verify(){
+      if((document.getElementById("closecontracts") as HTMLInputElement).value.length==0){
+        this.required_closecontract = "*";
+      }else{
+        this.required_closecontract = "";
+      }
+      if((document.getElementById("cost") as HTMLInputElement).value.length==0){
+        this.required_cost = "*";
+      }else{
+        this.required_cost = "";
+      }
+      if((document.getElementById("opencontracts") as HTMLInputElement).value.length==0){
+        this.required_contract = "*";
+      }else{
+        this.required_contract = "";
+      }
+      if((document.getElementById("closecollateral") as HTMLInputElement).value.length==0){
+        this.required_coll = "*";
+      }else{
+        this.required_coll = "";
+      }
+      if((document.getElementById("exp") as HTMLInputElement).value.length==0){
+        this.required_exp = "*";
+      }else{
+        this.required_exp = "";
+      }
+      if((document.getElementById("closecall") as HTMLInputElement).value.length==0){
+        this.required_call = "*";
+      }else{
+        this.required_call = "";
+      }
+      if((document.getElementById("closeput") as HTMLInputElement).value.length==0){
+        this.required_put = "*";
+      }else{
+        this.required_put = "";
+      }
+      if((document.getElementById("premium") as HTMLInputElement).value.length==0){
+        this.required_prem = "*";
+      }else{
+        this.required_prem = "";
+      }
+      if(this.required_contract || this.required_coll || this.required_exp || this.required_call || this.required_put || this.required_prem){
+        console.log("requirement not fulfilled");
+      }else{
+        this.msgbool = false;
+      }
     }
 
 }

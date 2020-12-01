@@ -1,7 +1,7 @@
 .content {
   position: relative;
   display: inline-block;
-  width: 100%;
+  width: 95%;
     border: pink solid 0px;
 }
 
@@ -17,17 +17,16 @@
 }
 
 .social {
-    position: relative;
-    margin: 0px auto;
-    left: 42%;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
+  border: pink solid 0px;
+  width: 95%;
 }
 
 .this {
-  margin: 0px auto;
-  display: inline-block;
-  padding: 2.5px;
-  padding-top: 10px;
+
+  margin: 0 auto;
+  padding: 5px;
   border-collapse:separate;
   border:solid wheat 1px;
   border-radius:10px;
@@ -101,7 +100,7 @@
 
 .three {
   margin: 0 auto;
-  padding: 20px;
+  padding: 5px;
   border-collapse:separate;
   border:solid wheat 1px;
   border-radius:10px;
@@ -185,3 +184,13 @@ igx-drop-down {
 
 }
 
+@media only screen and (max-width: 800px){
+  .mobile-view {
+    display: none;
+  }
+}
+@media only screen and (min-width: 800px){
+  .mobile-view-off {
+    display: none;
+  }
+}

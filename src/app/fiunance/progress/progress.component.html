@@ -1,11 +1,126 @@
 <div class="container">
   <div *ngIf="chart" class="charting_hist" >
-    <div style="float: left; width:70%">
-    <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Daily historic performance - {{type_key | uppercase}}
+    <span class="mobile-view-off"><button *ngIf="!clickedAdd" mat-button (click)="onClickAddNewData()" style="float: right; color: wheat;">Add data</button>
+
+      <table *ngIf="clickedAdd" class="this" style="float: right;">
+        <tr>
+          <td colspan="3" style="border: none;"><span style="float: right;"><mat-icon (click)="onClickCloseAddNewData()" style="cursor: pointer; color: red; border: none;" class="material-icons">close</mat-icon></span></td>
+        </tr>
+        <tr>
+          <th colspan="3" style="text-align: center; border: none; background-color:  rgb(78, 73, 73);">Add new data</th>
+        </tr>
+        <tr>
+          <td style="border: none; background-color:  rgb(78, 73, 73);"></td>
+          <td style="border: none; background-color:  rgb(78, 73, 73);">EOD Gain:</td>
+          <td style="border: none; background-color:  rgb(78, 73, 73);">Contribution:</td>
+        </tr>
+        <tr>
+          <td style="border: none;">{{account_1}}</td>
+          <td style="border: none;"><input matInput type="number" id="fidelity" style="width: 80px;"></td>
+          <td style="border: none;"><input matInput type="number" id="fidelity_c" style="width: 80px;" value="0"></td>
+        </tr>
+        <tr>
+          <td style="border: none;">{{account_2}}</td>
+          <td style="border: none;"><input matInput type="number" id="robinhood" style="width: 80px;"></td>
+          <td style="border: none;"><input matInput type="number" id="robinhood_c" style="width: 80px;" value="0"></td>
+        </tr>
+        <tr>
+          <td style="border: none;">{{account_3}}</td>
+          <td style="border: none;"><input matInput type="number" id="tastyworks" style="width: 80px;"></td>
+          <td style="border: none;"><input matInput type="number" id="tastyworks_c" style="width: 80px;" value="0"></td>
+        </tr>
+        <tr>
+          <td style="border: none;">Retirement</td>
+          <td style="border: none;"><input matInput type="number" id="retirement" style="width: 80px;"></td>
+          <td style="border: none;"><input matInput type="number" id="retirement_c" style="width: 80px;" value="0"></td>
+        </tr>
+        <tr *ngIf="addmsg">
+          <td colspan="3" style="color: red; border: none;">{{addmsg}}</td>
+        </tr>
+        <tr *ngIf="addmsg_done">
+          <td colspan="2" style="color: green; border: none;">{{addmsg_done}}: Please refresh</td>
+          <td style="border: none;"><button mat-button style="float: right;"><img (click)="charting()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></td>
+        </tr>
+        <tr>
+          <td colspan="3" style="text-align: center; border: none;"><button mat-button (click)="addDataHistoric()"><b>&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;</b></button></td>
+        </tr>
+      </table>
+
+    </span>
+    <span class="mobile-view-off"><button *ngIf="!clickedEdit" (click)="onClickEditData()" mat-button style="float: right; color: wheat;">Edit data</button>
+      <span *ngIf="clickedEdit" style="float: right;">
+      <div *ngIf="loading else loaded" style="text-align: center;">
+        <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
+          <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+          </div></div>
+      </div>
+
+      <ng-template #loaded>
+      <table class="this" *ngIf="sure_del">
+        <tr>
+          <td style="border: none;"><span style="color: red;">Deleted, refresh to continue</span></td>
+        </tr>
+        <tr>
+          <td style="border: none;"><button mat-button style="float: right;"><img (click)="charting()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></td>
+        </tr>
+      </table>
+        <table class="this" *ngIf="!sure_del">
+          <tr>
+            <td colspan="3" style="border: none;"><span style="float: right;"><mat-icon (click)="onClickCloseEditData()" style="cursor: pointer; color: red; border: none;" class="material-icons">close</mat-icon></span></td>
+          </tr>
+          <tr>
+            <th colspan="3" style="text-align: center; border: none; background-color:  rgb(78, 73, 73);">Edit recent data</th>
+          </tr>
+          <tr>
+            <td style="border: none;"></td>
+            <td style="border: none;"><mat-icon id="closetrade" (click)="sure(recentdaily[0][0])" class="material-icons">close</mat-icon></td>
+            <td style="border: none;"><mat-icon id="closetrade" (click)="sure(recentdaily[1][0])" class="material-icons">close</mat-icon></td>
+          </tr>
+          <tr>
+            <td style="border: none;">Date</td>
+            <td style="border: none;"><input matInput type="text" id="date_y" style="width: 80px;" value="{{recentdaily[0][0]}}"></td>
+            <td style="border: none;"><input matInput type="text" id="date_t" style="width: 80px;" value="{{recentdaily[1][0]}}"></td>
+          </tr>
+            <tr>
+            <td style="border: none;">{{account_1}}</td>
+            <td style="border: none;"><input matInput type="number" id="fidelity_y" style="width: 80px;" value="{{recentdaily[0][1]}}"></td>
+            <td style="border: none;"><input matInput type="number" id="fidelity_t" style="width: 80px;" value="{{recentdaily[1][1]}}"></td>
+          </tr>
+          <tr>
+            <td style="border: none;">{{account_2}}</td>
+            <td style="border: none;"><input matInput type="number" id="robinhood_y" style="width: 80px;" value="{{recentdaily[0][2]}}"></td>
+            <td style="border: none;"><input matInput type="number" id="robinhood_t" style="width: 80px;" value="{{recentdaily[1][2]}}"></td>
+          </tr>
+          <tr>
+            <td style="border: none;">{{account_3}}</td>
+            <td style="border: none;"><input matInput type="number" id="tastyworks_y" style="width: 80px;" value="{{recentdaily[0][3]}}"></td>
+            <td style="border: none;"><input matInput type="number" id="tastyworks_t" style="width: 80px;" value="{{recentdaily[1][3]}}"></td>
+          </tr>
+          <tr>
+            <td style="border: none;">Retirement</td>
+            <td style="border: none;"><input matInput type="number" id="retirement_y" style="width: 80px;" value="{{recentdaily[0][4]}}"></td>
+            <td style="border: none;"><input matInput type="number" id="retirement_t" style="width: 80px;" value="{{recentdaily[1][4]}}"></td>
+          </tr>
+          <tr *ngIf="updatemsg">
+            <td colspan="3" style="color: red; border: none;">{{updatemsg}}</td>
+          </tr>
+          <tr *ngIf="updatemsg_done">
+            <td colspan="3" style="color: green; border: none;">{{updatemsg_done}}</td>
+          </tr>
+          <tr>
+            <td colspan="3" style="text-align: center; border: none;"><button mat-button (click)="updatedDaily()"><b>&nbsp;&nbsp;&nbsp;&nbsp;Update&nbsp;&nbsp;&nbsp;&nbsp;</b></button></td>
+          </tr>
+        </table>
+    </ng-template>
+  </span>
+    </span>
+    <span class="mobile-view-off"><button mat-button style="float: right; color: wheat;"><img (click)="charting()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></span>
+  <div class="chart_inside">
+    <p style="text-align:center;color: wheat; font-size: 1.5em;">Daily historic performance - {{type_key | uppercase}}
       <span style="color: green;" *ngIf="perc_change.indexOf('-')==-1">{{perc_change}}</span>
       <span style="color: red;" *ngIf="perc_change.indexOf('-')!=-1">{{perc_change}}</span>
-      <button mat-button style="float: right;"><img (click)="charting()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
-  <p>
+      <span class="mobile-view"><button mat-button style="float: right;"><img (click)="charting()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></span>
+    <p>
     <canvas id="canvas">{{ chart }}</canvas>
 
     <div style="text-align: center; color: wheat;">
@@ -65,7 +180,7 @@
   </div>
 
 
-<div style="color: wheat; border: solid wheat 0px; padding: 5px; text-align: center; width: 30%; float: left;">
+<div class="mobile-view" style="color: wheat; border: solid wheat 0px; padding: 5px; text-align: center; width: 30%; float: left;">
   <div *ngIf="roles.indexOf('new')!=-1 && user_diffdays.indexOf('ENDED')!=-1" style="height: 800px; background-color:  rgb(65, 61, 61); color: wheat; border: solid wheat 0px; padding: 5px; text-align: center; width: 30%; float: right; z-index: 10; position: absolute;" >
     <table style="margin: 0 auto;">
       <tr>
@@ -141,13 +256,13 @@
         </tr>
         <tr>
           <td style="border: none;"></td>
-          <td style="border: none;"><button mat-button (click)="sure(recentdaily[0][0])"><b style="color:tomato;">x</b></button></td>
-          <td style="border: none;"><button mat-button (click)="sure(recentdaily[1][0])"><b style="color:tomato;">x</b></button></td>
+          <td style="border: none;"><mat-icon id="closetrade" (click)="sure(recentdaily[0][0])" class="material-icons">close</mat-icon></td>
+          <td style="border: none;"><mat-icon id="closetrade" (click)="sure(recentdaily[1][0])" class="material-icons">close</mat-icon></td>
         </tr>
         <tr>
-          <td style="border: none;"></td>
-          <td style="border: none;">{{recentdaily[0][0]}}</td>
-          <td style="border: none;">{{recentdaily[1][0]}}</td>
+          <td style="border: none;">Date</td>
+          <td style="border: none;"><input matInput type="text" id="date_y" style="width: 80px;" value="{{recentdaily[0][0]}}"></td>
+          <td style="border: none;"><input matInput type="text" id="date_t" style="width: 80px;" value="{{recentdaily[1][0]}}"></td>
         </tr>
         <tr>
           <td style="border: none;">{{account_1}}</td>
@@ -191,25 +306,25 @@
           <canvas id="canvas_monthly">{{ monthly }}</canvas>
         </p>
       </div>
-      <div  style="float: right; width:30%">
-        <div class="login">
-  <div class="charting_front">
-    <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">{{monthone}}
-      <button mat-button style="float: right;"><img (click)="gainsProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
-      <canvas id="canvas_front">{{ frontMonth }}</canvas>
-    </p>
-  </div>
-</div>
-<div class="login" >
-  <div class="charting_next" >
-    <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">{{monthtwo}}
-      <button mat-button style="float: right;"><img (click)="gainsProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
-    <canvas id="canvas_next">{{ nextMonth }}</canvas>
-    </p>
-  </div>
-</div>
-</div>
-</div>
+      <div  class="charting_monthly_last">
+        <div class="login one">
+          <div class="charting_front">
+            <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">{{monthone}}
+              <button mat-button style="float: right;"><img (click)="gainsProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
+              <canvas id="canvas_front">{{ frontMonth }}</canvas>
+            </p>
+          </div>
+        </div>
+        <div class="login two" >
+          <div class="charting_next" >
+            <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">{{monthtwo}}
+              <button mat-button style="float: right;"><img (click)="gainsProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
+            <canvas id="canvas_next">{{ nextMonth }}</canvas>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
 
 <!--<div class="percent" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1">
   <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Percent PNL

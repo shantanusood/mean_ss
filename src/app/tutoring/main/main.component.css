@@ -14,3 +14,40 @@
   color: aliceblue;
   max-width: 800px;
 }
+
+@media only screen and (max-width: 600px){
+
+  .chartingvirus table th {
+    border: none;
+    font-size: 0.7em;
+    padding: -5px;
+    color: wheat;
+  }
+  .chartingvirus table td {
+    border-top: wheat dashed 1px;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    border: none;
+    font-size: 0.7em;
+    padding: -5px;
+    color: wheat;
+  }
+}
+@media only screen and (min-width: 600px){
+  .chartingvirus table th {
+    border: none;
+    font-size: 1.2em;
+    padding: -5px;
+    color: wheat;
+  }
+  .chartingvirus table td {
+    border-top: wheat dashed 2px;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    font-size: 1.0em;
+    padding: -5px;
+    color: wheat;
+  }
+}

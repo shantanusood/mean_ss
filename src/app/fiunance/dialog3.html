@@ -1,0 +1,58 @@
+<div>
+  <table style="border: none; color: black; width: 100%;">
+    <tr>
+      <th colspan="2" style="border: none; color: black; width: 100%;">Close Positions (Available: {{getClickedPosition(data.datax, data.strike)[1]}})</th>
+      <td rowspan="7" style="border: none; width: 10px;"></td>
+      <th colspan="2" style="border: none; color: black; width: 100%;">Open Positions (Per contract)</th>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; width: 100%;">Contracts:<span *ngIf="required_closecontract" style="color: red; font-size: 1.2em;">{{required_closecontract}}</span></td>
+      <td style="border: none; color: black; width: 100%;"><input type="number" id="closecontracts" matInput [(ngModel)]="data.ret.contracts" ></td>
+      <td style="border: none; color: black; width: 100%;">Contracts:<span *ngIf="required_contract" style="color: red; font-size: 1.2em;">{{required_contract}}</span></td>
+      <td style="border: none; color: black; width: 100%;"><input id="opencontracts" type="number" matInput [(ngModel)]="data.ret.opencontracts" ></td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; width: 100%;">Collateral:</td>
+      <td style="border: none; color: black; width: 100%;"><input type="number" value="{{getClickedPosition(data.datax, data.strike)[2]}}" disabled></td>
+      <td style="border: none; color: black; width: 100%;">Collateral:<span *ngIf="required_coll" style="color: red; font-size: 1.2em;">{{required_coll}}</span></td>
+      <td style="border: none; color: black; width: 100%;"><input id="closecollateral"  matInput [(ngModel)]="data.ret.opencollateral" type="number" ></td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; width: 100%;">Expiry:</td>
+      <td style="border: none; color: black; width: 100%;"><input type="text" value="{{getClickedPosition(data.datax, data.strike)[3]}}" disabled></td>
+      <td style="border: none; color: black; width: 100%;">Expiry:<span *ngIf="required_exp" style="color: red; font-size: 1.2em;">{{required_exp}}</span></td>
+      <td style="border: none; color: black; width: 100%;"><input class="inputs" matInput [(ngModel)]="data.ret.openexpiry" type="date" id="exp" name="trip-start" min="2020-01-01" max="2023-01-01"></td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; width: 100%;">Call:</td>
+      <td style="border: none; color: black; width: 100%;"><input type="number" value="{{getClickedPosition(data.datax, data.strike)[4]}}" disabled></td>
+      <td style="border: none; color: black; width: 100%;">Call:<span *ngIf="required_call" style="color: red; font-size: 1.2em;">{{required_call}}</span></td>
+      <td style="border: none; color: black; width: 100%;"><input id="closecall"  matInput [(ngModel)]="data.ret.opencall" type="number" ></td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; width: 100%;">Put:</td>
+      <td style="border: none; color: black; width: 100%;"><input type="number" value="{{getClickedPosition(data.datax, data.strike)[5]}}" disabled></td>
+      <td style="border: none; color: black; width: 100%;">Put:<span *ngIf="required_put" style="color: red; font-size: 1.2em;">{{required_put}}</span></td>
+      <td style="border: none; color: black; width: 100%;"><input id="closeput" type="number"  matInput [(ngModel)]="data.ret.openput" ></td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; width: 100%;">Cost:<span *ngIf="required_cost" style="color: red; font-size: 1.2em;">{{required_cost}}</span></td>
+      <td style="border: none; color: black; width: 100%;"><input id="cost" matInput [(ngModel)]="data.ret.price" type="number"></td>
+      <td style="border: none; color: black; width: 100%;">Premium:<span *ngIf="required_prem" style="color: red; font-size: 1.2em;">{{required_prem}}</span></td>
+      <td style="border: none; color: black; width: 100%;"><input id="premium" matInput [(ngModel)]="data.ret.premium" type="number"></td>
+    </tr>
+    <tr>
+      <td colspan="5" style="border: none;"><span *ngIf="required_cost || required_closecontract || required_contract || required_coll || required_exp || required_call || required_put || required_prem" style="color: red;">*required</span></td>
+    </tr>
+    <tr>
+      <td colspan="5" style="border-left: none; border-right: none; border-bottom: none; color: black; width: 100%; text-align: left;">
+        <!--<button mat-button mat-button [mat-dialog-close]="data" cdkFocusInitial style="width: 100%;">Execute Roll</button>-->
+
+
+        <span *ngIf="msgbool"><button mat-button (click)="verify()" style="width: 100%;">Verify</button></span>
+        <span *ngIf="!msgbool"><button mat-button [mat-dialog-close]="data" style="width: 100%;" cdkFocusInitial>Execute Roll</button></span>
+      </td>
+    </tr>
+  </table>
+
+</div>
