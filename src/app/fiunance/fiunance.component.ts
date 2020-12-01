@@ -263,7 +263,6 @@ export class FiunanceComponent implements OnInit {
           width: '300px',
           data: {name: this.name, animal: this.animal, contracts: datax['contracts']}
         });
-        console.log(datax['premium'])
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
         this.animal = result['animal'];
@@ -540,7 +539,13 @@ export class FiunanceComponent implements OnInit {
         });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result['ret']['opencall']);
+        console.log("---------------------------------");
+        console.log(result['ret']['contracts']);
+        console.log(result['ret']['opencontracts']);
+        console.log("---------------------------------");
+        console.log(result['ret']['opencollateral']);
+        console.log("---------------------------------");
+
         //Close the trade
         this.http
         .get(this.baseUrl + "data/"+this.username+"/monitoring/delete/" + data.ticker + "/" + vals[_strike][0]
@@ -549,9 +554,11 @@ export class FiunanceComponent implements OnInit {
           //console.log(data);
         });
 
+        var width_num: Number = Number(result['ret']['opencollateral'])*Number(result['ret']['opencontracts']);
+        var width: string = String(width_num);
         //Open new trade
         this.http.get(this.baseUrl +
-              "data/"+this.username+"/monitoring/add/" + vals[_strike][0] + "/" + data.ticker + "/" + result['ret']['opencollateral'] + "/" +
+              "data/"+this.username+"/monitoring/add/" + vals[_strike][0] + "/" + data.ticker + "/" + width + "/" +
               result['ret']['openexpiry'] + "/" + result['ret']['opencall'] + "/" + result['ret']['openput'] + "/" + result['ret']['premium']
             ).subscribe((data) => {
               this.addedRes = data as string[];
@@ -600,9 +607,6 @@ export class Dialog {
 
     }
     verify(contracts, val, price:String){
-      console.log(contracts);
-      console.log(val);
-      console.log(price)
       if(val == undefined || price == undefined){
         this.msg = "Price and number of contracts are required!";
       }else{
