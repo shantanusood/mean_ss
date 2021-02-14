@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject} from '@angular/core';
+import {formatDate} from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EaseInOut } from 'igniteui-angular/lib/animations/easings';
@@ -6,6 +7,8 @@ import { AstMemoryEfficientTransformer } from '@angular/compiler';
 import { CoronaserviceService } from '../coronaservice.service';
 import { AppSettings } from '../AppSettings';
 import {TooltipPosition} from '@angular/material/tooltip';
+import { NavComponent } from '../nav/nav.component';
+import { NotificationService } from '../notification.service';
 
 export interface DialogData {
   animal: string;
@@ -38,6 +41,7 @@ export interface Dialog3Data {
 }
 
 @Component({
+  providers: [NotificationService, NavComponent],
   selector: "app-fiunance",
   templateUrl: "./fiunance.component.html",
   styleUrls: ["./fiunance.component.css"]
@@ -45,11 +49,16 @@ export interface Dialog3Data {
 export class FiunanceComponent implements OnInit {
 
   user_diffdays: any;
-
+  earning_dates = [];
+  earning_dates_mobile = [];
+  earning_data: object;
   username: string;
   roles: string;
   role_list: object[];
-  constructor(private http: HttpClient, public dialog: MatDialog, private ds: CoronaserviceService) {}
+  data_trade_notification: object[];
+  constructor(private http: HttpClient, public dialog: MatDialog, private ds: CoronaserviceService, private nt: NotificationService, private nav: NavComponent) {}
+
+  run_spinner: boolean = false;
 
   stock_close():boolean{
     return false;
@@ -108,6 +117,18 @@ export class FiunanceComponent implements OnInit {
   refresh: boolean = false;
 
   ngOnInit() {
+    this.earning_dates.push(formatDate(new Date().setDate(new Date().getDate() -1), 'yyyy-MM-dd', 'en'))
+    this.earning_dates.push(formatDate(new Date(), 'yyyy-MM-dd', 'en'))
+    this.earning_dates.push(formatDate(new Date().setDate(new Date().getDate() + 1 ), 'yyyy-MM-dd', 'en'))
+    this.earning_dates.push(formatDate(new Date().setDate(new Date().getDate() + 2), 'yyyy-MM-dd', 'en'))
+    this.earning_dates.push(formatDate(new Date().setDate(new Date().getDate() + 3), 'yyyy-MM-dd', 'en'))
+    this.earning_dates_mobile.push(formatDate(new Date(), 'yyyy-MM-dd', 'en'))
+    this.earning_dates_mobile.push(formatDate(new Date().setDate(new Date().getDate() +1), 'yyyy-MM-dd', 'en'))
+
+    this.http.get(this.baseUrl + "data/calendar/get").subscribe((data) => {
+      this.earning_data = data as object;
+    });
+
     this.ds.current.subscribe(message => this.username = message);
     this.http.get(this.baseUrl + "data/"+this.username+"/expiration").subscribe((data) => {
       this.dt = data as object;
@@ -158,6 +179,32 @@ export class FiunanceComponent implements OnInit {
       });
   }
 
+  getTopEarnings(date: string){
+    console.log(date);
+    console.log(this.earning_data[date]);
+    if(this.earning_data.hasOwnProperty(date)){
+      return this.earning_data[date];
+
+    }
+  }
+  getTopEarningsLength(date: string){
+    console.log(date);
+    console.log(this.earning_data[date]);
+    if(this.earning_data.hasOwnProperty(date)){
+      return this.earning_data[date].length;
+
+    }else{
+      return 0;
+    }
+  }
+  runEarnings(date: string){
+    this.run_spinner = true;
+    this.http.get(this.baseUrl + "data/calendar/"+date+"/1000/10000").subscribe((data) => {
+      this.earning_data = data as object;
+      this.run_spinner = false;
+    });
+
+  }
   getData() {
     this.loading = true;
     this.http.get(this.baseUrl + "data/"+this.username+"/monitoring").subscribe((data) => {
@@ -214,7 +261,7 @@ export class FiunanceComponent implements OnInit {
       this.retExp.push(key.toString());
       this.retExp.push(input[key].toString());
     }
-    console.log(this.retExp);
+
     return this.retExp;
   }
 
@@ -273,6 +320,25 @@ export class FiunanceComponent implements OnInit {
           this.refresh = true;
           //console.log(data);
         });
+        this.trade_notification = {
+          date: formatDate(new Date(), 'MM/dd/yyyy HH:mm:ss', 'en'),
+          status: "unread",
+          ticker: ticker.ticker,
+          contracts: this.name,
+          expiry: this.date,
+          type: type,
+          strike: strike,
+          premium: this.animal
+        }
+        this.http
+            .post(
+              this.baseUrl +
+              "data/"+this.username+"/notification/add", this.trade_notification)
+            .subscribe((data) => {
+              this.data_trade_notification = data as object[];
+              this.nav.ngOnInit();
+
+            });
       });
     });
 
@@ -442,6 +508,7 @@ export class FiunanceComponent implements OnInit {
 
       this.refresh = true;
   }
+  trade_notification: object;
   onClickAddVals() {
     console.log(this.selectedOption);
     this.http.get(
@@ -514,6 +581,26 @@ export class FiunanceComponent implements OnInit {
           }
         });
     });
+    this.trade_notification = {
+      date: formatDate(new Date(), 'MM/dd/yyyy HH:mm:ss', 'en'),
+      status: "unread",
+      ticker: (document.getElementById("ticker") as HTMLInputElement).value,
+      contracts: (document.getElementById("contracts") as HTMLInputElement).value,
+      collateral: (document.getElementById("collateral") as HTMLInputElement).value,
+      expiry: this.date,
+      call: (document.getElementById("call") as HTMLInputElement).value,
+      put: (document.getElementById("put") as HTMLInputElement).value,
+      premium: (document.getElementById("premium") as HTMLInputElement).value
+    }
+    this.http
+        .post(
+          this.baseUrl +
+          "data/"+this.username+"/notification/add", this.trade_notification)
+        .subscribe((data) => {
+          this.data_trade_notification = data as object[];
+          this.nav.ngOnInit();
+
+        });
     this.refresh = true;
   }
 
@@ -539,12 +626,7 @@ export class FiunanceComponent implements OnInit {
         });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log("---------------------------------");
-        console.log(result['ret']['contracts']);
-        console.log(result['ret']['opencontracts']);
-        console.log("---------------------------------");
-        console.log(result['ret']['opencollateral']);
-        console.log("---------------------------------");
+
 
         //Close the trade
         this.http

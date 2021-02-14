@@ -5,6 +5,10 @@
 
     <ul>
       <li>
+        <span *ngIf="intro_bool"><a (click)="change('Tasks2'); intro()"  style="cursor: pointer; background-color: wheat; color: black; width: 100%;">Intro</a></span>
+        <span *ngIf="!intro_bool"><a (click)="change('Tasks2'); intro()"  style="cursor: pointer;">Intro</a></span>
+      </li>
+      <li>
         <span *ngIf="faq_bool"><a (click)="change('Tasks'); faq()"  style="cursor: pointer; background-color: wheat; color: black; width: 100%;">FAQs</a></span>
         <span *ngIf="!faq_bool"><a (click)="change('Tasks'); faq()"  style="cursor: pointer;">FAQs </a></span>
       </li>

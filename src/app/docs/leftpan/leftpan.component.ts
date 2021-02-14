@@ -19,17 +19,27 @@ export class LeftpanComponent implements OnInit {
   cstrat:number = 0;
   predict = false;
   cpredict:number = 0;
-  faq_bool: boolean = true;
+  intro_bool: boolean = true;
+  faq_bool: boolean = false;
   report_bool: boolean = false;
   train_bool: boolean = false;
   ment_bool: boolean = false;
+  intro(){
+    this.intro_bool = true;
+    this.faq_bool = false;
+    this.report_bool = false;
+    this.train_bool = false;
+    this.ment_bool = false;
+  }
   faq(){
+    this.intro_bool = false;
       this.faq_bool = true;
       this.report_bool = false;
       this.train_bool = false;
       this.ment_bool = false;
   }
   report(){
+    this.intro_bool = false;
       this.report_bool = true;
       this.faq_bool = false;
       this.train_bool = false;
@@ -37,6 +47,7 @@ export class LeftpanComponent implements OnInit {
 
   }
   train(){
+    this.intro_bool = false;
       this.train_bool = true;
       this.report_bool = false;
       this.faq_bool = false;
@@ -44,6 +55,7 @@ export class LeftpanComponent implements OnInit {
 
   }
   ment(){
+    this.intro_bool = false;
       this.ment_bool = true;
       this.report_bool = false;
       this.train_bool = false;

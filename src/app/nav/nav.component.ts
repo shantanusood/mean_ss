@@ -1,21 +1,28 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AppSettings } from '../AppSettings';
+import { NotificationService } from '../notification.service';
+import { resolve } from '@angular/compiler-cli/src/ngtsc/file_system';
 
 @Component({
+  providers: [NotificationService],
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private nt: NotificationService) { }
 
   readonly baseUrl = AppSettings.baseUrl;
 
+  notification_alert: number = 0;
+  trade_notification: object[];
 
   countx: number = 0;
   open: boolean = false;
+  countn: number = 0;
+  open_notification: boolean = false;
   msg: string;
   msg2: string;
   msg3: string;
@@ -30,6 +37,7 @@ export class NavComponent implements OnInit {
   data: object;
   email: String;
   phone:String;
+  interval: any;
 
   question:String;
   answer:String;
@@ -86,7 +94,15 @@ export class NavComponent implements OnInit {
         });
   }
 
-  ngOnInit() {
+  setUserName(username){
+    this.username = username;
+  }
+  async ngOnInit() {
+    console.log("********************CALLED*********************");
+    await this.nt.ngOnInit();
+    await this.nt.current.subscribe(x => this.notification_alert = x);
+    await console.log("Alert");
+    await console.log(this.notification_alert);
     this.http
       .get(
         this.baseUrl +
@@ -118,6 +134,15 @@ export class NavComponent implements OnInit {
         console.log(d['role']);
       });
     });
+
+    this.http
+      .get(
+        this.baseUrl +
+          "data/"+this.username+"/notification/get")
+      .subscribe((data) => {
+        this.trade_notification = data as object[];
+        this.trade_notification = this.trade_notification.slice(0, 6);
+      });
 
   }
   secretqa: object;
@@ -184,6 +209,24 @@ export class NavComponent implements OnInit {
       this.open = false;
     }else{
       this.open = true;
+    }
+
+  }
+
+  openNotificationMenu(){
+    this.countn++;
+    if(this.countn%2==0){
+
+      this.open_notification = false;
+    }else{
+      this.open_notification = true;
+      this.notification_alert = 0;
+      var updatedData = this.http.get(this.baseUrl + "data/"+this.username+"/notification/update");
+
+      updatedData.subscribe((data) => {
+        this.trade_notification = data as object[];
+        this.trade_notification = this.trade_notification.slice(0, 6);
+      });
     }
 
   }

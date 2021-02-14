@@ -299,32 +299,338 @@
     </div>
   </div>
   <hr>
-    <div  class="charting_months">
-      <div class="charting_monthly">
-        <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Historic monthly progress</p>
-        <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">
-          <canvas id="canvas_monthly">{{ monthly }}</canvas>
-        </p>
-      </div>
-      <div  class="charting_monthly_last">
-        <div class="login one">
-          <div class="charting_front">
-            <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">{{monthone}}
-              <button mat-button style="float: right;"><img (click)="gainsProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
-              <canvas id="canvas_front">{{ frontMonth }}</canvas>
-            </p>
-          </div>
+ <div  class="charting_months">
+    <div class="charting_monthly">
+      <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Historic monthly progress</p>
+      <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">
+        <canvas id="canvas_monthly">{{ monthly }}</canvas>
+      </p>
+    </div>
+    <div  class="charting_monthly_last">
+      <div class="login one">
+        <div class="charting_front">
+          <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">{{monthone}}
+            <button mat-button style="float: right;"><img (click)="gainsProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
+            <canvas id="canvas_front">{{ frontMonth }}</canvas>
+          </p>
         </div>
-        <div class="login two" >
-          <div class="charting_next" >
-            <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">{{monthtwo}}
-              <button mat-button style="float: right;"><img (click)="gainsProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
-            <canvas id="canvas_next">{{ nextMonth }}</canvas>
-            </p>
-          </div>
+      </div>
+      <div class="login two" >
+        <div class="charting_next" >
+          <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">{{monthtwo}}
+            <button mat-button style="float: right;"><img (click)="gainsProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
+          <canvas id="canvas_next">{{ nextMonth }}</canvas>
+          </p>
         </div>
       </div>
     </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <!-- <div  class="charting_months">
+    <div class="charting_monthly">
+      <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Historic net worth</p>
+      <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">
+        <canvas id="canvas_monthly">{{ monthly }}</canvas>
+      </p>
+    </div>
+    <div class="charting_monthly_last">
+      <br>
+      <table class="this" style="width: 90%;" *ngIf="switch_networth">
+        <div>
+          <div class="heads" style="text-align: center;"><button mat-button (click)="switch()">Switch to {{add_networth}} data</button></div>
+          <div class="heads">Net worth as of {{networth[0].date }}:&nbsp;$<span id="totalnetworth" style="color: aliceblue;">{{ net(networth[0]) }}</span></div>
+          <div class="heads">Cash & Investments:</div>
+          <button class="accordion" (click)="toggleAccordian($event, 0)"> Cash: <span style="color: aliceblue;"> ${{total(networth[0].pos.cash)}}</span> </button>
+          <div class="panel" hide="!item.isActive">
+            <br>
+            <table class="this2" style="margin: 0 auto; width: 80%;" id="cash">
+              <tbody>
+                <tr *ngFor="let c of getValuesFromJson(networth[0].pos.cash)">
+                  <td style="border: none;">{{c[0]}}</td>
+                  <td style="border: none;"><input matInput id="{{'poscash' + c[0]}}" (change)="changeInputVal($event)" type="number" style="width: 80px;" value="{{c[1]}}"></td>
+                </tr>
+                <tr>
+                  <td style="border: none;"><button mat-button (click)="updateNetWorth('pos', 'cash')">Update</button></td>
+                  <td style="border: none;"><button mat-button (click)="addAccount($event,'cash')">Add Account</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+          </div>
+        <div>
+          <button class="accordion" (click)="toggleAccordian($event, 0)"> Real Estate: <span style="color: aliceblue;"> ${{total(networth[0].pos.real)}}</span> </button>
+          <div class="panel" hide="!item.isActive">
+            <br>
+            <table class="this2" style="margin: 0 auto; width: 80%;">
+              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.real)">
+                <td style="border: none;">{{c[0]}}</td>
+                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
+              </tr>
+              <tr>
+                <td style="border: none;"><button mat-button>Update</button></td>
+                <td style="border: none;"><button mat-button>Add Account</button></td>
+              </tr>
+            </table>
+            <br>
+          </div>
+        </div>
+        <div>
+          <button class="accordion" (click)="toggleAccordian($event, 0)"> Investments: <span style="color: aliceblue;"> ${{total(networth[0].pos.investments)}}</span> </button>
+          <div class="panel" hide="!item.isActive">
+            <br>
+            <table class="this2" style="margin: 0 auto; width: 80%;" id="investments">
+              <tbody>
+              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.investments)">
+                <td style="border: none;">{{c[0]}}</td>
+                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
+              </tr>
+              <tr>
+                <td style="border: none;"><button mat-button>Update</button></td>
+                <td style="border: none;"><button mat-button (click)="addAccount($event,'investments')">Add Account</button></td>
+              </tr>
+            </tbody>
+            </table>
+            <br>
+          </div>
+        </div>
+        <div>
+          <button class="accordion" (click)="toggleAccordian($event, 0)"> Retirement: <span style="color: aliceblue;"> ${{total(networth[0].pos.retirement)}}</span> </button>
+          <div class="panel" hide="!item.isActive">
+            <br>
+            <table class="this2" style="margin: 0 auto; width: 80%;">
+              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.retirement)">
+                <td style="border: none;">{{c[0]}}</td>
+                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
+              </tr>
+              <tr>
+                <td style="border: none;"><button mat-button>Update</button></td>
+                <td style="border: none;"><button mat-button>Add Account</button></td>
+              </tr>
+            </table>
+            <br>
+          </div>
+        </div>
+        <div>
+          <button class="accordion" (click)="toggleAccordian($event, 0)"> Other:<span style="color: aliceblue;"> ${{total(networth[0].pos.other)}}</span> </button>
+          <div class="panel" hide="!item.isActive">
+            <br>
+            <table class="this2" style="margin: 0 auto; width: 80%;">
+              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.other)">
+                <td style="border: none;">{{c[0]}}</td>
+                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
+              </tr>
+              <tr>
+                <td style="border: none;"><button mat-button>Update</button></td>
+                <td style="border: none;"><button mat-button>Add Account</button></td>
+              </tr>
+            </table>
+            <br>
+          </div>
+        </div>
+        <div class="heads">Debt accounts</div>
+        <div>
+          <button class="accordion" (click)="toggleAccordian($event, 0)"> Credit Card Debt:<span style="color: aliceblue;"> ${{total(networth[0].neg.credit)}}</span> </button>
+          <div class="panel" hide="!item.isActive">
+            <br>
+            <table class="this2" style="margin: 0 auto; width: 80%;">
+              <tr *ngFor="let c of getValuesFromJson(networth[0].neg.credit)">
+                <td style="border: none;">{{c[0]}}</td>
+                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
+              </tr>
+              <tr>
+                <td style="border: none;"><button mat-button>Update</button></td>
+                <td style="border: none;"><button mat-button>Add Account</button></td>
+              </tr>
+            </table>
+            <br>
+          </div>
+        </div>
+        <div>
+          <button class="accordion" (click)="toggleAccordian($event, 0)"> Real Estate Debt:<span style="color: aliceblue;"> ${{total(networth[0].neg.real)}}</span> </button>
+          <div class="panel" hide="!item.isActive">
+            <br>
+            <table class="this2" style="margin: 0 auto; width: 80%;">
+              <tr *ngFor="let c of getValuesFromJson(networth[0].neg.real)">
+                <td style="border: none;">{{c[0]}}</td>
+                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
+              </tr>
+              <tr>
+                <td style="border: none;"><button mat-button>Update</button></td>
+                <td style="border: none;"><button mat-button>Add Account</button></td>
+              </tr>
+            </table>
+            <br>
+          </div>
+        </div>
+        <div>
+          <button class="accordion" (click)="toggleAccordian($event, 0)"> Other Debt:<span style="color: aliceblue;"> ${{total(networth[0].neg.other)}}</span> </button>
+          <div class="panel" hide="!item.isActive">
+            <br>
+            <table class="this2" style="margin: 0 auto; width: 80%;">
+              <tr *ngFor="let c of getValuesFromJson(networth[0].neg.other)">
+                <td style="border: none;">{{c[0]}}</td>
+                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
+              </tr>
+              <tr>
+                <td style="border: none;"><button mat-button>Update</button></td>
+                <td style="border: none;"><button mat-button>Add Account</button></td>
+              </tr>
+            </table>
+            <br>
+          </div>
+        </div>
+        <div class="heads" style="text-align: center;"><button mat-raised-button>Delete data for {{networth[0].date}}</button></div>
+      </div>
+  </table>
+  <table style="width: 90%;" *ngIf="!switch_networth" class="this3">
+      <div class="heads" style="text-align: center;"><button mat-button (click)="switch()">Switch to {{add_networth}} data</button></div>
+    <div *ngIf="check_date">
+        <div>
+          <div class="heads">Net worth as of {{curr_date }}:&nbsp;<span style="color: aliceblue;">${{ net(networth[0]) }}</span></div>
+          <div class="heads">Cash & Investments:</div>
+          <button class="accordion" (click)="toggleAccordian($event, 0)"> Cash: <span style="color: aliceblue;"> ${{total(networth[0].pos.cash)}}</span> </button>
+          <div class="panel" hide="!item.isActive">
+            <br>
+            <table class="this2" style="margin: 0 auto; width: 80%;">
+              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.cash)">
+                <td style="border: none;">{{c[0]}}</td>
+                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
+              </tr>
+              <tr>
+                <td colspan="2" style="border: none;"><button mat-button>Add new Account</button></td>
+              </tr>
+            </table>
+            <br>
+          </div>
+        <div>
+          <button class="accordion" (click)="toggleAccordian($event, 0)"> Real Estate: <span style="color: aliceblue;"> ${{total(networth[0].pos.real)}}</span> </button>
+          <div class="panel" hide="!item.isActive">
+            <br>
+            <table class="this2" style="margin: 0 auto; width: 80%;">
+              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.real)">
+                <td style="border: none;">{{c[0]}}</td>
+                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
+              </tr>
+              <tr>
+                <td colspan="2" style="border: none;"><button mat-button>Add new Account</button></td>
+              </tr>
+            </table>
+            <br>
+          </div>
+        </div>
+        <div>
+          <button class="accordion" (click)="toggleAccordian($event, 0)"> Investments: <span style="color: aliceblue;"> ${{total(networth[0].pos.investments)}}</span> </button>
+          <div class="panel" hide="!item.isActive">
+            <br>
+            <table class="this2" style="margin: 0 auto; width: 80%;">
+              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.investments)">
+                <td style="border: none;">{{c[0]}}</td>
+                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
+              </tr>
+              <tr>
+                <td colspan="2" style="border: none;"><button mat-button>Add new Account</button></td>
+              </tr>
+            </table>
+            <br>
+          </div>
+        </div>
+        <div>
+          <button class="accordion" (click)="toggleAccordian($event, 0)"> Retirement: <span style="color: aliceblue;"> ${{total(networth[0].pos.retirement)}}</span> </button>
+          <div class="panel" hide="!item.isActive">
+            <br>
+            <table class="this2" style="margin: 0 auto; width: 80%;">
+              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.retirement)">
+                <td style="border: none;">{{c[0]}}</td>
+                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
+              </tr>
+              <tr>
+                <td colspan="2" style="border: none;"><button mat-button>Add new Account</button></td>
+              </tr>
+            </table>
+            <br>
+          </div>
+        </div>
+        <div>
+          <button class="accordion" (click)="toggleAccordian($event, 0)"> Other:<span style="color: aliceblue;"> ${{total(networth[0].pos.other)}}</span> </button>
+          <div class="panel" hide="!item.isActive">
+            <br>
+            <table class="this2" style="margin: 0 auto; width: 80%;">
+              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.other)">
+                <td style="border: none;">{{c[0]}}</td>
+                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
+              </tr>
+              <tr>
+                <td colspan="2" style="border: none;"><button mat-button>Add new Account</button></td>
+              </tr>
+            </table>
+            <br>
+          </div>
+        </div>
+        <div class="heads">Debt accounts</div>
+        <div>
+          <button class="accordion" (click)="toggleAccordian($event, 0)"> Credit Card Debt:<span style="color: aliceblue;"> ${{total(networth[0].neg.credit)}}</span> </button>
+          <div class="panel" hide="!item.isActive">
+            <br>
+            <table class="this2" style="margin: 0 auto; width: 80%;">
+              <tr *ngFor="let c of getValuesFromJson(networth[0].neg.credit)">
+                <td style="border: none;">{{c[0]}}</td>
+                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
+              </tr>
+              <tr>
+                <td colspan="2" style="border: none;"><button mat-button>Add new Account</button></td>
+              </tr>
+            </table>
+            <br>
+          </div>
+        </div>
+        <div>
+          <button class="accordion" (click)="toggleAccordian($event, 0)"> Real Estate Debt:<span style="color: aliceblue;"> ${{total(networth[0].neg.real)}}</span> </button>
+          <div class="panel" hide="!item.isActive">
+            <br>
+            <table class="this2" style="margin: 0 auto; width: 80%;">
+              <tr *ngFor="let c of getValuesFromJson(networth[0].neg.real)">
+                <td style="border: none;">{{c[0]}}</td>
+                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
+              </tr>
+              <tr>
+                <td colspan="2" style="border: none;"><button mat-button>Add new Account</button></td>
+              </tr>
+            </table>
+            <br>
+          </div>
+        </div>
+        <div>
+          <button class="accordion" (click)="toggleAccordian($event, 0)"> Other Debt:<span style="color: aliceblue;"> ${{total(networth[0].neg.other)}}</span> </button>
+          <div class="panel" hide="!item.isActive">
+            <br>
+            <table class="this2" style="margin: 0 auto; width: 80%;">
+              <tr *ngFor="let c of getValuesFromJson(networth[0].neg.other)">
+                <td style="border: none;">{{c[0]}}</td>
+                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
+              </tr>
+              <tr>
+                <td colspan="2" style="border: none;"><button mat-button>Add new Account</button></td>
+              </tr>
+            </table>
+            <br>
+          </div>
+        </div>
+        <div class="heads" style="text-align: center;"><button mat-raised-button>Add data for {{curr_date}}</button></div>
+
+      </div>
+    </div>
+    <div *ngIf="!check_date">
+      <span style="color: red;">{{curr_date}} date data already added, update it instead</span>
+    </div>
+
+    </table>
+    <br>
+    <br>
+  </div>
+
+-->
 
 <!--<div class="percent" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1">
   <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Percent PNL

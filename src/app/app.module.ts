@@ -46,6 +46,8 @@ import { AdminComponent } from './admin/admin.component';
 import { TechieComponent } from './techie/techie.component';
 import { SubscribeComponent } from './subscribe/subscribe.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { ReversePipe } from './Pipes/reverse.pipe';
 
 @NgModule({
   declarations: [
@@ -82,7 +84,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     EducationComponent,
     AdminComponent,
     TechieComponent,
-    SubscribeComponent
+    SubscribeComponent,
+    NotificationsComponent,
+    ReversePipe
   ],
   imports: [
     AgGridModule.withComponents([]),

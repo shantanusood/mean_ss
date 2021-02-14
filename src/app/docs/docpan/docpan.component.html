@@ -1,11 +1,69 @@
 <div class="docpan">
 
-  <h5 *ngIf="default || tasks">&nbsp;&nbsp;&nbsp;FAQs</h5>
+  <h5 *ngIf="default || tasks">&nbsp;&nbsp;&nbsp;Intro</h5>
+  <h5 *ngIf="newuser2">&nbsp;&nbsp;&nbsp;FAQs</h5>
   <h5 *ngIf="newuser">&nbsp;&nbsp;&nbsp;Training</h5>
   <h5 *ngIf="deleteuser">&nbsp;&nbsp;&nbsp;Mentorship</h5>
   <h5 *ngIf="roleslist">&nbsp;&nbsp;&nbsp;Report bug</h5>
   <div class="chartingvirus">
     <div *ngIf="default || tasks">
+      <div class="trainingbox">
+        <div class="internal">
+          <h6>Introduction to this application</h6>
+          <iframe src="https://www.youtube.com/embed/CgubMugPoiI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <table class="three" >
+
+        <tr>
+
+          <td colspan="4" style="border:0px">
+            <h6 >
+              Only credit spread strategies & covered calls are suported!
+            </h6>
+          </td>
+        </tr>
+        <tr  >
+          <th>Strategies</th>
+          <th>Supported?</th>
+          <th>Strategies</th>
+          <th>Supported?</th>
+        </tr>
+        <tr  >
+          <td style="border: 0px">Covered Calls</td>
+          <td style="border: 0px; text-align: center;"><img src="/assets/green.png" style="width: 40px; height: auto;"/></td>
+          <td style="border: 0px">Short Put</td>
+          <td style="border: 0px; text-align: center;"><img src="/assets/red.png" style="width: 40px; height: auto;"/></td>
+        </tr>
+        <tr  >
+          <td style="border: 0px">Credit(Short) Put Spread</td>
+          <td style="border: 0px; text-align: center;"><img src="/assets/green.png" style="width: 40px; height: auto;"/></td>
+          <td style="border: 0px">Debit(Long) Put Spread</td>
+          <td style="border: 0px; text-align: center;"><img src="/assets/red.png" style="width: 40px; height: auto;"/></td>
+        </tr>
+        <tr  >
+          <td style="border: 0px">Credit(Short) Call Spread</td>
+          <td style="border: 0px; text-align: center;"><img src="/assets/green.png" style="width: 40px; height: auto;"/></td>
+          <td style="border: 0px">Debit(Long) Call Spread</td>
+          <td style="border: 0px; text-align: center;"><img src="/assets/red.png" style="width: 40px; height: auto;"/></td>
+        </tr>
+        <tr  >
+          <td style="border: 0px">Iron Condor (Short)</td>
+          <td style="border: 0px; text-align: center;"><img src="/assets/green.png" style="width: 40px; height: auto;"/></td>
+          <td style="border: 0px">Strangle (Short or Long)</td>
+          <td style="border: 0px; text-align: center;"><img src="/assets/red.png" style="width: 40px; height: auto;"/></td>
+        </tr>
+        <tr  >
+          <td style="border: 0px">Iron Butterfly (Short)</td>
+          <td style="border: 0px; text-align: center;"><img src="/assets/green.png" style="width: 40px; height: auto;"/></td>
+          <td style="border: 0px">Straddle (Short or Long)</td>
+          <td style="border: 0px; text-align: center;"><img src="/assets/red.png" style="width: 40px; height: auto;"/></td>
+        </tr>
+      </table>
+      <br>
+      <br>
+    </div>
+    <div *ngIf="newuser2">
       <div class="trainingbox">
       <div class="internal">
         <h6>Step by step guide on how to work this application</h6>
@@ -20,7 +78,8 @@
         <p> {{child.propertyName}} </p>
       </div>
       </div>
-
+    <br>
+    <br>
     </div>
     <div *ngIf="newuser">
       <div class="trainingbox" *ngIf="count == 1">
@@ -174,8 +233,8 @@
       </div>
       <div class="trainingbox" *ngIf="count == 15">
         <div class="internal">
-          <h6>Mentorship: make my own video for it</h6>
-          <iframe src="https://www.youtube.com/embed/GtlzSpoDags" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <h6>Mentorship: book a one on one training session</h6>
+          <iframe src="https://www.youtube.com/embed/aWztMZwau34" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           <h6>Credit to: <a href="https://www.youtube.com/channel/UCshcClu1tCelZoY54HmyciQ" target="_blank">Shan in NYC</a></h6>
           <button id="buttonleft" (click)="dec()" mat-button> < Previous</button>
         </div>
@@ -252,6 +311,9 @@
         </table>
 
       </div>
+      <br>
+      <br>
+      <br>
     </div>
     <div *ngIf="deleteuser">
       <div class="trainingbox">
@@ -316,8 +378,13 @@
 
       </table>
     </div>
-
+    <br>
+    <br>
+    <br>
   </div>
 
 </div>
+<br>
+<br>
+<br>
 <br>

@@ -96,9 +96,77 @@
   <ng-template #loaded>
     <p style="font-size: 1.2em; float: right; position:fixed; margin-right: 10px; right: 60px; top: 2%; z-index: 10; color: red;" *ngIf="refresh">
       <span class="blink_me">Refresh to see your changes --> </span></p>
+
   <div class="monitor">
+    <div class="dividend">
+      <table class="mobile-view">
+        <tr>
+          <th colspan="5" style="text-align: center; font-size: 1em; ">Upcoming earnings with good options volume</th>
+        </tr>
+        <tr>
+          <th style="text-align: center;" *ngFor="let x of earning_dates">{{x}}</th>
+        </tr>
+        <tr>
+          <td *ngFor="let x of earning_dates">
+              <!--<tr *ngIf="getTopEarningsLength(x)>0">
+                <th style="font-size: 0.7em">Ticker</th>
+                <th style="font-size: 0.7em">Call Vol/Open Int</th>
+                <th style="font-size: 0.7em">Put Vol/Open Int</th>
+              </tr>-->
+              <tr *ngIf="getTopEarningsLength(x)==0 && roles.indexOf('admin')!=-1">
+                <td style="border: none;" *ngIf="!run_spinner"><button mat-raised-button (click)="runEarnings(x)">Run</button></td>
+                <td style="border: none;" *ngIf="run_spinner"><div class="lds-dual-ring"></div></td>
+              </tr>
+              <tr *ngIf="getTopEarningsLength(x)==0 && roles.indexOf('admin')==-1">
+                <td style="background-color: none; border: none;">None</td>
+              </tr>
+                <tr *ngFor="let y of getTopEarnings(x)">
+                <td matTooltip="Ticker" style="color: aliceblue; font-size: 0.75em; border: none; padding: 1px;">{{y[0]}}
+                  <sup matTooltip="At Open" style="color: green;" *ngIf="y[5].indexOf('Open')!=-1">O</sup>
+                  <sup matTooltip="After Close" style="color: red;" *ngIf="y[5].indexOf('Close')!=-1">C</sup>
+                </td>
+                <td matTooltip="Call Volume/Call Open interest" style="color: aliceblue; font-size: 0.5em; border: none; padding: 1px;">{{y[1]}}/{{y[2]}}</td>
+                <td matTooltip="Put Volume/Put Open interest" style="color: aliceblue; font-size: 0.5em; border: none; padding: 1px;">{{y[3]}}/{{y[4]}}</td>
+              </tr>
+          </td>
+        </tr>
+      </table>
+      <table class="normal-view">
+        <tr>
+          <th style="text-align: center;" *ngFor="let x of earning_dates_mobile">{{x}}</th>
+        </tr>
+        <tr>
+          <td *ngFor="let x of earning_dates_mobile">
+              <!--<tr *ngIf="getTopEarningsLength(x)>0">
+                <th style="font-size: 0.7em">Ticker</th>
+                <th style="font-size: 0.7em">Call Vol/Open Int</th>
+                <th style="font-size: 0.7em">Put Vol/Open Int</th>
+              </tr>-->
+              <tr *ngIf="getTopEarningsLength(x)==0 && roles.indexOf('admin')!=-1">
+                <td style="border: none;" *ngIf="!run_spinner"><button mat-raised-button (click)="runEarnings(x)">Run</button></td>
+                <td style="border: none;" *ngIf="run_spinner"><div class="lds-dual-ring"></div></td>
+              </tr>
+              <tr *ngIf="getTopEarningsLength(x)==0 && roles.indexOf('admin')==-1">
+                <td style="background-color: none; border: none;">None</td>
+              </tr>
+                <tr *ngFor="let y of getTopEarnings(x)">
+                <td matTooltip="Ticker" style="color: aliceblue; font-size: 0.75em; border: none; padding: 1px;">{{y[0]}}
+                  <sup matTooltip="At Open" style="color: green; font-size: 0.5em; font-weight: bold;" *ngIf="y[5].indexOf('Open')!=-1">O</sup>
+                  <sup matTooltip="After Close" style="color: red; font-size: 0.5em" *ngIf="y[5].indexOf('Close')!=-1">C</sup>
+                </td>
+                <td matTooltip="Call Volume/Call Open interest" style="color: aliceblue; font-size: 0.5em; border: none; padding: 1px;">{{y[1]}}/{{y[2]}}</td>
+                <td matTooltip="Put Volume/Put Open interest" style="color: aliceblue; font-size: 0.5em; border: none; padding: 1px;">{{y[3]}}/{{y[4]}}</td>
+              </tr>
+          </td>
+        </tr>
+      </table>
+    </div>
+
     <div class="dividend" *ngIf="stocks">
       <table>
+        <tr class="mobile-view">
+          <th colspan="10" style="text-align: center; font-size: 1em; ">Manage your dividend paying stock/etf positions</th>
+        </tr>
         <tr>
           <th>Ticker</th>
           <th>Price</th>
@@ -134,20 +202,27 @@
           <td class="mobile-view" *ngIf="x.account.indexOf('robinhood')!=-1" style="color:rosybrown; ">{{x.pershare}}</td>
           <td class="mobile-view" *ngIf="x.account.indexOf('tastyworks')!=-1" style="color:rgb(243, 138, 126); ">{{x.pershare}}</td>
           <td style="color:aliceblue; ">${{x.total}}</td>
-          <td style="border: none;"><span><mat-icon id="closetrade"
+          <td style="width: 50px;"><span><mat-icon id="closetrade"
             matTooltip="Close position" (click)="delStock(x.ticker, x.account, x.shares)" class="material-icons">close</mat-icon></span></td>
         </tr>
       </table>
     </div>
     <div class="inner" *ngFor="let x of arrBirds" >
     <table>
-      <tr style="color:aliceblue; font-size: 7.5mm;">{{x.ticker | uppercase}} - <span matTooltip="Collateral for {{x.ticker}}">{{x.total}}</span>
-        <span *ngIf="isTickerEmpty(x)">
-          <mat-icon id="closetrade" (click)="onClickDelete(x)" matTooltip="Close ticker"  class="material-icons">close</mat-icon>
-        </span>
+      <tr>
+        <th style="text-align: center; font-size: 1em; border: none">Manage short positions - {{x.ticker | uppercase}}
+          <span *ngIf="isTickerEmpty(x)">
+            <mat-icon id="closetrade" (click)="onClickDelete(x)" matTooltip="Close ticker"  class="material-icons">close</mat-icon>
+          </span>
+        </th>
       </tr>
-      <hr>
-      <tr *ngFor="let y of reverseIt(x.ordered.call)">
+      <tr style="color:wheat; font-size: 3mm; border-bottom: dashed 2px wheat; ">
+        <th style="text-align: center; border: none;">
+          Total Collateral in {{x.ticker | uppercase}} - <span matTooltip="Collateral for {{x.ticker}}">{{x.total}}</span>
+
+        </th>
+      </tr>
+      <tr *ngFor="let y of reverseIt(x.ordered.call)" style="border-right: dashed 2px wheat;">
         <td *ngIf="process(y)[0].indexOf('robinhood')!=-1 && processKey(y)!='0'" style="display:inline-block; color:rosybrown; font-size: 6mm; border: solid rosybrown 0px;">
           {{processKey(y)}} <sup matTooltip="%OTM, Expiry, Collateral">{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
           <span style="float: right;">
@@ -179,7 +254,7 @@
           </span>
       </tr>
       <tr style="color: white; font-size: 8mm; border: dashed wheat 2px; padding: 5px;"><i matTooltip="Current price for {{x.ticker}}">{{x.price}}</i></tr>
-      <tr *ngFor="let y of reverseIt(x.ordered.put)">
+      <tr *ngFor="let y of reverseIt(x.ordered.put)" style="border-right: dashed 2px wheat;">
         <td *ngIf="process(y)[0].indexOf('robinhood')!=-1 && processKey(y)!='0'" style="display:inline-block; color:rosybrown; font-size: 6mm; border: solid rosybrown 0px;">
           {{processKey(y)}} <sup matTooltip="%OTM, Expiry, Collateral">{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
           <span style="float: right;">

@@ -1,18 +1,36 @@
 <div class="topnav">
-  <a [routerLink]="'/'" routerLinkActive="hme" >Home</a>
   <a [routerLink]="'/tutor'" routerLinkActive="tut" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('tenant')!=-1">Pay Rent</a>
   <a [routerLink]="'/tech'" routerLinkActive="tut" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('tenant')!=-1">Work Order</a>
   <a [routerLink]="'/explore'" routerLinkActive="exp" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">Explore</a>
   <a [routerLink]="'/strategy'" routerLinkActive="hth" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">Analytics</a>
-  <a [routerLink]="'/predict'" routerLinkActive="fin" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">Monitor</a>
-  <a [routerLink]="'/progress'" routerLinkActive="pro" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">Progress</a>
-  <a [routerLink]="'/external'" routerLinkActive="edu" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('analytics')!=-1">Search</a>
-  <a [routerLink]="'/docs'" routerLinkActive="doc" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">Help</a>
+  <a [routerLink]="'/predict'" routerLinkActive="fin" *ngIf="roles.indexOf('admin')!=-1">Monitor</a>
   <a [routerLink]="'/admin'" routerLinkActive="adm" *ngIf="roles.indexOf('admin')!=-1">Admin</a>
-  <a *ngIf="open else thisone" style="float: right; cursor:pointer; background-color: wheat; color:rosybrown ;" (click)="openUserMenu()"><span style="height: auto;">{{username}}</span></a>
-  <ng-template #thisone><a style="float: right; cursor:pointer;" (click)="openUserMenu()"><span style="height: auto;">{{username}}</span></a></ng-template>
 </div>
-
+<div class="bottomnav">
+  <a [routerLink]="'/'" routerLinkActive="hme"><mat-icon style="font-size: 40px;"><span class="circle2">home</span></mat-icon></a>
+  <a [routerLink]="'/progress'" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1"><mat-icon routerLinkActive="pro" style="font-size: 40px;"><span class="circle2">trending_up</span></mat-icon></a>
+  <a [routerLink]="'/external'" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1 || roles.indexOf('analytics')!=-1"><mat-icon routerLinkActive="pro" style="font-size: 40px;"><span class="circle2">search</span></mat-icon></a>
+  <a [routerLink]="'/docs'" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1"><mat-icon routerLinkActive="pro" style="font-size: 40px;"><span class="circle2">help_outline</span></mat-icon></a>
+  <a *ngIf="open else thisone" style="cursor:pointer; text-decoration: underline ; color: white;" (click)="openUserMenu()"><span style="height: auto;"><mat-icon style="font-size: 40px;"><span class="circle2">settings</span></mat-icon></span></a>
+  <ng-template #thisone>
+    <a style="cursor:pointer;" (click)="openUserMenu()">
+      <span style="height: auto;">
+        <mat-icon style="font-size: 40px;"><span class="circle2">settings</span></mat-icon>
+      </span>
+    </a>
+  </ng-template>
+  <a *ngIf="notification_alert > 0" (click)="openNotificationMenu()" style="cursor:pointer; ">
+    <span style="height: auto;  color: white;">
+      <mat-icon style="font-size: 40px;"><span class="circle2">notifications</span></mat-icon>
+      <sup *ngIf="notification_alert > 0"  class="circle" >{{notification_alert}}</sup>
+    </span>
+  </a>
+  <a  *ngIf="notification_alert == 0" (click)="openNotificationMenu()" style="cursor:pointer; ">
+    <span style="height: auto;" >
+      <mat-icon style="font-size: 40px;"><span class="circle2">notifications</span></mat-icon>
+    </span>
+  </a>
+</div>
 <div *ngIf="open" class="header_menu">
   <table class="add">
     <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">
@@ -41,4 +59,25 @@
     <tr *ngIf="status.indexOf('delete')!=-1"><td colspan="2" style="color: red;">Your account will delete in 24 hrs</td></tr>
     <!--<tr><td></td><td><button mat-button style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>-->
 </table>
+</div>
+
+<div *ngIf="open_notification" class="header_menu">
+  <table class="add">
+    <tr *ngFor="let x of trade_notification">
+      <td>{{x.date}}</td>
+      <td>You traded {{x.ticker}}</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <p *ngIf="trade_notification.length==0">No new Notifications</p>
+      </td>
+    </tr>
+    <tr style="background-color:  rgb(100, 90, 90); ">
+      <td colspan="2" style="text-align: center;">
+        <span class="all"><a (click)="openNotificationMenu()" [routerLink]="'/notification'">View All Notifications</a></span>
+      </td>
+    </tr>
+  </table>
+
+
 </div>

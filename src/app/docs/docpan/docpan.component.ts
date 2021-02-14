@@ -13,6 +13,7 @@ export class DocpanComponent implements OnInit {
   count = 1;
   roleslist: boolean = false;
   newuser: boolean = false;
+  newuser2: boolean = false;
   tasks: boolean = false;
   default: boolean = true;
   deleteuser:boolean= false;
@@ -127,26 +128,37 @@ export class DocpanComponent implements OnInit {
       if(message==='Vol'){
         this.roleslist = true;
         this.newuser = false;
+        this.newuser2 = false;
         this.tasks = false;
         this.default = false;
         this.deleteuser = false;
       }else if(message==='Chart'){
         this.newuser = true;
+        this.newuser2 = false;
         this.roleslist = false;
         this.tasks = false;
         this.default = false;
         this.deleteuser = false;
       }else if(message==='Del'){
         this.newuser = false;
+        this.newuser2 = false;
         this.roleslist = false;
         this.tasks = false;
         this.default = false;
         this.deleteuser = true;
-      }else if(message==='Tasks'){
+      }else if(message==='Tasks2'){
         this.newuser = false;
+        this.newuser2 = false;
         this.deleteuser = false;
         this.roleslist = false;
         this.tasks = true;
+        this.default = false;
+      }else if(message==='Tasks'){
+        this.newuser2 = true;
+        this.newuser = false;
+        this.deleteuser = false;
+        this.roleslist = false;
+        this.tasks = false;
         this.default = false;
       }
     });

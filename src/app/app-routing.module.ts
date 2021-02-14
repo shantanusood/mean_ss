@@ -16,9 +16,10 @@ import { ResearchComponent } from './home/research/research.component';
 import { TechieComponent } from './techie/techie.component';
 import { AdminComponent } from './admin/admin.component';
 import { SubscribeComponent } from './subscribe/subscribe.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 const routes: Routes = [
-  {path: '', component: CoronaComponent},
+  {path: '', component: FiunanceComponent},
   {path: 'tutor', component: EducationComponent},
   {path: 'tech', component: TechieComponent},
   {path: 'explore', component: HomeComponent},
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path: 'predict', component: FiunanceComponent},
   {path: 'progress', component: ProgressComponent},
   {path: 'strategy', component: HealthComponent},
+  {path: 'notification', component: NotificationsComponent},
   {path: 'admin', component: AdminComponent},
   {path: 'docs', component: DocsComponent},
   {path: 'subscribe', component: SubscribeComponent},

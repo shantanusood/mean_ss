@@ -26,13 +26,12 @@ sub {
   border: none;
 }
 .dividend {
+  display: inline-flex;
   margin: auto;
--webkit-transform: translateX(-20px); /* 10px to left */
--moz-transform: translateX(-20px); /* 10px to left */
--ms-transform: translateX(-20px); /* 10px to left */
- transform: translateX(-20px); /* 10px to left */
+  padding: 5px;
 }
 .dividend table {
+  border: wheat dashed 2px;
   margin: 0 auto;
 }
 .dividend table td {
@@ -48,7 +47,7 @@ sub {
 .dividend table th {
   border: none;
   font-size: 0.7em;
-  padding: -5px;
+  padding: 5px;
   color: wheat;
 }
 .monitor {
@@ -60,7 +59,7 @@ sub {
 .inner {
   padding: 5px;
   display: inline-flex;
-  overflow: auto;
+  overflow: none;
   border: aqua solid 0px;
 }
 .inner table {
@@ -71,6 +70,7 @@ sub {
 }
 
 .inner tr {
+  border-right: wheat dashed 2px;
   text-align: center;
   height: 20px;
 }
@@ -199,27 +199,56 @@ sub {
   50% { opacity: 0; }
 }
 #closetrade {
-  padding:14px;
+  padding:8px;
   color:red;
 }
 #closetrade:hover {
   cursor: pointer;
-  padding:14px;
+  padding:8px;
   color:wheat;
 
 }
 #rolltrade {
-  padding:14px;
+  padding:10px;
   color: aliceblue;
 }
 #rolltrade:hover {
   cursor: pointer;
-  padding:14px;
+  padding:10px;
   color:wheat;
 
 }
 @media only screen and (max-width: 800px){
   .mobile-view {
     display: none;
+  }
+}
+@media only screen and (min-width: 800px){
+  .normal-view {
+    display: none;
+  }
+}
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 50px;
+  height: 50px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

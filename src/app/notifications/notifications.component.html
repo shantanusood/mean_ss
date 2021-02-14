@@ -1,0 +1,18 @@
+<div class="container">
+<table class="this">
+  <tr>
+    <th style="border: none;">Date</th>
+    <th style="border: none;">Ticker</th>
+    <th style="border: none;">Contracts</th>
+    <th style="border: none;">Premium</th>
+  </tr>
+  <tr *ngFor="let x of trade_notification">
+    <td style="border: none;">{{x.date}}</td>
+    <td style="border: none;">{{x.ticker}}</td>
+    <td style="border: none;">{{x.contracts}}</td>
+    <td style="border: none;">{{x.premium}}</td>
+
+  </tr>
+</table>
+<br><br>
+</div>

@@ -41,11 +41,18 @@ export class ProgressComponent implements OnInit {
   account_2: string;
   account_3: string;
 
+  networth: any;
+  switch_networth: boolean = true;
+  add_networth: string = "add new";
+  check_date: boolean = true;
+
   type_key: string;
 
   gains: object[];
 
   current: object[];
+
+  curr_date= formatDate(new Date(), 'MM/dd/yyyy', 'en');
 
   clickedAdd: boolean = false;
 
@@ -54,6 +61,55 @@ export class ProgressComponent implements OnInit {
 
   }
 
+  count_values: number = 0;
+  addAccount(event, value: string){
+    this.count_values = this.count_values + 1;
+    var d = document.getElementById(value).getElementsByTagName('tbody')[0];
+    var newRoww = d.insertRow(0);
+    var newCell1 = newRoww.insertCell()
+    newCell1.setAttribute('style', 'border: none;');
+    var newCell2 = newRoww.insertCell()
+    newCell2.setAttribute('style', 'border: none;');
+    var newText1 = document.createElement('input');
+    newText1.setAttribute('type', 'text');
+    newText1.setAttribute('id', value+'name_'+this.count_values);
+    var newText3 = document.createElement('input');
+    newText3.setAttribute('type', 'number');
+    newText3.setAttribute('id', value+'value_'+this.count_values);
+    newCell1.appendChild(newText1);
+    newCell2.appendChild(newText3);
+  }
+  inputval: number;
+  changeInputVal(event){
+    this.inputval = Number((event.target as HTMLInputElement).value);
+  }
+  updateNetWorth(isdebt: string, type: string){
+    var table = document.getElementById(type);
+    var tbodies = table.getElementsByTagName("tbody")[0].rows;
+    var row_len = Number(tbodies.length) -1;
+    console.log(this.inputval);
+    for(var i=0;i<row_len;i++){
+      var type_name = (tbodies[i].cells[0].firstChild as HTMLInputElement).value;
+      if(type_name == undefined){
+        type_name = tbodies[i].cells[0].firstChild.nodeValue;
+      }
+      if(type_name.length>1){
+        this.networth[0][isdebt][type][type_name] = Number(this.inputval);
+
+      }
+    }
+
+    this.networth[0]['net'] = this.net(this.networth[0]);
+    delete this.networth[0]['isActive'];
+
+    this.http
+      .post(
+        this.baseUrl +
+          "data/"+this.username+"/networth/update", this.networth[0])
+      .subscribe((data) => {
+        this.networth = data as object[];
+      });
+  }
   onClickAddNewData(){
     this.clickedAdd = true;
   }
@@ -66,6 +122,22 @@ export class ProgressComponent implements OnInit {
   }
   onClickCloseEditData(){
     this.clickedEdit = false;
+  }
+
+  switch(){
+    if(this.switch_networth==true){
+      this.add_networth = "update";
+      if(this.networth[0]['date']==formatDate(new Date(), 'MM/dd/yyyy', 'en')){
+        this.check_date = false;
+      }else{
+        this.check_date = true;
+      }
+      this.switch_networth = false;
+    }else{
+      this.add_networth = "add new";
+      this.switch_networth = true;
+    }
+
   }
 
   changeType(type: string){
@@ -106,6 +178,14 @@ export class ProgressComponent implements OnInit {
     this.http
       .get(
         this.baseUrl +
+          "data/"+this.username+"/networth/get")
+      .subscribe((data) => {
+        this.networth = data as object[];
+      });
+
+    this.http
+      .get(
+        this.baseUrl +
           "data/"+this.username+"/accounts")
       .subscribe((data) => {
         this.account_1 = data['fidelity'];
@@ -139,6 +219,53 @@ export class ProgressComponent implements OnInit {
     });
   }
 
+  toggleAccordian(event, index) {
+    var element = event.target;
+    element.classList.toggle("active");
+    if(this.networth[index].isActive) {
+      this.networth[index].isActive = false;
+    } else {
+      this.networth[index].isActive = true;
+    }
+    var panel = element.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  }
+  getValuesFromJson(data: object){
+    var ret = [];
+    for(var x in data){
+      var vals = [x, data[x]];
+      ret.push(vals);
+    }
+    return ret;
+  }
+  total(data: object){
+    var ret = 0;
+    for(var x in data){
+      ret = ret + data[x];
+
+    }
+    return ret;
+  }
+  net(data: object){
+    var credit = 0;
+    var debt = 0;
+    for(var x in data['pos']){
+      for(var y in data['pos'][x]){
+        credit = credit + data['pos'][x][y];
+      }
+    }
+    for(var x in data['neg']){
+      for(var y in data['neg'][x]){
+        debt = debt + data['neg'][x][y];
+      }
+
+    }
+    return (credit - debt);
+  }
   gainsProgressMonthly(){
     Chart.helpers.each(Chart.instances, function (instance) {
       if (instance.chart.canvas.id === "canvas_monthly") {
