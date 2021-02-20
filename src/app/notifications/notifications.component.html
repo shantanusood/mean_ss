@@ -1,17 +1,40 @@
 <div class="container">
 <table class="this">
   <tr>
-    <th style="border: none;">Date</th>
+    <td colspan="2" style="border: none; text-align: right;">Filter by Date or Ticker:</td>
+    <td style="border: none;">
+      <span><b>Date</b>:
+        <select class="inputs" (change)="selectDate($event.target.value)">
+          <option value="">&nbsp;</option>
+          <option value="ThisMonth">This Month</option>
+          <option value="ThisWeek">This Week</option>
+          <option value="PreviousMonth">Previous Month</option>
+          <option value="PreviousWeek">Previous Week</option>
+          <option value="YeartoDate">Year to date</option>
+          <option value="PreviousYear">Previous Year</option>
+        </select>
+      </span>
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      <span><b>Ticker</b>:&nbsp;<input class="inputs" matInput type="text" id="ticker" value="All"></span>&nbsp;&nbsp;
+      <button mat-raised-button (click)="filter()">Filter</button>
+    </td>
+  </tr>
+  <tr>
+    <th style="border: none;">Date (mm/dd/yyyy HH:MM:SS)</th>
     <th style="border: none;">Ticker</th>
-    <th style="border: none;">Contracts</th>
-    <th style="border: none;">Premium</th>
+    <th style="border: none; text-align: center;">Details</th>
   </tr>
   <tr *ngFor="let x of trade_notification">
     <td style="border: none;">{{x.date}}</td>
-    <td style="border: none;">{{x.ticker}}</td>
-    <td style="border: none;">{{x.contracts}}</td>
-    <td style="border: none;">{{x.premium}}</td>
-
+    <td style="border: none; color: red; padding: 5px;" matTooltip="Closed trade" *ngIf="getDetails(x)[0] == 'cost'">{{x.ticker | uppercase}}</td>
+    <td style="border: none; color: green; padding: 5px;" matTooltip="Opened trade" *ngIf="getDetails(x)[0] == 'premium'">{{x.ticker | uppercase}}</td>
+    <td style="border: none; ">
+      <table>
+        <span *ngFor="let z of getDetails(x)[1]; let i = index">
+          <tr>&nbsp;&nbsp;<span style="color: aliceblue;">{{z}}</span>:&nbsp;<span style="color: aliceblue;">{{getDetails(x)[2][i]}}</span>&nbsp;&nbsp;|&nbsp;</tr>
+        </span>
+      </table>
+    </td>
   </tr>
 </table>
 <br><br>

@@ -124,6 +124,7 @@ export class FiunanceComponent implements OnInit {
     this.earning_dates.push(formatDate(new Date().setDate(new Date().getDate() + 3), 'yyyy-MM-dd', 'en'))
     this.earning_dates_mobile.push(formatDate(new Date(), 'yyyy-MM-dd', 'en'))
     this.earning_dates_mobile.push(formatDate(new Date().setDate(new Date().getDate() +1), 'yyyy-MM-dd', 'en'))
+    this.earning_dates_mobile.push(formatDate(new Date().setDate(new Date().getDate() +2), 'yyyy-MM-dd', 'en'))
 
     this.http.get(this.baseUrl + "data/calendar/get").subscribe((data) => {
       this.earning_data = data as object;
@@ -148,8 +149,6 @@ export class FiunanceComponent implements OnInit {
             this.user_diffdays = String(this.user_diffdays) + " days";
           }
         }
-        console.log(d['userid']);
-        console.log(d['role']);
       });
     });
     this.http
@@ -180,16 +179,12 @@ export class FiunanceComponent implements OnInit {
   }
 
   getTopEarnings(date: string){
-    console.log(date);
-    console.log(this.earning_data[date]);
     if(this.earning_data.hasOwnProperty(date)){
       return this.earning_data[date];
 
     }
   }
   getTopEarningsLength(date: string){
-    console.log(date);
-    console.log(this.earning_data[date]);
     if(this.earning_data.hasOwnProperty(date)){
       return this.earning_data[date].length;
 
@@ -200,6 +195,15 @@ export class FiunanceComponent implements OnInit {
   runEarnings(date: string){
     this.run_spinner = true;
     this.http.get(this.baseUrl + "data/calendar/"+date+"/1000/10000").subscribe((data) => {
+      this.earning_data = data as object;
+      this.run_spinner = false;
+    });
+
+  }
+  reRunEarnings(date: string){
+    this.run_spinner = true;
+    this.http.get(this.baseUrl + "data/calendar/"+date+"/"+(document.getElementById("volume_threshhold") as HTMLInputElement).value
+      +"/"+(document.getElementById("open_threshhold") as HTMLInputElement).value).subscribe((data) => {
       this.earning_data = data as object;
       this.run_spinner = false;
     });
@@ -325,10 +329,9 @@ export class FiunanceComponent implements OnInit {
           status: "unread",
           ticker: ticker.ticker,
           contracts: this.name,
-          expiry: this.date,
           type: type,
           strike: strike,
-          premium: this.animal
+          cost: this.animal
         }
         this.http
             .post(
@@ -485,7 +488,6 @@ export class FiunanceComponent implements OnInit {
   addStock(){
     this.http.get(
       this.baseUrl + "data/"+this.username+"/accounts").subscribe((data) => {
-        console.log(data);
         if(this.selectedOption===data['fidelity']){
           this.account = 'fidelity';
         }else if(this.selectedOption===data['robinhood']){
@@ -510,10 +512,8 @@ export class FiunanceComponent implements OnInit {
   }
   trade_notification: object;
   onClickAddVals() {
-    console.log(this.selectedOption);
     this.http.get(
       this.baseUrl + "data/"+this.username+"/accounts").subscribe((data) => {
-        console.log(data);
         if(this.selectedOption===data['fidelity']){
           this.account = 'fidelity';
         }else if(this.selectedOption===data['robinhood']){
@@ -636,6 +636,24 @@ export class FiunanceComponent implements OnInit {
           //console.log(data);
         });
 
+        this.trade_notification = {
+          date: formatDate(new Date(), 'MM/dd/yyyy HH:mm:ss', 'en'),
+          status: "unread",
+          ticker: data.ticker,
+          contracts: result['ret']['contracts'],
+          type: _type,
+          strike: _strike,
+          cost: result['ret']['price']
+        }
+        this.http
+            .post(
+              this.baseUrl +
+              "data/"+this.username+"/notification/add", this.trade_notification)
+            .subscribe((data) => {
+              this.data_trade_notification = data as object[];
+              this.nav.ngOnInit();
+
+            });
         var width_num: Number = Number(result['ret']['opencollateral'])*Number(result['ret']['opencontracts']);
         var width: string = String(width_num);
         //Open new trade
@@ -651,6 +669,26 @@ export class FiunanceComponent implements OnInit {
             this.addedResErr = error["statusText"] as string[];
           });
 
+          this.trade_notification = {
+            date: formatDate(new Date(), 'MM/dd/yyyy HH:mm:ss', 'en'),
+            status: "unread",
+            ticker: data.ticker,
+            contracts: result['ret']['opencontracts'],
+            collateral: result['ret']['opencollateral'],
+            expiry: result['ret']['openexpiry'],
+            call: result['ret']['opencall'],
+            put: result['ret']['openput'],
+            premium: result['ret']['premium']
+          }
+          this.http
+              .post(
+                this.baseUrl +
+                "data/"+this.username+"/notification/add", this.trade_notification)
+              .subscribe((data) => {
+                this.data_trade_notification = data as object[];
+                this.nav.ngOnInit();
+
+              });
         this.http.get(this.baseUrl +
             "data/"+this.username+"/progress/add/" + vals[_strike][0] + "/" + data.ticker + "/" + result['ret']['opencontracts'] + "/" +
             result['ret']['opencollateral'] + "/" + result['ret']['openexpiry'] + "/" + result['ret']['opencall'] + "/" + result['ret']['openput']

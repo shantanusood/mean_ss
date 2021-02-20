@@ -22,3 +22,12 @@
 .this td:first-child, th:first-child {
    border-left: none;
 }
+.inputs {
+  width:100px;
+  resize: vertical;
+  padding:5px;
+  border-radius:5px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  height: 30px;
+}

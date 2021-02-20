@@ -225,10 +225,35 @@ export class NavComponent implements OnInit {
 
       updatedData.subscribe((data) => {
         this.trade_notification = data as object[];
-        this.trade_notification = this.trade_notification.slice(0, 6);
+        this.trade_notification = this.trade_notification.slice(0, 7);
       });
     }
 
+  }
+  getDetails(x: Object){
+
+    var keys= [];
+    var vals= [];
+    for (let key in x) {
+      if(key != "date"){
+        if(key != "ticker"){
+          if(key != "status"){
+            keys.push(key);
+            vals.push(x[key]);
+          }
+        }
+      }
+    }
+    var type = "";
+    keys.forEach(x => {
+      if(x == "cost"){
+        type = x.toString();
+      }
+      if(x == "premium"){
+        type = x.toString();
+      }
+    })
+    return [type, keys, vals];
   }
 
 }
