@@ -91,6 +91,7 @@ export class FiunanceComponent implements OnInit {
   covered:boolean = false;
   callspread:boolean = false;
   putspread:boolean = false;
+  butterfly:boolean = false;
   account: String;
   longstock:boolean = false;
 
@@ -235,21 +236,31 @@ export class FiunanceComponent implements OnInit {
       this.callspread = false;
       this.putspread = false;
       this.longstock = false;
+      this.butterfly = false;
     }else if(value=='Credit Call Spread'){
       this.callspread = true;
       this.covered = false;
       this.putspread = false
       this.longstock = false;
+      this.butterfly = false;
     }else if(value=='Credit Put Spread'){
       this.putspread = true;
       this.callspread = false;
       this.covered = false;
       this.longstock = false;
+      this.butterfly = false;
+    }else if(value=='Iron Butterfly'){
+      this.covered = false;
+      this.callspread = false;
+      this.putspread = false;
+      this.longstock = false;
+      this.butterfly = true;
     }else{
       this.covered = false;
       this.callspread = false;
       this.putspread = false;
       this.longstock = false;
+      this.butterfly = false;
     }
     if(value=='Long Stock'){
       this.longstock = true;
@@ -512,6 +523,11 @@ export class FiunanceComponent implements OnInit {
   }
   trade_notification: object;
   onClickAddVals() {
+    var callSide = (document.getElementById("call") as HTMLInputElement).value;
+      var putSide = (document.getElementById("put") as HTMLInputElement).value;
+      if(this.butterfly){
+        putSide = callSide;
+      }
     this.http.get(
       this.baseUrl + "data/"+this.username+"/accounts").subscribe((data) => {
         if(this.selectedOption===data['fidelity']){
@@ -523,6 +539,7 @@ export class FiunanceComponent implements OnInit {
         }
       var width_num: Number = Number((document.getElementById("contracts") as HTMLInputElement).value)*Number((document.getElementById("collateral") as HTMLInputElement).value);
       var width: string = String(width_num);
+
       this.http
         .get(
           this.baseUrl +
@@ -535,9 +552,9 @@ export class FiunanceComponent implements OnInit {
             "/" +
             this.date +
             "/" +
-            (document.getElementById("call") as HTMLInputElement).value +
+            callSide +
             "/" +
-            (document.getElementById("put") as HTMLInputElement).value +
+            putSide +
             "/" +
             (document.getElementById("premium") as HTMLInputElement).value
         )
@@ -564,9 +581,9 @@ export class FiunanceComponent implements OnInit {
             "/" +
             this.date +
             "/" +
-            (document.getElementById("call") as HTMLInputElement).value +
+            callSide +
             "/" +
-            (document.getElementById("put") as HTMLInputElement).value +
+            putSide +
             "/" +
             (document.getElementById("premium") as HTMLInputElement).value
         )
@@ -581,6 +598,7 @@ export class FiunanceComponent implements OnInit {
           }
         });
     });
+
     this.trade_notification = {
       date: formatDate(new Date(), 'MM/dd/yyyy HH:mm:ss', 'en'),
       status: "unread",
@@ -588,8 +606,8 @@ export class FiunanceComponent implements OnInit {
       contracts: (document.getElementById("contracts") as HTMLInputElement).value,
       collateral: (document.getElementById("collateral") as HTMLInputElement).value,
       expiry: this.date,
-      call: (document.getElementById("call") as HTMLInputElement).value,
-      put: (document.getElementById("put") as HTMLInputElement).value,
+      call: callSide,
+      put: putSide,
       premium: (document.getElementById("premium") as HTMLInputElement).value
     }
     this.http

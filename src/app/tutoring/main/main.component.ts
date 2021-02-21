@@ -94,6 +94,13 @@ export class MainComponent implements OnInit, OnChanges {
               trs.push(call[s]);
               trs.push("-");
               trs.push(prem[s]);
+            }else if(call[s]==put[s]){
+              trs.push("Iron Butterly");
+              trs.push(exp[s]);
+              trs.push(coll[s]);
+              trs.push(call[s]);
+              trs.push(put[s]);
+              trs.push(prem[s]);
             }else{
               trs.push("Iron Condor");
               trs.push(exp[s]);

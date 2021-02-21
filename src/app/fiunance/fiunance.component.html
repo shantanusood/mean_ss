@@ -62,24 +62,38 @@
       <td><input class="inputs" matInput type="text" id="ticker"></td></tr>
     <tr *ngIf="!longstock"><td>Contracts: <span *ngIf="required_contract" style="color: red; font-size: 1.2em;">{{required_contract}}</span></td>
       <td><input class="inputs" matInput type="number" id="contracts"></td></tr>
-    <tr ><td> <span *ngIf="!longstock">Collateral</span><span *ngIf="longstock">Shares</span>:
-      <span *ngIf="required_coll" style="color: red; font-size: 1.2em;">{{required_coll}}</span></td>
+    <tr >
+      <td> <span *ngIf="!longstock">Collateral</span><span *ngIf="longstock">Shares</span>:
+        <span *ngIf="required_coll" style="color: red; font-size: 1.2em;">{{required_coll}}</span>
+      </td>
       <td>
-      <span *ngIf="!covered"><input class="inputs" matInput type="number" id="collateral"></span>
-      <span *ngIf="covered"><input class="inputs" matInput type="number" id="collateral" value="0" disabled></span>
-    </td></tr>
+        <span *ngIf="!covered"><input class="inputs" matInput type="number" id="collateral"></span>
+        <span *ngIf="covered"><input class="inputs" matInput type="number" id="collateral" value="0" disabled></span>
+      </td>
+    </tr>
     <tr *ngIf="!longstock"><td>Expiration: <span *ngIf="required_exp" style="color: red; font-size: 1.2em;">{{required_exp}}</span></td>
-      <td><input class="inputs" matInput type="date" id="exp" name="trip-start" (change)="changeDueDate()" value="{{cur_date}}" min="2020-01-01" max="2023-01-01"></td></tr>
-    <tr *ngIf="!longstock"><td>Call side: <span *ngIf="required_call" style="color: red; font-size: 1.2em;">{{required_call}}</span></td>
       <td>
-      <span *ngIf="!putspread"><input class="inputs" matInput type="number" id="call"></span>
-      <span *ngIf="putspread"><input class="inputs" value="0" matInput type="number" id="call" disabled></span>
-    </td></tr>
-    <tr *ngIf="!longstock"><td>Put side: <span *ngIf="required_put" style="color: red; font-size: 1.2em;">{{required_put}}</span></td>
+        <input class="inputs" matInput type="date" id="exp" name="trip-start" (change)="changeDueDate()" value="{{cur_date}}" min="2020-01-01" max="2023-01-01">
+      </td>
+    </tr>
+    <tr *ngIf="butterfly"><td>Call/Put: <span *ngIf="required_call" style="color: red; font-size: 1.2em;">{{required_call}}</span></td>
       <td>
-      <span *ngIf="!covered && !callspread"><input class="inputs" matInput type="number" id="put"></span>
-      <span *ngIf="covered || callspread"><input class="inputs" matInput type="number" id="put" value="0" disabled></span>
-    </td></tr>
+        <span><input class="inputs" matInput type="number" id="call"></span>
+        <span><input class="inputs" matInput type="number" id="put" value="0" hidden></span>
+      </td>
+    </tr>
+    <tr *ngIf="!longstock && !butterfly"><td>Call side: <span *ngIf="required_call" style="color: red; font-size: 1.2em;">{{required_call}}</span></td>
+      <td>
+        <span *ngIf="!putspread"><input class="inputs" matInput type="number" id="call"></span>
+        <span *ngIf="putspread"><input class="inputs" value="0" matInput type="number" id="call" disabled></span>
+      </td>
+    </tr>
+    <tr *ngIf="!longstock && !butterfly"><td>Put side: <span *ngIf="required_put" style="color: red; font-size: 1.2em;">{{required_put}}</span></td>
+      <td>
+        <span *ngIf="!covered && !callspread"><input class="inputs" matInput type="number" id="put"></span>
+        <span *ngIf="covered || callspread"><input class="inputs" matInput type="number" id="put" value="0" disabled></span>
+      </td>
+    </tr>
     <tr><td><span *ngIf="!longstock">Premium</span><span *ngIf="longstock">Price</span>:
       <span *ngIf="required_prem" style="color: red; font-size: 1.2em;">{{required_prem}}</span></td>
       <td><input class="inputs" matInput type="number" id="premium"></td></tr>
