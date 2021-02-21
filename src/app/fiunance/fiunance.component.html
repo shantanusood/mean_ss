@@ -117,14 +117,6 @@
                 <td style="border: none;" *ngIf="!run_spinner"><button mat-raised-button (click)="runEarnings(x)">Run</button></td>
                 <td style="border: none;" *ngIf="run_spinner"><div class="lds-dual-ring"></div></td>
               </tr>
-              <tr *ngIf="getTopEarningsLength(x)>0 && roles.indexOf('admin')!=-1">
-                <td style="border: none;" *ngIf="!run_spinner">
-                  <input class="inputs" matInput type="number" id="volume_threshhold" style="width: 63px;" value="1000"><br>
-                  <input class="inputs" matInput type="number" id="open_threshhold" style="width: 63px;" value="10000"><br>
-                  <button mat-raised-button (click)="reRunEarnings(x)">Rerun</button>
-                </td>
-                <td style="border: none;" *ngIf="run_spinner"><div class="lds-dual-ring"></div></td>
-              </tr>
               <tr *ngIf="getTopEarningsLength(x)==0 && roles.indexOf('admin')==-1">
                 <td style="background-color: none; border: none;">None</td>
               </tr>
@@ -136,6 +128,19 @@
                 <td matTooltip="Call Volume/Call Open interest" style="color: aliceblue; font-size: 0.5em; border: none; padding: 1px;">{{y[1]}}/{{y[2]}}</td>
                 <td matTooltip="Put Volume/Put Open interest" style="color: aliceblue; font-size: 0.5em; border: none; padding: 1px;">{{y[3]}}/{{y[4]}}</td>
               </tr>
+              <tr *ngIf="getTopEarningsLength(x)>0 && roles.indexOf('admin')!=-1">
+                <td *ngIf="!run_spinner">
+                  <input class="inputs" matInput type="number" id="volume_threshhold" style="width: 63px;" value="1000"><br>
+                </td>
+                <td *ngIf="!run_spinner">
+                  <input class="inputs" matInput type="number" id="open_threshhold" style="width: 63px;" value="10000"><br>
+                </td>
+                <td *ngIf="!run_spinner">
+                  <button mat-button (click)="reRunEarnings(x)">Rerun</button>
+                </td>
+                <td style="border: none;" *ngIf="run_spinner"><div class="lds-dual-ring"></div></td>
+              </tr>
+
           </td>
         </tr>
       </table>
