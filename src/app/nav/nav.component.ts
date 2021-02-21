@@ -225,7 +225,7 @@ export class NavComponent implements OnInit {
 
       updatedData.subscribe((data) => {
         this.trade_notification = data as object[];
-        this.trade_notification = this.trade_notification.slice(0, 7);
+        this.trade_notification = this.trade_notification.slice(0, 5);
       });
     }
 

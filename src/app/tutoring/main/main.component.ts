@@ -14,13 +14,14 @@ export class MainComponent implements OnInit, OnChanges {
   description:string = "";
 
   dt: object[];
+  dt_activity: object[];
   ticker: object;
   readonly baseUrl = AppSettings.baseUrl;
   @Input()
   nameSel: string;
   @Input()
   refreshed: string;
-
+  selectedDate: String;
   selectedUser: any;
   msg: string = "spy";
   constructor(private http: HttpClient, private serv: CoronaserviceService) {}
@@ -35,17 +36,28 @@ export class MainComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.serv.currentMessage.subscribe(message => {
       this.msg = message;
-      this.http.get(this.baseUrl + "data/"+this.nameSel+"/monitoring/raw").subscribe((data) => {
-        this.dt = data as object[];
-        this.dt.forEach(vals =>{
-          if(vals['ticker']===this.msg){
-            this.ticker = vals['positions']
-          }
+      if(this.msg=='Activity'){
+        this.http.get(this.baseUrl + "data/"+this.nameSel+"/notification/get").subscribe((data) => {
+          this.dt_activity = data as object[];
         });
-      });
-   });
-
+      }else{
+        this.dt_activity = [];
+        this.http.get(this.baseUrl + "data/"+this.nameSel+"/monitoring/raw").subscribe((data) => {
+          this.dt = data as object[];
+          this.dt.forEach(vals =>{
+            if(vals['ticker']===this.msg){
+              this.ticker = vals['positions']
+            }
+          });
+        });
+      }
+    });
   }
+
+  activitySize(activity: object[]){
+    return activity.length;
+  }
+
   process(tickerdata: object): object[] {
     var retVal: object[] = new Array();
 
@@ -98,6 +110,43 @@ export class MainComponent implements OnInit, OnChanges {
     }
     return retVal;
   }
+  getDetails(x: Object){
 
+    var keys= [];
+    var vals= [];
+    for (let key in x) {
+      if(key != "date"){
+        if(key != "ticker"){
+          if(key != "status"){
+            keys.push(key);
+            vals.push(x[key]);
+          }
+        }
+      }
+    }
+    var type = "";
+    keys.forEach(x => {
+      if(x == "cost"){
+        type = x.toString();
+      }
+      if(x == "premium"){
+        type = x.toString();
+      }
+    })
+    return [type, keys, vals];
+  }
+
+  selectDate(value: String) {
+    this.selectedDate = value;
+   }
+   filter(){
+    this.http
+    .get(
+      this.baseUrl +
+        "data/"+this.nameSel+"/notification/get/"+this.selectedDate+"/"
+            +(document.getElementById("ticker") as HTMLInputElement).value).subscribe(ele => {
+          this.dt_activity = ele as object[];
+        });
+   }
 
 }

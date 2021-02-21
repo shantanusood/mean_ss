@@ -7,6 +7,8 @@
         <span class="mobile-view"><a [routerLink]="'/external'" routerLinkActive="hme" >{{nameSel}}</a></span>
 
         <ul>
+          <li><a (click)="change('Activity')" style="cursor: pointer;">Past Activity</a></li>
+          <span style="color: aliceblue;">Open trades:</span>
           <li *ngFor="let t of dt"><a (click)="change(t.ticker)" style="cursor: pointer;">{{t.ticker}}</a></li>
         </ul>
       </li>
