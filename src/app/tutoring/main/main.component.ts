@@ -22,6 +22,8 @@ export class MainComponent implements OnInit, OnChanges {
   @Input()
   refreshed: string;
   selectedDate: String;
+  selectedTrade: String;
+  selectedPnl: String;
   selectedUser: any;
   msg: string = "spy";
   constructor(private http: HttpClient, private serv: CoronaserviceService) {}
@@ -37,7 +39,7 @@ export class MainComponent implements OnInit, OnChanges {
     this.serv.currentMessage.subscribe(message => {
       this.msg = message;
       if(this.msg=='Activity'){
-        this.http.get(this.baseUrl + "data/"+this.nameSel+"/notification/get").subscribe((data) => {
+        this.http.get(this.baseUrl + "data/"+this.nameSel+"/notification/get/ThisMonth/All/All/All").subscribe((data) => {
           this.dt_activity = data as object[];
         });
       }else{
@@ -146,14 +148,29 @@ export class MainComponent implements OnInit, OnChanges {
   selectDate(value: String) {
     this.selectedDate = value;
    }
+   selectPnl(value: String) {
+    this.selectedPnl = value;
+   }
+   selectTrade(value: String) {
+    this.selectedTrade = value;
+   }
    filter(){
     this.http
     .get(
       this.baseUrl +
-        "data/"+this.nameSel+"/notification/get/"+this.selectedDate+"/"
-            +(document.getElementById("ticker") as HTMLInputElement).value).subscribe(ele => {
+        "data/"+this.nameSel+"/notification/get/"+this.selectedDate
+          + "/" +(document.getElementById("ticker") as HTMLInputElement).value
+          + "/" +this.selectedTrade
+          + "/" +this.selectedPnl
+            ).subscribe(ele => {
           this.dt_activity = ele as object[];
+          if(this.dt_activity.length==0){
+            let commentData = {};
+            commentData["0"] = "No results!";
+            this.dt_activity.push(commentData)
+          }
         });
+
    }
 
 }

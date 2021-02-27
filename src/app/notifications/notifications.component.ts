@@ -15,25 +15,36 @@ export class NotificationsComponent implements OnInit {
   trade_notification: object[];
   constructor(private http: HttpClient, private ds: CoronaserviceService) { }
   selectedDate: String;
+  selectedTrade: String;
+  selectedPnl: String;
   ngOnInit() {
 
     this.ds.current.subscribe(message => this.username = message);
     this.http
       .get(
         this.baseUrl +
-          "data/"+this.username+"/notification/get/ThisMonth/All").subscribe(ele => {
+          "data/"+this.username+"/notification/get/ThisMonth/All/All/All").subscribe(ele => {
             this.trade_notification = ele as object[];
           });
   }
   selectDate(value: String) {
     this.selectedDate = value;
    }
+   selectPnl(value: String) {
+    this.selectedPnl = value;
+   }
+   selectTrade(value: String) {
+    this.selectedTrade = value;
+   }
    filter(){
     this.http
     .get(
       this.baseUrl +
-        "data/"+this.username+"/notification/get/"+this.selectedDate+"/"
-            +(document.getElementById("ticker") as HTMLInputElement).value).subscribe(ele => {
+        "data/"+this.username+"/notification/get/"+this.selectedDate
+          + "/" +(document.getElementById("ticker") as HTMLInputElement).value
+          + "/" +this.selectedTrade
+          + "/" +this.selectedPnl
+            ).subscribe(ele => {
           this.trade_notification = ele as object[];
         });
    }

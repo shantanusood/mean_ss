@@ -1,8 +1,12 @@
 <div class="container">
 <table class="this">
+
   <tr>
-    <td colspan="2" style="border: none; text-align: right;">Filter by Date or Ticker:</td>
-    <td style="border: none;">
+    <td colspan="3" style="border: none; text-align: left; text-decoration: underline;">Filter by Date, Ticker, trade type and pnl:</td>
+
+  </tr>
+  <tr>
+    <td colspan="3" style="border: none;">
       <span><b>Date</b>:
         <select class="inputs" (change)="selectDate($event.target.value)">
           <option value="">&nbsp;</option>
@@ -16,6 +20,30 @@
       </span>
       &nbsp;&nbsp;|&nbsp;&nbsp;
       <span><b>Ticker</b>:&nbsp;<input class="inputs" matInput type="text" id="ticker" value="All"></span>&nbsp;&nbsp;
+      <span><b>Trade Type:</b>:
+        <select class="inputs" (change)="selectTrade($event.target.value)">
+          <option value="">&nbsp;</option>
+          <option value="All">All</option>
+          <option value="CoveredCall">Covered Call</option>
+          <option value="CreditCallSpread">Credit call spread</option>
+          <option value="CreditPutSpread">Credit put spread</option>
+          <option value="IronCondor">Iron condor</option>
+          <option value="IronButterfly">Iron Butterfly</option>
+        </select>
+      </span>
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      <span><b>PNL</b>:
+        <select class="inputs" (change)="selectPnl($event.target.value)">
+          <option value="">&nbsp;</option>
+          <option value="All">All</option>
+          <option value="100g">> 100%</option>
+          <option value="100to0">0% to 100%</option>
+          <option value="0to100">-100% to 0%</option>
+          <option value="100l">< -100%</option>
+        </select>
+      </span>
+      &nbsp;&nbsp;
+
       <button mat-raised-button (click)="filter()">Filter</button>
     </td>
   </tr>
@@ -30,9 +58,28 @@
     <td style="border: none; color: green; padding: 5px;" matTooltip="Opened trade" *ngIf="getDetails(x)[0] == 'premium'">{{x.ticker | uppercase}}</td>
     <td style="border: none; ">
       <table>
-        <span *ngFor="let z of getDetails(x)[1]; let i = index">
-          <tr>&nbsp;&nbsp;<span style="color: aliceblue;">{{z}}</span>:&nbsp;<span style="color: aliceblue;">{{getDetails(x)[2][i]}}</span>&nbsp;&nbsp;|&nbsp;</tr>
-        </span>
+        <tr style="font-size: 0.9em;" *ngIf="getDetails(x)[0] == 'cost'">{{x.type}}&nbsp;&nbsp;|&nbsp;&nbsp; <span>Cost:
+          <span style="color: aliceblue;">{{x.cost}}</span> &nbsp;&nbsp;|&nbsp;&nbsp;
+          <span *ngIf="x.pnl.indexOf('-')!=-1" style="color: red; font-weight: bold;">{{x.pnl}}</span>
+          <span *ngIf="x.pnl.indexOf('-')==-1" style="color: green; font-weight: bold;">{{x.pnl}}</span>
+          </span>
+        </tr>
+        <tr style="font-size: 0.9em;" *ngIf="getDetails(x)[0] == 'premium'">{{x.type}}&nbsp;&nbsp;|&nbsp;&nbsp; <span>Premium:
+          <span style="color: aliceblue;">{{x.premium}}</span>
+          </span>
+        </tr>
+        <tr style="font-size: 0.9em;">
+          &nbsp;&nbsp;<span style="color: wheat;">Expiry</span>:
+          &nbsp;&nbsp;<span style="color: aliceblue;">{{x.expiry}}</span>&nbsp;&nbsp;|
+          &nbsp;&nbsp;<span style="color: wheat;">Contracts</span>:
+          &nbsp;&nbsp;<span style="color: aliceblue;">{{x.contracts}}</span>&nbsp;&nbsp;|
+          &nbsp;&nbsp;<span style="color: wheat;">Collateral</span>:
+          &nbsp;&nbsp;<span style="color: aliceblue;">{{x.collateral}}</span>&nbsp;&nbsp;|
+          &nbsp;&nbsp;<span style="color: wheat;">Call</span>:
+          &nbsp;&nbsp;<span style="color: aliceblue;">{{x.call}}</span>&nbsp;&nbsp;|
+          &nbsp;&nbsp;<span style="color: wheat;">Put</span>:
+          &nbsp;&nbsp;<span style="color: aliceblue;">{{x.put}}</span>
+        </tr>
       </table>
     </td>
   </tr>

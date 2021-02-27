@@ -69,13 +69,13 @@
       <th style="border: none; text-align: center; color: rgb(100, 90, 90);">Details</th>
     </tr>
     <tr *ngFor="let x of trade_notification" style="border: 1px dashed black">
-      <td style="border: none;">{{x.date}}</td>
+      <td style="border: none; width: 24px;">{{x.date}}</td>
       <td style="border: none; color: red; padding: 5px;" matTooltip="Closed trade" *ngIf="getDetails(x)[0] == 'cost'">{{x.ticker | uppercase}}</td>
       <td style="border: none; color: green; padding: 5px;" matTooltip="Opened trade" *ngIf="getDetails(x)[0] == 'premium'">{{x.ticker | uppercase}}</td>
       <td style="border: none; max-width: 250px;">
         <table>
           <span *ngFor="let z of getDetails(x)[1]; let i = index">
-            <tr>&nbsp;&nbsp;<span style="color: black;">{{z}}</span>:&nbsp;<span style="color: rgb(100, 90, 90);">{{getDetails(x)[2][i]}}</span>&nbsp;&nbsp;|&nbsp;</tr>
+            <tr style="font-size: 0.8em;">&nbsp;&nbsp;<span style="color: black;">{{z}}</span>:&nbsp;<span style="color: rgb(100, 90, 90);">{{getDetails(x)[2][i]}}</span>&nbsp;&nbsp;|&nbsp;</tr>
           </span>
         </table>
       </td>

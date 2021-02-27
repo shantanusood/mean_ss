@@ -341,7 +341,7 @@ export class FiunanceComponent implements OnInit {
   onClickDeleteStrike(ticker: any, account: string, type: string, strike: any) {
 
     this.http
-      .get(this.baseUrl + "data/"+this.username+"/monitoring/delete/getcontracts/" + ticker.ticker + "/" + account+ "/" + type + "/" + strike)
+      .get(this.baseUrl + "data/"+this.username+"/monitoring/delete/getclosedetails/" + ticker.ticker + "/" + account+ "/" + type + "/" + strike)
       .subscribe((datax) => {
         const dialogRef = this.dialog.open(Dialog, {
           width: '300px',
@@ -357,14 +357,30 @@ export class FiunanceComponent implements OnInit {
           this.refresh = true;
           //console.log(data);
         });
+        var trade_type = "";
+        if(datax['collateral'] == '0'){
+          trade_type = "Covered call";
+        }else if(datax['put']==datax['call']){
+          trade_type = "Iron Butterfly";
+        }else if(datax['put']=='0'){
+          trade_type = "Credit call spread";
+        }else if(datax['call']=='0'){
+          trade_type = "Credit put spread";
+        }else{
+          trade_type = "Iron Condor";
+        }
         this.trade_notification = {
           date: formatDate(new Date(), 'MM/dd/yyyy HH:mm:ss', 'en'),
           status: "unread",
           ticker: ticker.ticker,
           contracts: this.name,
-          type: type,
-          strike: strike,
-          cost: this.animal
+          type: trade_type,
+          collateral: datax['collateral'],
+          call: datax['call'],
+          put: datax['put'],
+          expiry: datax['expiry'],
+          cost: this.animal,
+          pnl: String(((Number(datax['premium']) - Number(this.animal))*100/Number(datax['premium'])).toFixed(0)) + "%"
         }
         this.http
             .post(
@@ -620,14 +636,30 @@ export class FiunanceComponent implements OnInit {
           }
         });
     });
-
+    var trade_type = "";
+    if((document.getElementById("collateral") as HTMLInputElement).value == '0'){
+      trade_type = "Covered call";
+    }else if(putSide==callSide){
+      trade_type = "Iron Butterfly";
+    }else if(putSide=='0'){
+      trade_type = "Credit call spread";
+    }else if(callSide=='0'){
+      trade_type = "Credit put spread";
+    }else{
+      trade_type = "Iron Condor";
+    }
+    var dateArray = this.date.split("-");
+    var year = parseInt(dateArray[0]);
+    var month = parseInt(dateArray[1], 10) - 1;
+    var date = parseInt(dateArray[2]);
     this.trade_notification = {
       date: formatDate(new Date(), 'MM/dd/yyyy HH:mm:ss', 'en'),
       status: "unread",
       ticker: (document.getElementById("ticker") as HTMLInputElement).value,
       contracts: (document.getElementById("contracts") as HTMLInputElement).value,
+      type: trade_type,
       collateral: (document.getElementById("collateral") as HTMLInputElement).value,
-      expiry: this.date,
+      expiry: formatDate(new Date(year, month, date), 'dd-MMM', 'en'),
       call: callSide,
       put: putSide,
       premium: (document.getElementById("premium") as HTMLInputElement).value
