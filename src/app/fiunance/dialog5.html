@@ -1,5 +1,6 @@
 <div>
-  <table style="border: none; color: black; ">
+  <span style="border: 0px solid pink;" *ngIf="run_spinner"><div class="lds-dual-ring"></div></span>
+  <table style="border: none; color: black; " *ngIf="!run_spinner">
     <tr>
       <td style="border: none; color: black; text-decoration: underline;">Contracts :</td>
       <td style="border: none; color: black; font-weight: bold;">{{getClickedPosition(data.datax, data.strike)[1]}}</td>
@@ -27,6 +28,13 @@
     <tr>
       <td style="border: none; color: black; text-decoration: underline;">Premium:</td>
       <td style="border: none; color: black; font-weight: bold;">{{getClickedPosition(data.datax, data.strike)[6]}} <span style="color: rgb(141, 139, 139);">(per contract)</span></td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; text-decoration: underline;">PNL (%):</td>
+      <td style="border: none; color: black; font-weight: bold;">
+        <span *ngIf="ret_price.indexOf('-')==-1" style="color: green;">{{ret_price}} </span>
+        <span *ngIf="ret_price.indexOf('-')!=-1" style="color: red;">{{ret_price}} </span>
+      </td>
     </tr>
   </table>
 

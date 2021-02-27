@@ -809,7 +809,7 @@ export class FiunanceComponent implements OnInit {
         const dialogRef = this.dialog.open(Dialog5, {
           width: '300px',
           data: {
-            stock: data, datax: vals as string[], type: _type, strike: _strike, contracts: datax['contracts'],
+            stock: data, datax: vals as string[], type: _type, strike: _strike, contracts: datax['contracts'], username: this.username, ticker: data.ticker,
             ret: {
               contracts: "",
               price: "",
@@ -1047,22 +1047,37 @@ export class Dialog4 {
 
 @Component({
   selector: 'dialog-overview-example-dialog5',
-  templateUrl: './dialog5.html'
+  templateUrl: './dialog5.html',
+  styleUrls: ["./dialog5.css"]
 })
-export class Dialog5 {
+export class Dialog5 implements OnInit{
 
   constructor(public dialogRef: MatDialogRef<Dialog>,
-    @Inject(MAT_DIALOG_DATA) public data: Dialog5Data) {
+    @Inject(MAT_DIALOG_DATA) public data: Dialog5Data, private http: HttpClient) {
 
 
     }
+  ngOnInit() {
+      this.getPrice(this.getClickedPosition(this.data['datax'], this.data['strike']));
+  }
+    readonly baseUrl = AppSettings.baseUrl;
 
     close_call: string;
+    run_spinner: boolean = true;
     close_put: string;
     close_collateral: string;
     msg: String;
     correct: String;
     msgbool: boolean = true;
+    ret_price: String;
+    getPrice(vals: String[]){
+      vals.push(this.data['ticker']);
+      this.http.post(this.baseUrl + "data/"+this.data['username']+"/spread/get", vals)
+        .subscribe((data) => {
+          this.ret_price = data['value'] as String;
+          this.run_spinner = false;
+      });
+    }
 
     getClickedPosition(vals: string[], strike: string){
 
