@@ -260,6 +260,7 @@
       </table>
     </div>
     <div class="inner" *ngFor="let x of arrBirds" >
+      <span class="rearrange"><mat-icon matTooltip="Rearrange" (click)="rearrange()" class="material-icons">open_with</mat-icon></span>
     <table>
       <tr>
         <th style="text-align: center; font-size: 1em; border: none">Manage short positions - {{x.ticker | uppercase}}
@@ -282,7 +283,8 @@
             <mat-icon id="closetrade" matTooltip="Close position"  (click)="onClickDeleteStrike(x, 'robinhood', 'call', processKey(y))" class="material-icons">close</mat-icon>
           </span>
           <span style="float: right;">
-            <mat-icon id="rolltrade" (click)="rolltrade(x, y, 'call', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
+            <mat-icon id="rolltrade" (click)="viewtrade(x, y, 'call', processKey(y))" matTooltip="View position"  class="material-icons">visibility</mat-icon>
+            <mat-icon id="rolltrade" *ngIf="roles.indexOf('admin')!=-1" (click)="rolltrade(x, y, 'call', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
           </span>
         </td>
         <td *ngIf="process(y)[0].indexOf('fidelity')!=-1 && processKey(y)!='0'" style="display:inline-block; color:orange; font-size: 6mm; border: solid orange 0px;">
@@ -292,7 +294,8 @@
             <mat-icon id="closetrade" matTooltip="Close position"  (click)="onClickDeleteStrike(x, 'fidelity', 'call', processKey(y))" class="material-icons">close</mat-icon>
             </span>
           <span style="float: right;">
-            <mat-icon id="rolltrade" (click)="rolltrade(x, y, 'call', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
+            <mat-icon id="rolltrade" (click)="viewtrade(x, y, 'call', processKey(y))" matTooltip="View position"  class="material-icons">visibility</mat-icon>
+            <mat-icon id="rolltrade" *ngIf="roles.indexOf('admin')!=-1" (click)="rolltrade(x, y, 'call', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
           </span>
 
           <td *ngIf="process(y)[0].indexOf('tastyworks')!=-1 && processKey(y)!='0'" style="display:inline-block; color:rgb(243, 138, 126); font-size: 6mm; border: solid salmon 0px;">
@@ -302,7 +305,8 @@
             <!--<button style="padding: -4px !important;" mat-button (click)="onClickDeleteStrike(x, 'tastyworks', 'call', processKey(y))" style="padding: 0px !important;"><b style="color:tomato;">x</b></button>-->
             </span>
           <span style="float: right;">
-            <mat-icon id="rolltrade" (click)="rolltrade(x, y, 'call', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
+            <mat-icon id="rolltrade" (click)="viewtrade(x, y, 'call', processKey(y))" matTooltip="View position"  class="material-icons">visibility</mat-icon>
+            <mat-icon id="rolltrade" *ngIf="roles.indexOf('admin')!=-1" (click)="rolltrade(x, y, 'call', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
           </span>
       </tr>
       <tr style="color: white; font-size: 8mm; border: dashed wheat 2px; padding: 5px;"><i matTooltip="Current price for {{x.ticker}}">{{x.price}}</i></tr>
@@ -314,8 +318,9 @@
             <!--<button style="padding: -4px !important;" mat-button (click)="onClickDeleteStrike(x, 'robinhood', 'put', processKey(y))" style="padding: 0px !important;"><b style="color:tomato;">x</b></button>-->
           </span>
           <span style="float: right;">
-              <mat-icon id="rolltrade" (click)="rolltrade(x, y, 'put', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
-          </span>
+              <mat-icon id="rolltrade" (click)="viewtrade(x, y, 'put', processKey(y))" matTooltip="View position"  class="material-icons">visibility</mat-icon>
+              <mat-icon id="rolltrade" *ngIf="roles.indexOf('admin')!=-1" (click)="rolltrade(x, y, 'put', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
+            </span>
         <td *ngIf="process(y)[0].indexOf('fidelity')!=-1 && processKey(y)!='0'" style="display:inline-block; color:orange; font-size: 6mm; border: solid orange 0px;">
           {{processKey(y)}} <sup matTooltip="%OTM, Expiry, Collateral">{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
           <span style="float: right;">
@@ -323,8 +328,9 @@
             <!--<button style="padding: -4px !important;" mat-button (click)="onClickDeleteStrike(x, 'fidelity', 'put', processKey(y))" style="padding: 0px !important;"><b style="color:tomato;">x</b></button>-->
           </span>
           <span style="float: right;">
-              <mat-icon id="rolltrade" (click)="rolltrade(x, y, 'put', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
-          </span>
+              <mat-icon id="rolltrade" (click)="viewtrade(x, y, 'put', processKey(y))" matTooltip="View position"  class="material-icons">visibility</mat-icon>
+              <mat-icon id="rolltrade" *ngIf="roles.indexOf('admin')!=-1" (click)="rolltrade(x, y, 'put', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
+            </span>
         <td *ngIf="process(y)[0].indexOf('tastyworks')!=-1 && processKey(y)!='0'" style="display:inline-block; color:rgb(243, 138, 126); font-size: 6mm; border: solid salmon 0px;">
           {{processKey(y)}} <sup matTooltip="%OTM, Expiry, Collateral">{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
           <span style="float: right;">
@@ -332,8 +338,9 @@
             <!--<button style="padding: -4px !important;" mat-button (click)="onClickDeleteStrike(x, 'tastyworks', 'put', processKey(y))" style="padding: 0px !important;"><b style="color:tomato;">x</b></button>-->
           </span>
           <span style="float: right;">
-              <mat-icon id="rolltrade" (click)="rolltrade(x, y, 'put', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
-          </span>
+              <mat-icon id="rolltrade" (click)="viewtrade(x, y, 'put', processKey(y))" matTooltip="View position"  class="material-icons">visibility</mat-icon>
+              <mat-icon id="rolltrade" *ngIf="roles.indexOf('admin')!=-1" (click)="rolltrade(x, y, 'put', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
+            </span>
       </tr>
     </table>
 

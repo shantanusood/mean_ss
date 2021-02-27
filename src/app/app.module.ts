@@ -11,7 +11,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { TutoringComponent, AutocompletePipeExtData } from './tutoring/tutoring.component';
-import { FiunanceComponent, Dialog, Dialog2, Dialog3 } from './fiunance/fiunance.component';
+import { FiunanceComponent, Dialog, Dialog2, Dialog3, Dialog4, Dialog5 } from './fiunance/fiunance.component';
 import { HealthComponent } from './health/health.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -48,12 +48,15 @@ import { SubscribeComponent } from './subscribe/subscribe.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ReversePipe } from './Pipes/reverse.pipe';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
     Dialog,
     Dialog2,
     Dialog3,
+    Dialog4,
+    Dialog5,
     AppComponent,
     NavComponent,
     HeaderComponent,
@@ -107,11 +110,12 @@ import { ReversePipe } from './Pipes/reverse.pipe';
     IgxAutocompleteModule,
     IgxDropDownModule,
     IgxButtonModule,
+    DragDropModule,
     IgxInputGroupModule,
     FormsModule,
     ReactiveFormsModule
   ],
-  entryComponents: [Dialog, Dialog2, Dialog3],
+  entryComponents: [Dialog, Dialog2, Dialog3, Dialog4, Dialog5],
   providers: [CoronaserviceService],
   bootstrap: [AppComponent]
 })

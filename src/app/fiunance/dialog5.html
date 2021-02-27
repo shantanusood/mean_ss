@@ -1,0 +1,33 @@
+<div>
+  <table style="border: none; color: black; ">
+    <tr>
+      <td style="border: none; color: black; text-decoration: underline;">Contracts :</td>
+      <td style="border: none; color: black; font-weight: bold;">{{getClickedPosition(data.datax, data.strike)[1]}}</td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; text-decoration: underline;">Type:</td>
+      <td style="border: none; color: black; font-weight: bold;">{{getTypeOfTrade(getClickedPosition(data.datax, data.strike))}}</td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; text-decoration: underline;">Collateral:</td>
+      <td style="border: none; color: black; font-weight: bold;">{{getClickedPosition(data.datax, data.strike)[2]}} <span style="color: rgb(141, 139, 139);">(per contract)</span></td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; text-decoration: underline;">Expiry:</td>
+      <td style="border: none; color: black; font-weight: bold;">{{getClickedPosition(data.datax, data.strike)[3]}}</td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; text-decoration: underline;">Call:</td>
+      <td style="border: none; color: black; font-weight: bold;">{{getClickedPosition(data.datax, data.strike)[4]}}</td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; text-decoration: underline;">Put:</td>
+      <td style="border: none; color: black; font-weight: bold;">{{getClickedPosition(data.datax, data.strike)[5]}}</td>
+    </tr>
+    <tr>
+      <td style="border: none; color: black; text-decoration: underline;">Premium:</td>
+      <td style="border: none; color: black; font-weight: bold;">{{getClickedPosition(data.datax, data.strike)[6]}} <span style="color: rgb(141, 139, 139);">(per contract)</span></td>
+    </tr>
+  </table>
+
+</div>

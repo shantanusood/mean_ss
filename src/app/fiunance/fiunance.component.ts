@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject} from '@angular/core';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {formatDate} from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
@@ -23,6 +24,27 @@ export interface Dialog2Data {
 }
 
 export interface Dialog3Data {
+  stock: object,
+  datax: string[],
+  type: string,
+  strike: string,
+  contracts: string,
+  ret: {
+    contracts: string,
+    price: string,
+    opencontracts: string,
+    opencollateral: string,
+    openexpiry: string,
+    opencall: string,
+    openput: string,
+    premium: string
+  }
+}
+
+export interface Dialog4Data {
+}
+
+export interface Dialog5Data {
   stock: object,
   datax: string[],
   type: string,
@@ -622,6 +644,29 @@ export class FiunanceComponent implements OnInit {
     this.refresh = true;
   }
 
+  rearrange(){
+
+    this.http.get(this.baseUrl + "data/"+this.username+"/monitoring/rearrange/get").subscribe((datax) => {
+
+      const dialogRef = this.dialog.open(Dialog4, {
+        width: '300px',
+        data: datax
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if(result.length>0){
+          this.http.post(this.baseUrl + "data/"+this.username+"/monitoring/rearrange/update", result).subscribe((datax) => {
+            console.log("DONE");
+          });
+          this.refresh = true;
+        }else{
+          console.log("Did not trigger");
+        }
+      });
+    });
+
+  }
+
   rolltrade(data: any, vals: any, _type: string, _strike: any){
     this.http.get(this.baseUrl + "data/"+this.username+"/monitoring/delete/getcontracts/" +
       data.ticker + "/" + vals[_strike][0]+ "/" + _type + "/" + _strike).subscribe((datax) => {
@@ -725,6 +770,30 @@ export class FiunanceComponent implements OnInit {
     });
   }
 
+  viewtrade(data: any, vals: any, _type: string, _strike: any){
+    this.http.get(this.baseUrl + "data/"+this.username+"/monitoring/delete/getcontracts/" +
+      data.ticker + "/" + vals[_strike][0]+ "/" + _type + "/" + _strike).subscribe((datax) => {
+
+        const dialogRef = this.dialog.open(Dialog5, {
+          width: '300px',
+          data: {
+            stock: data, datax: vals as string[], type: _type, strike: _strike, contracts: datax['contracts'],
+            ret: {
+              contracts: "",
+              price: "",
+              opencontracts: "",
+              opencollateral: "",
+              openexpiry: "",
+              opencall: "",
+              openput: "",
+              premium: ""
+            }
+          }
+        });
+
+
+    });
+  }
 }
 
 @Component({
@@ -859,6 +928,168 @@ export class Dialog3 {
     }
 
 
+    required_closecontract = undefined;
+    required_cost = undefined;
+    required_coll = undefined;
+    required_exp = undefined;
+    required_call = undefined;
+    required_put = undefined;
+    required_prem = undefined;
+    required_contract = undefined;
+    verify(){
+      if((document.getElementById("closecontracts") as HTMLInputElement).value.length==0){
+        this.required_closecontract = "*";
+      }else{
+        this.required_closecontract = "";
+      }
+      if((document.getElementById("cost") as HTMLInputElement).value.length==0){
+        this.required_cost = "*";
+      }else{
+        this.required_cost = "";
+      }
+      if((document.getElementById("opencontracts") as HTMLInputElement).value.length==0){
+        this.required_contract = "*";
+      }else{
+        this.required_contract = "";
+      }
+      if((document.getElementById("closecollateral") as HTMLInputElement).value.length==0){
+        this.required_coll = "*";
+      }else{
+        this.required_coll = "";
+      }
+      if((document.getElementById("exp") as HTMLInputElement).value.length==0){
+        this.required_exp = "*";
+      }else{
+        this.required_exp = "";
+      }
+      if((document.getElementById("closecall") as HTMLInputElement).value.length==0){
+        this.required_call = "*";
+      }else{
+        this.required_call = "";
+      }
+      if((document.getElementById("closeput") as HTMLInputElement).value.length==0){
+        this.required_put = "*";
+      }else{
+        this.required_put = "";
+      }
+      if((document.getElementById("premium") as HTMLInputElement).value.length==0){
+        this.required_prem = "*";
+      }else{
+        this.required_prem = "";
+      }
+      if(this.required_contract || this.required_coll || this.required_exp || this.required_call || this.required_put || this.required_prem){
+        console.log("requirement not fulfilled");
+      }else{
+        this.msgbool = false;
+      }
+    }
+
+}
+
+@Component({
+  selector: 'dialog-overview-example-dialog4',
+  templateUrl: './dialog4.html',
+  styleUrls: ["./dialog4.css"]
+})
+export class Dialog4 {
+
+  constructor(
+    public dialogRef: MatDialogRef<Dialog>,
+    @Inject(MAT_DIALOG_DATA) public data: Dialog4Data) {
+      for(let key in data){
+        this.movies.push(data[key])
+      }
+    }
+
+    movies = [];
+
+    drop(event: CdkDragDrop<string[]>) {
+      moveItemInArray(this.movies, event.previousIndex, event.currentIndex);
+    }
+
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
+
+}
+
+@Component({
+  selector: 'dialog-overview-example-dialog5',
+  templateUrl: './dialog5.html'
+})
+export class Dialog5 {
+
+  constructor(public dialogRef: MatDialogRef<Dialog>,
+    @Inject(MAT_DIALOG_DATA) public data: Dialog5Data) {
+
+
+    }
+
+    close_call: string;
+    close_put: string;
+    close_collateral: string;
+    msg: String;
+    correct: String;
+    msgbool: boolean = true;
+
+    getClickedPosition(vals: string[], strike: string){
+
+      var account:string = vals[strike][0];
+      var contracts:string = this.data.contracts;
+      var collateral:string = vals[strike][2];
+      var expiry:string = vals[strike][1];
+      var call:string;
+      var put: string;
+      var premium:string = vals[strike][3];
+      var positions: object = this.data.stock['positions'][account];
+
+      for(let i = 0; i < positions[this.data.type].length; i++){
+        if(positions[this.data.type][i]==this.data.strike && positions['exp'][i]==expiry && positions['coll'][i]==collateral && positions['prem'][i]==premium){
+          call = positions['call'][i];
+          put = positions['put'][i];
+          this.close_call = call;
+          this.close_put = put;
+        }
+      }
+
+      //this.data.ret.contracts = contracts;
+      //this.data.ret.opencontracts = contracts;
+      //this.data.ret.opencollateral = collateral;
+      //this.data.ret.opencall = call;
+      //this.data.ret.openput = put;
+
+      if(this.close_put=='0'){
+        this.data.ret.openput = put;
+      }
+      if(this.close_call=='0'){
+        this.data.ret.opencall = call;
+      }
+      if(collateral=='0'){
+        this.data.ret.opencollateral = collateral;
+      }
+
+      return [account, contracts, collateral, expiry, call, put, premium];
+
+    }
+
+    onNoClick(): void {
+
+      this.dialogRef.close();
+    }
+
+    getTypeOfTrade(vals: String[]){
+      if(vals[2]=='0'){
+        return "Covered call";
+      }else if(vals[4]==vals[5]){
+        return "Iron Butterfly";
+      }else if(vals[4]=='0'){
+        return "Credit call spread";
+      }else if(vals[5]=='0'){
+        return "Credit put spread";
+      }else{
+        return "Iron Condor";
+      }
+    }
     required_closecontract = undefined;
     required_cost = undefined;
     required_coll = undefined;

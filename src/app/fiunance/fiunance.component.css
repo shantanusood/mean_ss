@@ -56,6 +56,24 @@ sub {
   margin-top: 1px;
   margin-right: 7%;
 }
+.rearrange {
+  background-color: rgb(65, 61, 61);
+  position: absolute;
+  color: wheat;
+  float: right;
+  cursor: pointer;
+  width: auto;
+  border: solid 0px pink;
+}
+.rearrange:hover{
+  background-color: rgb(65, 61, 61);
+  position: absolute;
+  cursor: pointer;
+  color: aliceblue;
+  float: right;
+  width: auto;
+  border: solid 0px pink;
+}
 .inner {
   padding: 5px;
   display: inline-flex;
@@ -209,13 +227,15 @@ sub {
 
 }
 #rolltrade {
-  padding:10px;
-  color: aliceblue;
+  padding:15px;
+  margin-top: -7px;
+  color: wheat;
 }
 #rolltrade:hover {
   cursor: pointer;
-  padding:10px;
-  color:wheat;
+  margin-top: -7px;
+  padding:15px;
+  color:aliceblue;
 
 }
 @media only screen and (max-width: 800px){

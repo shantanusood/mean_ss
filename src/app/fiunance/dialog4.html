@@ -1,0 +1,21 @@
+
+<div>
+ <table style="border: none; color: black; width: 100%;">
+    <tr>
+      <th style="border: none; color: black; width: 100%;" colspan="2">Update ticker box positions</th>
+    </tr>
+    <tr>
+      <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let movie of movies" cdkDrag>
+          {{movie}}
+          <span style="float: right;">
+            <mat-icon class="material-icons">drag_indicator</mat-icon>
+          </span>
+        </div>
+      </div>
+    </tr>
+    <tr>
+      <td style="border: none;"><span><button class="savebutton" [mat-dialog-close]="movies" mat-button style="width: 100%;">Save</button></span></td>
+    </tr>
+  </table>
+</div>
