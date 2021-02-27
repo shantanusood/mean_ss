@@ -210,8 +210,6 @@ export class ProgressComponent implements OnInit {
             this.user_diffdays = String(this.user_diffdays) + " days";
           }
         }
-        console.log(d['userid']);
-        console.log(d['role']);
       });
     });
     this.http.get(this.baseUrl+'data/'+this.username+'/daily/get').subscribe((data) => {

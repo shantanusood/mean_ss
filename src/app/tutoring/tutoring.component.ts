@@ -22,6 +22,9 @@ export class TutoringComponent implements OnInit {
   currency = false;
   options = false;
   roles: object[];
+  roles_cur: string;
+  role_list: object[];
+  user_diffdays: any;
   refreshed: number = 0;
   username: string;
   type:string = "";
@@ -35,6 +38,21 @@ export class TutoringComponent implements OnInit {
         if(x['role']=='admin' || x['role']=='basictrader' || x['role']=='advancedtrader')
           this.towns.push(x['userid']);
       })
+
+      this.roles.forEach(d => {
+        if(d['userid']===this.username){
+          this.roles_cur = d['role'];
+          var date1 = new Date(d['join']);
+          var date2 = new Date();
+          var diff = Math.abs(date1.getTime() - date2.getTime());
+          this.user_diffdays = 14 - Math.ceil(diff / (1000 * 3600 * 24));
+          if(this.user_diffdays<0){
+            this.user_diffdays = "ENDED";
+          }else{
+            this.user_diffdays = String(this.user_diffdays) + " days";
+          }
+        }
+      });
     });
 
   }
