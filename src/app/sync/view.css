@@ -1,0 +1,10 @@
+.datadialog {
+  color: black;
+
+}
+
+.datadialog td {
+  color: black;
+  border: none;
+  font-size: x-small;
+}

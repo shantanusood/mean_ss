@@ -49,9 +49,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ReversePipe } from './Pipes/reverse.pipe';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { SyncComponent, Dialog_sync } from './sync/sync.component';
 
 @NgModule({
   declarations: [
+    Dialog_sync,
     Dialog,
     Dialog2,
     Dialog3,
@@ -89,7 +91,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     TechieComponent,
     SubscribeComponent,
     NotificationsComponent,
-    ReversePipe
+    ReversePipe,
+    SyncComponent
   ],
   imports: [
     AgGridModule.withComponents([]),
@@ -115,7 +118,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     FormsModule,
     ReactiveFormsModule
   ],
-  entryComponents: [Dialog, Dialog2, Dialog3, Dialog4, Dialog5],
+  entryComponents: [Dialog_sync, Dialog, Dialog2, Dialog3, Dialog4, Dialog5],
   providers: [CoronaserviceService],
   bootstrap: [AppComponent]
 })

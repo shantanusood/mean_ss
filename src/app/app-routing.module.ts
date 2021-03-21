@@ -17,6 +17,7 @@ import { TechieComponent } from './techie/techie.component';
 import { AdminComponent } from './admin/admin.component';
 import { SubscribeComponent } from './subscribe/subscribe.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { SyncComponent } from './sync/sync.component';
 
 const routes: Routes = [
   {path: '', component: FiunanceComponent},
@@ -24,7 +25,7 @@ const routes: Routes = [
   {path: 'tech', component: TechieComponent},
   {path: 'explore', component: HomeComponent},
   {path: 'external', component: TutoringComponent},
-  {path: 'predict', component: FiunanceComponent},
+  {path: 'predict', component: SyncComponent},
   {path: 'progress', component: ProgressComponent},
   {path: 'strategy', component: HealthComponent},
   {path: 'notification', component: NotificationsComponent},

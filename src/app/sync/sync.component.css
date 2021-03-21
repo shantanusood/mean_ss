@@ -1,0 +1,15 @@
+.grid {
+  margin: 0 auto;
+  border: 1px solid wheat;
+  padding: 20px;
+  width: 90%;
+}
+.inputs {
+  width:100%;
+  resize: vertical;
+  padding:5px;
+  border-radius:5px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  height: 30px;
+}

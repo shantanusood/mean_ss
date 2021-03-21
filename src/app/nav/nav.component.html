@@ -2,8 +2,8 @@
   <a [routerLink]="'/tutor'" routerLinkActive="tut" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('tenant')!=-1">Pay Rent</a>
   <a [routerLink]="'/tech'" routerLinkActive="tut" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('tenant')!=-1">Work Order</a>
   <a [routerLink]="'/explore'" routerLinkActive="exp" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">Explore</a>
+  <a [routerLink]="'/predict'" routerLinkActive="fin" *ngIf="roles.indexOf('admin')!=-1">Sync</a>
   <a [routerLink]="'/strategy'" routerLinkActive="hth" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('analytics')!=-1">Analytics</a>
-  <a [routerLink]="'/predict'" routerLinkActive="fin" *ngIf="roles.indexOf('admin')!=-1">Monitor</a>
   <a [routerLink]="'/admin'" routerLinkActive="adm" *ngIf="roles.indexOf('admin')!=-1">Admin</a>
 </div>
 <div class="bottomnav">

@@ -1,0 +1,140 @@
+<div class="container">
+
+  <div class="grid">
+    <table>
+      <tr>
+        <!-- (change)="selectOption($event.target.value)"-->
+        <td style="border: none;">
+          <select class="inputs" (change)="selectParent($event.target.value)">
+            <option *ngFor="let x of parentSectors; let j = idx" value="{{x}}" [selected]="j === 0">{{x}}</option>
+          </select>
+        </td>
+        <td>
+          <button mat-button (click)="getSubSectors()" >Find SubSectors</button>
+        </td>
+        <td style="border: none;" *ngIf="subSectors" (change)="selectSubSector($event.target.value)">
+          <select class="inputs" >
+            <option value="All" [selected]>All</option>
+            <option *ngFor="let x of subSectors; let j = idx" value="{{x}}" [selected]="j === 0">{{x}}</option>
+          </select>
+        </td>
+        <td>
+          <button mat-button (click)="getTickers()" >Get Tickers</button>
+        </td>
+        <td style="border: none;">
+          Update Sector:
+        </td>
+        <td>
+          <button mat-button (click)="syncSector('quote')">Quote</button>
+        </td>
+        <td *ngIf="selectedParent.indexOf('Indicators') == -1">
+          <button mat-button (click)="syncSector('fin')">Income</button>
+        </td>
+        <td *ngIf="selectedParent.indexOf('Indicators') == -1">
+          <button mat-button (click)="syncSector('bs')">Balance</button>
+        </td>
+        <td *ngIf="selectedParent.indexOf('Indicators') == -1">
+          <button mat-button (click)="syncSector('cf')">Cash</button>
+        </td>
+        <td *ngIf="selectedParent.indexOf('Indicators') == -1">
+          <button mat-button (click)="syncSector('inside')">Insider</button>
+        </td>
+        <td *ngIf="selectedParent.indexOf('Indicators') == -1">
+          <button mat-button (click)="syncSector('inst')">Institutional</button>
+        </td>
+        <td *ngIf="selectedParent.indexOf('Indicators') == -1">
+          <button mat-button (click)="syncSector('bonds')">Bonds</button>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <hr>
+    <br>
+    <table *ngIf="selectedParent.indexOf('Indicators') == -1">
+        <tr>
+        <th>Ticker</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Country</th>
+        <th>Quote</th>
+        <th>Income Statement</th>
+        <th>Balance Sheet</th>
+        <th>Cash Flow</th>
+        <th>Insider Info</th>
+        <th>Institutional</th>
+        <th>Corporate Bonds</th>
+      </tr>
+      <tr *ngFor="let x of tickers" >
+        <td>{{x.Ticker}}</td>
+        <td>{{x.Name}}</td>
+        <td>{{x.Category}}</td>
+        <td>{{x.Country}}</td>
+        <td *ngIf="x.Quote == 'N'"><button mat-button (click)="dump(x, 'quote')">Dump</button></td>
+        <td *ngIf="x.Quote != 'N'">
+          <button (click)="update(x, 'quote')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
+          <button (click)="view(x, 'quote')" mat-button>{{dateDiff(x.Quote)}}</button>
+        </td>
+        <td *ngIf="x.Income == 'N'"><button mat-button (click)="dump(x, 'fin')">Dump</button></td>
+        <td *ngIf="x.Income != 'N'">
+          <button (click)="update(x, 'fin')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
+          <button (click)="view(x, 'fin')" mat-button>{{dateDiff(x.Income)}}</button></td>
+        <td *ngIf="x.Balance == 'N'"><button mat-button (click)="dump(x, 'bs')">Dump</button>
+        </td>
+        <td *ngIf="x.Balance != 'N'">
+          <button (click)="update(x, 'bs')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
+          <button (click)="view(x, 'bs')" mat-button>{{dateDiff(x.Balance)}}</button>
+        </td>
+        <td *ngIf="x.Cash == 'N'"><button mat-button (click)="dump(x, 'cf')">Dump</button></td>
+        <td *ngIf="x.Cash != 'N'">
+          <button (click)="update(x, 'cf')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
+          <button (click)="view(x, 'cf')" mat-button>{{dateDiff(x.Cash)}}</button>
+        </td>
+        <td *ngIf="x.Insider == 'N'"><button mat-button (click)="dump(x, 'inside')">Dump</button></td>
+        <td *ngIf="x.Insider != 'N'">
+          <button (click)="update(x, 'inside')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
+          <button (click)="view(x, 'inside')" mat-button>{{dateDiff(x.Insider)}}</button>
+        </td>
+        <td *ngIf="x.Institutional == 'N'"><button mat-button (click)="dump(x, 'inst')">Dump</button></td>
+        <td *ngIf="x.Institutional != 'N'">
+          <button (click)="update(x, 'inst')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
+          <button (click)="view(x, 'inst')" mat-button>{{dateDiff(x.Institutional)}}</button></td>
+        <td *ngIf="x.Bonds == 'N'"><button mat-button (click)="dump(x, 'bonds')">Dump</button>
+        </td>
+        <td *ngIf="x.Bonds != 'N'">
+          <button (click)="update(x, 'bonds')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
+          <button (click)="view(x, 'bonds')" mat-button>{{dateDiff(x.Bonds)}}</button></td>
+      </tr>
+    </table>
+    <table *ngIf="selectedParent.indexOf('Indicators') != -1">
+      <tr>
+        <th>Ticker</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Country</th>
+        <th>Quote</th>
+      </tr>
+      <tr *ngFor="let x of tickers" >
+        <td>{{x.Ticker}}</td>
+        <td>{{x.Name}}</td>
+        <td>{{x.Category}}</td>
+        <td>{{x.Country}}</td>
+        <td *ngIf="x.Quote == 'N'"><button mat-button (click)="dumpIndicator(x, 'quote')">Dump</button></td>
+        <td *ngIf="x.Quote != 'N'">
+          <button (click)="dumpIndicator(x, 'quote')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
+          <button (click)="viewIndicator(x, 'quote')" mat-button>{{dateDiff(x.Quote)}}</button>
+        </td>
+      </tr>
+    </table>
+    <span *ngIf="chart_boolean">
+      <div>
+        <p style="width:100%;text-align:center;color: wheat;">{{chart_title}}<p>
+        <canvas id="canvas">
+          {{ chart }}
+      </canvas>
+    </div>
+  </span>
+
+  </div>
+  <br>
+  <br>
+  </div>

@@ -1,0 +1,8 @@
+<div>
+  <table *ngIf="data['type'].indexOf('Indicators')==-1" class="datadialog" style="color: black;">
+    <td *ngFor="let x of actuals">
+      <tr *ngFor="let y of x">{{y}}</tr>
+
+    </td>
+    </table>
+</div>
