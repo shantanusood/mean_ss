@@ -24,27 +24,28 @@
         <td style="border: none;">
           Update Sector:
         </td>
-        <td>
+        <td *ngIf="!run_spinner">
           <button mat-button (click)="syncSector('quote')">Quote</button>
         </td>
-        <td *ngIf="selectedParent.indexOf('Indicators') == -1">
+        <td *ngIf="selectedParent.indexOf('Indicators') == -1 && !run_spinner">
           <button mat-button (click)="syncSector('fin')">Income</button>
         </td>
-        <td *ngIf="selectedParent.indexOf('Indicators') == -1">
+        <td *ngIf="selectedParent.indexOf('Indicators') == -1 && !run_spinner">
           <button mat-button (click)="syncSector('bs')">Balance</button>
         </td>
-        <td *ngIf="selectedParent.indexOf('Indicators') == -1">
+        <td *ngIf="selectedParent.indexOf('Indicators') == -1 && !run_spinner">
           <button mat-button (click)="syncSector('cf')">Cash</button>
         </td>
-        <td *ngIf="selectedParent.indexOf('Indicators') == -1">
+        <td *ngIf="selectedParent.indexOf('Indicators') == -1 && !run_spinner">
           <button mat-button (click)="syncSector('inside')">Insider</button>
         </td>
-        <td *ngIf="selectedParent.indexOf('Indicators') == -1">
+        <td *ngIf="selectedParent.indexOf('Indicators') == -1 && !run_spinner">
           <button mat-button (click)="syncSector('inst')">Institutional</button>
         </td>
-        <td *ngIf="selectedParent.indexOf('Indicators') == -1">
+        <td *ngIf="selectedParent.indexOf('Indicators') == -1 && !run_spinner">
           <button mat-button (click)="syncSector('bonds')">Bonds</button>
         </td>
+        <td style="border: none;" *ngIf="run_spinner"><div class="lds-dual-ring"></div></td>
       </tr>
     </table>
     <br>

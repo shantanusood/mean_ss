@@ -17,6 +17,8 @@ export interface DialogData {
 export class SyncComponent implements OnInit {
 
   readonly baseUrl = AppSettings.baseUrlAnalytics;
+
+  run_spinner: boolean = false;
   sectors: Object;
   parentSectors = [];
   subSectors = [];
@@ -110,11 +112,13 @@ export class SyncComponent implements OnInit {
     });
    }
    syncSector(type: String){
+    this.run_spinner = true;
       this.http.get(this.baseUrl + "data/sync/sector/"+this.selectedParent
         + "/"+ this.selectedsubsector + "/" + type).subscribe((data) => {
           this.http.get(this.baseUrl + "data/metadata/stocks/USA/"+this.selectedParent+ "/"+ this.selectedsubsector).subscribe((data_tick) => {
             this.tickers = data_tick as object[];
           this.dump_res = data as String;
+          this.run_spinner = false;
         });
       });
    }

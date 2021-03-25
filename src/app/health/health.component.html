@@ -1,3 +1,84 @@
 <div class="container">
-<p>Analytics TEST</p>
-</div>
+
+  <div class="grid">
+    <table>
+      <tr>
+        <!-- (change)="selectOption($event.target.value)"-->
+        <td style="border: none;">
+          <select class="inputs" (change)="selectParent($event.target.value)">
+            <option *ngFor="let x of parentSectors; let j = idx" value="{{x}}" [selected]="j === 0">{{x}}</option>
+          </select>
+        </td>
+        <td>
+          <button mat-button (click)="getSubSectors()" >Find SubSectors</button>
+        </td>
+        <td style="border: none;" *ngIf="subSectors">
+          <select class="inputs" (change)="selectSubSector($event.target.value)">
+            <option value="All" [selected]>All</option>
+            <option *ngFor="let x of subSectors; let j = idx" value="{{x}}" [selected]="j === 0">{{x}}</option>
+          </select>
+        </td>
+        <td>
+          <button mat-button (click)="getTickers()" >Get Tickers</button>
+        </td>
+        <td style="border: none;">
+          <select class="inputs" (change)="selectAnalysisType($event.target.value)">
+            <option *ngFor="let x of analysis_type; let j = idx" value="{{x}}" [selected]="j === 0">{{x}}</option>
+          </select>
+        </td>
+        <td>
+          <button mat-button (click)="analyze()" >Analyze</button>
+        </td>
+        <td style="border: none;">
+          <select class="inputs" (change)="selectOrderBy($event.target.value)">
+            <option value="None" [selected]>None</option>
+            <option *ngFor="let x of analysis_values; let j = idx" value="{{x}}" [selected]="j === 0">{{x}}</option>
+          </select>
+        </td>
+        <td>
+          <button mat-button (click)="order()" >Order</button>
+        </td>
+        <td style="border: none;" *ngIf="run_spinner"><div class="lds-dual-ring"></div></td>
+      </tr>
+    </table>
+    <br>
+    <hr>
+    <br>
+    <table *ngIf="selectedParent.indexOf('Indicators') == -1">
+        <tr>
+        <th>Ticker</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Country</th>
+        <th>{{selectedanalysis}}</th>
+      </tr>
+      <tr *ngFor="let x of tickers; let i = index" >
+        <td>{{x.Ticker}}</td>
+        <td>{{x.Name}}</td>
+        <td>{{x.Category}}</td>
+        <td>{{x.Country}}</td>
+        <td>
+          <div fxLayout="row" >
+            <div *ngFor="let y of getAnalysisData(x)" style="display: inline-block; padding: 5px;">
+              <span style="color: aliceblue;">{{y[0]}}&nbsp;</span>
+              <br>
+              <span *ngIf="y[1].indexOf('-999')!=-1" style="color: red;">err&nbsp;</span>
+              <span *ngIf="y[1].indexOf('-999')==-1">{{y[1]}}&nbsp;</span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <table *ngIf="selectedParent.indexOf('Indicators') != -1">
+      <tr>
+        <th>Ticker</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Country</th>
+        <th>Quote</th>
+      </tr>
+    </table>
+  </div>
+  <br>
+  <br>
+  </div>
