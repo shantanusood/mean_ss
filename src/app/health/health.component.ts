@@ -11,7 +11,7 @@ export class HealthComponent implements OnInit {
 
   readonly baseUrl = AppSettings.baseUrlAnalytics;
 
-  analysis_type = ['ratios', 'incomechanges', 'balancesheetchanges', 'cashflowchanges',  'discountedcashflow']
+  analysis_type = ['basics', 'ratios', 'incomechanges', 'balancesheetchanges', 'cashflowchanges',  'discountedcashflow']
 
   run_spinner: boolean = false;
   sectors: Object;
@@ -22,7 +22,7 @@ export class HealthComponent implements OnInit {
   dump_res: String = "";
   selectedParent: String = "Commodity";
   selectedsubsector: String = "All";
-  selectedanalysis: String = "ratios";
+  selectedanalysis: String = "basics";
   view_type: object;
 
   chart_boolean: boolean = false;

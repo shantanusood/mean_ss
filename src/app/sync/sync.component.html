@@ -70,40 +70,116 @@
         <td>{{x.Name}}</td>
         <td>{{x.Category}}</td>
         <td>{{x.Country}}</td>
-        <td *ngIf="x.Quote == 'N'"><button mat-button (click)="dump(x, 'quote')">Dump</button></td>
-        <td *ngIf="x.Quote != 'N'">
-          <button (click)="update(x, 'quote')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
-          <button (click)="view(x, 'quote')" mat-button>{{dateDiff(x.Quote)}}</button>
+        <td *ngIf="x.Quote == 'N'">
+          <button mat-button (click)="dump(x, 'quote')" *ngIf="selectedParent.indexOf('Customs')==-1">Dump</button>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            N/A
+          </span>
         </td>
-        <td *ngIf="x.Income == 'N'"><button mat-button (click)="dump(x, 'fin')">Dump</button></td>
+        <td *ngIf="x.Quote != 'N'">
+          <span *ngIf="selectedParent.indexOf('Customs')==-1">
+            <button (click)="update(x, 'quote')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
+            <button (click)="view(x, 'quote')" mat-button>{{dateDiff(x.Quote)}}</button>
+          </span>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            {{dateDiff(x.Quote)}}
+          </span>
+        </td>
+
+        <td *ngIf="x.Income == 'N'">
+          <button mat-button (click)="dump(x, 'fin')" *ngIf="selectedParent.indexOf('Customs')==-1">Dump</button>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            N/A
+          </span>
+        </td>
         <td *ngIf="x.Income != 'N'">
-          <button (click)="update(x, 'fin')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
-          <button (click)="view(x, 'fin')" mat-button>{{dateDiff(x.Income)}}</button></td>
-        <td *ngIf="x.Balance == 'N'"><button mat-button (click)="dump(x, 'bs')">Dump</button>
+          <span *ngIf="selectedParent.indexOf('Customs')==-1">
+            <button (click)="update(x, 'fin')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
+            <button (click)="view(x, 'fin')" mat-button>{{dateDiff(x.Income)}}</button>
+          </span>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            {{dateDiff(x.Income)}}
+          </span>
+        </td>
+
+        <td *ngIf="x.Balance == 'N'">
+          <button mat-button (click)="dump(x, 'bs')" *ngIf="selectedParent.indexOf('Customs')==-1">Dump</button>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            N/A
+          </span>
         </td>
         <td *ngIf="x.Balance != 'N'">
-          <button (click)="update(x, 'bs')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
-          <button (click)="view(x, 'bs')" mat-button>{{dateDiff(x.Balance)}}</button>
+          <span *ngIf="selectedParent.indexOf('Customs')==-1">
+            <button (click)="update(x, 'bs')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
+            <button (click)="view(x, 'bs')" mat-button>{{dateDiff(x.Balance)}}</button>
+          </span>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            {{dateDiff(x.Balance)}}
+          </span>
         </td>
-        <td *ngIf="x.Cash == 'N'"><button mat-button (click)="dump(x, 'cf')">Dump</button></td>
+
+        <td *ngIf="x.Cash == 'N'">
+          <button mat-button (click)="dump(x, 'cf')" *ngIf="selectedParent.indexOf('Customs')==-1">Dump</button>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            N/A
+          </span>
+        </td>
         <td *ngIf="x.Cash != 'N'">
-          <button (click)="update(x, 'cf')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
-          <button (click)="view(x, 'cf')" mat-button>{{dateDiff(x.Cash)}}</button>
+          <span *ngIf="selectedParent.indexOf('Customs')==-1">
+            <button (click)="update(x, 'cf')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
+            <button (click)="view(x, 'cf')" mat-button>{{dateDiff(x.Cash)}}</button>
+          </span>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            {{dateDiff(x.Cash)}}
+          </span>
         </td>
-        <td *ngIf="x.Insider == 'N'"><button mat-button (click)="dump(x, 'inside')">Dump</button></td>
+
+        <td *ngIf="x.Insider == 'N'">
+          <button mat-button (click)="dump(x, 'inside')" *ngIf="selectedParent.indexOf('Customs')==-1">Dump</button>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            N/A
+          </span>
+        </td>
         <td *ngIf="x.Insider != 'N'">
-          <button (click)="update(x, 'inside')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
-          <button (click)="view(x, 'inside')" mat-button>{{dateDiff(x.Insider)}}</button>
+          <span *ngIf="selectedParent.indexOf('Customs')==-1">
+            <button (click)="update(x, 'inside')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
+            <button (click)="view(x, 'inside')" mat-button>{{dateDiff(x.Insider)}}</button>
+          </span>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            {{dateDiff(x.Insider)}}
+          </span>
         </td>
-        <td *ngIf="x.Institutional == 'N'"><button mat-button (click)="dump(x, 'inst')">Dump</button></td>
+
+        <td *ngIf="x.Institutional == 'N'">
+          <button mat-button (click)="dump(x, 'inst')" *ngIf="selectedParent.indexOf('Customs')==-1">Dump</button>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            N/A
+          </span>
+        </td>
         <td *ngIf="x.Institutional != 'N'">
-          <button (click)="update(x, 'inst')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
-          <button (click)="view(x, 'inst')" mat-button>{{dateDiff(x.Institutional)}}</button></td>
-        <td *ngIf="x.Bonds == 'N'"><button mat-button (click)="dump(x, 'bonds')">Dump</button>
+          <span *ngIf="selectedParent.indexOf('Customs')==-1">
+            <button (click)="update(x, 'inst')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
+            <button (click)="view(x, 'inst')" mat-button>{{dateDiff(x.Institutional)}}</button>
+          </span>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            {{dateDiff(x.Institutional)}}
+          </span>
+        </td>
+
+        <td *ngIf="x.Bonds == 'N'">
+          <button mat-button (click)="dump(x, 'bonds')" *ngIf="selectedParent.indexOf('Customs')==-1">Dump</button>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            N/A
+          </span>
         </td>
         <td *ngIf="x.Bonds != 'N'">
-          <button (click)="update(x, 'bonds')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
-          <button (click)="view(x, 'bonds')" mat-button>{{dateDiff(x.Bonds)}}</button></td>
+          <span *ngIf="selectedParent.indexOf('Customs')==-1">
+            <button (click)="update(x, 'bonds')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
+            <button (click)="view(x, 'bonds')" mat-button>{{dateDiff(x.Bonds)}}</button>
+          </span>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            {{dateDiff(x.Bonds)}}
+          </span>
       </tr>
     </table>
     <table *ngIf="selectedParent.indexOf('Indicators') != -1">
