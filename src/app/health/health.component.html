@@ -43,9 +43,23 @@
     </table>
     <br>
     <hr>
-    <br>
     <table *ngIf="selectedParent.indexOf('Indicators') == -1">
-        <tr>
+      <tr>
+        <td style="text-align: right; color: aliceblue; border: none;"></td>
+        <td style="text-align: right; color: aliceblue; border: none;">{{selectedParent}}</td>
+        <td style="text-align: right; color: aliceblue; border: none;">{{selectedsubsector}}</td>
+        <td style="text-align: right; color: aliceblue; border: none;">AVERAGE:</td>
+        <td style="border: none;">
+          <div fxLayout="row" *ngIf="sector_avg">
+            <div *ngFor="let y of sector_avg" style="display: inline-block; padding: 5px;">
+              <span style="color: aliceblue;">{{y[0]}}&nbsp;</span>
+              <br>
+              <span style="color: wheat; font-weight: bolder;">{{y[1]}}&nbsp;</span>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
         <th>Ticker</th>
         <th>Name</th>
         <th>Category</th>

@@ -11,7 +11,7 @@ export class HealthComponent implements OnInit {
 
   readonly baseUrl = AppSettings.baseUrlAnalytics;
 
-  analysis_type = ['basics', 'ratios', 'incomechanges', 'balancesheetchanges', 'cashflowchanges',  'discountedcashflow']
+  analysis_type = ['basics', 'ratios', 'incomechanges', 'balancesheetchanges', 'cashflowchanges',  'discountedcashflow', 'capm', 'divdiscounted', 'enterprisevaluetoebitda', 'enterprisevaluetorev']
 
   run_spinner: boolean = false;
   sectors: Object;
@@ -31,6 +31,8 @@ export class HealthComponent implements OnInit {
   analysis_values = new Set();
   selectOrder: String = "None";
   dates = new Set();
+
+  sector_avg = [];
 
   constructor(private http: HttpClient) {}
 
@@ -69,11 +71,20 @@ export class HealthComponent implements OnInit {
     this.http.post(this.baseUrl + "data/analyze/"+this.selectedParent+ "/"+ this.selectedsubsector + "/" + this.selectedanalysis,
       this.tickers).subscribe((data) => {
         this.tickers = data as object[];
+
+
+        this.http.post(this.baseUrl + "data/analyze/sectors/" + this.selectedanalysis,
+          this.tickers).subscribe((data_avg) => {
+            this.sector_avg = data_avg as object[];
+            console.log(data_avg)
+        });
+
         this.run_spinner = false;
       });
    }
    getAnalysisData(value: any){
      var ret = [];
+     this.analysis_values = new Set();
       for(var k in value){
         if(k == this.selectedanalysis){
           for(var j in value[k]){
