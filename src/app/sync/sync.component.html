@@ -45,6 +45,9 @@
         <td *ngIf="selectedParent.indexOf('Indicators') == -1 && !run_spinner">
           <button mat-button (click)="syncSector('bonds')">Bonds</button>
         </td>
+        <td *ngIf="selectedParent.indexOf('Buybacks') == -1 && !run_spinner">
+          <button mat-button (click)="syncSector('back')">Buybacks</button>
+        </td>
         <td style="border: none;" *ngIf="run_spinner"><div class="lds-dual-ring"></div></td>
       </tr>
     </table>
@@ -64,6 +67,7 @@
         <th>Insider Info</th>
         <th>Institutional</th>
         <th>Corporate Bonds</th>
+        <th>Buybacks</th>
       </tr>
       <tr *ngFor="let x of tickers" >
         <td>{{x.Ticker}}</td>
@@ -180,6 +184,22 @@
           <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
             {{dateDiff(x.Bonds)}}
           </span>
+        </td>
+        <td *ngIf="x.Buybacks == 'N'">
+          <button mat-button (click)="dump(x, 'back')" *ngIf="selectedParent.indexOf('Customs')==-1">Dump</button>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            N/A
+          </span>
+        </td>
+        <td *ngIf="x.Buybacks != 'N'">
+          <span *ngIf="selectedParent.indexOf('Customs')==-1">
+            <button (click)="update(x, 'back')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
+            <button (click)="view(x, 'back')" mat-button>{{dateDiff(x.Bonds)}}</button>
+          </span>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            {{dateDiff(x.Bonds)}}
+          </span>
+        </td>
       </tr>
     </table>
     <table *ngIf="selectedParent.indexOf('Indicators') != -1">
