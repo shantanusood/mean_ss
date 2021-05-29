@@ -86,13 +86,6 @@
           </span>
         </td>
 
-        <td *ngIf="x.Income == 'N'">
-          <button mat-button (click)="dump(x, 'fin')" *ngIf="selectedParent.indexOf('Customs')==-1">Dump</button>
-          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
-            N/A
-          </span>
-        </td>
-
         <td *ngIf="x.Key == 'N'">
           <button mat-button (click)="dump(x, 'ks')" *ngIf="selectedParent.indexOf('Customs')==-1">Dump</button>
           <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
@@ -109,6 +102,12 @@
           </span>
         </td>
 
+        <td *ngIf="x.Income == 'N'">
+          <button mat-button (click)="dump(x, 'fin')" *ngIf="selectedParent.indexOf('Customs')==-1">Dump</button>
+          <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
+            N/A
+          </span>
+        </td>
         <td *ngIf="x.Income != 'N'">
           <span *ngIf="selectedParent.indexOf('Customs')==-1">
             <button (click)="update(x, 'fin')" mat-button><img style="width: 15px; height: 15px;" src="/assets/refresh.png"></button>
