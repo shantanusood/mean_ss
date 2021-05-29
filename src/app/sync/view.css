@@ -1,4 +1,5 @@
 .datadialog {
+  overflow-y: auto;
   color: black;
 
 }

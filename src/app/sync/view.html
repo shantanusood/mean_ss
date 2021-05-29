@@ -1,8 +1,15 @@
 <div>
-  <table *ngIf="data['type'].indexOf('Indicators')==-1" class="datadialog" style="color: black;">
-    <td *ngFor="let x of actuals">
-      <tr *ngFor="let y of x">{{y}}</tr>
+  <table *ngIf="data['type'].indexOf('quote')==-1" class="datadialog" style="color: black;">
+    <tr *ngFor="let x of actuals" style="border: grey 0.5px dashed;">
+      <td *ngFor="let y of x">{{y}}</td>
 
-    </td>
+    </tr>
     </table>
+    <table *ngIf="data['type'].indexOf('quote')!=-1" class="datadialog" style="color: black;">
+      <td *ngFor="let x of actuals" style="border: grey 0.5px dashed;">
+        <tr *ngFor="let y of x">{{y}}</tr>
+
+      </td>
+      </table>
+
 </div>

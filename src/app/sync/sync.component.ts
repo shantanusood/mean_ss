@@ -89,6 +89,8 @@ export class SyncComponent implements OnInit {
     this.http.get(this.baseUrl + "data/get/"+this.selectedParent+ "/"+ x['Category'] + "/" + x['Ticker'] + "/" + _type).subscribe((data_tick) => {
       this.view_type = data_tick as object;
       const dialogRef = this.dialog.open(Dialog_sync, {
+        maxHeight: '800px',
+        autoFocus: false,
         data: {type: _type, view: this.view_type}
       });
 
@@ -211,12 +213,11 @@ export class Dialog_sync {
       for(var y in vals){
         this.fields.add(y);
       }
-      this.actuals.push(this.fields);
+      this.actuals.push(Array.from(this.fields));
       var heads = this.getHeaders();
       for(var i = 0; i < heads.length; i++){
         this.actuals.push(this.getData(heads[i]))
       }
-
     }
 
     getHeaders(){
