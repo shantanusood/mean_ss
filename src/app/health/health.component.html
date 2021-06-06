@@ -48,7 +48,6 @@
         <td style="text-align: right; color: aliceblue; border: none;"></td>
         <td style="text-align: right; color: aliceblue; border: none;">{{selectedParent}}</td>
         <td style="text-align: right; color: aliceblue; border: none;">{{selectedsubsector}}</td>
-        <td style="text-align: right; color: aliceblue; border: none;">AVERAGE:</td>
         <td style="border: none;">
           <div fxLayout="row" *ngIf="sector_avg">
             <div *ngFor="let y of sector_avg" style="display: inline-block; padding: 5px;">
@@ -59,21 +58,48 @@
           </div>
         </td>
       </tr>
+
       <tr>
         <th>Ticker</th>
         <th>Name</th>
         <th>Category</th>
-        <th>Country</th>
         <th>{{selectedanalysis}}</th>
+        <td rowspan="10" *ngIf="selectedanalysis.indexOf('ratios') != -1 || selectedanalysis.indexOf('incomechanges') != -1 || selectedanalysis.indexOf('balancesheetchanges') != -1 || selectedanalysis.indexOf('cashflowchanges') != -1">
+          <div>
+            <p style="width:100%;text-align:center;color: wheat;">{{chart_title}}<p>
+              <canvas id="canvas" style="width: 800px; height: 600px">
+                {{ chart }}
+              </canvas>
+            </div>
+        </td>
       </tr>
+
       <tr *ngFor="let x of tickers; let i = index" >
         <td>{{x.Ticker}}</td>
         <td>{{x.Name}}</td>
         <td>{{x.Category}}</td>
-        <td>{{x.Country}}</td>
+        <td *ngIf="selectedanalysis.indexOf('ratios') != -1 || selectedanalysis.indexOf('incomechanges') != -1 || selectedanalysis.indexOf('balancesheetchanges') != -1 || selectedanalysis.indexOf('cashflowchanges') != -1">
+          <select class="inputs" (change)="selectGraphLineType($event.target.value)" style="width: 150px;">
+            <option value="None" [selected]>None</option>
+            <option *ngFor="let y of getDropdownLines(x.Ticker); let j = idx" value="{{y}}" [selected]="j === 0">{{y}}</option>
+          </select>
+          &nbsp;<button mat-button (click)="graph(x.Ticker, x.Category)">Graph</button>
+        </td>
+
         <td>
-          <div fxLayout="row" >
+          <div fxLayout="row" *ngIf="selectedanalysis.indexOf('basics') != -1 || selectedanalysis.indexOf('intValCustom') != -1">
             <div *ngFor="let y of getAnalysisData(x)" style="display: inline-block; padding: 5px;">
+              <span style="color: aliceblue;">{{y[0]}}&nbsp;</span>
+              <br>
+              <span *ngIf="y[1].indexOf('-999')!=-1" style="color: red;">err&nbsp;</span>
+              <span *ngIf="y[1].indexOf('-999')==-1">{{y[1]}}&nbsp;</span>
+            </div>
+          </div>
+          <div fxLayout="row" *ngIf="selectedanalysis.indexOf('discountedcashflow') != -1">
+            <div style="display: inline-block; padding: 5px;">
+              <button mat-button (click)="freecash(getAnalysisData(x))">freecash</button>
+            </div>
+            <div *ngFor="let y of getAnalysisData(x) | slice:4" style="display: inline-block; padding: 5px;">
               <span style="color: aliceblue;">{{y[0]}}&nbsp;</span>
               <br>
               <span *ngIf="y[1].indexOf('-999')!=-1" style="color: red;">err&nbsp;</span>

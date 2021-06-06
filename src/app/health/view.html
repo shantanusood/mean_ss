@@ -1,0 +1,16 @@
+<div>
+  <table>
+    <tr>
+      <th style="color: black;" *ngFor="let x of data['view'][1]">{{x}}</th>
+    </tr>
+  <tr>
+    <td *ngFor="let x of data['view'][0]; let j = index">
+      <span *ngIf="data['view'][2][j]=='cur'" style="color:blue">{{x}}</span>
+      <span *ngIf="data['view'][2][j]=='pro'" style="color:red">{{x}}</span>
+    </td>
+  </tr>
+  <tr>
+    <td style="color: green;" *ngFor="let x of data['view'][3]">{{x}}</td>
+  </tr>
+</table>
+</div>

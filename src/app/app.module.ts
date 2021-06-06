@@ -12,7 +12,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { TutoringComponent, AutocompletePipeExtData } from './tutoring/tutoring.component';
 import { FiunanceComponent, Dialog, Dialog2, Dialog3, Dialog4, Dialog5 } from './fiunance/fiunance.component';
-import { HealthComponent } from './health/health.component';
+import { HealthComponent, Dialog_hth } from './health/health.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -54,6 +54,7 @@ import { SyncComponent, Dialog_sync } from './sync/sync.component';
 @NgModule({
   declarations: [
     Dialog_sync,
+    Dialog_hth,
     Dialog,
     Dialog2,
     Dialog3,
@@ -118,7 +119,7 @@ import { SyncComponent, Dialog_sync } from './sync/sync.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  entryComponents: [Dialog_sync, Dialog, Dialog2, Dialog3, Dialog4, Dialog5],
+  entryComponents: [Dialog_sync, Dialog_hth, Dialog, Dialog2, Dialog3, Dialog4, Dialog5],
   providers: [CoronaserviceService],
   bootstrap: [AppComponent]
 })
