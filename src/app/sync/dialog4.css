@@ -1,0 +1,14 @@
+.move{
+  color: black;
+}
+.move table{
+  border: none;
+}
+.move table td{
+  color: black;
+  border: none;
+}
+.move table th{
+  border: none;
+  color: gray;
+}

@@ -1,0 +1,18 @@
+
+<div class="move">
+ <table style="border: none; color: black; width: 100%;">
+    <tr >
+      <th style="border: none; color: gray;" colspan="2">{{data.tick}} &nbsp; {{data.tickname}}</th>
+    </tr>
+    <tr *ngFor="let x of links_tick_lst">
+      <td style="border: none;"><a target="_blank" href={{x[1]}}>{{x[0]}}</a></td>
+      <td style="border: none;" id="closetrade"><mat-icon id="remove" (click)="rem(x)" matTooltip="Remove" class="material-icons">close</mat-icon></td>
+    </tr>
+    <tr>
+      <td>Type: &nbsp;<input class="inputs" matInput type="text" id="type"></td>
+      <td>Link: &nbsp;<input class="inputs" matInput type="text" id="newLink"></td>
+      <td style="border: none;"><button (click)="add()">Add Link</button></td>
+    </tr>
+    <tr style="color: red;">{{err_msg}}</tr>
+  </table>
+</div>

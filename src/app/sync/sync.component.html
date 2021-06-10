@@ -1,3 +1,4 @@
+<!-- Analytics -->
 <div class="container">
 
   <div class="grid">
@@ -56,7 +57,6 @@
         <th>Ticker</th>
         <th>Name</th>
         <th>Category</th>
-        <th>Country</th>
         <th>Quote</th>
         <th>Key stats</th>
         <th>Income Statement</th>
@@ -65,11 +65,10 @@
         <th>Insider</th>
         <th>Bond Rating</th>
       </tr>
-      <tr *ngFor="let x of tickers" >
-        <td>{{x.Ticker}}</td>
+      <tr *ngFor="let x of tickers">
+        <td><button mat-button (click)="links(x.Ticker, x.Name)">{{x.Ticker}}</button></td>
         <td>{{x.Name}}</td>
-        <td>{{x.Category}}</td>
-        <td>{{x.Country}}</td>
+        <td><button mat-button (click)="changeCat(x.Ticker, x.Name, x.Category)">{{x.Category}}</button></td>
         <td *ngIf="x.Quote == 'N'">
           <button mat-button (click)="dump(x, 'quote')" *ngIf="selectedParent.indexOf('Customs')==-1">Dump</button>
           <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
@@ -82,7 +81,7 @@
             <button (click)="view(x, 'quote')" mat-button>{{dateDiff(x.Quote)}}</button>
           </span>
           <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
-            {{dateDiff(x.Quote)}}
+            <button (click)="view(x, 'quote')" mat-button>{{dateDiff(x.Quote)}}</button>
           </span>
         </td>
 
@@ -98,7 +97,7 @@
             <button (click)="view(x, 'ks')" mat-button>{{dateDiff(x.Key)}}</button>
           </span>
           <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
-            {{dateDiff(x.Key)}}
+            <button (click)="view(x, 'ks')" mat-button>{{dateDiff(x.Key)}}</button>
           </span>
         </td>
 
@@ -114,7 +113,7 @@
             <button (click)="view(x, 'fin')" mat-button>{{dateDiff(x.Income)}}</button>
           </span>
           <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
-            {{dateDiff(x.Income)}}
+            <button (click)="view(x, 'fin')" mat-button>{{dateDiff(x.Income)}}</button>
           </span>
         </td>
 
@@ -130,7 +129,7 @@
             <button (click)="view(x, 'bs')" mat-button>{{dateDiff(x.Balance)}}</button>
           </span>
           <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
-            {{dateDiff(x.Balance)}}
+            <button (click)="view(x, 'bs')" mat-button>{{dateDiff(x.Balance)}}</button>
           </span>
         </td>
 
@@ -146,7 +145,7 @@
             <button (click)="view(x, 'cf')" mat-button>{{dateDiff(x.Cash)}}</button>
           </span>
           <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
-            {{dateDiff(x.Cash)}}
+            <button (click)="view(x, 'cf')" mat-button>{{dateDiff(x.Cash)}}</button>
           </span>
         </td>
 
@@ -162,7 +161,7 @@
             <button (click)="view(x, 'inside')" mat-button>{{dateDiff(x.Insider)}}</button>
           </span>
           <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
-            {{dateDiff(x.Insider)}}
+            <button (click)="view(x, 'inside')" mat-button>{{dateDiff(x.Insider)}}</button>
           </span>
         </td>
 
@@ -178,7 +177,7 @@
             <button (click)="view(x, 'bonds')" mat-button>{{dateDiff(x.Bonds)}}</button>
           </span>
           <span *ngIf="selectedParent.indexOf('Customs')!=-1" style="color: aliceblue;">
-            {{dateDiff(x.Bonds)}}
+            <button (click)="view(x, 'bonds')" mat-button>{{dateDiff(x.Bonds)}}</button>
           </span>
         </td>
       </tr>

@@ -3,10 +3,14 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { AppSettings } from '../AppSettings';
 import { Chart } from 'chart.js';
+import { Dialog } from '../fiunance/fiunance.component';
 
 export interface DialogData {
   type: string;
   view: object;
+}
+
+export interface Dialog4Data {
 }
 
 @Component({
@@ -187,6 +191,45 @@ export class SyncComponent implements OnInit {
     });
   }
 
+  changeCat(ticker: String, tickname:String, curSect: String){
+
+    this.http.get(this.baseUrl + "data/getAllSubSectors").subscribe((datax) => {
+      this.http.get(this.baseUrl + "data/getParent/"+curSect).subscribe((prt) => {
+        const dialogRef = this.dialog.open(DialogSync2, {
+          width: '500px',
+          data: {
+            tick: ticker,
+            parent: prt['parent'],
+            tickname: tickname,
+            url: this.baseUrl + "data/sync/move/"+ticker+"/",
+            sub:datax,
+            curCat: curSect
+          }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+
+        });
+      });
+    });
+  }
+
+  links(ticker: String, tickname: String){
+
+      const dialogRef = this.dialog.open(DialogSyncLinks, {
+        width: '500px',
+        data: {
+          tick: ticker,
+          tickname: tickname,
+          url: this.baseUrl + "data/sync/links/"+ticker,
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+
+      });
+  }
+
 }
 
 @Component({
@@ -241,6 +284,98 @@ export class Dialog_sync {
 
       this.dialogRef.close();
 
+    }
+
+
+}
+
+@Component({
+  selector: 'dialog-overview-example-dialog4',
+  templateUrl: './dialog4.html',
+  styleUrls: ["./dialog4.css"]
+})
+export class DialogSync2 {
+  move_data: any;
+  selectedsubsector: String;
+  constructor(
+    public dialogRef: MatDialogRef<Dialog>,
+    @Inject(MAT_DIALOG_DATA) public data: Dialog4Data, private http: HttpClient) {
+    }
+
+    url: string = this.data['url']
+
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
+
+    selectNewSubSector(value: String) {
+      this.selectedsubsector = value;
+     }
+
+     err_msg: String;
+
+    moveCat(){
+      this.http.get(this.url + this.selectedsubsector).subscribe((datax) => {
+        this.move_data = datax;
+        this.onNoClick()
+      },
+      error => {
+        this.err_msg = error;
+      });
+    }
+
+}
+
+@Component({
+  selector: 'dialog-overview-example-dialog4',
+  templateUrl: './dialog5.html',
+  styleUrls: ["./dialog5.css"]
+})
+export class DialogSyncLinks {
+  links_tick: any;
+  links_tick_lst: String[];
+
+  url: string = this.data['url']
+  err_msg:String;
+
+  constructor(
+    public dialogRef: MatDialogRef<Dialog>,
+    @Inject(MAT_DIALOG_DATA) public data: Dialog4Data, private http: HttpClient) {
+      this.http.post(this.url + "/get", {'link': ""}).subscribe((datax) => {
+        this.links_tick = datax;
+        this.links_tick_lst = this.links_tick[data['tick']];
+      },
+      error => {
+        this.err_msg = error['statusText'];
+
+      });
+    }
+
+    add(){
+      this.http.post(this.url + "/add", {'link': [(document.getElementById("type") as HTMLInputElement).value,(document.getElementById("newLink") as HTMLInputElement).value]
+
+      }).subscribe((datax) => {
+        this.links_tick = datax;
+        this.links_tick_lst = this.links_tick[this.data['tick']];
+      },
+      error => {
+        this.err_msg = error['statusText'];
+
+      });
+    }
+    rem(lnk: String[]){
+      this.http.post(this.url + "/remove", {'link': lnk}).subscribe((datax) => {
+        this.links_tick = datax;
+        this.links_tick_lst = this.links_tick[this.data['tick']];
+      },
+      error => {
+        this.err_msg = error['statusText'];
+
+      });
+    }
+
+    onNoClick(): void {
+      this.dialogRef.close();
     }
 
 

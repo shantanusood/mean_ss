@@ -1,0 +1,24 @@
+
+<div class="move">
+ <table style="border: none; color: black; width: 100%;">
+  <tr>
+    <th>{{data.tick}}</th>
+    <th>{{data.tickname}}</th>
+  </tr>
+    <tr><td>Current Subsector:</td><td>{{data.parent}} &nbsp;::&nbsp;{{data.curCat}} </td></tr>
+    <tr>
+      <td>New Subsector:</td>
+      <td style="border: none;" (change)="selectNewSubSector($event.target.value)">
+        <select class="inputs" style="width: 250px;">
+          <option *ngFor="let x of data.sub; let j = idx" value="{{x}}" [selected]="j === 0">{{x}}</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td></td><td><button (click)="moveCat()">Move</button></td>
+    </tr>
+    <tr style="color: red;">
+      {{err_msg.statusText}}
+    </tr>
+  </table>
+</div>

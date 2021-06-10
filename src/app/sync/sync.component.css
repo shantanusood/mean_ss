@@ -37,3 +37,27 @@
     transform: rotate(360deg);
   }
 }
+.rearrange {
+  position: absolute;
+  transform: scale(0.6);
+  color: wheat;
+  float: right;
+  cursor: pointer;
+  width: auto;
+  margin-left: -20px;
+  margin-top: -15px;
+  font-size: 5px;
+  border: solid 0px pink;
+}
+.rearrange:hover{
+  margin-left: -20px;
+  margin-top: -15px;
+  transform: scale(0.6);
+  position: absolute;
+  color: aliceblue;
+  float: right;
+  cursor: pointer;
+  width: auto;
+  font-size: 5px;
+  border: solid 0px pink;
+}

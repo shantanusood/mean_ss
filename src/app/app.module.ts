@@ -49,10 +49,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ReversePipe } from './Pipes/reverse.pipe';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { SyncComponent, Dialog_sync } from './sync/sync.component';
+import { SyncComponent, Dialog_sync, DialogSync2, DialogSyncLinks } from './sync/sync.component';
 
 @NgModule({
   declarations: [
+    DialogSync2,
+    DialogSyncLinks,
     Dialog_sync,
     Dialog_hth,
     Dialog,
@@ -119,7 +121,7 @@ import { SyncComponent, Dialog_sync } from './sync/sync.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  entryComponents: [Dialog_sync, Dialog_hth, Dialog, Dialog2, Dialog3, Dialog4, Dialog5],
+  entryComponents: [Dialog_sync, Dialog_hth, Dialog, Dialog2, Dialog3, Dialog4, Dialog5, DialogSync2, DialogSyncLinks],
   providers: [CoronaserviceService],
   bootstrap: [AppComponent]
 })
