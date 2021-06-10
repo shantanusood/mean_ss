@@ -11,6 +11,18 @@ export interface DialogData {
 }
 
 export interface Dialog4Data {
+  tick: string;
+  parent: string;
+  tickname: string;
+  url: string;
+  sub:object,
+  curCat: string
+}
+
+export interface Dialog5Data {
+  tick: string;
+  tickname: string;
+  url: string;
 }
 
 @Component({
@@ -340,7 +352,7 @@ export class DialogSyncLinks {
 
   constructor(
     public dialogRef: MatDialogRef<Dialog>,
-    @Inject(MAT_DIALOG_DATA) public data: Dialog4Data, private http: HttpClient) {
+    @Inject(MAT_DIALOG_DATA) public data: Dialog5Data, private http: HttpClient) {
       this.http.post(this.url + "/get", {'link': ""}).subscribe((datax) => {
         this.links_tick = datax;
         this.links_tick_lst = this.links_tick[data['tick']];
