@@ -155,6 +155,18 @@ text-decoration: none;
   text-align: center;
 
 }
+#saveAcc {
+  padding:8px;
+  margin-top: -15px;
+  color:blue;
+  cursor: pointer;
+}
+#delAcc {
+  padding:8px;
+  margin-top: -15px;
+  color:red;
+  cursor: pointer;
+}
 .circle {
   width: 0.5px;
   height: 0.5px;
@@ -174,4 +186,29 @@ text-decoration: none;
   border-radius: 50%;
   background: rgb(65, 61, 61);
  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+}
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 50px;
+  height: 50px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -1,12 +1,12 @@
 
 <div>
- <table style="border: none; color: black; width: 100%;">
+ <table style="border: dashed 0.5px gray; padding: 2.5px; color: black; width: 52%; float: left;">
     <tr>
-      <th style="border: none; color: black; width: 100%;" colspan="2">Update ticker box positions</th>
+      <th style="border: none; color: black; width: 50%;" colspan="2">Update ticker box positions</th>
     </tr>
-    <tr>
+    <tr style="height: 25px; width: 50%;">
       <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let movie of movies" cdkDrag>
+        <div class="example-box" style="height: 28px;" *ngFor="let movie of movies" cdkDrag>
           {{movie}}
           <span style="float: right;">
             <mat-icon class="material-icons">drag_indicator</mat-icon>
@@ -15,7 +15,19 @@
       </div>
     </tr>
     <tr>
-      <td style="border: none;"><span><button class="savebutton" [mat-dialog-close]="movies" mat-button style="width: 100%;">Save</button></span></td>
+      <td style="border: none;"><span><button class="savebutton" [mat-dialog-close]="movies" mat-button style="width: 60%;">Save Order</button></span></td>
+    </tr>
+  </table>
+  <table style="border: dashed 0.5px gray; color: black; width: 38%; float: right;">
+    <tr>
+      <th style="border: none; color: black;" colspan="2">Update Account Colors</th>
+    </tr>
+    <tr *ngFor="let item of colors | keyvalue">
+      <td style="border: none; color: black;">{{item.key}}</td>
+      <td style="border: none; color: black;"><input style="width: 75px;" placeholder="{{item.value}}" type="text" id="{{item.key}}"></td>
+    </tr>
+    <tr>
+      <td style="border: none;"><span><button class="savebutton" mat-button style="width: 120%;">Save Colors</button></span></td>
     </tr>
   </table>
 </div>

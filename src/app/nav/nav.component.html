@@ -15,7 +15,7 @@
   <ng-template #thisone>
     <a style="cursor:pointer;" (click)="openUserMenu()">
       <span style="height: auto;">
-        <mat-icon style="font-size: 40px;"><span class="circle2">settings</span></mat-icon>
+        <mat-icon style="font-size: 40px;"><span class="circle2" (click)="ngOnInit()">settings</span></mat-icon>
       </span>
     </a>
   </ng-template>
@@ -32,7 +32,7 @@
   </a>
 </div>
 <div *ngIf="open" class="header_menu">
-  <table class="add">
+  <table class="add" id="nav_table">
     <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">
       <td colspan="2"><u>Update your account names:</u></td></tr>
     <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">
@@ -41,8 +41,32 @@
       <td>Account 2:</td> <td><input class="inputs" matInput type="text" id="account2" value="{{account_2}}"></td></tr>
     <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1">
       <td>Account 3:</td> <td><input class="inputs" matInput type="text" id="account3" value="{{account_3}}"></td></tr>
+    <tr *ngFor="let x of more_acc">
+      <td class="more_acc_td">{{modAccVal(x[0]) | titlecase}}: </td>
+      <td>
+        <input style="width: 80%;" class="inputs" matInput type="text" value="{{x[1]}}">
+        <span class="material-icons" id="delAcc" (click)="delNewAccount(x[0])">close</span>
+      </td>
+    </tr>
+
+    <tr *ngIf="newAccclick">
+      <td>Account:</td>
+      <td>
+        <input class="inputs" matInput type="text" style="width: 80%;" id="newAccount">
+        <span class="material-icons" id="saveAcc" (click)="saveNewAccount()">done</span>
+      </td>
+    </tr>
+    <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1" style="border: 0.5px dashed white; cursor: pointer;" (click)="addNewAccount()">
+      <td *ngIf="more_acc.length < 8" style="text-align: right;"><b style="font-size: 10mm; color: white; "  matTooltip="Add new account">+</b></td>
+      <td *ngIf="more_acc.length < 8" style="text-align: left;">New Account</td>
+      <td colspan="2" *ngIf="more_acc.length >= 8" style="color: aliceblue;">Can't add anymore Accounts</td>
+    </tr>
     <tr *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1 || roles.indexOf('basictrader')!=-1" style="border-bottom: dashed 1px rosybrown;"><td></td><td><button mat-button style="display: block; margin-left: auto; margin-right: auto; " (click)="changeAcc()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
-    <tr *ngIf="msg"><td colspan="2" style="color: green;">{{msg}}</td></tr>
+    <tr *ngIf="msg">
+      <td *ngIf="run_spinner"><div class="lds-dual-ring"></div></td>
+      <td colspan="2" style="color: green;">{{msg}}</td>
+    </tr>
+
     <tr><td colspan="2"><u>Update contact info:</u></td></tr>
     <tr><td>Email:</td> <td><input class="inputs" matInput type="text" id="email" value="{{email}}"></td></tr>
     <tr><td>Phone:</td> <td><input class="inputs" matInput type="text" id="phone" value="{{phone}}"></td></tr>

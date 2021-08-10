@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   answer:String = "";
   question_bool:boolean = false;
 
-  readonly baseUrl = AppSettings.baseUrl;
+  readonly baseUrl = AppSettings.baseUrlUser;
 
   setLogin(){
     this.signup = false;

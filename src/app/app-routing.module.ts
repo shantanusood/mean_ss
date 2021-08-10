@@ -21,6 +21,7 @@ import { SyncComponent } from './sync/sync.component';
 
 const routes: Routes = [
   {path: '', component: FiunanceComponent},
+  {path: 'rent', component: CoronaComponent},
   {path: 'tutor', component: EducationComponent},
   {path: 'tech', component: TechieComponent},
   {path: 'explore', component: HomeComponent},

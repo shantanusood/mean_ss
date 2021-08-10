@@ -1,0 +1,165 @@
+<div class="inner">
+  <!-- <span  *ngIf="ticker.indexOf('EARNINGS')==-1" class="rearrange"><mat-icon style="font-size: 27px;" (click)="dialogBox('Rearrange', position)" matTooltip="Rearrange" class="material-icons">open_with</mat-icon></span> -->
+  <span class="refresh" *ngIf="ticker.indexOf('EARNINGS')==-1 && ticker.indexOf('DIVIDEND')==-1">
+    <mat-icon id="rolltrade" matTooltip="Refresh ticker" style="font-size: 28px;" (click)="refresh()" class="material-icons">refresh</mat-icon>
+  </span>
+  <table>
+    <tr>
+      <th style=" text-align: center; font-size: 1.5em; border: none">{{ticker | uppercase}}</th>
+    </tr>
+    <tr style="border: none;">
+        <span *ngIf="ticker.indexOf('Cash')==-1 && ticker.indexOf('_cf')==-1" style="color: aliceblue;">
+          <table style="color: aliceblue;" *ngIf="ticker.indexOf('EARNINGS')==-1 && ticker.indexOf('DIVIDEND')==-1">
+              <td style="color: aliceblue;"><span>Spread Collateral: {{display_data_meta[0]}} &nbsp;&nbsp;&nbsp;
+                Total Delta:
+                <span *ngIf="display_data_meta[1].indexOf('-')!=-1" style="color: red;">{{display_data_meta[1]}}</span>
+                <span *ngIf="display_data_meta[1].indexOf('-')==-1" style="color: green;">{{display_data_meta[1]}}</span>
+              </span>
+              </td>
+              <span>
+              <td style="color: aliceblue; border: none; " *ngFor="let exp of display_data_meta | slice:2">
+                <span>{{exp[0]}}:&nbsp;{{exp[1]}}</span>
+              </td>
+              </span>
+          </table>
+        </span>
+        <span *ngIf="ticker.indexOf('Cash')!=-1" style="color: aliceblue;">Total Cash: ${{display_data_meta[0]}}</span>
+        <span *ngIf="ticker.indexOf('_cf')!=-1" style="color: aliceblue;">
+          <table>
+            <tr>
+              <th colspan="3"  style="border: none; color: aliceblue; text-align: center;">Current Month
+                <mat-icon id="rolltrade"  (click)="dialogBox('View Cash Flow History', ticker)" matTooltip="View history" class="material-icons" style="font-size: 20px; float: right;">trending_up</mat-icon>
+              </th>
+            </tr>
+            <tr>
+              <td style="border: none; color: aliceblue;">Income: {{display_data_meta[0]}}$</td>
+              <td style="border: none; color: aliceblue;">Expense: {{display_data_meta[1]}}$</td>
+              <td style="border: none; color: aliceblue;">
+                Net:
+                <span *ngIf="display_data_meta[2].indexOf('-')!=-1" style="color: red;">{{display_data_meta[2]}}$</span>
+                <span *ngIf="display_data_meta[2].indexOf('-')==-1" style="color: green;">{{display_data_meta[2]}}$</span>
+              </td>
+            </tr>
+            </table>
+            <table style="border-top: none;">
+              <tr>
+                <td style="border: none;">
+                  <select style="width:100%;" class="inputs" (change)="selectType($event.target.value)">
+                    <option selected disabled>Type</option>
+                    <option value="Income">Income</option>
+                    <option value="Expense">Expense</option>
+                  </select>
+                </td>
+                <td style="border: none;">
+                  <select style="width:100%;" class="inputs" (change)="selectOption($event.target.value)">
+                    <option selected disabled>Account</option>
+                    <option *ngFor="let acc of all_accounts">
+                      {{acc}}
+                    </option>
+                  </select>
+                </td>
+                <td rowspan="2" style="border: none;">
+                  <button (click)="addCashFlow()" mat-button style="font-size: 1.4em; font-weight: bold; color: white;" onmouseover="this.style.color='wheat'" onmouseout="this.style.color='white'">+</button>
+                </td>
+              </tr>
+              <tr>
+                <td style="border: none;">
+                  <input id="{{ticker + '_name'}}" style="width:100%;" class="inputs" placeholder="Name..." id="name">
+                </td>
+                <td style="border: none;">
+                  <input id="{{ticker + '_amount'}}" style="width:100%;" class="inputs" placeholder="Amount..." id="amount">
+                </td>
+              </tr>
+            </table>
+        </span>
+      <div *ngIf="loading else loaded" style="text-align: center; border: none;">
+        <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
+          <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+          </div></div>
+      </div>
+    </tr>
+    <tr  style="border-right: dashed 2px wheat;" *ngFor="let x of display_data_arr" #loaded>
+
+      <td *ngIf="ticker.indexOf('Cash')==-1 && ticker.indexOf('_cf')==-1" style="text-align: center; border-bottom: dashed 2px wheat; height: 50px;" >
+        <table style="border: none; vertical-align: center;">
+          <td style="border: none; vertical-align: center;">
+            <tr style="border: none; color: green; font-size: x-small;  width: 50px;" *ngIf="checkITM(x[1], x[5]).indexOf('Stock')!=-1">{{checkITM(x[1], x[5])}}</tr>
+            <tr style="border: none; color: red; font-size: x-small; width: 50px;" *ngIf="checkITM(x[1], x[5]).indexOf('ITM')!=-1">{{checkITM(x[1], x[5])}}</tr>
+            <tr style="border: none; color: wheat; font-size: x-small;  width: 50px;" *ngIf="checkITM(x[1], x[5]).indexOf('OTM')!=-1">{{checkITM(x[1], x[5])}}</tr>
+            <tr style="border: none; color: aliceblue; font-size: x-small;  width: 50px;" *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')!=-1">{{ticker | uppercase}}</tr>
+            <tr style="border: none; color: aliceblue; font-size: x-small;  width: 50px;" *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')!=-1">Curr Price</tr>
+            <tr style="border: none; font-size: xx-small; width: 50px;" *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')==-1">{{strSplit(x[0], 'first')}}</tr>
+          </td>
+          <td id="{{x}}" style="background-color: rgb(70, 66, 66); border: none; font-size: 1.75em; text-align: center; vertical-align:middle; width:fit-content;"><sup style="color: aliceblue; font-size:0.5em">{{strSplit(x[0], 'second')}}</sup>{{x[2]}}
+              <span *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')==-1 && checkITM(x[1], x[5]).indexOf('Stock')==-1" (click)="dialogBox('View Trade', x)" style="border: none;"><mat-icon id="rolltrade" matTooltip="View position" class="material-icons">visibility</mat-icon></span>
+              <span *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')==-1 && checkITM(x[1], x[5]).indexOf('Stock')==-1" (click)="dialogBox('Roll trade', x)" style="border: none;"><mat-icon id="rolltrade" matTooltip="Roll position" class="material-icons">redo</mat-icon></span>
+              <span *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')==-1" (click)="dialogBox('Close Trade', x)" style="border: none;"><mat-icon id="closetrade" matTooltip="Close position" class="material-icons">close</mat-icon></span>
+          </td>
+          <td style="border: none; vertical-align: center;">
+            <tr *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')==-1 && checkITM(x[1], x[5]).indexOf('Stock')==-1" matTooltip="Expiration date" style="border: none; width: 50px; font-size: small">{{remZero(x[8])}}</tr>
+            <tr *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')==-1 && checkITM(x[1], x[5]).indexOf('Stock')!=-1" matTooltip="Accounts Present in" style="border: none; width: 50px; font-size: small">{{remZero(x[10])}}</tr>
+            <tr *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')==-1" matTooltip="Collateral(Contracts/Shares)" style="border: none; width: 50px; font-size: small">{{remZero(x[7])}}({{remZero(x[4])}})</tr>
+          </td>
+          <td style="border: none; vertical-align: center;">
+            <tr *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')==-1" matTooltip="Delta" style="border: none; width: 50px; font-size: small">{{remZero(x[6])}}</tr>
+            <tr *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')==-1" matTooltip="% out of money" style="border: none; width: 50px; font-size: small">{{remZero(x[5])}}%</tr>
+            <tr *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')!=-1" style="border: none; width: 50px; font-size: x-small; color: aliceblue;">
+              <mat-icon>north</mat-icon><sup>Calls</sup>
+            </tr>
+            <tr *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')!=-1" style="border: none; width: 50px; font-size: x-small; color: aliceblue;">
+              <mat-icon>south</mat-icon><sup>Puts</sup>
+            </tr>
+          </td>
+        </table>
+      </td>
+      <td *ngIf="ticker.indexOf('Cash')!=-1" style="border-bottom: dashed 2px wheat;">
+        <table style="border: none; vertical-align: center;">
+          <tr style="border: none" >
+            <td style="border: none">{{x[0]}}</td>
+            <td style="border: none; background-color: rgb(70, 66, 66);" id="{{x}}"><span style="font-size: 1.5em; ">${{x[2]}}</span>&nbsp;<span style="font-size: 0.65em; ">as of {{x[1]}}</span></td>
+            <td style="border: none">
+              <mat-icon id="rolltrade" (click)="dialogBox('View Cash History', x)" matTooltip="View history" class="material-icons" style="font-size: 20px;">trending_up</mat-icon>
+              <mat-icon id="closetrade" (click)="dialogBox('Close Cash Position', x)" matTooltip="Close position" class="material-icons">close</mat-icon>
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td *ngIf="ticker.indexOf('_cf')!=-1">
+        <table style="border: none; vertical-align: center;">
+          <tr style="border: none" *ngFor="let y of x | slice:0:12;">
+            <td style="border: none">{{y[0]}}</td>
+            <td style="border: none; background-color: rgb(70, 66, 66);" id="{{y}}"><span style="font-size: 1.5em; ">${{y[2]}}</span>&nbsp;
+              <span style="font-size: 0.65em; ">{{y[1]}}&nbsp;
+                <span style="color: red;" *ngIf="y[4].indexOf('Expense')!=-1">{{y[4]}}</span>
+                <span style="color: green;" *ngIf="y[4].indexOf('Expense')==-1">{{y[4]}}</span>
+              </span>
+            </td>
+            <td style="border: none">
+              <mat-icon id="closetrade" (click)="deleteCashFlow(y)" matTooltip="Close position" class="material-icons">close</mat-icon>
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td *ngIf="ticker.indexOf('EARNINGS')!=-1">
+        <table style="border: none; vertical-align: center;">
+          <tr style="border: none">
+            <td style="border: none">e1</td>
+            <td style="border: none">e2</td>
+            <td style="border: none">e3</td>
+          </tr>
+        </table>
+      </td>
+      <td *ngIf="ticker.indexOf('DIVIDENDS')!=-1">
+        <table style="border: none; vertical-align: center;">
+          <tr style="border: none">
+            <td style="border: none">d1</td>
+            <td style="border: none">d2</td>
+            <td style="border: none">d3</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+  </table>
+
+</div>

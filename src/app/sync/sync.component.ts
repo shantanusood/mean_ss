@@ -32,7 +32,7 @@ export interface Dialog5Data {
 })
 export class SyncComponent implements OnInit {
 
-  readonly baseUrl = AppSettings.baseUrlAnalytics;
+  readonly baseUrl = AppSettings.baseUrl;
 
   run_spinner: boolean = false;
   sectors: Object;

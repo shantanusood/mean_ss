@@ -50,10 +50,12 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { ReversePipe } from './Pipes/reverse.pipe';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SyncComponent, Dialog_sync, DialogSync2, DialogSyncLinks } from './sync/sync.component';
+import { CardboxComponent, RemoveWhiteSpacePipe, Dialog_cardbox } from './fiunance/cardbox/cardbox.component';
 
 @NgModule({
   declarations: [
     DialogSync2,
+    Dialog_cardbox,
     DialogSyncLinks,
     Dialog_sync,
     Dialog_hth,
@@ -95,7 +97,9 @@ import { SyncComponent, Dialog_sync, DialogSync2, DialogSyncLinks } from './sync
     SubscribeComponent,
     NotificationsComponent,
     ReversePipe,
-    SyncComponent
+    SyncComponent,
+    CardboxComponent,
+    RemoveWhiteSpacePipe
   ],
   imports: [
     AgGridModule.withComponents([]),
@@ -121,9 +125,10 @@ import { SyncComponent, Dialog_sync, DialogSync2, DialogSyncLinks } from './sync
     FormsModule,
     ReactiveFormsModule
   ],
-  entryComponents: [Dialog_sync, Dialog_hth, Dialog, Dialog2, Dialog3, Dialog4, Dialog5, DialogSync2, DialogSyncLinks],
+  entryComponents: [Dialog_cardbox, Dialog_sync, Dialog_hth, Dialog, Dialog2, Dialog3, Dialog4, Dialog5, DialogSync2, DialogSyncLinks],
   providers: [CoronaserviceService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [RemoveWhiteSpacePipe]
 })
 export class AppModule {
 }

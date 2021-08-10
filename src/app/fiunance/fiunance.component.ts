@@ -4,7 +4,7 @@ import {formatDate} from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EaseInOut } from 'igniteui-angular/lib/animations/easings';
-import { AstMemoryEfficientTransformer } from '@angular/compiler';
+import { AstMemoryEfficientTransformer, compileBaseDefFromMetadata } from '@angular/compiler';
 import { CoronaserviceService } from '../coronaservice.service';
 import { AppSettings } from '../AppSettings';
 import {TooltipPosition} from '@angular/material/tooltip';
@@ -70,6 +70,36 @@ export interface Dialog5Data {
 })
 export class FiunanceComponent implements OnInit {
 
+
+////////////////////////////NEW/////////////////////////////////
+  readonly newbaseUrl = AppSettings.newbaseUrl;
+  positions_tick = [];
+  colors: object = {};
+  passed_val(incoming: Object){
+    return incoming;
+  }
+
+  changeColor(){
+    for(let x in this.colors){
+      document.getElementById(x).style.color = this.colors[x]
+    }
+  }
+
+  updateColors(){
+    console.log("=============================")
+    console.log("=============================")
+    console.log("=============================")
+    console.log("=============================")
+  }
+
+////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
   user_diffdays: any;
   earning_dates = [];
   earning_dates_mobile = [];
@@ -93,6 +123,7 @@ export class FiunanceComponent implements OnInit {
   arrBirds: string[];
   stocks: string[];
   selectedOption:String;
+  selectedLongType:String = "Stock";
   mySubscription: any;
   addedRes: string[];
   addedResErr: string[];
@@ -110,12 +141,16 @@ export class FiunanceComponent implements OnInit {
   account_1: string;
   account_2: string;
   account_3: string;
+  all_accounts = [];
   covered:boolean = false;
+  ccp: boolean = false;
   callspread:boolean = false;
   putspread:boolean = false;
   butterfly:boolean = false;
   account: String;
   longstock:boolean = false;
+  cash:boolean = false;
+  cashflow:boolean = false;
 
   isTickerEmpty(data: object){
     var count = 0;
@@ -140,6 +175,8 @@ export class FiunanceComponent implements OnInit {
   refresh: boolean = false;
 
   ngOnInit() {
+    this.all_accounts = [];
+
     this.earning_dates.push(formatDate(new Date().setDate(new Date().getDate() -1), 'yyyy-MM-dd', 'en'))
     this.earning_dates.push(formatDate(new Date(), 'yyyy-MM-dd', 'en'))
     this.earning_dates.push(formatDate(new Date().setDate(new Date().getDate() + 1 ), 'yyyy-MM-dd', 'en'))
@@ -174,6 +211,7 @@ export class FiunanceComponent implements OnInit {
         }
       });
     });
+    this.all_accounts = [];
     this.http
       .get(
         this.baseUrl +
@@ -182,6 +220,9 @@ export class FiunanceComponent implements OnInit {
         this.account_1 = data['fidelity'];
         this.account_2 = data['robinhood'];
         this.account_3 = data['tastyworks'];
+        for(var key in data){
+          this.all_accounts.push(data[key])
+        }
       });
       this.http.get(this.baseUrl + "data/"+this.username+"/stocks/get/temp").subscribe((data) => {
         this.stocks = data as string[];
@@ -199,6 +240,27 @@ export class FiunanceComponent implements OnInit {
 
         this.loading = false;
       });
+////////////////////////////NEW/////////////////////////////////
+      this.positions_tick = [];
+  this.http.get(this.newbaseUrl + "trade/" + this.username + "/get").subscribe((data) => {
+
+      for(let keys in data){
+        this.positions_tick.push({
+          Ticker: keys,
+          Positions: data[keys]
+        });
+      }
+      this.loading = false;
+    });
+    this.http.get(this.baseUrl+"data/"+this.username+"/accounts/colors").subscribe((data) =>{
+      this.colors = data;
+      this.changeColor()
+    })
+
+
+
+////////////////////////////////////////////////////////////////
+
   }
 
   getTopEarnings(date: string){
@@ -255,42 +317,79 @@ export class FiunanceComponent implements OnInit {
   selectStrat(value: String){
     if(value=='Covered Call'){
       this.covered = true;
+      this.ccp = false;
       this.callspread = false;
       this.putspread = false;
       this.longstock = false;
       this.butterfly = false;
+      this.cashflow = false;
+      this.cash = false;
+    }else if(value=='Cash Covered Put'){
+      this.covered = false;
+      this.ccp = true;
+      this.callspread = false;
+      this.putspread = false;
+      this.longstock = false;
+      this.butterfly = false;
+      this.cashflow = false;
+      this.cash = false;
     }else if(value=='Credit Call Spread'){
       this.callspread = true;
+      this.ccp = false;
       this.covered = false;
       this.putspread = false
       this.longstock = false;
       this.butterfly = false;
+      this.cashflow = false;
+      this.cash = false;
     }else if(value=='Credit Put Spread'){
       this.putspread = true;
+      this.ccp = false;
       this.callspread = false;
       this.covered = false;
       this.longstock = false;
       this.butterfly = false;
+      this.cashflow = false;
+      this.cash = false;
     }else if(value=='Iron Butterfly'){
       this.covered = false;
+      this.ccp = false;
       this.callspread = false;
       this.putspread = false;
       this.longstock = false;
       this.butterfly = true;
+      this.cash = false;
+      this.cashflow = false;
     }else{
       this.covered = false;
+      this.ccp = false;
       this.callspread = false;
       this.putspread = false;
       this.longstock = false;
       this.butterfly = false;
+      this.cash = false;
+      this.cashflow = false;
     }
-    if(value=='Long Stock'){
+    if(value=='Long Stock' || value=='Cash' || value =='Cash Flow'){
       this.longstock = true;
+      this.cash = false;
+      this.cashflow = false;
+      if(value == 'Cash' || value =='Cash Flow'){
+       this.cash = true;
+       this.selectedLongType = "Stock";
+       if(value=='Cash Flow'){
+         this.cashflow = true;
+       }
+
+      }
     }
     this.strategy = value;
   }
   selectOption(value: String) {
     this.selectedOption = value;
+   }
+   selectLongType(value: String) {
+    this.selectedLongType = value;
    }
   processTopExpiration(input: object){
     this.retExp = new Array();
@@ -413,6 +512,14 @@ export class FiunanceComponent implements OnInit {
         this.required_call = undefined;
         this.required_put = undefined;
         this.required_prem = undefined;
+        this.covered = false;
+        this.ccp = false;
+        this.callspread = false;
+        this.putspread = false;
+        this.butterfly = false;
+        this.longstock = false;
+        this.cash = false;
+        this.cashflow= false;
         this.longstock = false;
       }
   }
@@ -534,7 +641,8 @@ export class FiunanceComponent implements OnInit {
       });
 
  }
-  addStock(){
+ addStock(){
+  /* addStock(){
     this.http.get(
       this.baseUrl + "data/"+this.username+"/accounts").subscribe((data) => {
         if(this.selectedOption===data['fidelity']){
@@ -558,15 +666,82 @@ export class FiunanceComponent implements OnInit {
     });
 
       this.refresh = true;
+  */
   }
   trade_notification: object;
   onClickAddVals() {
+
+    var account = this.selectedOption;
+    var strategy = this.strategy;
+    if(strategy=="Long Stock"){
+      var longtype = this.selectedLongType;
+    }else{
+      var longtype = new String("N/A");
+    }
+    var ticker = (document.getElementById("ticker") as HTMLInputElement).value;
+    var contracts = (document.getElementById("contracts") as HTMLInputElement).value;
+    if(contracts=="0" && !this.longstock){
+      this.required_contract = "*";
+      this.addedResErr = ["Contracts can't be 0"];
+      return;
+    }
+
+    var collateral = (document.getElementById("collateral") as HTMLInputElement).value;
+    var expiry = this.date;
     var callSide = (document.getElementById("call") as HTMLInputElement).value;
-      var putSide = (document.getElementById("put") as HTMLInputElement).value;
+    if((document.getElementById("longcall") as HTMLInputElement)!=null){
+      var long_callSide = (document.getElementById("longcall") as HTMLInputElement).value;
+    }else{
+      var long_callSide = "0";
+    }
+    var putSide = (document.getElementById("put") as HTMLInputElement).value;
+    if((document.getElementById("longput") as HTMLInputElement)!=null){
+      var long_putSide = (document.getElementById("longput") as HTMLInputElement).value;
+    }else{
+      var long_putSide = "0";
+    }
+    var price = (document.getElementById("premium") as HTMLInputElement).value;
+    if(String(long_callSide).length==0){
+      long_callSide = String(Number(callSide)+Number(collateral)/100);
+    }
+    if(String(long_putSide).length==0){
+      long_putSide = String(Number(putSide)-Number(collateral)/100);
+    }
+
       if(this.butterfly){
         putSide = callSide;
       }
-    this.http.get(
+      if(strategy=="Cash Covered Put"){
+        var collateral = String(Number(putSide)*100)
+      }
+
+      var dataToAdd ={
+        Account:  account,
+        TradeDate: new Date(),
+        Strategy: strategy,
+        Longtype: longtype,
+        Ticker: ticker,
+        Contracts: contracts,
+        Collateral: collateral,
+        Expiry: expiry,
+        LongCall: long_callSide,
+        ShortCall: callSide,
+        ShortPut: putSide,
+        LongPut: long_putSide,
+        Premium:  price
+      }
+
+      this.http.post(this.newbaseUrl + "trade/" + this.username + "/add", dataToAdd).subscribe((data) => {
+        this.addedRes = [String(account), String(strategy), " Successfully added!"]
+
+      },(error) => {
+          this.addedRes = []
+          this.addedResErr = [error["status"] , error["statusText"]];
+      });
+
+      this.selectedOption = "";
+      this.ngOnInit();
+    /* this.http.get(
       this.baseUrl + "data/"+this.username+"/accounts").subscribe((data) => {
         if(this.selectedOption===data['fidelity']){
           this.account = 'fidelity';
@@ -673,27 +848,27 @@ export class FiunanceComponent implements OnInit {
           this.nav.ngOnInit();
 
         });
-    this.refresh = true;
+    this.refresh = true; */
   }
 
   rearrange(){
 
-    this.http.get(this.baseUrl + "data/"+this.username+"/monitoring/rearrange/get").subscribe((datax) => {
-
+    this.http.get(this.newbaseUrl + "display/"+this.username+"/rearrange/get").subscribe((datax) => {
+      datax['url'] = this.baseUrl;
+      datax['username'] = this.username;
       const dialogRef = this.dialog.open(Dialog4, {
-        width: '300px',
-        data: datax
+        width: '500px',
+        data: datax,
       });
 
       dialogRef.afterClosed().subscribe(result => {
         if(result.length>0){
-          this.http.post(this.baseUrl + "data/"+this.username+"/monitoring/rearrange/update", result).subscribe((datax) => {
-            console.log("DONE");
+          this.http.post(this.newbaseUrl + "display/"+this.username+"/rearrange/update", result).subscribe((datax) => {
           });
-          this.refresh = true;
         }else{
           console.log("Did not trigger");
         }
+        this.ngOnInit();
       });
     });
 
@@ -1027,13 +1202,20 @@ export class Dialog4 {
 
   constructor(
     public dialogRef: MatDialogRef<Dialog>,
-    @Inject(MAT_DIALOG_DATA) public data: Dialog4Data) {
+    @Inject(MAT_DIALOG_DATA) public data: Dialog4Data, private http: HttpClient) {
       for(let key in data){
+        console.log(this.movies)
         this.movies.push(data[key])
       }
-    }
+      this.movies.pop()
+      this.movies.pop()
 
+      this.http.get(data['url']+"data/"+data['username']+"/accounts/colors").subscribe((data) =>{
+        this.colors = data;
+      })
+    }
     movies = [];
+    colors: object = {};
 
     drop(event: CdkDragDrop<string[]>) {
       moveItemInArray(this.movies, event.previousIndex, event.currentIndex);

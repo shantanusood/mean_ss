@@ -16,7 +16,7 @@ export interface DialogData {
 })
 export class HealthComponent implements OnInit {
 
-  readonly baseUrl = AppSettings.baseUrlAnalytics;
+  readonly baseUrl = AppSettings.baseUrl;
 
   analysis_type = ['basics', 'ratios', 'incomechanges', 'balancesheetchanges', 'cashflowchanges',  'discountedcashflow', 'intValCustom']
 
@@ -100,6 +100,15 @@ export class HealthComponent implements OnInit {
       });
 
    }
+
+   tops(){
+     var top_vals = [];
+     for(let x=0;x<this.sector_avg.length;x++){
+      top_vals.push(this.sector_avg[x][0]);
+     }
+     return top_vals;
+   }
+
    getDropdownLines(ticker: String){
     for(var x in this.analysis_graphs){
       if(Object.keys(this.analysis_graphs[x])[0] == ticker){

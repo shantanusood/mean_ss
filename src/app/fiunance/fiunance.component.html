@@ -1,13 +1,31 @@
-<div *ngIf="loading else loaded" style="text-align: center;">
-  <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
-    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-    </div></div>
+<div *ngIf="roles.indexOf('tenant')!=-1">
+  <app-corona></app-corona>
 </div>
+<div *ngIf="roles.indexOf('admin')!=-1">
+  <a [routerLink]="'/rent'">Rental Admin Page</a>
+</div>
+
+<div *ngIf="roles.indexOf('tenant')==-1">
+  <div *ngIf="loading else loaded" style="text-align: center;">
+    <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
+      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+      </div></div>
+  </div>
+<div class="container" >
+  <ng-template #loaded>
+    <div *ngFor="let x of positions_tick" style="display: inline-flex; margin: auto;">
+      <app-cardbox [position]=passed_val(x) [username]="username"></app-cardbox>
+    </div>
+  </ng-template>
+</div>
+
 <div style="float: right; position:fixed; margin-right: 10px; right: 10px; top: 2%; z-index: 10;">
   <br>
   <table>
-    <tr><button mat-button><img (click)="onClickRefresh()" matTooltip="Refresh pag data" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></tr>
-     <tr><button mat-button (click)="onClickAdd()">
+    <tr style="border: none; text-align:center; z-index: -1; font-size: x-small; background-color: rgb(65, 61, 61); " (click)="updateColors()">
+      <mat-icon (click)="rearrange()" style="vertical-align: middle; font-size: 7mm; cursor: pointer; color:white" matTooltip="Edit" class="material-icons">mode_edit</mat-icon>
+    </tr>
+   <tr><button mat-button (click)="onClickAdd()">
        <b style="font-size: 10mm; color: white; "  matTooltip="Open trade box"  *ngIf="addtext.indexOf('-')==-1">{{addtext}}</b>
        <b style="font-size: 10mm; color: black; "  matTooltip="Close trade box"  *ngIf="addtext.indexOf('+')==-1">{{addtext}}</b>
       </button>
@@ -15,12 +33,11 @@
   </table>
 
 </div>
-<div style="max-width: 80px; padding: 8px; float: right; position:fixed; margin-right: 10px; right: 0; top: 20%; z-index: -1; background-color: rgb(78, 73, 73);">
+<div style="max-width: 80px; padding: 8px; float: right; position:fixed; margin-right: 10px; right: 0; top:17%; z-index: -1; background-color: rgb(78, 73, 73);">
   <table style="table-layout: fixed; width: 100%;">
-  <tr><td style="color: orange; width: 100%; z-index: -1; word-wrap:break-word; border: none; white-space: normal;">{{account_1}}</td></tr>
-  <tr><td  style="color: rosybrown; width: 100%; z-index: -1; word-wrap:break-word; border: none; white-space: normal;">{{account_2}}</td></tr>
-  <tr><td style="color: rgb(243, 138, 126); width: 100%; z-index: -1; word-wrap:break-word; border: none; white-space: normal;">{{account_3}}</td></tr>
-  <tr>&nbsp;</tr>
+    <tr *ngFor="let x of all_accounts">
+    <td style="width: 100%; z-index: -1; word-wrap:break-word; border: none; white-space: normal;"><span id="{{x}}">{{x}}</span></td>
+  </tr>
   <tr *ngFor="let x of processTopExpiration(dt)" style="color: wheat;"><td style=" border: none;">
     <span *ngIf="x.indexOf('-')!=-1">{{x}}:</span>
     <span *ngIf="x.indexOf('-')==-1" style="color: aliceblue;">{{x}}</span></td>
@@ -40,35 +57,84 @@
 <div *ngIf="add" style="float:right; background-color:wheat; padding: 5px; margin-top: 20px; margin-right: 10px; position:fixed; right: 0; top: 6.5%; z-index: 9;">
   <br>
   <table class="add">
-    <tr><td>Account:<span *ngIf="required_msg" style="color: red; font-size: 1.2em;">{{required_msg}}</span></td>
+    <tr>
+      <td>Account:<span *ngIf="required_msg" style="color: red; font-size: 1.2em;">{{required_msg}}</span></td>
       <td><select class="inputs" (change)="selectOption($event.target.value)">
-      <option value="">&nbsp;</option>
-      <option value="{{account_1}}">{{account_1}}</option>
-      <option value="{{account_2}}">{{account_2}}</option>
-      <option value="{{account_3}}">{{account_3}}</option>
-    </select></td></tr>
-    <tr><td>Strategy:<span *ngIf="required_strategy" style="color: red; font-size: 1.2em;">{{required_strategy}}</span></td>
-      <td><select class="inputs" (change)="selectStrat($event.target.value)">
-      <option value="">&nbsp;</option>
-      <option value="Long Stock">Long Stock</option>
-      <option value="Covered Call">Covered Call</option>
-      <option value="Iron Condor">Iron Condor</option>
-      <option value="Iron Butterfly">Iron Butterfly</option>
-      <option value="Credit Put Spread">Credit Put Spread</option>
-      <option value="Credit Call Spread">Credit Call Spread</option>
-    </select></td></tr>
-    <!--<tr><td>Account2:</td> <td><input matInput type="text" id="account"></td></tr>-->
-    <tr><td>Ticker: <span *ngIf="required_ticker" style="color: red; font-size: 1.2em;">{{required_ticker}}</span></td>
-      <td><input class="inputs" matInput type="text" id="ticker"></td></tr>
-    <tr *ngIf="!longstock"><td>Contracts: <span *ngIf="required_contract" style="color: red; font-size: 1.2em;">{{required_contract}}</span></td>
-      <td><input class="inputs" matInput type="number" id="contracts"></td></tr>
-    <tr >
-      <td> <span *ngIf="!longstock">Collateral</span><span *ngIf="longstock">Shares</span>:
+        <option value="">&nbsp;</option>
+        <option *ngFor="let acc of all_accounts">
+          {{acc}}
+        </option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>Strategy:<span *ngIf="required_strategy" style="color: red; font-size: 1.2em;">{{required_strategy}}</span></td>
+      <td>
+        <select class="inputs" (change)="selectStrat($event.target.value)">
+          <option value="">&nbsp;</option>
+          <option value="Long Stock">Long (Buy Position)</option>
+          <option value="Cash">Cash</option>
+          <option value="Cash Flow">Cash Flow</option>
+          <option value="Covered Call">Covered Call</option>
+          <option value="Cash Covered Put">Cash Covered Put</option>
+          <option value="Iron Condor">Iron Condor</option>
+          <option value="Iron Butterfly">Iron Butterfly</option>
+          <option value="Credit Put Spread">Credit Put Spread</option>
+          <option value="Credit Call Spread">Credit Call Spread</option>
+        </select>
+      </td>
+    </tr>
+    <tr *ngIf="cash">
+      <td *ngIf="!cashflow" colspan=2>To remove cash put -ve value (ex. -500)</td>
+      <td *ngIf="cashflow" colspan=2>Give it a unique name (No spaces allowed)</td>
+    </tr>
+    <tr *ngIf="longstock && !cash"><td>Type:</td>
+      <td>
+        <select class="inputs" (change)="selectLongType($event.target.value)">
+          <option selected="Stock">Stock</option>
+          <option value="Call">Call</option>
+          <option value="Put">Put</option>
+        </select>
+      </td>
+    </tr>
+    <tr *ngIf="!cash">
+      <td>Ticker:
+        <span *ngIf="required_ticker" style="color: red; font-size: 1.2em;">{{required_ticker}}</span>
+      </td>
+      <td><input class="inputs" matInput type="text" id="ticker"></td>
+    </tr>
+    <tr *ngIf="!longstock">
+      <td>Contracts:
+        <span *ngIf="required_contract" style="color: red; font-size: 1.2em;">{{required_contract}}</span>
+      </td>
+      <td>
+        <input class="inputs" matInput type="number" id="contracts">
+      </td>
+    </tr>
+    <tr *ngIf="longstock">
+      <td>
+        <span *ngIf="selectedLongType.indexOf('Stock')!=-1">Shares</span>
+        <span *ngIf="selectedLongType.indexOf('Stock')==-1">Contracts</span>
+        <span *ngIf="required_contract" style="color: red; font-size: 1.2em;">{{required_contract}}</span>
+      </td>
+      <td >
+        <input *ngIf="!cash" class="inputs" matInput type="number" id="contracts">
+        <input *ngIf="cash" class="inputs" matInput type="number" id="contracts" value="1" disabled>
+      </td>
+    </tr>
+    <tr *ngIf="longstock && selectedLongType.indexOf('Stock')==-1">
+      <td>Strike:</td>
+      <td *ngIf="selectedLongType.indexOf('Call')!=-1"><input class="inputs" matInput type="number" id="longcall"></td>
+      <td *ngIf="selectedLongType.indexOf('Put')!=-1"><input class="inputs" matInput type="number" id="longput"></td>
+    </tr>
+    <tr *ngIf="!longstock">
+      <td>
+        <span>Collateral:</span>
         <span *ngIf="required_coll" style="color: red; font-size: 1.2em;">{{required_coll}}</span>
       </td>
       <td>
-        <span *ngIf="!covered"><input class="inputs" matInput type="number" id="collateral"></span>
-        <span *ngIf="covered"><input class="inputs" matInput type="number" id="collateral" value="0" disabled></span>
+        <span *ngIf="!covered && !ccp"><input class="inputs" matInput type="number" id="collateral"></span>
+        <span *ngIf="covered || ccp"><input class="inputs" matInput type="text" id="collateral" value="Calculated" disabled></span>
       </td>
     </tr>
     <tr *ngIf="!longstock"><td>Expiration: <span *ngIf="required_exp" style="color: red; font-size: 1.2em;">{{required_exp}}</span></td>
@@ -76,29 +142,89 @@
         <input class="inputs" matInput type="date" id="exp" name="trip-start" (change)="changeDueDate()" value="{{cur_date}}" min="2020-01-01" max="2023-01-01">
       </td>
     </tr>
-    <tr *ngIf="butterfly"><td>Call/Put: <span *ngIf="required_call" style="color: red; font-size: 1.2em;">{{required_call}}</span></td>
+    <tr *ngIf="longstock && selectedLongType.indexOf('Stock')==-1"><td>Expiration: <span *ngIf="required_exp" style="color: red; font-size: 1.2em;">{{required_exp}}</span></td>
+      <td>
+        <input class="inputs" matInput type="date" id="exp" name="trip-start" (change)="changeDueDate()" value="{{cur_date}}" min="2020-01-01" max="2023-01-01">
+      </td>
+    </tr>
+    <tr *ngIf="butterfly">
+      <td>Long Call(Buy):</td>
+      <td>
+        <span><input class="inputs" matInput type="number" id="longcall"></span>
+      </td>
+    </tr>
+    <tr *ngIf="butterfly">
+      <td>Call/Put(Sell): <span *ngIf="required_call" style="color: red; font-size: 1.2em;">{{required_call}}</span>
+      </td>
       <td>
         <span><input class="inputs" matInput type="number" id="call"></span>
         <span><input class="inputs" matInput type="number" id="put" value="0" hidden></span>
       </td>
     </tr>
-    <tr *ngIf="!longstock && !butterfly"><td>Call side: <span *ngIf="required_call" style="color: red; font-size: 1.2em;">{{required_call}}</span></td>
+    <tr *ngIf="butterfly">
+      <td>Long Put(Buy):</td>
       <td>
-        <span *ngIf="!putspread"><input class="inputs" matInput type="number" id="call"></span>
-        <span *ngIf="putspread"><input class="inputs" value="0" matInput type="number" id="call" disabled></span>
+        <span><input class="inputs" matInput type="number" id="longput"></span>
       </td>
     </tr>
-    <tr *ngIf="!longstock && !butterfly"><td>Put side: <span *ngIf="required_put" style="color: red; font-size: 1.2em;">{{required_put}}</span></td>
+    <tr *ngIf="!longstock && !butterfly"><td>Buy Call(Long): </td>
+      <td>
+        <span *ngIf="!putspread && !ccp && !covered"><input class="inputs" matInput type="number" id="longcall"></span>
+        <span *ngIf="covered || putspread || ccp"><input class="inputs" value="0" matInput type="number" id="longcall" disabled></span>
+      </td>
+    </tr>
+    <tr *ngIf="!longstock && !butterfly"><td>Short Call(Sell): <span *ngIf="required_call" style="color: red; font-size: 1.2em;">{{required_call}}</span></td>
+      <td>
+        <span *ngIf="!putspread && !ccp"><input class="inputs" matInput type="number" id="call"></span>
+        <span *ngIf="putspread || ccp"><input class="inputs" value="0" matInput type="number" id="call" disabled></span>
+      </td>
+    </tr>
+    <tr *ngIf="!longstock && !butterfly"><td>Short Put(Sell): <span *ngIf="required_put" style="color: red; font-size: 1.2em;">{{required_put}}</span></td>
       <td>
         <span *ngIf="!covered && !callspread"><input class="inputs" matInput type="number" id="put"></span>
         <span *ngIf="covered || callspread"><input class="inputs" matInput type="number" id="put" value="0" disabled></span>
       </td>
     </tr>
-    <tr><td><span *ngIf="!longstock">Premium</span><span *ngIf="longstock">Price</span>:
+    <tr *ngIf="!longstock && !butterfly"><td>Put side(Buy): </td>
+      <td>
+        <span *ngIf="!covered && !callspread && !ccp"><input class="inputs" matInput type="number" id="longput"></span>
+        <span *ngIf="covered || callspread || ccp"><input class="inputs" matInput type="number" id="longput" value="0" disabled></span>
+      </td>
+    </tr>
+    <tr><td><span *ngIf="!longstock">Premium</span><span *ngIf="longstock">
+      <span *ngIf="cash && !cashflow">Value</span>
+      <span *ngIf="cash && cashflow">Name</span>
+      <span *ngIf="!cash && !cashflow">Price</span>
+    </span>:
       <span *ngIf="required_prem" style="color: red; font-size: 1.2em;">{{required_prem}}</span></td>
-      <td><input class="inputs" matInput type="number" id="premium"></td></tr>
-    <tr *ngIf="!longstock"><td></td><td><button mat-button (click)="clickAdd()" style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
-    <tr *ngIf="longstock"><td></td><td><button mat-button (click)="clickAddStock()" style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
+      <td *ngIf="!cashflow"><input class="inputs" matInput type="number" id="premium"></td>
+      <td *ngIf="cashflow"><input class="inputs" matInput type="text" id="premium"></td></tr>
+      <tr *ngIf="longstock && selectedLongType.indexOf('Stock')!=-1" hidden>
+        <input class="inputs" matInput type="text" id="exp" value="2020-01-01">
+        <input class="inputs" matInput type="text" id="collateral" value="0" disabled>
+        <input class="inputs" matInput type="number" id="call" value = "0" disabled>
+        <input class="inputs" matInput type="number" id="put" value = "0" disabled>
+      </tr>
+    <tr *ngIf="longstock && selectedLongType.indexOf('Call')!=-1" hidden>
+      <span><input class="inputs" matInput type="number" id="call" value = "0"></span>
+      <span><input class="inputs" matInput type="number" id="put" value = "0"></span>
+      <input class="inputs" matInput type="text" id="collateral" value="0" disabled>
+    </tr>
+    <tr *ngIf="longstock && selectedLongType.indexOf('Put')!=-1" hidden>
+      <span><input class="inputs" matInput type="number" id="call" value = "0"></span>
+      <span><input class="inputs" matInput type="number" id="put" value = "0"></span>
+      <input class="inputs" matInput type="text" id="collateral" value="0" disabled>
+    </tr>
+    <tr *ngIf="cash" hidden>
+      <input class="inputs" matInput type="text" id="exp" value="2020-01-01">
+      <span><input class="inputs" matInput type="number" id="put" value="0"></span>
+      <span><input class="inputs" matInput type="number" id="call" value="0"></span>
+      <input class="inputs" matInput type="text" id="contracts" value="N/A" disabled>
+      <input class="inputs" matInput type="text" id="ticker" value="N/A" disabled>
+      <input class="inputs" matInput type="text" id="collateral" value="N/A" disabled>
+    </tr>
+    <tr><td></td><td><button mat-button (click)="clickAdd()" style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>
+    <!--<tr *ngIf="longstock"><td></td><td><button mat-button (click)="clickAddStock()" style="display: block; margin-left: auto; margin-right: auto; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>-->
     <tr><td colspan="2"><span *ngIf="required_msg || required_strategy || required_ticker || required_contract || required_coll || required_exp || required_call || required_put || required_prem" style="color: red;">*required</span></td></tr>
     <tr *ngIf="addedRes"><td colspan="2" style="color: green;">{{addedRes}}</td></tr>
     <tr *ngIf="addedResErr"><td colspan="2" style="color: red;">{{addedResErr}}</td></tr>
@@ -106,10 +232,10 @@
 </table>
 
 </div>
-<div class="container" >
+<!--<div class="container" >
   <ng-template #loaded>
     <p style="font-size: 1.2em; float: right; position:fixed; margin-right: 10px; right: 60px; top: 2%; z-index: 10; color: red;" *ngIf="refresh">
-      <span class="blink_me">Refresh to see your changes --> </span></p>
+      <span class="blink_me">Refresh to see your changes > </span></p>
 
   <div class="monitor">
     <div class="dividend">
@@ -122,11 +248,6 @@
         </tr>
         <tr>
           <td *ngFor="let x of earning_dates">
-              <!--<tr *ngIf="getTopEarningsLength(x)>0">
-                <th style="font-size: 0.7em">Ticker</th>
-                <th style="font-size: 0.7em">Call Vol/Open Int</th>
-                <th style="font-size: 0.7em">Put Vol/Open Int</th>
-              </tr>-->
               <tr *ngIf="getTopEarningsLength(x)==0 && roles.indexOf('admin')!=-1">
                 <td style="border: none;" *ngIf="!run_spinner"><button mat-raised-button (click)="runEarnings(x)">Run</button></td>
                 <td style="border: none;" *ngIf="run_spinner"><div class="lds-dual-ring"></div></td>
@@ -164,11 +285,6 @@
         </tr>
         <tr>
           <td *ngFor="let x of earning_dates_mobile">
-              <!--<tr *ngIf="getTopEarningsLength(x)>0">
-                <th style="font-size: 0.7em">Ticker</th>
-                <th style="font-size: 0.7em">Call Vol/Open Int</th>
-                <th style="font-size: 0.7em">Put Vol/Open Int</th>
-              </tr>-->
               <tr *ngIf="getTopEarningsLength(x)==0 && roles.indexOf('admin')!=-1">
                 <td style="border: none;" *ngIf="!run_spinner"><button mat-raised-button (click)="runEarnings(x)">Run</button></td>
                 <td style="border: none;" *ngIf="run_spinner"><div class="lds-dual-ring"></div></td>
@@ -279,7 +395,6 @@
         <td *ngIf="process(y)[0].indexOf('robinhood')!=-1 && processKey(y)!='0'" style="display:inline-block; color:rosybrown; font-size: 6mm; border: solid rosybrown 0px;">
           {{processKey(y)}} <sup matTooltip="%OTM, Expiry, Collateral">{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
           <span style="float: right;">
-            <!--<button mat-button (click)="onClickDeleteStrike(x, 'robinhood', 'call', processKey(y))"><b style="color:tomato;">x</b></button>-->
             <mat-icon id="closetrade" matTooltip="Close position"  (click)="onClickDeleteStrike(x, 'robinhood', 'call', processKey(y))" class="material-icons">close</mat-icon>
           </span>
           <span style="float: right;">
@@ -290,7 +405,6 @@
         <td *ngIf="process(y)[0].indexOf('fidelity')!=-1 && processKey(y)!='0'" style="display:inline-block; color:orange; font-size: 6mm; border: solid orange 0px;">
           {{processKey(y)}} <sup matTooltip="%OTM, Expiry, Collateral">{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
           <span style="float: right;">
-            <!--<button mat-button (click)="onClickDeleteStrike(x, 'fidelity', 'call', processKey(y))"><b style="color:tomato;">x</b></button></span>-->
             <mat-icon id="closetrade" matTooltip="Close position"  (click)="onClickDeleteStrike(x, 'fidelity', 'call', processKey(y))" class="material-icons">close</mat-icon>
             </span>
           <span style="float: right;">
@@ -302,7 +416,6 @@
           {{processKey(y)}} <sup matTooltip="%OTM, Expiry, Collateral">{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
           <span style="float: right;">
             <mat-icon id="closetrade" matTooltip="Close position"  (click)="onClickDeleteStrike(x, 'tastyworks', 'call', processKey(y))" class="material-icons">close</mat-icon>
-            <!--<button style="padding: -4px !important;" mat-button (click)="onClickDeleteStrike(x, 'tastyworks', 'call', processKey(y))" style="padding: 0px !important;"><b style="color:tomato;">x</b></button>-->
             </span>
           <span style="float: right;">
             <mat-icon id="rolltrade" (click)="viewtrade(x, y, 'call', processKey(y))" matTooltip="View position"  class="material-icons">visibility</mat-icon>
@@ -315,8 +428,7 @@
           {{processKey(y)}} <sup matTooltip="%OTM, Expiry, Collateral">{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
           <span style="float: right;">
             <mat-icon id="closetrade" matTooltip="Close position"  (click)="onClickDeleteStrike(x, 'robinhood', 'put', processKey(y))" class="material-icons">close</mat-icon>
-            <!--<button style="padding: -4px !important;" mat-button (click)="onClickDeleteStrike(x, 'robinhood', 'put', processKey(y))" style="padding: 0px !important;"><b style="color:tomato;">x</b></button>-->
-          </span>
+             </span>
           <span style="float: right;">
               <mat-icon id="rolltrade" (click)="viewtrade(x, y, 'put', processKey(y))" matTooltip="View position"  class="material-icons">visibility</mat-icon>
               <mat-icon id="rolltrade" *ngIf="roles.indexOf('admin')!=-1" (click)="rolltrade(x, y, 'put', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
@@ -325,8 +437,7 @@
           {{processKey(y)}} <sup matTooltip="%OTM, Expiry, Collateral">{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
           <span style="float: right;">
             <mat-icon id="closetrade" matTooltip="Close position"  (click)="onClickDeleteStrike(x, 'fidelity', 'put', processKey(y))" class="material-icons">close</mat-icon>
-            <!--<button style="padding: -4px !important;" mat-button (click)="onClickDeleteStrike(x, 'fidelity', 'put', processKey(y))" style="padding: 0px !important;"><b style="color:tomato;">x</b></button>-->
-          </span>
+           </span>
           <span style="float: right;">
               <mat-icon id="rolltrade" (click)="viewtrade(x, y, 'put', processKey(y))" matTooltip="View position"  class="material-icons">visibility</mat-icon>
               <mat-icon id="rolltrade" *ngIf="roles.indexOf('admin')!=-1" (click)="rolltrade(x, y, 'put', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
@@ -335,8 +446,7 @@
           {{processKey(y)}} <sup matTooltip="%OTM, Expiry, Collateral">{{process(y)[4]}}, {{process(y)[1]}}, {{process(y)[2]}}</sup>
           <span style="float: right;">
             <mat-icon id="closetrade" matTooltip="Close position"  (click)="onClickDeleteStrike(x, 'tastyworks', 'put', processKey(y))" class="material-icons">close</mat-icon>
-            <!--<button style="padding: -4px !important;" mat-button (click)="onClickDeleteStrike(x, 'tastyworks', 'put', processKey(y))" style="padding: 0px !important;"><b style="color:tomato;">x</b></button>-->
-          </span>
+           </span>
           <span style="float: right;">
               <mat-icon id="rolltrade" (click)="viewtrade(x, y, 'put', processKey(y))" matTooltip="View position"  class="material-icons">visibility</mat-icon>
               <mat-icon id="rolltrade" *ngIf="roles.indexOf('admin')!=-1" (click)="rolltrade(x, y, 'put', processKey(y))" matTooltip="Roll position"  class="material-icons">redo</mat-icon>
@@ -369,5 +479,6 @@
 </div>
 
 </ng-template>
-</div>
+</div>-->
 
+</div>

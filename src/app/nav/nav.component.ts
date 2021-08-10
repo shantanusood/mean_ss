@@ -14,7 +14,9 @@ export class NavComponent implements OnInit {
 
   constructor(private http: HttpClient, private nt: NotificationService) { }
 
-  readonly baseUrl = AppSettings.baseUrl;
+  readonly baseUrl = AppSettings.baseUrlUser;
+
+  run_spinner: boolean = false;
 
   notification_alert: number = 0;
   trade_notification: object[];
@@ -38,12 +40,77 @@ export class NavComponent implements OnInit {
   email: String;
   phone:String;
   interval: any;
+  more_acc = [];
+  all_acc = {};
 
   question:String;
   answer:String;
 
   @Input() username: string;
 
+  newAccclick: boolean = false;
+
+  addNewAccount(){
+    this.newAccclick = true;
+  }
+
+  saveNewAccount(){
+    this.run_spinner = true;
+    var acc_num = 4 + this.more_acc.length;
+    var send_data = {
+      "acc_name": "account_"+acc_num,
+      "acc_value": (document.getElementById("newAccount") as HTMLInputElement).value
+    }
+    this.http.post(this.baseUrl + "data/"+this.username+"/accounts/add", send_data).subscribe((data) => {
+      this.msg = "Changed Successfully!";
+      this.run_spinner = false;
+      this.ngOnInit();
+    },
+    (error) => {
+      this.msg = error['status'] + " - " + error['statusText'];
+      console.log(error);
+      this.run_spinner = false;
+      this.ngOnInit();
+    });
+  }
+  delNewAccount(acc: String){
+    this.run_spinner = true;
+
+    this.http.get(this.baseUrl + "data/"+this.username+"/accounts/delete/"+acc).subscribe((data) => {
+      this.msg = "Changed Successfully!";
+      this.run_spinner = false;
+      this.ngOnInit();
+    },
+    (error) => {
+      this.msg = error['status'] + " - " + error['statusText'];
+      console.log(error);
+      this.run_spinner = false;
+      this.ngOnInit();
+    });
+  }
+  getMoreAccounts(){
+    this.more_acc = []
+    this.http
+      .get(
+        this.baseUrl +
+          "data/"+this.username+"/accounts")
+      .subscribe((data) => {
+        this.account_1 = data['fidelity'];
+        this.account_2 = data['robinhood'];
+        this.account_3 = data['tastyworks'];
+        this.all_acc = data;
+        delete this.all_acc['fidelity'];
+        delete this.all_acc['robinhood'];
+        delete this.all_acc['tastyworks'];
+        for(const key in this.all_acc){
+          this.more_acc.push([key, this.all_acc[key]]);
+        }
+
+      });
+  }
+  modAccVal(acc: String){
+    return acc.replace("_", " ");
+  }
   update(){
     this.http
       .get(
@@ -98,7 +165,8 @@ export class NavComponent implements OnInit {
     this.username = username;
   }
   async ngOnInit() {
-    console.log("********************CALLED*********************");
+    this.more_acc = [];
+    this.newAccclick = false;
     await this.nt.ngOnInit();
     await this.nt.current.subscribe(x => this.notification_alert = x);
     await console.log("Alert");
@@ -121,6 +189,7 @@ export class NavComponent implements OnInit {
         this.account_2 = data['robinhood'];
         this.account_3 = data['tastyworks'];
       });
+      this.getMoreAccounts();
     this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
       this.role_list = data as object[];
       this.role_list.forEach(d => {
@@ -197,6 +266,18 @@ export class NavComponent implements OnInit {
         this.account_2 = data['robinhood'];
         this.account_3 = data['tastyworks'];
       });
+
+      var table_add = document.getElementById("nav_table");
+      var inputs = table_add.getElementsByTagName("input");
+      for (var index = 3; index >= this.more_acc.length; index++) {
+        if(this.more_acc[index-3][0].indexOf("ccount")!=-1){
+          this.http.post(this.baseUrl + "data/"+this.username+"/accounts/update/account_"+(index+1), {"name": (inputs[index] as HTMLInputElement).value}).subscribe((data) => {
+            console.log("Done!");
+          })
+        }else{
+          break;
+        }
+      }
   }
 
   openUserMenu(){

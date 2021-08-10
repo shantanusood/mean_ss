@@ -45,27 +45,20 @@
     </table>
     <br>
     <hr>
+    <br>
     <table *ngIf="selectedParent.indexOf('Indicators') == -1">
-      <tr>
-        <td style="text-align: right; color: aliceblue; border: none;"></td>
-        <td style="text-align: right; color: aliceblue; border: none;">{{selectedParent}}</td>
-        <td style="text-align: right; color: aliceblue; border: none;">{{selectedsubsector}}</td>
-        <td style="border: none;">
-          <div fxLayout="row" *ngIf="sector_avg">
-            <div *ngFor="let y of sector_avg" style="display: inline-block; padding: 5px;">
-              <span style="color: aliceblue;">{{y[0]}}&nbsp;</span>
-              <br>
-              <span style="color: wheat; font-weight: bolder;">{{y[1]}}&nbsp;</span>
-            </div>
-          </div>
-        </td>
-      </tr>
-
       <tr>
         <th>Ticker</th>
         <th>Name</th>
         <th>Category</th>
-        <th>{{selectedanalysis}}</th>
+        <th *ngIf="selectedanalysis.indexOf('basics') != -1">
+          <table *ngFor="let y of tops()" style="display: inline-block; ">
+            <td style="color: wheat; width: 70px; padding-top: 3.5px; padding-bottom: 9px; border: none; border-right: dashed wheat 0.25px;">{{y}}&nbsp;</td>
+          </table>
+        </th>
+        <th *ngIf="selectedanalysis.indexOf('basics') == -1">
+          {{selectedanalysis}}
+        </th>
         <td rowspan="10" *ngIf="selectedanalysis.indexOf('ratios') != -1 || selectedanalysis.indexOf('incomechanges') != -1 || selectedanalysis.indexOf('balancesheetchanges') != -1 || selectedanalysis.indexOf('cashflowchanges') != -1">
           <div>
             <p style="width:100%;text-align:center;color: wheat;">{{chart_title}}<p>
@@ -75,11 +68,25 @@
             </div>
         </td>
       </tr>
+      <tr>
+        <td style="text-align: right; color: aliceblue;"></td>
+        <td style="text-align: right; color: aliceblue; width:190px">{{selectedParent}}</td>
+        <td style="text-align: right; color: aliceblue; width:190px">{{selectedsubsector}}</td>
+        <td>
+          <span *ngIf="selectedanalysis.indexOf('basics') != -1">
+            <div fxLayout="row" *ngIf="sector_avg">
+              <table *ngFor="let y of sector_avg" style="display: inline-block; ">
+                <td style="word-wrap:break-word; color: aliceblue; width: 70px; padding-bottom: 9px; padding-top: 3.5px; border: none; border-right: dashed wheat 0.25px; ">{{y[1]}}&nbsp;</td>
+              </table>
+            </div>
+          </span>
+        </td>
+      </tr>
 
       <tr *ngFor="let x of tickers; let i = index" >
         <td>{{x.Ticker}}</td>
-        <td>{{x.Name}}</td>
-        <td>{{x.Category}}</td>
+        <td style="word-wrap:break-word; width:190px">{{x.Name}}</td>
+        <td style="word-wrap:break-word; width:190px">{{x.Category}}</td>
         <td *ngIf="selectedanalysis.indexOf('ratios') != -1 || selectedanalysis.indexOf('incomechanges') != -1 || selectedanalysis.indexOf('balancesheetchanges') != -1 || selectedanalysis.indexOf('cashflowchanges') != -1">
           <select class="inputs" (change)="selectGraphLineType($event.target.value)" style="width: 150px;">
             <option value="None" [selected]>None</option>
@@ -90,12 +97,10 @@
 
         <td>
           <div fxLayout="row" *ngIf="selectedanalysis.indexOf('basics') != -1 || selectedanalysis.indexOf('intValCustom') != -1">
-            <div *ngFor="let y of getAnalysisData(x)" style="display: inline-block; padding: 5px;">
-              <span style="color: aliceblue;">{{y[0]}}&nbsp;</span>
-              <br>
-              <span *ngIf="y[1].indexOf('-999')!=-1" style="color: red;">err&nbsp;</span>
-              <span *ngIf="y[1].indexOf('-999')==-1">{{y[1]}}&nbsp;</span>
-            </div>
+            <table *ngFor="let y of getAnalysisData(x)" style="display: inline-block; ">
+              <td *ngIf="y[1].indexOf('-999')!=-1" style="word-wrap:break-word; width: 70px; color: red; padding-bottom: 9px; padding-top: 3.5px; border: none; border-right: dashed wheat 0.25px; ">err&nbsp;</td>
+              <td *ngIf="y[1].indexOf('-999')==-1" style="word-wrap:break-word; width: 70px; color: aliceblue; padding-bottom: 9px; padding-top: 3.5px; border: none; border-right: dashed wheat 0.25px;">{{y[1]}}&nbsp;</td>
+            </table>
           </div>
           <div fxLayout="row" *ngIf="selectedanalysis.indexOf('discountedcashflow') != -1">
             <div style="display: inline-block; padding: 5px;">
