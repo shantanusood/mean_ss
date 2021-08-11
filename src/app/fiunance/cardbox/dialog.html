@@ -10,7 +10,7 @@
         <td style="border: none; color: black;">{{item.value}}</td>
       </tr>
     </span>
-    <!-- <span *ngIf="type.indexOf('Close Trade')!=-1">
+    <span *ngIf="type.indexOf('Close Trade')!=-1">
       <span style="border: 0px solid pink;" *ngIf="run_spinner"><div class="lds-dual-ring"></div></span>
       <tr style="width: 100%;">
         <th style="border: none; color: black; width: 100%;" colspan="2">{{populate_data['type']}} in Account: {{populate_data['Account']}}</th>
@@ -74,6 +74,6 @@
       <tr>
         <td colspan="2"><button (click)="closeTrade()" mat-button>Close Trade</button></td>
       </tr>
-    </span> -->
+    </span>
    </table>
  </div>

@@ -221,12 +221,12 @@ export class RemoveWhiteSpacePipe implements PipeTransform {
 })
 export class Dialog_cardbox {
 
-  type: String = "";
-  ticker: String = "";
+  type: string = "";
+  ticker: string = "";
   incoming: object;
   populate_data: object[];
-  baseUrl: String;
-  username: String;
+  baseUrl: string;
+  username: string;
   run_spinner: boolean = true;
 
   constructor(
