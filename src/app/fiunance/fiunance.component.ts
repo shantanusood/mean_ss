@@ -740,7 +740,7 @@ export class FiunanceComponent implements OnInit {
       });
 
       this.selectedOption = "";
-      this.ngOnInit();
+      //this.ngOnInit();
     /* this.http.get(
       this.baseUrl + "data/"+this.username+"/accounts").subscribe((data) => {
         if(this.selectedOption===data['fidelity']){

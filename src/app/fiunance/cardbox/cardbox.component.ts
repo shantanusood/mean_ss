@@ -91,6 +91,7 @@ export class CardboxComponent implements OnInit {
   all_accounts = [];
   account: string;
 
+
   selectOption(value: string){
     this.account = value;
   }
@@ -100,16 +101,21 @@ export class CardboxComponent implements OnInit {
   baseUrl:string = AppSettings.baseUrl;
 
   changeColor(){
-    for(let x of this.display_data_arr){
-      let val = x as String[];
-      if (Array.isArray(val[0])) {
-        for(let y of val){
-          document.getElementById(y.toString()).style.color = y[3];
+    try{
+      for(let x of this.display_data_arr){
+        let val = x as String[];
+        if (Array.isArray(val[0])) {
+          for(let y of val){
+            document.getElementById(y.toString()).style.color = y[3];
+          }
+        }else{
+          document.getElementById(x.toString()).style.color = x[3];
         }
-      }else{
-        document.getElementById(x.toString()).style.color = x[3];
       }
-  }
+    }catch(e){
+      console.log((e as Error).message);
+    }
+
 }
 remZero(str: string){
     if(str == "0"){
@@ -245,22 +251,71 @@ export class Dialog_cardbox {
           this.run_spinner = false;
         });
       }else if(this.type == 'Close Trade'){
+        this.isIron = false;
+        this.showSingleLeg = false;
+
         this.http.post(this.baseUrl + "display/" + this.username + "/trade/close/" + this.ticker, this.incoming).subscribe((datax) => {
           this.populate_data = [];
           this.populate_data = datax as object[];
           this.run_spinner = false;
+          this.isIronFun();
         });
       }
 
     }
     closeTrade(){
       this.run_spinner = true;
-      this.http.post(this.baseUrl + "display/" + this.username + "/trade/close/" + this.ticker +
+      this.http.post(this.baseUrl + "trade/" + this.username + "/close/" + this.ticker +
           "/"+(document.getElementById('tradeContracts') as HTMLInputElement).value +
           "/" +  (document.getElementById('tradeClose') as HTMLInputElement).value, this.incoming).subscribe((datax) => {
         this.run_spinner = false;
 
       });
+    }
+    closeLegTrade(){
+      this.run_spinner = true;
+      var dataToAdd ={
+        TradeDate: new Date(),
+        _account: this.populate_data['Account'],
+        _data: this.incoming
+      }
+      this.http.post(this.baseUrl + "trade/" + this.username + "/leg/close/" + this.ticker +
+          "/"+(document.getElementById('tradeContracts') as HTMLInputElement).value +
+          "/" +  (document.getElementById('tradeClose') as HTMLInputElement).value +
+          "/" + this.selectRecieve, dataToAdd).subscribe((datax) => {
+        this.run_spinner = false;
+
+      });
+    }
+
+    selectRecieve: String;
+    selectRecieved(value: String) {
+      this.selectRecieve = value;
+     }
+    isIron: boolean = false;
+    showSingleLeg: boolean = false;
+    legData: object;
+    showNonIronFun(val: string){
+      if(val == 'true'){
+        this.isIron = false;
+        this.showSingleLeg = true;
+
+        this.run_spinner = true;
+        this.http.post(this.baseUrl + "display/" + this.username + "/trade/leg/" + this.ticker, this.incoming).subscribe((datax) => {
+          this.populate_data = [];
+          this.populate_data = datax as object[];
+          this.run_spinner = false;
+        });
+      }else{
+        this.isIron = false;
+      }
+    }
+    isIronFun(){
+      if(this.populate_data['type'].indexOf('Iron')!=-1){
+        this.isIron = true;
+      }else{
+        this.isIron = false;
+      }
     }
 
 }

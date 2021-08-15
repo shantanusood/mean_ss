@@ -82,7 +82,7 @@
       <ng-template #loaded>
         <tr  style="border-right: dashed 2px wheat;" *ngFor="let x of display_data_arr" >
 
-          <td *ngIf="ticker.indexOf('Cash')==-1 && ticker.indexOf('_cf')==-1" style="text-align: center; border-bottom: dashed 2px wheat; height: 50px;" >
+          <td *ngIf="ticker.indexOf('Cash')==-1 && ticker.indexOf('_cf')==-1 && ticker.indexOf('EARNINGS')==-1 && ticker.indexOf('DIVIDEND')==-1" style="text-align: center; border-bottom: dashed 2px wheat; height: 50px;" >
             <table style="border: none; vertical-align: center;">
               <td style="border: none; vertical-align: center;">
                 <tr style="border: none; color: green; font-size: x-small;  width: 50px;" *ngIf="checkITM(x[1], x[5]).indexOf('Stock')!=-1">{{checkITM(x[1], x[5])}}</tr>
@@ -143,7 +143,8 @@
             </table>
           </td>
           <td *ngIf="ticker.indexOf('EARNINGS')!=-1">
-            <table style="border: none; vertical-align: center;">
+            test
+            <table style="border: 1px solid pink; vertical-align: center;">
               <tr style="border: none">
                 <td style="border: none">e1</td>
                 <td style="border: none">e2</td>
@@ -151,8 +152,8 @@
               </tr>
             </table>
           </td>
-          <td *ngIf="ticker.indexOf('DIVIDENDS')!=-1">
-            <table style="border: none; vertical-align: center;">
+          <td *ngIf="ticker.indexOf('DIVIDEND')!=-1">
+            <table style="border: 1px solid pink; vertical-align: center;">
               <tr style="border: none">
                 <td style="border: none">d1</td>
                 <td style="border: none">d2</td>
