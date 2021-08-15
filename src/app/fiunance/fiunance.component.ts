@@ -700,7 +700,10 @@ export class FiunanceComponent implements OnInit {
     }else{
       var long_putSide = "0";
     }
-    var price = (document.getElementById("premium") as HTMLInputElement).value;
+    if(this.butterfly){
+      putSide = callSide;
+    }
+  var price = (document.getElementById("premium") as HTMLInputElement).value;
     if(String(long_callSide).length==0){
       long_callSide = String(Number(callSide)+Number(collateral)/100);
     }
@@ -708,9 +711,6 @@ export class FiunanceComponent implements OnInit {
       long_putSide = String(Number(putSide)-Number(collateral)/100);
     }
 
-      if(this.butterfly){
-        putSide = callSide;
-      }
       if(strategy=="Cash Covered Put"){
         var collateral = String(Number(putSide)*100)
       }
