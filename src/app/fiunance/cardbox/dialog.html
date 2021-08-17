@@ -67,7 +67,7 @@
         <td style="width: 70%; border: none; color: black;">Premium recieved: </td>
         <td style="width: 30%; border: none; color: black;">{{populate_data['Premium']}}</td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['type'].indexOf('Long Stock')!=-1">
+      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['Longtype'].indexOf('Stock')!=-1">
         <td style="width: 70%; border: none; color: black;">Which account?</td>
         <td style="width: 30%; border: none; color: black;">
           <select (change)="selectRecieved($event.target.value)">
@@ -78,7 +78,7 @@
           </select>
         </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['type'].indexOf('Long Stock')!=-1">
+      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['Longtype'].indexOf('Stock')!=-1">
         <td style="width: 70%; border: none; color: black;">Full liquidation?</td>
         <td style="width: 30%; border: none; color: black;">
           <select (change)="selectLiquidation($event.target.value)">
@@ -100,10 +100,10 @@
           <input id="tradeContracts">
         </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['type'].indexOf('Long Stock')==-1">
+      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['Longtype'].indexOf('Stock')==-1">
         <td colspan="2"><button (click)="closeTrade()" mat-button>Close Trade</button></td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['type'].indexOf('Long Stock')!=-1">
+      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['Longtype'].indexOf('Stock')!=-1">
         <td colspan="2"><button (click)="closeStockTrade()" mat-button>Close Trade</button></td>
       </tr>
     </span>
