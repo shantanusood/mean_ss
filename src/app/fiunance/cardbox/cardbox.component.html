@@ -5,19 +5,25 @@
   </span>
   <table>
     <tr>
-      <th style=" text-align: center; font-size: 1.5em; border: none">{{ticker | uppercase}}</th>
+      <th style=" text-align: center; font-size: 1.5em; border: none">{{ticker | uppercase}}
+        <span *ngIf="ticker.indexOf('Cash')==-1 && ticker.indexOf('_cf')==-1 && ticker.indexOf('EARNINGS')==-1 && ticker.indexOf('DIVIDEND')==-1"
+              style="font-size: medium;">
+            <span *ngIf="display_data_meta[0].indexOf('-')!=-1" style="color: red;">{{display_data_meta[0]}}({{display_data_meta[1]}}%)</span>
+            <span *ngIf="display_data_meta[0].indexOf('-')==-1" style="color: green;">{{display_data_meta[0]}}({{display_data_meta[1]}}%)</span>
+        </span>
+      </th>
     </tr>
     <tr style="border: none;">
         <span *ngIf="ticker.indexOf('Cash')==-1 && ticker.indexOf('_cf')==-1" style="color: aliceblue;">
           <table style="color: aliceblue;" *ngIf="ticker.indexOf('EARNINGS')==-1 && ticker.indexOf('DIVIDEND')==-1">
-              <td style="color: aliceblue;"><span>Spread Collateral: {{display_data_meta[0]}} &nbsp;&nbsp;&nbsp;
+              <td style="color: aliceblue;"><span>Spread Collateral: {{display_data_meta[2]}} &nbsp;&nbsp;&nbsp;
                 Total Delta:
-                <span *ngIf="display_data_meta[1].indexOf('-')!=-1" style="color: red;">{{display_data_meta[1]}}</span>
-                <span *ngIf="display_data_meta[1].indexOf('-')==-1" style="color: green;">{{display_data_meta[1]}}</span>
+                <span *ngIf="display_data_meta[3].indexOf('-')!=-1" style="color: red;">{{display_data_meta[3]}}</span>
+                <span *ngIf="display_data_meta[3].indexOf('-')==-1" style="color: green;">{{display_data_meta[3]}}</span>
               </span>
               </td>
               <span>
-              <td style="color: aliceblue; border: none; " *ngFor="let exp of display_data_meta | slice:2">
+              <td style="color: aliceblue; border: none; " *ngFor="let exp of display_data_meta | slice:4">
                 <span>{{exp[0]}}:&nbsp;{{exp[1]}}</span>
               </td>
               </span>

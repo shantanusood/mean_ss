@@ -734,6 +734,12 @@ export class FiunanceComponent implements OnInit {
       this.http.post(this.newbaseUrl + "trade/" + this.username + "/add", dataToAdd).subscribe((data) => {
         this.addedRes = [String(account), String(strategy), " Successfully added!"]
 
+        // for(let keys in data){
+        //   this.positions_tick.push({
+        //     Ticker: keys,
+        //     Positions: data[keys]
+        //   });
+        // }
       },(error) => {
           this.addedRes = []
           this.addedResErr = [error["status"] , error["statusText"]];

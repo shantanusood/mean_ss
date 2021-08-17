@@ -69,16 +69,16 @@ export class CardboxComponent implements OnInit {
       for(var keys in this.display_data){
         this.display_data_arr.push(this.display_data[keys])
       }
-      this.loading = false;
+      this.http.post(this.newbaseUrl + "display/" + this.username + "/get/meta", this.position).subscribe((data) => {
+        this.display_data_meta = data as string[];
+        this.loading = false;
+      },
+      (error) => {
+      });
     },
     (error) => {
       this.loading = false;
 
-    });
-    this.http.post(this.newbaseUrl + "display/" + this.username + "/cache/get/meta", this.position).subscribe((data) => {
-      this.display_data_meta = data as string[];
-    },
-    (error) => {
     });
 
   }
@@ -132,7 +132,14 @@ remZero(str: string){
       for(var keys in this.display_data){
         this.display_data_arr.push(this.display_data[keys])
       }
-      this.loading = false;
+      this.http.post(this.newbaseUrl + "display/" + this.username + "/cache/get/meta", this.position).subscribe((data) => {
+        this.display_data_meta = data as string[];
+        this.loading = false;
+      },
+      (error) => {
+        this.loading = false;
+      });
+
 
     },
     (error) => {
@@ -140,12 +147,6 @@ remZero(str: string){
 
     });
 
-
-    this.http.post(this.newbaseUrl + "display/" + this.username + "/cache/get/meta", this.position).subscribe((data) => {
-      this.display_data_meta = data as string[];
-    },
-    (error) => {
-    });
 
     this.all_accounts = [];
     this.http
@@ -257,6 +258,7 @@ export class Dialog_cardbox {
         this.http.post(this.baseUrl + "display/" + this.username + "/trade/close/" + this.ticker, this.incoming).subscribe((datax) => {
           this.populate_data = [];
           this.populate_data = datax as object[];
+          console.log(this.populate_data);
           this.run_spinner = false;
           this.isIronFun();
         });
@@ -268,6 +270,15 @@ export class Dialog_cardbox {
       this.http.post(this.baseUrl + "trade/" + this.username + "/close/" + this.ticker +
           "/"+(document.getElementById('tradeContracts') as HTMLInputElement).value +
           "/" +  (document.getElementById('tradeClose') as HTMLInputElement).value, this.incoming).subscribe((datax) => {
+        this.run_spinner = false;
+
+      });
+    }
+    closeStockTrade(){
+      this.run_spinner = true;
+      this.http.post(this.baseUrl + "trade/" + this.username + "/stock/close/" + this.ticker +
+          "/"+(document.getElementById('tradeContracts') as HTMLInputElement).value +
+          "/" +  (document.getElementById('tradeClose') as HTMLInputElement).value + "/" + this.selectRecieve + "/" + this.selectLiquid, this.incoming).subscribe((datax) => {
         this.run_spinner = false;
 
       });
@@ -292,6 +303,11 @@ export class Dialog_cardbox {
     selectRecieved(value: String) {
       this.selectRecieve = value;
      }
+     selectLiquid: String;
+     selectLiquidation(value: String) {
+       this.selectLiquid = value;
+      }
+
     isIron: boolean = false;
     showSingleLeg: boolean = false;
     legData: object;
