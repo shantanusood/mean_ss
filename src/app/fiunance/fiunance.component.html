@@ -13,7 +13,7 @@
   </div>
 <div class="container" >
   <ng-template #loaded>
-    <div *ngFor="let x of positions_tick | slice:2:3" style="display: inline-flex; margin: auto;">
+    <div *ngFor="let x of positions_tick" style="display: inline-flex; margin: auto;">
       <app-cardbox [position]=passed_val(x) [username]="username"></app-cardbox>
     </div>
   </ng-template>
