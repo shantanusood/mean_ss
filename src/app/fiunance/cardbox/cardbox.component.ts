@@ -200,7 +200,7 @@ remZero(str: string){
 
   dialogBox(type: String, incoming: object){
     const dialogRef = this.dialog.open(Dialog_cardbox, {
-      width: '400px',
+      width: '450px',
       data: {_type: type, _ticker: this.ticker, _data: incoming, _username: this.username, _baseUrl: this.newbaseUrl}
     });
   dialogRef.afterClosed().subscribe(result => {  });
@@ -232,6 +232,7 @@ export class Dialog_cardbox {
   ticker: string = "";
   incoming: object;
   populate_data: object[];
+  populate_data_opt: object[];
   baseUrl: string;
   username: string;
   run_spinner: boolean = true;
@@ -248,10 +249,27 @@ export class Dialog_cardbox {
       if(this.type == 'View Trade'){
         this.http.post(this.baseUrl + "display/" + this.username + "/trade/view/" + this.ticker, this.incoming).subscribe((data) => {
           this.populate_data = [];
+          this.populate_data_opt = [];
           this.populate_data = data as object[];
+          if('ShortCall' in this.populate_data){
+            this.populate_data_opt['ShortCall'] = this.populate_data['ShortCall'];
+            delete this.populate_data['ShortCall'];
+          }
+          if('LongCall' in this.populate_data){
+            this.populate_data_opt['LongCall'] = this.populate_data['LongCall'];
+            delete this.populate_data['LongCall'];
+          }
+          if('ShortPut' in this.populate_data){
+            this.populate_data_opt['ShortPut'] = this.populate_data['ShortPut'];
+            delete this.populate_data['ShortPut'];
+          }
+          if('LongPut' in this.populate_data){
+            this.populate_data_opt['LongPut'] = this.populate_data['LongPut'];
+            delete this.populate_data['LongPut'];
+          }
           this.run_spinner = false;
         });
-      }else if(this.type == 'Close Trade'){
+      }else {
         this.isIron = false;
         this.showSingleLeg = false;
 
@@ -274,6 +292,59 @@ export class Dialog_cardbox {
 
       });
     }
+    receieveDummy: string = "x"
+    rollTrade(){
+      var _longcall = "";
+      if((document.getElementById('longcall') as HTMLInputElement) == null){
+        _longcall = "0";
+      }else{
+        _longcall = (document.getElementById('longcall') as HTMLInputElement).value;
+      }
+      var _shortcall = "";
+      if((document.getElementById('shortcall') as HTMLInputElement) == null){
+        _shortcall = "0";
+      }else{
+        _shortcall = (document.getElementById('shortcall') as HTMLInputElement).value;
+      }
+      var _longput = "";
+      if((document.getElementById('longput') as HTMLInputElement) == null){
+        _longput = "0";
+      }else{
+        _longput = (document.getElementById('longput') as HTMLInputElement).value;
+      }
+      var _shortput = "";
+      if((document.getElementById('shortput') as HTMLInputElement) == null){
+        _shortput = "0";
+      }else{
+        _shortput = (document.getElementById('shortput') as HTMLInputElement).value;
+      }
+
+      var dataToAdd2:object = {
+        close: this.incoming,
+        open : {
+          Account: this.populate_data['Account'],
+          TradeDate: new Date(),
+          Strategy: this.populate_data['type'],
+          Longtype: "N/A",
+          Ticker: this.ticker,
+          Contracts: (document.getElementById('contracts') as HTMLInputElement).value,
+          Collateral: (document.getElementById('collateral') as HTMLInputElement).value,
+          Expiry: (document.getElementById('expiry') as HTMLInputElement).value,
+          LongCall: _longcall,
+          ShortCall: _shortcall,
+          ShortPut: _shortput,
+          LongPut: _longput,
+          Premium: (document.getElementById('premium') as HTMLInputElement).value
+        }
+      }
+      this.run_spinner = true;
+      this.http.post(this.baseUrl + "trade/" + this.username + "/roll/" + this.ticker +
+          "/"+(document.getElementById('tradeContracts') as HTMLInputElement).value +
+          "/" +  (document.getElementById('tradeClose') as HTMLInputElement).value + "/" + this.receieveDummy, dataToAdd2).subscribe((datax) => {
+        this.run_spinner = false;
+
+      });
+    }
     closeStockTrade(){
       this.run_spinner = true;
       this.http.post(this.baseUrl + "trade/" + this.username + "/stock/close/" + this.ticker +
@@ -291,6 +362,63 @@ export class Dialog_cardbox {
         _data: this.incoming
       }
       this.http.post(this.baseUrl + "trade/" + this.username + "/leg/close/" + this.ticker +
+          "/"+(document.getElementById('tradeContracts') as HTMLInputElement).value +
+          "/" +  (document.getElementById('tradeClose') as HTMLInputElement).value +
+          "/" + this.selectRecieve, dataToAdd).subscribe((datax) => {
+        this.run_spinner = false;
+
+      });
+    }
+
+    rollLegTrade(){
+      this.run_spinner = true;
+      var _longcall = "";
+      if((document.getElementById('longcall') as HTMLInputElement) == null){
+        _longcall = "0";
+      }else{
+        _longcall = (document.getElementById('longcall') as HTMLInputElement).value;
+      }
+      var _shortcall = "";
+      if((document.getElementById('shortcall') as HTMLInputElement) == null){
+        _shortcall = "0";
+      }else{
+        _shortcall = (document.getElementById('shortcall') as HTMLInputElement).value;
+      }
+      var _longput = "";
+      if((document.getElementById('longput') as HTMLInputElement) == null){
+        _longput = "0";
+      }else{
+        _longput = (document.getElementById('longput') as HTMLInputElement).value;
+      }
+      var _shortput = "";
+      if((document.getElementById('shortput') as HTMLInputElement) == null){
+        _shortput = "0";
+      }else{
+        _shortput = (document.getElementById('shortput') as HTMLInputElement).value;
+      }
+      var dataToAdd ={
+        close: {
+          TradeDate: new Date(),
+          _account: this.populate_data['Account'],
+          _data: this.incoming
+        },
+        open : {
+          Account: this.populate_data['Account'],
+          TradeDate: new Date(),
+          Strategy: this.populate_data['type'],
+          Longtype: "N/A",
+          Ticker: this.ticker,
+          Contracts: (document.getElementById('contracts') as HTMLInputElement).value,
+          Collateral: (document.getElementById('collateral') as HTMLInputElement).value,
+          Expiry: (document.getElementById('expiry') as HTMLInputElement).value,
+          LongCall: _longcall,
+          ShortCall: _shortcall,
+          ShortPut: _shortput,
+          LongPut: _longput,
+          Premium: (document.getElementById('premium') as HTMLInputElement).value
+        }
+      }
+      this.http.post(this.baseUrl + "trade/" + this.username + "/roll/" + this.ticker +
           "/"+(document.getElementById('tradeContracts') as HTMLInputElement).value +
           "/" +  (document.getElementById('tradeClose') as HTMLInputElement).value +
           "/" + this.selectRecieve, dataToAdd).subscribe((datax) => {
@@ -332,6 +460,10 @@ export class Dialog_cardbox {
       }else{
         this.isIron = false;
       }
+    }
+    onNoClick(): void {
+
+      this.dialogRef.close();
     }
 
 }

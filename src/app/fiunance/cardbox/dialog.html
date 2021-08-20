@@ -1,75 +1,176 @@
 <div>
-  <table style="border: none; color: black; width: 100%;">
+  <span *ngIf="run_spinner"><div style="margin:0 auto;" class="lds-dual-ring"></div></span>
+  <table style="border: none; width: 100%;" class="dialog_table" *ngIf="!run_spinner">
+    <thead *ngIf="!run_spinner">
      <tr>
-       <th style="border: none; color: black; width: 100%;" colspan="2">{{type}} for {{ticker | uppercase}}</th>
+       <th style="border: none;">{{type}} for {{ticker | uppercase}}</th>
      </tr>
-     <span *ngIf="type.indexOf('View Trade')!=-1">
-      <span style="border: 0px solid pink;" *ngIf="run_spinner"><div class="lds-dual-ring"></div></span>
-      <tr *ngFor="let item of populate_data | keyvalue">
-        <td style="border: none; color: black;">{{item.key}}</td>
-        <td style="border: none; color: black;">{{item.value}}</td>
+    </thead>
+     <tbody *ngIf="type.indexOf('View Trade')!=-1">
+      <tr style="border: none; " *ngFor="let item of populate_data | keyvalue">
+        <td *ngIf="item.key.indexOf('Long')==-1 && item.key.indexOf('Short')==-1" style="border: none; width: 150px; color: rgb(65, 61, 61);">
+          {{item.key | uppercase}}
+        </td>
+        <td style="border: none; color: rgb(65, 61, 61);" *ngIf="item.key.indexOf('Long')==-1 && item.key.indexOf('Short')==-1">
+          <span *ngIf="item.key.indexOf('$PNL')!=-1">
+            <span *ngIf="populate_data['$PNL'].indexOf('-')!=-1" style="color: red;">{{item.value}}</span>
+            <span *ngIf="populate_data['$PNL'].indexOf('-')==-1" style="color: green;">{{item.value}}</span>
+          </span>
+          <span *ngIf="item.key.indexOf('%PNL')!=-1">
+            <span *ngIf="populate_data['%PNL'].indexOf('-')!=-1" style="color: red;">{{item.value}}</span>
+            <span *ngIf="populate_data['%PNL'].indexOf('-')==-1" style="color: green;">{{item.value}}</span>
+          </span>
+          <span *ngIf="item.key.indexOf('PNL')==-1">
+            {{item.value}}
+          </span>
+          </td>
       </tr>
-    </span>
+      <tr id="options">
+        <th>Strike</th>
+        <th>Type</th>
+        <th>Price</th>
+        <th>Bid</th>
+        <th>Ask</th>
+        <th>OpenInt</th>
+        <th>Delta</th>
+        <th>Gamma</th>
+        <th>Vega</th>
+        <th>Theta</th>
+      </tr>
+      <tr id="options" *ngFor="let item of populate_data_opt | keyvalue">
+          <td style="color: black; font-size: small;">{{item.value['value']}}</td>
+          <td style="background-color: green; color: white;" *ngIf="item.key.indexOf('LongCall')!=-1">{{populate_data['Contracts']}}&nbsp;Call</td>
+          <td style="background-color: red; color: white;" *ngIf="item.key.indexOf('ShortCall')!=-1">-{{populate_data['Contracts']}}&nbsp;Call</td>
+          <td style="background-color: red; color: white;" *ngIf="item.key.indexOf('ShortPut')!=-1">-{{populate_data['Contracts']}}&nbsp;Put</td>
+          <td style="background-color: green; color: white;" *ngIf="item.key.indexOf('LongPut')!=-1">{{populate_data['Contracts']}}&nbsp;Put</td>
+          <td style="color: black;">{{item.value['price']}}</td>
+          <td style="color: black;">{{item.value['bid']}}</td>
+          <td style="color: black;">{{item.value['ask']}}</td>
+          <td style="color: black;">{{item.value['open_interest']}}</td>
+          <td style="color: black;">{{item.value['delta']}}</td>
+          <td style="color: black;">{{item.value['gamma']}}</td>
+          <td style="color: black;">{{item.value['vega']}}</td>
+          <td style="color: black;">{{item.value['theta']}}</td>
+        </tr>
+    </tbody>
 
+    <tbody *ngIf="type.indexOf('Roll Trade')!=-1 && isIron">
+      <tr style="border: none;">
+        <td style="border: none; color: black;" colspan="2">Position is associated with {{populate_data['type']}}</td>
+      </tr>
+      <tr style="border: none; height: 100%;">
+        <td style="border: none; color: black;">Roll: </td>
+        <td style="border: none; "><button mat-button (click)="showNonIronFun('true')" >Only this position</button></td>
+      </tr>
+      <tr style="border: none; height: 100%;">
+        <td style="border: none; color: black;">Roll: </td>
+        <td style="border: none; "><button mat-button (click)="showNonIronFun('false')" >The {{populate_data['type']}} position</button></td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="type.indexOf('Close Trade')!=-1 && isIron">
+      <tr style="border: none; ">
+        <td style="border: none; color: black;" colspan="2">Position is associated with {{populate_data['type']}}</td>
+      </tr>
+      <tr style="border: none; height: 100%;">
+        <td style="border: none; color: black;">Close: </td>
+        <td style="border: none; "><button mat-button (click)="showNonIronFun('true')" >Only this position</button></td>
+      </tr>
+      <tr style="border: none; height: 100%;">
+        <td style="border: none; color: black;">Close: </td>
+        <td style="border: none; "><button mat-button (click)="showNonIronFun('false')" >The {{populate_data['type']}} position</button></td>
+      </tr>
+    </tbody>
 
-
-    <span *ngIf="type.indexOf('Close Trade')!=-1 && isIron">
-      This position is associated with an {{populate_data['type']}}:<br>
-      Close <button mat-button (click)="showNonIronFun('true')" >Only this position</button>
-      Close <button mat-button (click)="showNonIronFun('false')" >The {{populate_data['type']}} position</button>
-    </span>
-    <span *ngIf="type.indexOf('Close Trade')!=-1 && !isIron && !showSingleLeg">
-      <span style="border: 0px solid pink;" *ngIf="run_spinner"><div class="lds-dual-ring"></div></span>
-      <tr style="width: 100%;">
-        <th style="border: none; color: black; width: 100%;" colspan="2">{{populate_data['type']}} in Account: {{populate_data['Account']}}</th>
+    <tbody *ngIf="(type.indexOf('Close Trade')!=-1 || type.indexOf('Roll Trade')!=-1) && !isIron && !showSingleLeg">
+      <tr *ngIf="type.indexOf('Roll Trade')!=-1">
+        <th style="border: none; color: black; width: 150px;" ></th>
+        <th style="border: none; color: black; width: 110px;" >Close this:</th>
+        <th style="border: none; color: black; width: 110px;" >Open this:</th>
       </tr>
-      <tr style="width: 100%; border: none; color: black;">
-        <td style="width: 70%; border: none; color: black;">#Contracts: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['Contracts']}}</td>
+      <tr style="width: 100%;" *ngIf="type.indexOf('Close Trade')!=-1">
+        <th  style="border: none; color: black;" colspan="2">{{populate_data['type']}} in Account: {{populate_data['Account']}}</th>
       </tr>
-      <tr style="width: 100%; border: none; color: black;">
-        <td style="width: 70%; border: none; color: black;">Collateral: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['Collateral']}}</td>
+      <tr style="border: none; ">
+        <td  style="border: none; color: black; width: 150px; ">#Contracts: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['Contracts']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  id="contracts" type="number">
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;">
-        <td style="width: 70%; border: none; color: black;">Days To Expiry: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['Days To Expiry']}}</td>
+      <tr style="border: none; ">
+        <td  style="border: none; color: black; width: 150px; ">Collateral: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['Collateral']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  *ngIf="populate_data['type'].indexOf('Covered')!=-1" id="collateral" type="text" diabled value="Calculated">
+          <input class="inputs"  *ngIf="populate_data['type'].indexOf('Covered')==-1" id="collateral" type="number">
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;">
-        <td style="width: 70%; border: none; color: black;">Days Open: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['Days Open']}}</td>
+      <tr style="border: none; ">
+        <td  style="border: none; color: black; width: 150px; ">Days To Expiry: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['Days To Expiry']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          N/A
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;">
-        <td style="width: 70%; border: none; color: black;">Expiry: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['Expiry']}}</td>
+      <tr style="border: none; ">
+        <td  style="border: none; color: black; width: 150px; ">Days Open: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['Days Open']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          N/A
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['ShortCall']">
-        <td style="width: 70%; border: none; color: black;">ShortCall	: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['ShortCall']}}</td>
+      <tr style="border: none; ">
+        <td  style="border: none; color: black; width: 150px; ">Expiry: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['Expiry']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  id="expiry" type="date">
+        </td>
       </tr>
-      <tr  style="width: 100%; border: none; color: black;" *ngIf="populate_data['LongCall']">
-        <td style="width: 70%; border: none; color: black;">LongCall	: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['LongCall']}}</td>
+      <tr style="border: none; " *ngIf="populate_data['ShortCall']">
+        <td  style="border: none; color: black; width: 150px; ">ShortCall	: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['ShortCall']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  id="shortcall" type="number">
+        </td>
       </tr>
-      <tr  style="width: 100%; border: none; color: black;" *ngIf="populate_data['LongPut']">
-        <td style="width: 70%; border: none; color: black;">LongPut: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['LongPut']}}</td>
+      <tr  style="border: none; " *ngIf="populate_data['LongCall']">
+        <td  style="border: none; color: black; width: 150px; ">LongCall	: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['LongCall']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  id="longcall" type="number">
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['ShortPut']">
-        <td style="width: 70%; border: none; color: black;">ShortPut: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['ShortPut']}}</td>
+      <tr  style="border: none; " *ngIf="populate_data['LongPut']">
+        <td  style="border: none; color: black; width: 150px; ">LongPut: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['LongPut']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  id="longput" type="number">
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['Longtype'].indexOf('N/A')==-1">
-        <td style="width: 70%; border: none; color: black;">Price Paid: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['Premium']}}</td>
+      <tr style="border: none; " *ngIf="populate_data['ShortPut']">
+        <td  style="border: none; color: black; width: 150px; ">ShortPut: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['ShortPut']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  id="shortput" type="number">
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['Longtype'].indexOf('N/A')!=-1">
-        <td style="width: 70%; border: none; color: black;">Premium recieved: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['Premium']}}</td>
+      <tr style="border: none; " *ngIf="populate_data['Longtype'].indexOf('N/A')==-1">
+        <td  style="border: none; color: black; width: 150px; ">Price Paid: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['Premium']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  id="premium" type="number">
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['Longtype'].indexOf('Stock')!=-1">
-        <td style="width: 70%; border: none; color: black;">Which account?</td>
-        <td style="width: 30%; border: none; color: black;">
+      <tr style="border: none; " *ngIf="populate_data['Longtype'].indexOf('N/A')!=-1">
+        <td  style="border: none; color: black; width: 150px; ">Premium recieved: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['Premium']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  id="premium" type="number">
+        </td>
+      </tr>
+      <tr style="border: none; " *ngIf="populate_data['Longtype'].indexOf('Stock')!=-1">
+        <td  style="border: none; color: black; width: 150px; ">Which account?</td>
+        <td style=" border: none; color: black; width:110px;">
           <select (change)="selectRecieved($event.target.value)">
             <option value="">&nbsp;</option>
             <option *ngFor="let x of populate_data['Account']">
@@ -78,9 +179,9 @@
           </select>
         </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['Longtype'].indexOf('Stock')!=-1">
-        <td style="width: 70%; border: none; color: black;">Full liquidation?</td>
-        <td style="width: 30%; border: none; color: black;">
+      <tr style="border: none; " *ngIf="populate_data['Longtype'].indexOf('Stock')!=-1">
+        <td  style="border: none; color: black; width: 150px; ">Full liquidation?</td>
+        <td style=" border: none; color: black; width:110px;">
           <select (change)="selectLiquidation($event.target.value)">
             <option value="">&nbsp;</option>
             <option value="Y">Y</option>
@@ -88,78 +189,139 @@
           </select>
         </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;">
-        <td style="width: 70%; border: none; color: black;">Closing cost/price: </td>
-        <td style="width: 30%; border: none; color: black;">
-          <input id="tradeClose">
+      <tr style="border: none; ">
+        <td style="border: none; color: black; width: 150px; ">Closing cost/price: </td>
+        <td style="border: none; color: black; width:110px;">
+          <input class="inputs" type="number"  id="tradeClose">
+        </td>
+        <td style="border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          N/A
         </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;">
-        <td style="width: 70%; border: none; color: black;">#Contracts to Close: </td>
-        <td style="width: 30%; border: none; color: black;">
-          <input id="tradeContracts">
+      <tr style="border: none; ">
+        <td  style="border: none; color: black; width: 150px; ">#Contracts to Close: </td>
+        <td style=" border: none; color: black; width:110px;">
+          <input class="inputs" type="number" id="tradeContracts">
+        </td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          N/A
         </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['Longtype'].indexOf('Stock')==-1">
-        <td colspan="2"><button (click)="closeTrade()" mat-button>Close Trade</button></td>
+      <tr style="border: none; height: 100%; width: 100%;" *ngIf="populate_data['Longtype'].indexOf('Stock')==-1 && type.indexOf('Close Trade')!=-1">
+        <td style="border: none;  text-align: center;">
+          <button (click)="onNoClick()" mat-button>Cancel</button>
+        </td>
+        <td style="border: none;  text-align: center;">
+          <button (click)="closeTrade()" mat-button>Close Trade</button>
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['Longtype'].indexOf('Stock')!=-1">
-        <td colspan="2"><button (click)="closeStockTrade()" mat-button>Close Trade</button></td>
+      <tr style="border: none; height: 100%; width: 100%;" *ngIf="populate_data['Longtype'].indexOf('Stock')==-1 && type.indexOf('Roll Trade')!=-1">
+        <td style="border: none;  text-align: center;">
+          <button (click)="onNoClick()" mat-button>Cancel</button>
+        </td>
+        <td style="border: none;  text-align: center;">
+          <button (click)="rollTrade()" mat-button>Roll Trade</button>
+        </td>
       </tr>
-    </span>
-    <span *ngIf="type.indexOf('Close Trade')!=-1 && !isIron && showSingleLeg">
-      {{legData | json}}
-      <span style="border: 0px solid pink;" *ngIf="run_spinner"><div class="lds-dual-ring"></div></span>
-      <tr style="width: 100%;">
+      <tr style="border: none; height: 100%; width: 100%;" *ngIf="populate_data['Longtype'].indexOf('Stock')!=-1 && type.indexOf('Close Trade')!=-1">
+        <td style="border: none;  text-align: center;">
+          <button (click)="onNoClick()" mat-button>Cancel</button>
+        </td>
+        <td style="border: none;  text-align: center;">
+          <button (click)="closeStockTrade()" mat-button>Close Trade</button>
+        </td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="(type.indexOf('Close Trade')!=-1 || type.indexOf('Roll Trade')!=-1) && !isIron && showSingleLeg">
+      <tr style="width: 100%;" *ngIf="type.indexOf('Roll Trade')!=-1">
+        <th style="border: none; color: black; width: 150px;" ></th>
+        <th style="border: none; color: black; width: 110px;" >Close this:</th>
+        <th style="border: none; color: black; width: 110px;" >Open this:</th>
+      </tr>
+      <tr *ngIf="type.indexOf('Close Trade')!=-1">
         <th style="border: none; color: black; width: 100%;" colspan="2">{{populate_data['type']}} in Account: {{populate_data['Account']}}</th>
       </tr>
-      <tr style="width: 100%; border: none; color: black;">
-        <td style="width: 70%; border: none; color: black;">#Contracts: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['Contracts']}}</td>
+      <tr style="border: none; ">
+        <td  style="border: none; color: black; width: 150px; ">#Contracts: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['Contracts']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  id="contracts" type="number">
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;">
-        <td style="width: 70%; border: none; color: black;">Collateral: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['Collateral']}}</td>
+      <tr style="border: none; ">
+        <td  style="border: none; color: black; width: 150px; ">Collateral: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['Collateral']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  *ngIf="populate_data['type'].indexOf('Covered')!=-1" id="collateral" type="text" diabled value="Calculated">
+          <input class="inputs"  *ngIf="populate_data['type'].indexOf('Covered')==-1" id="collateral" type="number">
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;">
-        <td style="width: 70%; border: none; color: black;">Days To Expiry: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['Days To Expiry']}}</td>
+      <tr style="border: none; ">
+        <td  style="border: none; color: black; width: 150px; ">Days To Expiry: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['Days To Expiry']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          N/A
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;">
-        <td style="width: 70%; border: none; color: black;">Days Open: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['Days Open']}}</td>
+      <tr style="border: none; ">
+        <td  style="border: none; color: black; width: 150px; ">Days Open: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['Days Open']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          N/A
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;">
-        <td style="width: 70%; border: none; color: black;">Expiry: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['Expiry']}}</td>
+      <tr style="border: none; ">
+        <td  style="border: none; color: black; width: 150px; ">Expiry: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['Expiry']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  id="expiry" type="date">
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['ShortCall']">
-        <td style="width: 70%; border: none; color: black;">ShortCall	: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['ShortCall']}}</td>
+      <tr style="border: none; " *ngIf="populate_data['ShortCall']">
+        <td  style="border: none; color: black; width: 150px; ">ShortCall	: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['ShortCall']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  id="shortcall" type="number">
+        </td>
       </tr>
-      <tr  style="width: 100%; border: none; color: black;" *ngIf="populate_data['LongCall']">
-        <td style="width: 70%; border: none; color: black;">LongCall	: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['LongCall']}}</td>
+      <tr  style="border: none; " *ngIf="populate_data['LongCall']">
+        <td  style="border: none; color: black; width: 150px; ">LongCall	: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['LongCall']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  id="longcall" type="number">
+        </td>
       </tr>
-      <tr  style="width: 100%; border: none; color: black;" *ngIf="populate_data['LongPut']">
-        <td style="width: 70%; border: none; color: black;">LongPut: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['LongPut']}}</td>
+      <tr  style="border: none; " *ngIf="populate_data['LongPut']">
+        <td  style="border: none; color: black; width: 150px; ">LongPut: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['LongPut']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  id="longput" type="number">
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['ShortPut']">
-        <td style="width: 70%; border: none; color: black;">ShortPut: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['ShortPut']}}</td>
+      <tr style="border: none; " *ngIf="populate_data['ShortPut']">
+        <td  style="border: none; color: black; width: 150px; ">ShortPut: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['ShortPut']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  id="shortput" type="number">
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['Longtype'].indexOf('N/A')==-1">
-        <td style="width: 70%; border: none; color: black;">Price Paid: </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['Premium']}}</td>
+      <tr style="border: none; " *ngIf="populate_data['Longtype'].indexOf('N/A')==-1">
+        <td  style="border: none; color: black; width: 150px; ">Price Paid: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['Premium']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  id="premium" type="number">
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;" *ngIf="populate_data['Longtype'].indexOf('N/A')!=-1">
-        <td style="width: 70%; border: none; color: black;">Premium recieved<br>(On entire Position): </td>
-        <td style="width: 30%; border: none; color: black;">{{populate_data['Premium']}}</td>
+      <tr style="border: none; " *ngIf="populate_data['Longtype'].indexOf('N/A')!=-1">
+        <td  style="border: none; color: black; width: 150px; ">Premium recieved: </td>
+        <td style=" border: none; color: black; width:110px;">{{populate_data['Premium']}}</td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          <input class="inputs"  id="premium" type="number">
+        </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;">
-        <td style="width: 70%; border: none; color: black;">You received <br>Credit or Debit?</td>
-        <td style="width: 70%; border: none; color: black;">
+      <tr style="border: none; ">
+        <td  style="border: none; color: black; width: 150px; ">Credit or Debit?</td>
+        <td style="border: none; color: black;">
           <select class="inputs" (change)="selectRecieved($event.target.value)">
             <option value="">&nbsp;</option>
             <option value="Credit">Credit</option>
@@ -167,22 +329,46 @@
             </select>
 
         </td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          N/A
+        </td>
+
       </tr>
-      <tr style="width: 100%; border: none; color: black;">
-        <td style="width: 70%; border: none; color: black;">Closing cost/price: </td>
-        <td style="width: 30%; border: none; color: black;">
-          <input id="tradeClose">
+      <tr style="border: none; ">
+        <td  style="border: none; color: black; width: 150px; ">Closing cost/price: </td>
+        <td style=" border: none; color: black; width:110px;">
+          <input class="inputs" type="number"  id="tradeClose">
+        </td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          N/A
         </td>
       </tr>
-      <tr style="width: 100%; border: none; color: black;">
-        <td style="width: 70%; border: none; color: black;">#Contracts to Close: </td>
-        <td style="width: 30%; border: none; color: black;">
-          <input id="tradeContracts">
+      <tr style="border: none; ">
+        <td  style="border: none; color: black; width: 150px; ">#Contracts to Close: </td>
+        <td style=" border: none; color: black; width:110px;">
+          <input class="inputs" type="number" class="inputs" id="tradeContracts">
+        </td>
+        <td style=" border: none; color: black; width:110px;" *ngIf="type.indexOf('Roll Trade')!=-1">
+          N/A
         </td>
       </tr>
-      <tr>
-        <td colspan="2"><button (click)="closeLegTrade()" mat-button>Close Trade</button></td>
+      <tr style="border: none; height: 100%; width: 100%;" *ngIf="populate_data['Longtype'].indexOf('Stock')==-1 && type.indexOf('Close Trade')!=-1">
+        <td style="border: none;  text-align: center;">
+          <button (click)="onNoClick()" mat-button>Cancel</button>
+        </td>
+        <td style="border: none;  text-align: center;">
+          <button (click)="closeLegTrade()" mat-button>Close Trade</button>
+        </td>
       </tr>
-    </span>
+      <tr style="border: none; height: 100%; width: 100%;" *ngIf="populate_data['Longtype'].indexOf('Stock')==-1 && type.indexOf('Roll Trade')!=-1">
+        <td style="border: none;  text-align: center;">
+          <button (click)="onNoClick()" mat-button>Cancel</button>
+        </td>
+        <td style="border: none;  text-align: center;">
+          <button (click)="rollLegTrade()" mat-button>Roll Trade</button>
+        </td>
+      </tr>
+
+    </tbody>
    </table>
  </div>

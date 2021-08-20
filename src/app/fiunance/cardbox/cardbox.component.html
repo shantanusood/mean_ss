@@ -100,7 +100,7 @@
               </td>
               <td id="{{x}}" style="background-color: rgb(70, 66, 66); border: none; font-size: 1.75em; text-align: center; vertical-align:middle; width:fit-content;"><sup style="color: aliceblue; font-size:0.5em">{{strSplit(x[0], 'second')}}</sup>{{x[2]}}
                   <span *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')==-1 && checkITM(x[1], x[5]).indexOf('Stock')==-1" (click)="dialogBox('View Trade', x)" style="border: none;"><mat-icon id="rolltrade" matTooltip="View position" class="material-icons">visibility</mat-icon></span>
-                  <span *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')==-1 && checkITM(x[1], x[5]).indexOf('Stock')==-1" (click)="dialogBox('Roll trade', x)" style="border: none;"><mat-icon id="rolltrade" matTooltip="Roll position" class="material-icons">redo</mat-icon></span>
+                  <span *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')==-1 && checkITM(x[1], x[5]).indexOf('Stock')==-1" (click)="dialogBox('Roll Trade', x)" style="border: none;"><mat-icon id="rolltrade" matTooltip="Roll position" class="material-icons">redo</mat-icon></span>
                   <span *ngIf="checkITM(x[1], x[5]).indexOf('PRICE')==-1" (click)="dialogBox('Close Trade', x)" style="border: none;"><mat-icon id="closetrade" matTooltip="Close position" class="material-icons">close</mat-icon></span>
               </td>
               <td style="border: none; vertical-align: center;">

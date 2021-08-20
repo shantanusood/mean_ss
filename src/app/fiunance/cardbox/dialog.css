@@ -23,3 +23,88 @@
     transform: rotate(360deg);
   }
 }
+.dialog_table {
+  overflow-x: scroll;
+  table-layout: fixed;
+  overflow:scroll;
+  border-collapse: collapse;
+  margin: 5px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+.dialog_table thead tr {
+  background-color: rgb(65, 61, 61);
+  color: wheat;
+  text-align: center;
+}
+.dialog_table th{
+  padding: 2.5px;
+text-align: center;
+}
+.dialog_table td {
+  padding: 2.5px;
+}
+.dialog_table tbody tr {
+  display: block;
+  height: 28px;
+  border-bottom: 1px solid #dddddd;
+}
+
+.dialog_table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.dialog_table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+.dialog_table tbody tr.active-row {
+  font-weight: bold;
+  color: #009879;
+}
+
+.dialog_table button{
+  color: black;
+  background-color: wheat;
+  border: none;
+  margin-left: 120px;
+  width: 200px;
+  display: block;
+  margin: auto;
+  justify-content: center;
+}
+.dialog_table button :hover{
+  color: wheat;
+  background-color: rgb(65, 61, 61);
+  border: none;
+  display: block;
+  margin: auto;
+  justify-content: center;
+}
+.inputs {
+  width:100px;
+  resize: vertical;
+  padding:5px;
+  border-radius:5px;
+  border:1px solid black;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  height: 24px;
+}
+#options th{
+  text-align: center;
+  border: none;
+  font-size: xx-small;
+  background-color: rgb(65, 61, 61);
+  min-width: 40px;
+  max-width: 40px;
+}
+
+#options td{
+  text-align: center;
+  border: none;
+  color: black;
+  min-width: 40px;
+  max-width: 40px;
+  font-size: x-small;
+}
