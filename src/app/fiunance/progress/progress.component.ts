@@ -816,6 +816,9 @@ export class Dialog_progress{
   accGroups_display_acc: object[];
   selectedOption: String;
   selectedOptionFilt: String;
+  networth: object;
+  networth_num : number[];
+  networth_arr: object[];
 
   update(){
     if(this.type=='Edit Groups'){
@@ -866,6 +869,28 @@ export class Dialog_progress{
           }
           this.accGroups_display_acc.push(accounts);
         }
+      }else if(this.type=='Net Worth'){
+        this.http.get(this.baseUrl + "data/" + this.username + "/accounts/get").subscribe((datax) => {
+          var acc_data = datax as object[];
+          this.http.get(this.newBaseUrl + "progress/" + this.username + "/daily").subscribe((datax) => {
+            this.networth = datax as object;
+            this.networth = this.networth[Object.keys(this.networth)[0]] as object;
+            this.networth_arr = []
+            this.networth_num = [0, 0, 0, 0, 0]
+            for(let x in this.networth){
+              for(let y=0;y<=Number(acc_data.length)-1;y++){
+                if(x == acc_data[y]['id']){
+                  this.networth_arr.push([acc_data[y]['name'], [this.networth[x]['cash'], this.networth[x]['margin'], this.networth[x]['long'], this.networth[x]['short'], this.networth[x]['total']]]);
+                  this.networth_num[0] = this.networth_num[0] + this.networth[x]['cash'];
+                  this.networth_num[1] = this.networth_num[1] + this.networth[x]['margin'];
+                  this.networth_num[2] = this.networth_num[2] + this.networth[x]['long'];
+                  this.networth_num[3] = this.networth_num[3] + this.networth[x]['short'];
+                  this.networth_num[4] = this.networth_num[4] + this.networth[x]['total'];
+                }
+              }
+            }
+          });
+        });
       }
     }
     newAccclick: boolean = false;

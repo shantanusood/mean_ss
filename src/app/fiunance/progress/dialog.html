@@ -311,6 +311,28 @@
     </tr>
     </tbody>
   <tbody  *ngIf="type.indexOf('Net Worth')!=-1">
+    <tr>
+      <th style="border: none; width: 60px; color: black;">Account</th>
+      <th style="border: none; width: 60px; color: black;">Cash</th>
+      <th style="border: none; width: 60px; color: black;">Margin</th>
+      <th style="border: none; width: 60px; color: black;">Long</th>
+      <th style="border: none; width: 60px; color: black;">Short</th>
+      <th style="border: none; width: 60px; color: black;">Total</th>
+    </tr>
+    <tr style="border: none;" *ngFor="let x of networth_arr">
+      <td style="border: none;  text-align: center; width: 60px;" colspan="100%">
+        <span id="{{x[0]}}">{{x[0]}}</span>
+      </td>
+      <td style="border: none;  text-align: center; width: 60px; color: black;" colspan="100%" *ngFor="let y of x[1]">
+        {{y}}
+      </td>
+    </tr>
+    <tr style="border: none;">
+      <td style="border: none; width: 60px;">&nbsp;</td>
+      <td  style="border: none; font-weight: bold; text-align: center; width: 60px; color: black;" *ngFor="let x of networth_num">
+        {{x}}
+      </td>
+    </tr>
   <tr style="border: none; height: 100%; width: 100%;">
     <td style="border: none;  text-align: center;">
       <button (click)="onSaveClick()" mat-button>Cancel</button>
