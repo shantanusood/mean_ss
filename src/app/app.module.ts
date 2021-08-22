@@ -36,7 +36,7 @@ import { PredictdocComponent } from './docs/docpan/predictdoc/predictdoc.compone
 import { LeftComponent } from './tutoring/left/left.component';
 import { CoronaComponent, AutocompletePipeCorona} from './corona/corona.component';
 import { MainComponent } from './tutoring/main/main.component';
-import { ProgressComponent } from './fiunance/progress/progress.component';
+import { ProgressComponent, Dialog_progress } from './fiunance/progress/progress.component';
 import { LoginComponent } from './login/login.component';
 import { CoronaserviceService } from 'services/coronaservice.service';
 import { CoronaleftComponent  } from './admin/coronaleft/coronaleft.component';
@@ -51,11 +51,16 @@ import { ReversePipe } from './Pipes/reverse.pipe';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SyncComponent, Dialog_sync, DialogSync2, DialogSyncLinks } from './sync/sync.component';
 import { CardboxComponent, RemoveWhiteSpacePipe, Dialog_cardbox } from './fiunance/cardbox/cardbox.component';
+import { MonthlyComponent } from './fiunance/progress/monthly/monthly.component';
+import { TradegainsComponent } from './fiunance/progress/tradegains/tradegains.component';
+import { TaxComponent } from './fiunance/progress/tax/tax.component';
+import { BudgetComponent } from './fiunance/progress/budget/budget.component';
 
 @NgModule({
   declarations: [
     DialogSync2,
     Dialog_cardbox,
+    Dialog_progress,
     DialogSyncLinks,
     Dialog_sync,
     Dialog_hth,
@@ -99,7 +104,11 @@ import { CardboxComponent, RemoveWhiteSpacePipe, Dialog_cardbox } from './fiunan
     ReversePipe,
     SyncComponent,
     CardboxComponent,
-    RemoveWhiteSpacePipe
+    RemoveWhiteSpacePipe,
+    MonthlyComponent,
+    TradegainsComponent,
+    TaxComponent,
+    BudgetComponent
   ],
   imports: [
     AgGridModule.withComponents([]),
@@ -125,7 +134,7 @@ import { CardboxComponent, RemoveWhiteSpacePipe, Dialog_cardbox } from './fiunan
     FormsModule,
     ReactiveFormsModule
   ],
-  entryComponents: [Dialog_cardbox, Dialog_sync, Dialog_hth, Dialog, Dialog2, Dialog3, Dialog4, Dialog5, DialogSync2, DialogSyncLinks],
+  entryComponents: [Dialog_cardbox, Dialog_progress, Dialog_sync, Dialog_hth, Dialog, Dialog2, Dialog3, Dialog4, Dialog5, DialogSync2, DialogSyncLinks],
   providers: [CoronaserviceService],
   bootstrap: [AppComponent],
   exports: [RemoveWhiteSpacePipe]

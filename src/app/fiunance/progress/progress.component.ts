@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Chart } from 'chart.js';
 import { CoronaserviceService } from './../../coronaservice.service';
 import { AppSettings } from 'src/app/AppSettings';
 import {formatDate} from '@angular/common';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+export interface DialogData {
+  data: object;
+}
 
 @Component({
   selector: 'app-progress',
@@ -15,12 +20,12 @@ export class ProgressComponent implements OnInit {
   roles: string;
   role_list: object[];
   user_diffdays: any;
-  constructor(private http: HttpClient, private ds: CoronaserviceService) {
-
-  }
   closedTrd: object[];
   readonly baseUrl = AppSettings.baseUrl;
+  readonly newBaseUrl = AppSettings.newbaseUrl;
   recentdaily:String[];
+  add = false;
+  addtext:string = "+";
 
   data: object[];
   chart:Chart = [];
@@ -28,7 +33,7 @@ export class ProgressComponent implements OnInit {
   nextMonth:Chart = [];
   monthly:Chart = [];
   loading = false;
-
+  count:number = 0;
   dataof: object[];
   datamonthly:object[];
   index: number = 5;
@@ -55,6 +60,151 @@ export class ProgressComponent implements OnInit {
   curr_date= formatDate(new Date(), 'MM/dd/yyyy', 'en');
 
   clickedAdd: boolean = false;
+
+  accGroups: object;
+  accGroups_display_grp: string[];
+  accGroups_display_acc: object[];
+
+  colors: object = {};
+
+  changeColor(){
+    for(let x in this.colors){
+      try{
+        var ids = document.querySelectorAll('*[id="'+ x +'"]');
+        for(let i=0; i<ids.length; i++){
+          (ids[i] as HTMLSpanElement).style.color = this.colors[x];
+        }
+        //document.getElementsById(x).style.color = this.colors[x]
+      }catch{
+
+      }
+    }
+  }
+
+  onClickAdd() {
+    this.count = this.count + 1;
+    if(this.count%2===0 || this.count===0){
+      this.add = false;
+      this.addtext = "+";
+    }else{
+      this.add = true;
+      this.addtext = "-";
+    }
+}
+  constructor(private http: HttpClient, private ds: CoronaserviceService, public dialog: MatDialog) {
+
+  }
+
+  ngAfterViewChecked(){
+    this.changeColor()
+
+  }
+
+  ngOnInit() {
+
+    this.type_key = this.type;
+    this.ds.current.subscribe(message => this.username = message);
+    this.accGroups_display_grp = [];
+    this.accGroups_display_acc = [];
+    this.http.get(this.baseUrl + "data/" + this.username + "/accounts/groups/get").subscribe((datax) => {
+      this.accGroups = datax[0]['groups'];
+      for(let x in this.accGroups){
+        this.accGroups_display_grp.push(x);
+        var accounts = [];
+        for(let y=0;y<=Number(this.accGroups[x].length)-1;y++){
+          accounts.push([this.accGroups[x][y]['name'], this.accGroups[x][y]['color']]);
+        }
+        this.accGroups_display_acc.push(accounts);
+      }
+    });
+
+    this.http.get(this.baseUrl+"data/"+this.username+"/accounts/colors").subscribe((data) =>{
+      this.colors = data;
+      this.changeColor()
+    })
+    this.http
+      .get(
+        this.baseUrl +
+          "data/"+this.username+"/networth/get")
+      .subscribe((data) => {
+        this.networth = data as object[];
+      });
+
+    this.http
+      .get(
+        this.baseUrl +
+          "data/"+this.username+"/accounts")
+      .subscribe((data) => {
+        this.account_1 = data['fidelity'];
+        this.account_2 = data['robinhood'];
+        this.account_3 = data['tastyworks'];
+      });
+    this.gainsProgress();
+    this.charting();
+    this.gainsProgressMonthly();
+    this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
+      this.role_list = data as object[];
+      this.role_list.forEach(d => {
+        if(d['userid']===this.username){
+          this.roles = d['role'];
+          var date1 = new Date(d['join']);
+          var date2 = new Date();
+          var diff = Math.abs(date1.getTime() - date2.getTime());
+          this.user_diffdays = 14 - Math.ceil(diff / (1000 * 3600 * 24));
+          if(this.user_diffdays<0){
+            this.user_diffdays = "ENDED";
+          }else{
+            this.user_diffdays = String(this.user_diffdays) + " days";
+          }
+        }
+      });
+    });
+    this.http.get(this.baseUrl+'data/'+this.username+'/daily/get').subscribe((data) => {
+      this.recentdaily = data as string[];
+    });
+  }
+  byAccount: boolean = false;
+  byGroup: boolean = false;
+  byNone: boolean = false;
+  viewBySelect(value: String){
+    if(value=='Account'){
+      this.byNone = false;
+      this.byAccount = true;
+      this.byGroup = false;
+    }else if(value=='Account Group'){
+      this.byNone = false;
+      this.byAccount = false;
+      this.byGroup = true;
+    }else{
+      this.byNone = true;
+      this.byAccount = false;
+      this.byGroup = false;
+    }
+  }
+
+  dialogBox(type: String, incoming: object){
+    const dialogRef = this.dialog.open(Dialog_progress, {
+      width: '450px',
+      data: {_type: type, _data: incoming, _username: this.username, _baseUrl: this.baseUrl, _newBaseUrl: this.newBaseUrl }
+    });
+    dialogRef.disableClose = true;
+  dialogRef.afterClosed().subscribe(result => {
+    if(type == 'Edit Group'){
+      this.accGroups_display_grp = [];
+      this.accGroups_display_acc = [];
+
+      this.accGroups = result;
+        for(let x in this.accGroups){
+          this.accGroups_display_grp.push(x);
+          var accounts = [];
+          for(let y=0;y<=Number(this.accGroups[x].length)-1;y++){
+            accounts.push([this.accGroups[x][y]['name'], this.accGroups[x][y]['color']]);
+          }
+          this.accGroups_display_acc.push(accounts);
+        }
+      }
+    });
+  }
 
   formatTheDate(x){
     return formatDate(new Date(x), 'yyyy-MM-dd', 'en');
@@ -169,52 +319,6 @@ export class ProgressComponent implements OnInit {
       this.type_key = 'total';
     }
     this.charting();
-  }
-  ngOnInit() {
-
-    this.type_key = this.type;
-    this.ds.current.subscribe(message => this.username = message);
-
-    this.http
-      .get(
-        this.baseUrl +
-          "data/"+this.username+"/networth/get")
-      .subscribe((data) => {
-        this.networth = data as object[];
-      });
-
-    this.http
-      .get(
-        this.baseUrl +
-          "data/"+this.username+"/accounts")
-      .subscribe((data) => {
-        this.account_1 = data['fidelity'];
-        this.account_2 = data['robinhood'];
-        this.account_3 = data['tastyworks'];
-      });
-    this.gainsProgress();
-    this.charting();
-    this.gainsProgressMonthly();
-    this.http.get(this.baseUrl+'data/roles/get').subscribe((data) => {
-      this.role_list = data as object[];
-      this.role_list.forEach(d => {
-        if(d['userid']===this.username){
-          this.roles = d['role'];
-          var date1 = new Date(d['join']);
-          var date2 = new Date();
-          var diff = Math.abs(date1.getTime() - date2.getTime());
-          this.user_diffdays = 14 - Math.ceil(diff / (1000 * 3600 * 24));
-          if(this.user_diffdays<0){
-            this.user_diffdays = "ENDED";
-          }else{
-            this.user_diffdays = String(this.user_diffdays) + " days";
-          }
-        }
-      });
-    });
-    this.http.get(this.baseUrl+'data/'+this.username+'/daily/get').subscribe((data) => {
-      this.recentdaily = data as string[];
-    });
   }
 
   toggleAccordian(event, index) {
@@ -693,3 +797,197 @@ export class ProgressComponent implements OnInit {
   }
 
 }
+
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: './dialog.html',
+  styleUrls: ['./dialog.css']
+})
+export class Dialog_progress{
+
+  type: string = "";
+  incoming: object;
+  incoming_updated: object;
+  baseUrl: string;
+  newBaseUrl: string;
+  username: string;
+  run_spinner: boolean = true;
+  accGroups_display_grp: string[];
+  accGroups_display_acc: object[];
+  selectedOption: String;
+  selectedOptionFilt: String;
+
+  update(){
+    if(this.type=='Edit Groups'){
+      this.accGroups_display_grp = [];
+      this.accGroups_display_acc = [];
+      this.http.get(this.baseUrl + "data/" + this.username + "/accounts/groups/get").subscribe((datax) => {
+        console.log(this.accGroups_display_acc)
+        this.incoming_updated = datax[0]['groups'];
+        for(let x in this.incoming_updated){
+          this.accGroups_display_grp.push(x);
+          var accounts = [];
+          for(let y=0;y<=Number(this.incoming_updated[x].length)-1;y++){
+            accounts.push([this.incoming_updated[x][y]['name'], this.incoming_updated[x][y]['color']]);
+          }
+          this.accGroups_display_acc.push(accounts);
+        }
+        console.log(this.accGroups_display_acc)
+      });
+    }
+  }
+  constructor(
+    public dialogRef: MatDialogRef<Dialog_progress>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private http: HttpClient) {
+      this.type = data['_type'];
+      this.incoming = data['_data'];
+      this.baseUrl = data['_baseUrl'];
+      this.newBaseUrl = data['_newBaseUrl'];
+      this.username = data['_username'];
+      this.run_spinner = false;
+      this.http
+      .get(
+        this.baseUrl +
+          "data/"+this.username+"/accounts")
+      .subscribe((data) => {
+        for(var key in data){
+          this.all_accounts.push(data[key])
+        }
+      });
+
+      if(this.type=='Edit Groups'){
+        this.accGroups_display_grp = [];
+        this.accGroups_display_acc = [];
+        for(let x in this.incoming){
+          this.accGroups_display_grp.push(x);
+          var accounts = [];
+          for(let y=0;y<=Number(this.incoming[x].length)-1;y++){
+            accounts.push([this.incoming[x][y]['name'], this.incoming[x][y]['color']]);
+          }
+          this.accGroups_display_acc.push(accounts);
+        }
+      }
+    }
+    newAccclick: boolean = false;
+    all_accounts = [];
+
+    selectOption(value: String) {
+      this.selectedOption = value;
+     }
+     selectOptionFilt(value: String) {
+      this.selectedOptionFilt = value;
+     }
+     getAccNotGroup(group: String){
+      var accounts = [];
+      for(let x in this.incoming){
+        if(String(x)==group){
+          for(let y=0;y<=Number(this.incoming[x].length)-1;y++){
+            accounts.push(this.incoming[x][y]['name']);
+          }
+        }
+      }
+      var final_acc = [];
+      for(let x in this.all_accounts){
+        if(accounts.includes(this.all_accounts[x])){
+
+        }else{
+          final_acc.push(this.all_accounts[x]);
+        }
+      }
+      return final_acc;
+     }
+     addAccToGroup(_group: any){
+       this.run_spinner = true;
+      this.http.get(this.baseUrl + "data/" + this.username + "/accounts/get").subscribe((datax) => {
+        var acc_data = datax as object[];
+        var acc_id;
+       for(let y=0;y<=Number(acc_data.length)-1;y++){
+         if(this.selectedOptionFilt == acc_data[y]['name']){
+           acc_id = acc_data[y]['id'];
+           break;
+         }
+       }
+      var dataToSend = {
+        group: _group,
+        id_list: [acc_id]
+      }
+      this.http.post(this.baseUrl + "data/" + this.username + "/accounts/groups/add", dataToSend).subscribe((datax) => {
+        this.incoming = datax;
+        this.update();
+        this.run_spinner = false;
+      });
+
+    });
+     }
+     addAccToNewGroup(){
+      this.run_spinner = true;
+       var newGroup = (document.getElementById("newAccName") as HTMLInputElement).value
+       this.http.get(this.baseUrl + "data/" + this.username + "/accounts/get").subscribe((datax) => {
+        var acc_data = datax as object[];
+        var acc_id;
+       for(let y=0;y<=Number(acc_data.length)-1;y++){
+         if(this.selectedOption == acc_data[y]['name']){
+           acc_id = acc_data[y]['id'];
+           break;
+         }
+       }
+      var dataToSend = {
+        group: newGroup,
+        id_list: [acc_id]
+      }
+      this.http.post(this.baseUrl + "data/" + this.username + "/accounts/groups/add", dataToSend).subscribe((datax) => {
+        this.incoming = datax;
+        this.update();
+        this.run_spinner = false;
+      });
+
+    });
+     }
+     delAccFromGroup(_group: any, _account: String){
+      this.run_spinner = true;
+
+      this.http.get(this.baseUrl + "data/" + this.username + "/accounts/get").subscribe((datax) => {
+        var acc_data = datax as object[];
+        var acc_id;
+       for(let y=0;y<=Number(acc_data.length)-1;y++){
+         if(_account == acc_data[y]['name']){
+           acc_id = acc_data[y]['id'];
+           break;
+         }
+       }
+      var dataToSend = {
+        group: _group,
+        id_list: acc_id
+      }
+      this.http.post(this.baseUrl + "data/" + this.username + "/accounts/groups/delete", dataToSend).subscribe((datax) => {
+        this.incoming = datax;
+        this.update()
+        this.run_spinner = false;
+      });
+
+    });
+     }
+     delGroup(_group: String){
+      this.run_spinner = true;
+
+      this.http.get(this.baseUrl + "data/" + this.username + "/accounts/groups/" + _group + "/delete").subscribe((datax) => {
+        this.incoming = datax;
+        this.update()
+        this.run_spinner = false;
+
+      });
+
+     }
+    addNewAccount(){
+      this.newAccclick = true;
+    }
+
+    onSaveClick(){
+      this.dialogRef.close(this.incoming);
+
+    }
+
+    onNoClick(): void {
+
+    }
+  }

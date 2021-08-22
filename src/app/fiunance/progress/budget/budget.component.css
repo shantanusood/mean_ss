@@ -1,0 +1,18 @@
+.inner {
+  padding: 5px;
+  display: inline-flex;
+  overflow: none;
+  border: aqua solid 0px;
+}
+.inner table {
+  border: wheat dashed 2px;
+  padding: 5px;
+  width: 450px;
+  display:inline-table;
+}
+
+.inner tr {
+  border-right: wheat dashed 2px;
+  text-align: center;
+  height: 20px;
+}

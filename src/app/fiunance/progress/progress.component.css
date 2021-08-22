@@ -2,10 +2,13 @@
 .charting_hist{
   padding: 5px;
   margin-top: 0px;
-  width: 100%;
+  max-width: 450px;
   height: inherit;
-  display: inline-block;
-  min-width: 500px;
+  min-width: 400px;
+    padding: 5px;
+    display: inline-flex;
+    overflow: none;
+    border: wheat dashed 2px;
 }
 
 .percent {
@@ -257,7 +260,7 @@
   }
   .chart_inside{
     float: left;
-    width:70%
+    width:100%
   }
   .charting_months {
     padding: 5px;
@@ -368,4 +371,25 @@
   outline: none;
   font-size: 18px;
   color: wheat;
+}
+.accgroups{
+  float: right;
+  position:fixed;
+  margin-right: 10px;
+  right: 10px;
+  top: 5%;
+  z-index: 10;
+  background-color: rgb(78, 73, 73)
+}
+.accgroups_tbl {
+  margin: 0 auto;
+}
+.inputs {
+  width:90px;
+  resize: vertical;
+  padding:5px;
+  border-radius:5px;
+  border:1px solid black;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  height: 28px;
 }

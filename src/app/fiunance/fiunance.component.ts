@@ -85,6 +85,11 @@ export class FiunanceComponent implements OnInit {
     }
   }
 
+  ngAfterViewChecked(){
+    this.changeColor()
+
+  }
+
   updateColors(){
     console.log("=============================")
     console.log("=============================")

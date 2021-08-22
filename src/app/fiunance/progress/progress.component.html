@@ -1,125 +1,77 @@
 <div class="container">
-  <div *ngIf="chart" class="charting_hist" >
-    <span class="mobile-view-off"><button *ngIf="!clickedAdd" mat-button (click)="onClickAddNewData()" style="float: right; color: wheat;">Add data</button>
 
-      <table *ngIf="clickedAdd" class="this" style="float: right;">
-        <tr>
-          <td colspan="3" style="border: none;"><span style="float: right;"><mat-icon (click)="onClickCloseAddNewData()" style="cursor: pointer; color: red; border: none;" class="material-icons">close</mat-icon></span></td>
+  <div class="accgroups">
+    <table>
+     <tr><button mat-button (click)="onClickAdd()">
+         <b style="font-size: 10mm; color: white; "  matTooltip="Open trade box"  *ngIf="addtext.indexOf('-')==-1">{{addtext}}</b>
+         <b style="font-size: 10mm; color: black; "  matTooltip="Close trade box"  *ngIf="addtext.indexOf('+')==-1">
+          <mat-icon style="font-size: 20px; cursor: pointer; color: red; border: none;" class="material-icons">close</mat-icon>
+        </b>
+        </button>
         </tr>
-        <tr>
-          <th colspan="3" style="text-align: center; border: none; background-color:  rgb(78, 73, 73);">Add new data</th>
-        </tr>
-        <tr>
-          <td style="border: none; background-color:  rgb(78, 73, 73);"></td>
-          <td style="border: none; background-color:  rgb(78, 73, 73);">EOD Gain:</td>
-          <td style="border: none; background-color:  rgb(78, 73, 73);">Contribution:</td>
-        </tr>
-        <tr>
-          <td style="border: none;">{{account_1}}</td>
-          <td style="border: none;"><input matInput type="number" id="fidelity" style="width: 80px;"></td>
-          <td style="border: none;"><input matInput type="number" id="fidelity_c" style="width: 80px;" value="0"></td>
-        </tr>
-        <tr>
-          <td style="border: none;">{{account_2}}</td>
-          <td style="border: none;"><input matInput type="number" id="robinhood" style="width: 80px;"></td>
-          <td style="border: none;"><input matInput type="number" id="robinhood_c" style="width: 80px;" value="0"></td>
-        </tr>
-        <tr>
-          <td style="border: none;">{{account_3}}</td>
-          <td style="border: none;"><input matInput type="number" id="tastyworks" style="width: 80px;"></td>
-          <td style="border: none;"><input matInput type="number" id="tastyworks_c" style="width: 80px;" value="0"></td>
-        </tr>
-        <tr>
-          <td style="border: none;">Retirement</td>
-          <td style="border: none;"><input matInput type="number" id="retirement" style="width: 80px;"></td>
-          <td style="border: none;"><input matInput type="number" id="retirement_c" style="width: 80px;" value="0"></td>
-        </tr>
-        <tr *ngIf="addmsg">
-          <td colspan="3" style="color: red; border: none;">{{addmsg}}</td>
-        </tr>
-        <tr *ngIf="addmsg_done">
-          <td colspan="2" style="color: green; border: none;">{{addmsg_done}}: Please refresh</td>
-          <td style="border: none;"><button mat-button style="float: right;"><img (click)="charting()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></td>
-        </tr>
-        <tr>
-          <td colspan="3" style="text-align: center; border: none;"><button mat-button (click)="addDataHistoric()"><b>&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;</b></button></td>
-        </tr>
-      </table>
+    </table>
+    <table class="accgroups_tbl" *ngIf="add">
+      <tr>
+        <th style="border: none; border-top: 1px dashed wheat; text-align: center;" colspan="100%">Net Worth:
+          <span>$250,000</span>
+          <mat-icon (click)="dialogBox('Net Worth', {})" style="float: right; vertical-align: middle; font-size: 7mm; cursor: pointer; color:white" matTooltip="Edit Groups" class="material-icons">mode_edit</mat-icon>
+        </th>
+      </tr>
+      <tr>
+        <th style="border: none; border-top: 1px dashed wheat; text-align: center;" colspan="100%">Account Groups:
+          <mat-icon (click)="dialogBox('Edit Groups', accGroups)" style="float: right; vertical-align: middle; font-size: 7mm; cursor: pointer; color:white" matTooltip="Edit Groups" class="material-icons">mode_edit</mat-icon>
+        </th>
+      </tr>
+      <tr style="border: 1px dashed wheat;" *ngFor="let x of accGroups_display_grp; index as i">
+        <td style="border: none; text-align: right;">{{x}}:</td>
+        <td style="border: none; text-align: center;" *ngFor="let y of accGroups_display_acc[i]">
+          <span style="font-size: x-small;" id="{{y[0]}}">{{y[0]}}</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+<br>
+ <div *ngIf="chart" class="charting_hist" >
+<div class="chart_inside">
+    <table style="border: none;">
+      <tr>
+        <td style="border: none;">View By:</td>
+        <td style="border: none;">
+          <select class="inputs" (change)="viewBySelect($event.target.value)">
+            <option value="">&nbsp;</option>
+            <option value="Account">Account</option>
+            <option value="Account Group">Account Group</option>
+          </select>
+        </td>
+        <td style="border: none;" *ngIf="byNone">&nbsp;</td>
+        <td style="border: none;" *ngIf="byNone">
+        </td>
+        <td  style="border: none;" *ngIf="byAccount">Select Account:</td>
+        <td style="border: none;" *ngIf="byAccount">
+          <select class="inputs">
+            <option value="">&nbsp;</option>
+            <option value="Account">Account1</option>
+            <option value="Account Group">Account2</option>
+          </select>
+        </td>
+        <td  style="border: none;" *ngIf="byGroup">Select Group:</td>
+        <td style="border: none;" *ngIf="byGroup">
+          <select class="inputs">
+            <option value="">&nbsp;</option>
+            <option value="Account">Group1</option>
+            <option value="Account Group">Group2</option>
+          </select>
+        </td>
+        <td *ngIf="byGroup || byAccount" style="border: none;">
+          <span class="material-icons" id="saveAcc">done</span>
+        </td>
+      </tr>
 
-    </span>
-    <span class="mobile-view-off"><button *ngIf="!clickedEdit" (click)="onClickEditData()" mat-button style="float: right; color: wheat;">Edit data</button>
-      <span *ngIf="clickedEdit" style="float: right;">
-      <div *ngIf="loading else loaded" style="text-align: center;">
-        <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
-          <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-          </div></div>
-      </div>
-
-      <ng-template #loaded>
-      <table class="this" *ngIf="sure_del">
-        <tr>
-          <td style="border: none;"><span style="color: red;">Deleted, refresh to continue</span></td>
-        </tr>
-        <tr>
-          <td style="border: none;"><button mat-button style="float: right;"><img (click)="charting()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></td>
-        </tr>
-      </table>
-        <table class="this" *ngIf="!sure_del">
-          <tr>
-            <td colspan="3" style="border: none;"><span style="float: right;"><mat-icon (click)="onClickCloseEditData()" style="cursor: pointer; color: red; border: none;" class="material-icons">close</mat-icon></span></td>
-          </tr>
-          <tr>
-            <th colspan="3" style="text-align: center; border: none; background-color:  rgb(78, 73, 73);">Edit recent data</th>
-          </tr>
-          <tr>
-            <td style="border: none;"></td>
-            <td style="border: none;"><mat-icon id="closetrade" (click)="sure(recentdaily[0][0])" class="material-icons">close</mat-icon></td>
-            <td style="border: none;"><mat-icon id="closetrade" (click)="sure(recentdaily[1][0])" class="material-icons">close</mat-icon></td>
-          </tr>
-          <tr>
-            <td style="border: none;">Date</td>
-            <td style="border: none;"><input matInput type="text" id="date_y" style="width: 80px;" value="{{recentdaily[0][0]}}"></td>
-            <td style="border: none;"><input matInput type="text" id="date_t" style="width: 80px;" value="{{recentdaily[1][0]}}"></td>
-          </tr>
-            <tr>
-            <td style="border: none;">{{account_1}}</td>
-            <td style="border: none;"><input matInput type="number" id="fidelity_y" style="width: 80px;" value="{{recentdaily[0][1]}}"></td>
-            <td style="border: none;"><input matInput type="number" id="fidelity_t" style="width: 80px;" value="{{recentdaily[1][1]}}"></td>
-          </tr>
-          <tr>
-            <td style="border: none;">{{account_2}}</td>
-            <td style="border: none;"><input matInput type="number" id="robinhood_y" style="width: 80px;" value="{{recentdaily[0][2]}}"></td>
-            <td style="border: none;"><input matInput type="number" id="robinhood_t" style="width: 80px;" value="{{recentdaily[1][2]}}"></td>
-          </tr>
-          <tr>
-            <td style="border: none;">{{account_3}}</td>
-            <td style="border: none;"><input matInput type="number" id="tastyworks_y" style="width: 80px;" value="{{recentdaily[0][3]}}"></td>
-            <td style="border: none;"><input matInput type="number" id="tastyworks_t" style="width: 80px;" value="{{recentdaily[1][3]}}"></td>
-          </tr>
-          <tr>
-            <td style="border: none;">Retirement</td>
-            <td style="border: none;"><input matInput type="number" id="retirement_y" style="width: 80px;" value="{{recentdaily[0][4]}}"></td>
-            <td style="border: none;"><input matInput type="number" id="retirement_t" style="width: 80px;" value="{{recentdaily[1][4]}}"></td>
-          </tr>
-          <tr *ngIf="updatemsg">
-            <td colspan="3" style="color: red; border: none;">{{updatemsg}}</td>
-          </tr>
-          <tr *ngIf="updatemsg_done">
-            <td colspan="3" style="color: green; border: none;">{{updatemsg_done}}</td>
-          </tr>
-          <tr>
-            <td colspan="3" style="text-align: center; border: none;"><button mat-button (click)="updatedDaily()"><b>&nbsp;&nbsp;&nbsp;&nbsp;Update&nbsp;&nbsp;&nbsp;&nbsp;</b></button></td>
-          </tr>
-        </table>
-    </ng-template>
-  </span>
-    </span>
-    <span class="mobile-view-off"><button mat-button style="float: right; color: wheat;"><img (click)="charting()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></span>
-  <div class="chart_inside">
-    <p style="text-align:center;color: wheat; font-size: 1.5em;">Daily historic performance - {{type_key | uppercase}}
+    </table>
+    <p style="text-align:center;color: wheat; font-size: 1em;">Daily historic performance - {{type_key | uppercase}}
       <span style="color: green;" *ngIf="perc_change.indexOf('-')==-1">{{perc_change}}</span>
       <span style="color: red;" *ngIf="perc_change.indexOf('-')!=-1">{{perc_change}}</span>
-      <span class="mobile-view"><button mat-button style="float: right;"><img (click)="charting()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></span>
+      <mat-icon (click)="dialogBox('Progress Data', accGroups)" style="float: right; vertical-align: middle; font-size: 7mm; cursor: pointer; color:white" matTooltip="Edit Groups" class="material-icons">mode_edit</mat-icon>
     <p>
     <canvas id="canvas">{{ chart }}</canvas>
 
@@ -179,514 +131,18 @@
     </div >
   </div>
 
-
-<div class="mobile-view" style="color: wheat; border: solid wheat 0px; padding: 5px; text-align: center; width: 30%; float: left;">
-  <div *ngIf="roles.indexOf('new')!=-1 && user_diffdays.indexOf('ENDED')!=-1" style="height: 800px; background-color:  rgb(65, 61, 61); color: wheat; border: solid wheat 0px; padding: 5px; text-align: center; width: 30%; float: right; z-index: 10; position: absolute;" >
-    <table style="margin: 0 auto;">
-      <tr>
-        <td style="color: red; border: none;">Trail expired</td>
-      </tr>
-      <tr>
-        <td style="color: red;  border: none;"><button mat-button><u><a [routerLink]="'/subscribe'" style="color: red;">Upgrade</a></u></button></td>
-      </tr>
-    </table>
   </div>
-      <div class="login">
-      <table class="this">
-        <tr>
-          <th colspan="3" style="text-align: center; border: none; background-color:  rgb(78, 73, 73);">Add new data</th>
-        </tr>
-        <tr>
-          <td style="border: none; background-color:  rgb(78, 73, 73);"></td>
-          <td style="border: none; background-color:  rgb(78, 73, 73);">EOD Gain:</td>
-          <td style="border: none; background-color:  rgb(78, 73, 73);">Contribution:</td>
-        </tr>
-        <tr>
-          <td style="border: none;">{{account_1}}</td>
-          <td style="border: none;"><input matInput type="number" id="fidelity" style="width: 80px;"></td>
-          <td style="border: none;"><input matInput type="number" id="fidelity_c" style="width: 80px;" value="0"></td>
-        </tr>
-        <tr>
-          <td style="border: none;">{{account_2}}</td>
-          <td style="border: none;"><input matInput type="number" id="robinhood" style="width: 80px;"></td>
-          <td style="border: none;"><input matInput type="number" id="robinhood_c" style="width: 80px;" value="0"></td>
-        </tr>
-        <tr>
-          <td style="border: none;">{{account_3}}</td>
-          <td style="border: none;"><input matInput type="number" id="tastyworks" style="width: 80px;"></td>
-          <td style="border: none;"><input matInput type="number" id="tastyworks_c" style="width: 80px;" value="0"></td>
-        </tr>
-        <tr>
-          <td style="border: none;">Retirement</td>
-          <td style="border: none;"><input matInput type="number" id="retirement" style="width: 80px;"></td>
-          <td style="border: none;"><input matInput type="number" id="retirement_c" style="width: 80px;" value="0"></td>
-        </tr>
-        <tr *ngIf="addmsg">
-          <td colspan="3" style="color: red; border: none;">{{addmsg}}</td>
-        </tr>
-        <tr *ngIf="addmsg_done">
-          <td colspan="2" style="color: green; border: none;">{{addmsg_done}}: Please refresh</td>
-          <td style="border: none;"><button mat-button style="float: right;"><img (click)="charting()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></td>
-        </tr>
-        <tr>
-          <td colspan="3" style="text-align: center; border: none;"><button mat-button (click)="addDataHistoric()"><b>&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;</b></button></td>
-        </tr>
-      </table>
-    </div>
-    <br>
-    <div *ngIf="loading else loaded" style="text-align: center;">
-      <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
-        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-        </div></div>
-    </div>
-
-    <ng-template #loaded>
-  <div class="login">
-    <table class="this" *ngIf="sure_del">
-      <tr>
-        <td style="border: none;"><span style="color: red;">Deleted, refresh to continue</span></td>
-      </tr>
-      <tr>
-        <td style="border: none;"><button mat-button style="float: right;"><img (click)="charting()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button></td>
-      </tr>
-    </table>
-      <table class="this" *ngIf="!sure_del">
-        <tr>
-          <th colspan="3" style="text-align: center; border: none; background-color:  rgb(78, 73, 73);">Edit recent data</th>
-        </tr>
-        <tr>
-          <td style="border: none;"></td>
-          <td style="border: none;"><mat-icon id="closetrade" (click)="sure(recentdaily[0][0])" class="material-icons">close</mat-icon></td>
-          <td style="border: none;"><mat-icon id="closetrade" (click)="sure(recentdaily[1][0])" class="material-icons">close</mat-icon></td>
-        </tr>
-        <tr>
-          <td style="border: none;">Date</td>
-          <td style="border: none;"><input matInput type="text" id="date_y" style="width: 80px;" value="{{recentdaily[0][0]}}"></td>
-          <td style="border: none;"><input matInput type="text" id="date_t" style="width: 80px;" value="{{recentdaily[1][0]}}"></td>
-        </tr>
-        <tr>
-          <td style="border: none;">{{account_1}}</td>
-          <td style="border: none;"><input matInput type="number" id="fidelity_y" style="width: 80px;" value="{{recentdaily[0][1]}}"></td>
-          <td style="border: none;"><input matInput type="number" id="fidelity_t" style="width: 80px;" value="{{recentdaily[1][1]}}"></td>
-        </tr>
-        <tr>
-          <td style="border: none;">{{account_2}}</td>
-          <td style="border: none;"><input matInput type="number" id="robinhood_y" style="width: 80px;" value="{{recentdaily[0][2]}}"></td>
-          <td style="border: none;"><input matInput type="number" id="robinhood_t" style="width: 80px;" value="{{recentdaily[1][2]}}"></td>
-        </tr>
-        <tr>
-          <td style="border: none;">{{account_3}}</td>
-          <td style="border: none;"><input matInput type="number" id="tastyworks_y" style="width: 80px;" value="{{recentdaily[0][3]}}"></td>
-          <td style="border: none;"><input matInput type="number" id="tastyworks_t" style="width: 80px;" value="{{recentdaily[1][3]}}"></td>
-        </tr>
-        <tr>
-          <td style="border: none;">Retirement</td>
-          <td style="border: none;"><input matInput type="number" id="retirement_y" style="width: 80px;" value="{{recentdaily[0][4]}}"></td>
-          <td style="border: none;"><input matInput type="number" id="retirement_t" style="width: 80px;" value="{{recentdaily[1][4]}}"></td>
-        </tr>
-        <tr *ngIf="updatemsg">
-          <td colspan="3" style="color: red; border: none;">{{updatemsg}}</td>
-        </tr>
-        <tr *ngIf="updatemsg_done">
-          <td colspan="3" style="color: green; border: none;">{{updatemsg_done}}</td>
-        </tr>
-        <tr>
-          <td colspan="3" style="text-align: center; border: none;"><button mat-button (click)="updatedDaily()"><b>&nbsp;&nbsp;&nbsp;&nbsp;Update&nbsp;&nbsp;&nbsp;&nbsp;</b></button></td>
-        </tr>
-      </table>
-    </div>
-  </ng-template>
-    </div>
+  <div style="display: inline-flex; margin: auto;">
+    <app-monthly></app-monthly>
   </div>
-  <hr>
- <div  class="charting_months">
-    <div class="charting_monthly">
-      <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Historic monthly progress</p>
-      <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">
-        <canvas id="canvas_monthly">{{ monthly }}</canvas>
-      </p>
-    </div>
-    <div  class="charting_monthly_last">
-      <div class="login one">
-        <div class="charting_front">
-          <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">{{monthone}}
-            <button mat-button style="float: right;"><img (click)="gainsProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
-            <canvas id="canvas_front">{{ frontMonth }}</canvas>
-          </p>
-        </div>
-      </div>
-      <div class="login two" >
-        <div class="charting_next" >
-          <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">{{monthtwo}}
-            <button mat-button style="float: right;"><img (click)="gainsProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
-          <canvas id="canvas_next">{{ nextMonth }}</canvas>
-          </p>
-        </div>
-      </div>
-    </div>
+  <div style="display: inline-flex; margin: auto;">
+    <app-tradegains></app-tradegains>
+  </div>
+  <div style="display: inline-flex; margin: auto;">
+    <app-tax></app-tax>
+  </div>
+  <div style="display: inline-flex; margin: auto;">
+    <app-budget></app-budget>
   </div>
   <br>
-  <br>
-  <br>
-  <!-- <div  class="charting_months">
-    <div class="charting_monthly">
-      <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Historic net worth</p>
-      <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">
-        <canvas id="canvas_monthly">{{ monthly }}</canvas>
-      </p>
-    </div>
-    <div class="charting_monthly_last">
-      <br>
-      <table class="this" style="width: 90%;" *ngIf="switch_networth">
-        <div>
-          <div class="heads" style="text-align: center;"><button mat-button (click)="switch()">Switch to {{add_networth}} data</button></div>
-          <div class="heads">Net worth as of {{networth[0].date }}:&nbsp;$<span id="totalnetworth" style="color: aliceblue;">{{ net(networth[0]) }}</span></div>
-          <div class="heads">Cash & Investments:</div>
-          <button class="accordion" (click)="toggleAccordian($event, 0)"> Cash: <span style="color: aliceblue;"> ${{total(networth[0].pos.cash)}}</span> </button>
-          <div class="panel" hide="!item.isActive">
-            <br>
-            <table class="this2" style="margin: 0 auto; width: 80%;" id="cash">
-              <tbody>
-                <tr *ngFor="let c of getValuesFromJson(networth[0].pos.cash)">
-                  <td style="border: none;">{{c[0]}}</td>
-                  <td style="border: none;"><input matInput id="{{'poscash' + c[0]}}" (change)="changeInputVal($event)" type="number" style="width: 80px;" value="{{c[1]}}"></td>
-                </tr>
-                <tr>
-                  <td style="border: none;"><button mat-button (click)="updateNetWorth('pos', 'cash')">Update</button></td>
-                  <td style="border: none;"><button mat-button (click)="addAccount($event,'cash')">Add Account</button></td>
-                </tr>
-              </tbody>
-            </table>
-            <br>
-          </div>
-        <div>
-          <button class="accordion" (click)="toggleAccordian($event, 0)"> Real Estate: <span style="color: aliceblue;"> ${{total(networth[0].pos.real)}}</span> </button>
-          <div class="panel" hide="!item.isActive">
-            <br>
-            <table class="this2" style="margin: 0 auto; width: 80%;">
-              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.real)">
-                <td style="border: none;">{{c[0]}}</td>
-                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
-              </tr>
-              <tr>
-                <td style="border: none;"><button mat-button>Update</button></td>
-                <td style="border: none;"><button mat-button>Add Account</button></td>
-              </tr>
-            </table>
-            <br>
-          </div>
-        </div>
-        <div>
-          <button class="accordion" (click)="toggleAccordian($event, 0)"> Investments: <span style="color: aliceblue;"> ${{total(networth[0].pos.investments)}}</span> </button>
-          <div class="panel" hide="!item.isActive">
-            <br>
-            <table class="this2" style="margin: 0 auto; width: 80%;" id="investments">
-              <tbody>
-              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.investments)">
-                <td style="border: none;">{{c[0]}}</td>
-                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
-              </tr>
-              <tr>
-                <td style="border: none;"><button mat-button>Update</button></td>
-                <td style="border: none;"><button mat-button (click)="addAccount($event,'investments')">Add Account</button></td>
-              </tr>
-            </tbody>
-            </table>
-            <br>
-          </div>
-        </div>
-        <div>
-          <button class="accordion" (click)="toggleAccordian($event, 0)"> Retirement: <span style="color: aliceblue;"> ${{total(networth[0].pos.retirement)}}</span> </button>
-          <div class="panel" hide="!item.isActive">
-            <br>
-            <table class="this2" style="margin: 0 auto; width: 80%;">
-              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.retirement)">
-                <td style="border: none;">{{c[0]}}</td>
-                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
-              </tr>
-              <tr>
-                <td style="border: none;"><button mat-button>Update</button></td>
-                <td style="border: none;"><button mat-button>Add Account</button></td>
-              </tr>
-            </table>
-            <br>
-          </div>
-        </div>
-        <div>
-          <button class="accordion" (click)="toggleAccordian($event, 0)"> Other:<span style="color: aliceblue;"> ${{total(networth[0].pos.other)}}</span> </button>
-          <div class="panel" hide="!item.isActive">
-            <br>
-            <table class="this2" style="margin: 0 auto; width: 80%;">
-              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.other)">
-                <td style="border: none;">{{c[0]}}</td>
-                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
-              </tr>
-              <tr>
-                <td style="border: none;"><button mat-button>Update</button></td>
-                <td style="border: none;"><button mat-button>Add Account</button></td>
-              </tr>
-            </table>
-            <br>
-          </div>
-        </div>
-        <div class="heads">Debt accounts</div>
-        <div>
-          <button class="accordion" (click)="toggleAccordian($event, 0)"> Credit Card Debt:<span style="color: aliceblue;"> ${{total(networth[0].neg.credit)}}</span> </button>
-          <div class="panel" hide="!item.isActive">
-            <br>
-            <table class="this2" style="margin: 0 auto; width: 80%;">
-              <tr *ngFor="let c of getValuesFromJson(networth[0].neg.credit)">
-                <td style="border: none;">{{c[0]}}</td>
-                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
-              </tr>
-              <tr>
-                <td style="border: none;"><button mat-button>Update</button></td>
-                <td style="border: none;"><button mat-button>Add Account</button></td>
-              </tr>
-            </table>
-            <br>
-          </div>
-        </div>
-        <div>
-          <button class="accordion" (click)="toggleAccordian($event, 0)"> Real Estate Debt:<span style="color: aliceblue;"> ${{total(networth[0].neg.real)}}</span> </button>
-          <div class="panel" hide="!item.isActive">
-            <br>
-            <table class="this2" style="margin: 0 auto; width: 80%;">
-              <tr *ngFor="let c of getValuesFromJson(networth[0].neg.real)">
-                <td style="border: none;">{{c[0]}}</td>
-                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
-              </tr>
-              <tr>
-                <td style="border: none;"><button mat-button>Update</button></td>
-                <td style="border: none;"><button mat-button>Add Account</button></td>
-              </tr>
-            </table>
-            <br>
-          </div>
-        </div>
-        <div>
-          <button class="accordion" (click)="toggleAccordian($event, 0)"> Other Debt:<span style="color: aliceblue;"> ${{total(networth[0].neg.other)}}</span> </button>
-          <div class="panel" hide="!item.isActive">
-            <br>
-            <table class="this2" style="margin: 0 auto; width: 80%;">
-              <tr *ngFor="let c of getValuesFromJson(networth[0].neg.other)">
-                <td style="border: none;">{{c[0]}}</td>
-                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
-              </tr>
-              <tr>
-                <td style="border: none;"><button mat-button>Update</button></td>
-                <td style="border: none;"><button mat-button>Add Account</button></td>
-              </tr>
-            </table>
-            <br>
-          </div>
-        </div>
-        <div class="heads" style="text-align: center;"><button mat-raised-button>Delete data for {{networth[0].date}}</button></div>
-      </div>
-  </table>
-  <table style="width: 90%;" *ngIf="!switch_networth" class="this3">
-      <div class="heads" style="text-align: center;"><button mat-button (click)="switch()">Switch to {{add_networth}} data</button></div>
-    <div *ngIf="check_date">
-        <div>
-          <div class="heads">Net worth as of {{curr_date }}:&nbsp;<span style="color: aliceblue;">${{ net(networth[0]) }}</span></div>
-          <div class="heads">Cash & Investments:</div>
-          <button class="accordion" (click)="toggleAccordian($event, 0)"> Cash: <span style="color: aliceblue;"> ${{total(networth[0].pos.cash)}}</span> </button>
-          <div class="panel" hide="!item.isActive">
-            <br>
-            <table class="this2" style="margin: 0 auto; width: 80%;">
-              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.cash)">
-                <td style="border: none;">{{c[0]}}</td>
-                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
-              </tr>
-              <tr>
-                <td colspan="2" style="border: none;"><button mat-button>Add new Account</button></td>
-              </tr>
-            </table>
-            <br>
-          </div>
-        <div>
-          <button class="accordion" (click)="toggleAccordian($event, 0)"> Real Estate: <span style="color: aliceblue;"> ${{total(networth[0].pos.real)}}</span> </button>
-          <div class="panel" hide="!item.isActive">
-            <br>
-            <table class="this2" style="margin: 0 auto; width: 80%;">
-              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.real)">
-                <td style="border: none;">{{c[0]}}</td>
-                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
-              </tr>
-              <tr>
-                <td colspan="2" style="border: none;"><button mat-button>Add new Account</button></td>
-              </tr>
-            </table>
-            <br>
-          </div>
-        </div>
-        <div>
-          <button class="accordion" (click)="toggleAccordian($event, 0)"> Investments: <span style="color: aliceblue;"> ${{total(networth[0].pos.investments)}}</span> </button>
-          <div class="panel" hide="!item.isActive">
-            <br>
-            <table class="this2" style="margin: 0 auto; width: 80%;">
-              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.investments)">
-                <td style="border: none;">{{c[0]}}</td>
-                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
-              </tr>
-              <tr>
-                <td colspan="2" style="border: none;"><button mat-button>Add new Account</button></td>
-              </tr>
-            </table>
-            <br>
-          </div>
-        </div>
-        <div>
-          <button class="accordion" (click)="toggleAccordian($event, 0)"> Retirement: <span style="color: aliceblue;"> ${{total(networth[0].pos.retirement)}}</span> </button>
-          <div class="panel" hide="!item.isActive">
-            <br>
-            <table class="this2" style="margin: 0 auto; width: 80%;">
-              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.retirement)">
-                <td style="border: none;">{{c[0]}}</td>
-                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
-              </tr>
-              <tr>
-                <td colspan="2" style="border: none;"><button mat-button>Add new Account</button></td>
-              </tr>
-            </table>
-            <br>
-          </div>
-        </div>
-        <div>
-          <button class="accordion" (click)="toggleAccordian($event, 0)"> Other:<span style="color: aliceblue;"> ${{total(networth[0].pos.other)}}</span> </button>
-          <div class="panel" hide="!item.isActive">
-            <br>
-            <table class="this2" style="margin: 0 auto; width: 80%;">
-              <tr *ngFor="let c of getValuesFromJson(networth[0].pos.other)">
-                <td style="border: none;">{{c[0]}}</td>
-                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
-              </tr>
-              <tr>
-                <td colspan="2" style="border: none;"><button mat-button>Add new Account</button></td>
-              </tr>
-            </table>
-            <br>
-          </div>
-        </div>
-        <div class="heads">Debt accounts</div>
-        <div>
-          <button class="accordion" (click)="toggleAccordian($event, 0)"> Credit Card Debt:<span style="color: aliceblue;"> ${{total(networth[0].neg.credit)}}</span> </button>
-          <div class="panel" hide="!item.isActive">
-            <br>
-            <table class="this2" style="margin: 0 auto; width: 80%;">
-              <tr *ngFor="let c of getValuesFromJson(networth[0].neg.credit)">
-                <td style="border: none;">{{c[0]}}</td>
-                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
-              </tr>
-              <tr>
-                <td colspan="2" style="border: none;"><button mat-button>Add new Account</button></td>
-              </tr>
-            </table>
-            <br>
-          </div>
-        </div>
-        <div>
-          <button class="accordion" (click)="toggleAccordian($event, 0)"> Real Estate Debt:<span style="color: aliceblue;"> ${{total(networth[0].neg.real)}}</span> </button>
-          <div class="panel" hide="!item.isActive">
-            <br>
-            <table class="this2" style="margin: 0 auto; width: 80%;">
-              <tr *ngFor="let c of getValuesFromJson(networth[0].neg.real)">
-                <td style="border: none;">{{c[0]}}</td>
-                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
-              </tr>
-              <tr>
-                <td colspan="2" style="border: none;"><button mat-button>Add new Account</button></td>
-              </tr>
-            </table>
-            <br>
-          </div>
-        </div>
-        <div>
-          <button class="accordion" (click)="toggleAccordian($event, 0)"> Other Debt:<span style="color: aliceblue;"> ${{total(networth[0].neg.other)}}</span> </button>
-          <div class="panel" hide="!item.isActive">
-            <br>
-            <table class="this2" style="margin: 0 auto; width: 80%;">
-              <tr *ngFor="let c of getValuesFromJson(networth[0].neg.other)">
-                <td style="border: none;">{{c[0]}}</td>
-                <td style="border: none;"><input matInput type="number" id="inestments_add" style="width: 80px;" value="{{c[1]}}"></td>
-              </tr>
-              <tr>
-                <td colspan="2" style="border: none;"><button mat-button>Add new Account</button></td>
-              </tr>
-            </table>
-            <br>
-          </div>
-        </div>
-        <div class="heads" style="text-align: center;"><button mat-raised-button>Add data for {{curr_date}}</button></div>
-
-      </div>
-    </div>
-    <div *ngIf="!check_date">
-      <span style="color: red;">{{curr_date}} date data already added, update it instead</span>
-    </div>
-
-    </table>
-    <br>
-    <br>
-  </div>
-
--->
-
-<!--<div class="percent" *ngIf="roles.indexOf('admin')!=-1 || roles.indexOf('advancedtrader')!=-1">
-  <p style="width:100%;text-align:center;color: wheat; font-size: 1.5em;">Percent PNL
-    <button mat-button style="float: right;"><img (click)="currentProgress()" style="width: 25px; height: 25px;" src="/assets/refresh.png"></button>
-    <button mat-raised-button style="float: right;" (click)="closeExpired()"><span style="color: red">x</span> Expired</button>
-  </p>
-  <span style="color: red;">{{closedTrd}}</span>
-  <div *ngIf="loading else loaded" style="text-align: center;">
-    <div class="loadingio-spinner-spinner-w7gjtov5wck"><div class="ldio-tbsvbued4f">
-      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-      </div></div>
-  </div>
-
-  <ng-template #loaded>
-
-    <table>
-      <tr>
-        <td style="border: 0px;"></td>
-        <td colspan="2" style="border: 0px;"><span style="color: orange;">{{account_1}}</span></td>
-        <td colspan="2" style="border: 0px;"><span style="color: rosybrown;">{{account_2}}</span></td>
-        <td colspan="2" style="border: 0px"><span style="color: rgb(243, 138, 126);">{{account_3}}</span></td>
-      </tr>
-      <tr>
-        <th>Ticker</th>
-        <th>call-put</th>
-        <th>Expiry</th>
-        <th>Buy</th>
-        <th>Current</th>
-        <th>PNL</th>
-        <th>% Chng</th>
-      </tr>
-      <tr *ngFor="let x of current;">
-
-          <td *ngFor="let y of x | slice:1; let i = index" >
-            <span *ngIf="x[0].indexOf('fidelity')!=-1 && i!=6"  style="color:orange">
-              {{y}}
-            </span>
-            <span *ngIf="x[0].indexOf('robinhood')!=-1 && i!=6"  style="color:rosybrown">
-              {{y}}
-            </span>
-            <span *ngIf="x[0].indexOf('tastyworks')!=-1 && i!=6"  style="color:rgb(243, 138, 126)">
-              {{y}}
-            </span>
-            <span *ngIf="i==6 && y.indexOf('-')!=-1"  style="color:red">{{y}}%-->
-              <!--<span *ngIf="!retValGreater(y, -75.0)" style="border: solid red 0.5px;">{{y}}%</span>
-              <span *ngIf="!retValGreater(y, -50.0) && retValGreater(y, -75.0)" style="border: dashed red 0.5px;">{{y}}%</span>
-              <span *ngIf="retValGreater(y, -50.0)">{{y}}%</span>-->
-            <!--</span>
-            <span *ngIf="i==6 && y.indexOf('-')==-1"  style="color:green">{{y}}%-->
-              <!--<span *ngIf="retValGreater(y, 75.0)" style="border: solid green 0.5px;">{{y}}%</span>
-              <span *ngIf="retValGreater(y, 50.0) && !retValGreater(y, 75.0)" style="border: dashed green 0.5px;">{{y}}%</span>
-              <span *ngIf="!retValGreater(y, 50.0)">{{y}}%</span>-->
-             <!--</span>
-          </td>
-        </tr>
-    </table>
-  </ng-template>
-</div>-->
 </div>
