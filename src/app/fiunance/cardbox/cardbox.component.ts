@@ -21,8 +21,10 @@ export class CardboxComponent implements OnInit {
   @Input() username: string;
 
   ticker: string;
+  ticker_group: string;
   loading = true;
   display_data: object;
+  groups_data: object[] = [];
   display_data_arr: object[] = [];
   display_data_meta: string[] = [];
 
@@ -60,26 +62,70 @@ export class CardboxComponent implements OnInit {
     }
   }
 
-  refresh(){
-    this.loading = true;
-    this.display_data_arr = []
-    this.display_data_meta = []
-    this.http.post(this.newbaseUrl + "display/" + this.username + "/get", this.position).subscribe((data) => {
-      this.display_data = data;
-      for(var keys in this.display_data){
-        this.display_data_arr.push(this.display_data[keys])
+  networth(worth: object){
+    var ret_list = [];
+    for(var keys in worth['NetWorth']){
+      if(worth['NetWorth'][keys] != 0 && keys != "Total"){
+        ret_list.push([keys, worth['NetWorth'][keys]])
       }
-      this.http.post(this.newbaseUrl + "display/" + this.username + "/get/meta", this.position).subscribe((data) => {
-        this.display_data_meta = data as string[];
+    }
+    ret_list.sort().reverse();
+    ret_list.push([keys, worth['NetWorth']["Total"]])
+    return ret_list;
+  }
+
+  groups(){
+    this.http.get(this.newbaseUrl + "groups/" + this.username + "/get").subscribe((data) => {
+      this.groups_data = data as object[];
+      for(var group in this.groups_data){
+        for(var subgroup in this.groups_data[group]){
+          for(var tick in this.groups_data[group][subgroup]){
+            if(String(this.ticker).toUpperCase() === String(this.groups_data[group][subgroup][tick]).toUpperCase() ){
+              this.ticker_group = String(group) + " .  | .  " + String(subgroup)
+              break;
+            }
+          }
+        }
+      }
+
+    },
+    (error) => {
+    });
+  }
+
+  refresh(){
+    if(String(this.ticker)==="EARNINGS"){
+      this.loading = true;
+      this.display_data_arr = []
+      this.display_data_meta = []
+      this.http.get(this.newbaseUrl + "networth/" + this.username + "/get").subscribe((data) => {
         this.loading = false;
       },
       (error) => {
-      });
-    },
-    (error) => {
-      this.loading = false;
+        this.loading = false;
 
-    });
+      });
+    }else{
+      this.loading = true;
+      this.display_data_arr = []
+      this.display_data_meta = []
+      this.http.post(this.newbaseUrl + "display/" + this.username + "/get", this.position).subscribe((data) => {
+        this.display_data = data;
+        for(var keys in this.display_data){
+          this.display_data_arr.push(this.display_data[keys])
+        }
+        this.http.post(this.newbaseUrl + "display/" + this.username + "/get/meta", this.position).subscribe((data) => {
+          this.display_data_meta = data as string[];
+          this.loading = false;
+        },
+        (error) => {
+        });
+      },
+      (error) => {
+        this.loading = false;
+
+      });
+    }
 
   }
 
@@ -117,6 +163,7 @@ export class CardboxComponent implements OnInit {
     }
 
 }
+
 remZero(str: string){
     if(str == "0"){
       return ""
@@ -124,6 +171,7 @@ remZero(str: string){
     return str
   }
   ngOnInit() {
+    this.groups();
     this.ticker = this.position['Ticker'];
     this.loading = true;
 

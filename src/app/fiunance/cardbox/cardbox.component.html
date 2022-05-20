@@ -1,11 +1,15 @@
 <div class="inner">
   <!-- <span  *ngIf="ticker.indexOf('EARNINGS')==-1" class="rearrange"><mat-icon style="font-size: 27px;" (click)="dialogBox('Rearrange', position)" matTooltip="Rearrange" class="material-icons">open_with</mat-icon></span> -->
-  <span class="refresh" *ngIf="ticker.indexOf('EARNINGS')==-1 && ticker.indexOf('DIVIDEND')==-1">
+  <span class="refresh" *ngIf="ticker.indexOf('DIVIDEND')==-1">
     <mat-icon id="rolltrade" matTooltip="Refresh ticker" style="font-size: 28px;" (click)="refresh()" class="material-icons">refresh</mat-icon>
   </span>
   <table>
+    <tr style="color: aliceblue;">{{ticker_group}}</tr>
     <tr>
-      <th style=" text-align: center; font-size: 1.5em; border: none">{{ticker | uppercase}}
+      <th *ngIf="ticker.indexOf('EARNINGS')!=-1" style=" text-align: center; font-size: 1.5em; border: none">
+        NET WORTH
+      </th>
+      <th *ngIf="ticker.indexOf('EARNINGS')==-1" style=" text-align: center; font-size: 1.5em; border: none">{{ticker | uppercase}}
         <span *ngIf="ticker.indexOf('Cash')==-1 && ticker.indexOf('_cf')==-1 && ticker.indexOf('EARNINGS')==-1 && ticker.indexOf('DIVIDEND')==-1"
               style="font-size: medium;">
             <span *ngIf="display_data_meta[0].indexOf('-')!=-1" style="color: red;">{{display_data_meta[0]}}({{display_data_meta[1]}}%)</span>
@@ -148,12 +152,10 @@
             </table>
           </td>
           <td *ngIf="ticker.indexOf('EARNINGS')!=-1">
-            test
-            <table style="border: 1px solid pink; vertical-align: center;">
-              <tr style="border: none">
-                <td style="border: none">e1</td>
-                <td style="border: none">e2</td>
-                <td style="border: none">e3</td>
+            <table *ngFor="let y of networth(x)" style="border: none">
+              <tr style="border: none" style="text-align: left;">
+                <td style="border: none" style="text-align: left;">{{y[0]}}</td>
+                <td style="border: none" style="text-align: right;">{{y[1]}}</td>
               </tr>
             </table>
           </td>
